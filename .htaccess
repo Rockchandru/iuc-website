@@ -1,0 +1,82 @@
+# ══════════════════════════════════════════════════════════
+# IUC Edu — Apache Configuration
+# ══════════════════════════════════════════════════════════
+
+# Enable Rewrite Engine
+RewriteEngine On
+
+# Force HTTPS (uncomment on production)
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+# Redirect www to non-www (uncomment on production)
+# RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+# RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+
+# ── SEO Friendly URLs ────────────────────────────────────
+
+# Course detail pages
+RewriteRule ^course/([a-z0-9-]+)/?$ course.php?slug=$1 [L,QSA,NC]
+
+# Blog detail pages
+RewriteRule ^blog/([a-z0-9-]+)/?$ blog.php?slug=$1 [L,QSA,NC]
+
+# Remove .php extension
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1.php [L,QSA]
+
+# ── Security Headers ─────────────────────────────────────
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+    Header set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+</IfModule>
+
+# ── Caching ──────────────────────────────────────────────
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpg "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType text/javascript "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>
+
+# ── Compression ──────────────────────────────────────────
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/css text/javascript application/javascript application/json image/svg+xml
+</IfModule>
+
+# ── Block bad bots ───────────────────────────────────────
+RewriteCond %{HTTP_USER_AGENT} libwww-perl [NC,OR]
+RewriteCond %{HTTP_USER_AGENT} wget [NC]
+RewriteRule ^ - [F,L]
+
+# ── Directory protection ─────────────────────────────────
+Options -Indexes
+<FilesMatch "\.(env|sql|log|ini)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# ── Custom error pages ───────────────────────────────────
+ErrorDocument 404 /404.php
+ErrorDocument 500 /404.php
+
+# Redirect 404.php to the correct path if in subdirectory
+RewriteCond %{REQUEST_URI} ^/404\.php$ [NC]
+RewriteCond %{DOCUMENT_ROOT}/404.php !-f
+RewriteRule ^ /iuc-website/404.php [R=302,L]
+
+# ── Redirect trailing slash (skip directories) ────────────
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} (.+)/$
+RewriteRule ^ %1 [R=301,L]

@@ -1,0 +1,3414 @@
+<?php
+/* ============================================================
+   IUC Computers — Premium Enterprise EdTech Landing Page v2.0
+   Production-ready | PHP 8+ | Tailwind CSS CDN | Vanilla JS
+   ============================================================ */
+
+session_start();
+
+require_once "db.php";
+
+// ── CSRF Token ────────────────────────────────────────────────
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
+// ── CAPTCHA ───────────────────────────────────────────────────
+if (empty($_SESSION['captcha'])) {
+    $_SESSION['captcha'] = rand(1000, 9999);
+}
+
+// ── Form Handler ─────────────────────────────────────────────
+$formSuccess = false;
+$formError   = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_submit'])) {
+
+    // CSRF validation
+    if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'] ?? '')) {
+        $formError = 'Security validation failed. Please refresh and try again.';
+    } else {
+        $name    = trim($_POST['name']    ?? '');
+        $phone   = trim($_POST['phone']   ?? '');
+        $email   = trim($_POST['email']   ?? '');
+        $course  = trim($_POST['course']  ?? '');
+        $message = trim($_POST['message'] ?? '');
+        $captcha = trim($_POST['captcha'] ?? '');
+
+        if (!$name || !$phone || !$email || !$course) {
+            $formError = 'Please fill in all required fields.';
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $formError = 'Please enter a valid email address.';
+        } elseif ($captcha != $_SESSION['captcha']) {
+            $formError = 'Invalid CAPTCHA. Please try again.';
+        } else {
+            // Sanitize for DB
+            $name_safe    = htmlspecialchars($name);
+            $phone_safe   = htmlspecialchars($phone);
+            $email_safe   = htmlspecialchars($email);
+            $course_safe  = htmlspecialchars($course);
+            $message_safe = htmlspecialchars($message);
+
+            $stmt = $conn->prepare("
+                INSERT INTO enquiries (full_name, phone, email, course, message)
+                VALUES (?, ?, ?, ?, ?)
+            ");
+            $stmt->bind_param("sssss",
+                $name_safe, $phone_safe, $email_safe, $course_safe, $message_safe
+            );
+
+            if ($stmt->execute()) {
+                // Email notification
+                $to      = 'info@iucedu.com';
+                $subject = "New Inquiry from {$name_safe} – IUC Computers";
+                $body    = "Name: {$name_safe}\nPhone: {$phone_safe}\nEmail: {$email_safe}\nCourse: {$course_safe}\nMessage: {$message_safe}";
+                $headers = "From: noreply@iucedu.com\r\nReply-To: {$email_safe}";
+                @mail($to, $subject, $body, $headers);
+
+                $formSuccess = true;
+                $_SESSION['captcha'] = rand(1000, 9999);
+                $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+                $_POST = [];
+            } else {
+                $formError = 'Something went wrong. Please try again.';
+            }
+            $stmt->close();
+        }
+    }
+}
+
+// ── Data ─────────────────────────────────────────────────────
+$programs = [
+    [
+        'title'    => 'Full Stack Web Development',
+        'desc'     => 'Master React, Node.js, databases & cloud deployment. Build production-grade apps.',
+        'img'      => 'https://images.unsplash.com/photo-1547658719-da2b51169166?w=600&q=80',
+        'duration' => '6 Months',
+        'level'    => 'Beginner → Pro',
+        'projects' => '12 Projects',
+        'badge'    => 'Most Popular',
+        'badge_color' => '#f59e0b',
+        'grad_from'=> '#1d4ed8',
+        'grad_to'  => '#06b6d4',
+        'icon'     => 'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4',
+        'tags'     => ['React','Node.js','MongoDB','AWS'],
+        'price'    => '₹35,000',
+        'emi'      => '₹3,500/mo',
+        'rating'   => '4.9',
+        'enrolled' => '1,240',
+    ],
+    [
+        'title'    => 'Cybersecurity & Ethical Hacking',
+        'desc'     => 'Master penetration testing, network security & earn CEH / CompTIA Security+.',
+        'img'      => 'https://images.unsplash.com/photo-1510511459019-5dda7724fd87?w=600&q=80',
+        'duration' => '4 Months',
+        'level'    => 'Intermediate',
+        'projects' => '8 Labs',
+        'badge'    => 'High Demand',
+        'badge_color' => '#ef4444',
+        'grad_from'=> '#7c3aed',
+        'grad_to'  => '#06b6d4',
+        'icon'     => 'M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z',
+        'tags'     => ['CEH','Kali Linux','Wireshark','OSCP'],
+        'price'    => '₹28,000',
+        'emi'      => '₹2,800/mo',
+        'rating'   => '4.8',
+        'enrolled' => '890',
+    ],
+    [
+        'title'    => 'Data Science & AI/ML',
+        'desc'     => 'Python, machine learning, deep learning & real-world data pipelines from scratch.',
+        'img'      => 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80',
+        'duration' => '6 Months',
+        'level'    => 'Beginner → Pro',
+        'projects' => '10 Projects',
+        'badge'    => 'AI Powered',
+        'badge_color' => '#8b5cf6',
+        'grad_from'=> '#0e7490',
+        'grad_to'  => '#3b82f6',
+        'icon'     => 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z',
+        'tags'     => ['Python','TensorFlow','PyTorch','SQL'],
+        'price'    => '₹40,000',
+        'emi'      => '₹4,000/mo',
+        'rating'   => '4.9',
+        'enrolled' => '1,050',
+    ],
+    [
+        'title'    => 'Cloud Computing (AWS / Azure)',
+        'desc'     => 'Architect, deploy & manage enterprise cloud infrastructure. Dual certification track.',
+        'img'      => 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=600&q=80',
+        'duration' => '3 Months',
+        'level'    => 'Intermediate',
+        'projects' => '6 Projects',
+        'badge'    => 'Certified',
+        'badge_color' => '#22c55e',
+        'grad_from'=> '#1d4ed8',
+        'grad_to'  => '#06b6d4',
+        'icon'     => 'M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z',
+        'tags'     => ['AWS','Azure','Terraform','Docker'],
+        'price'    => '₹22,000',
+        'emi'      => '₹2,200/mo',
+        'rating'   => '4.8',
+        'enrolled' => '760',
+    ],
+    [
+        'title'    => 'UI/UX Design & Prototyping',
+        'desc'     => 'Figma, user research, wireframing & design systems for modern digital products.',
+        'img'      => 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&q=80',
+        'duration' => '3 Months',
+        'level'    => 'Beginner',
+        'projects' => '5 Projects',
+        'badge'    => 'Creative',
+        'badge_color' => '#ec4899',
+        'grad_from'=> '#db2777',
+        'grad_to'  => '#f59e0b',
+        'icon'     => 'M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01',
+        'tags'     => ['Figma','Adobe XD','Prototyping','Research'],
+        'price'    => '₹18,000',
+        'emi'      => '₹1,800/mo',
+        'rating'   => '4.7',
+        'enrolled' => '620',
+    ],
+    [
+        'title'    => 'Digital Marketing & SEO',
+        'desc'     => 'Google Ads, Meta Ads, SEO, analytics & growth hacking for modern businesses.',
+        'img'      => 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80',
+        'duration' => '2 Months',
+        'level'    => 'Beginner',
+        'projects' => '4 Campaigns',
+        'badge'    => 'Fast Track',
+        'badge_color' => '#06b6d4',
+        'grad_from'=> '#d97706',
+        'grad_to'  => '#06b6d4',
+        'icon'     => 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6',
+        'tags'     => ['Google Ads','Meta Ads','SEO','Analytics'],
+        'price'    => '₹15,000',
+        'emi'      => '₹1,500/mo',
+        'rating'   => '4.8',
+        'enrolled' => '980',
+    ],
+];
+
+$mentors = [
+    [
+        'name'    => 'Dr. Senthil Kumar R.',
+        'role'    => 'Founder & Lead Instructor',
+        'exp'     => '20+ Years',
+        'company' => 'IUC Computers',
+        'img'     => 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&q=80',
+        'spec'    => 'Full Stack & Cloud',
+        'linkedin'=> '#',
+        'courses' => 12,
+    ],
+    [
+        'name'    => 'Priya Anand',
+        'role'    => 'Senior Data Science Mentor',
+        'exp'     => '12 Years',
+        'company' => 'Ex-Amazon',
+        'img'     => 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&q=80',
+        'spec'    => 'AI/ML & Python',
+        'linkedin'=> '#',
+        'courses' => 8,
+    ],
+    [
+        'name'    => 'Rajesh Mohan',
+        'role'    => 'Cybersecurity Expert',
+        'exp'     => '15 Years',
+        'company' => 'Ex-Cisco',
+        'img'     => 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&q=80',
+        'spec'    => 'Security & Networking',
+        'linkedin'=> '#',
+        'courses' => 6,
+    ],
+    [
+        'name'    => 'Kavitha Suresh',
+        'role'    => 'UI/UX Design Lead',
+        'exp'     => '10 Years',
+        'company' => 'Ex-Zoho',
+        'img'     => 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&q=80',
+        'spec'    => 'Design Systems & Figma',
+        'linkedin'=> '#',
+        'courses' => 5,
+    ],
+];
+
+$testimonials = [
+    [
+        'name'   => 'Ramesh Subramanian',
+        'role'   => 'Full Stack Developer @ Infosys',
+        'img'    => '1544005313-94ddf0286df2',
+        'rating' => 5,
+        'salary' => '₹8.5 LPA',
+        'prev'   => '₹3.2 LPA',
+        'quote'  => 'IUC Computers completely changed my life. The hands-on projects and dedicated placement team secured my dream role at Infosys within 3 months. The mentors invest personally in every student\'s success.',
+        'batch'  => 'Batch 2023',
+        'course' => 'Full Stack Development',
+    ],
+    [
+        'name'   => 'Arjun Krishnan',
+        'role'   => 'Cybersecurity Analyst @ TCS',
+        'img'    => '1507003211169-0a1dd7228f2d',
+        'rating' => 5,
+        'salary' => '₹9.2 LPA',
+        'prev'   => '₹4.1 LPA',
+        'quote'  => 'The Cybersecurity program was incredibly detailed — real labs, real attack scenarios. I passed my CEH exam on the first attempt. The institute truly prepares you for what the industry demands.',
+        'batch'  => 'Batch 2023',
+        'course' => 'Cybersecurity',
+    ],
+    [
+        'name'   => 'Sneha Meenakshi',
+        'role'   => 'Data Scientist @ Amazon',
+        'img'    => '1438761681033-6461ffad8d80',
+        'rating' => 5,
+        'salary' => '₹14 LPA',
+        'prev'   => '₹5.5 LPA',
+        'quote'  => 'From zero coding experience to landing a Data Science role at Amazon — IUC made it possible. The AI/ML curriculum is world-class and the career support team goes above and beyond.',
+        'batch'  => 'Batch 2024',
+        'course' => 'Data Science & AI/ML',
+    ],
+    [
+        'name'   => 'Vikram Nair',
+        'role'   => 'Cloud Architect @ Wipro',
+        'img'    => '1472099645785-5658abf4ff4e',
+        'rating' => 5,
+        'salary' => '₹12 LPA',
+        'prev'   => '₹5 LPA',
+        'quote'  => 'The Cloud Computing bootcamp was intense in the best way possible. Got AWS certified and secured a Cloud Architect role within weeks of graduation. Best investment I ever made in my career.',
+        'batch'  => 'Batch 2024',
+        'course' => 'Cloud Computing',
+    ],
+    [
+        'name'   => 'Divya Sundararajan',
+        'role'   => 'UI/UX Lead @ Zoho',
+        'img'    => '1494790108377-be9c29b29330',
+        'rating' => 5,
+        'salary' => '₹10.5 LPA',
+        'prev'   => '₹4.8 LPA',
+        'quote'  => 'The UI/UX program taught me Figma, user research, and design systems from scratch. Now I lead a team of 6 designers at Zoho. IUC gave me the confidence and portfolio that got me hired.',
+        'batch'  => 'Batch 2023',
+        'course' => 'UI/UX Design',
+    ],
+    [
+        'name'   => 'Rahul Kumar',
+        'role'   => 'Digital Marketing Manager @ Swiggy',
+        'img'    => '1500648767791-00dcc994a43e',
+        'rating' => 5,
+        'salary' => '₹9.8 LPA',
+        'prev'   => '₹4.2 LPA',
+        'quote'  => 'In 2 months I learned Google Ads, Meta campaigns, and advanced SEO strategies. Got a 133% salary hike at Swiggy. The ROI on this course is absolutely phenomenal.',
+        'batch'  => 'Batch 2024',
+        'course' => 'Digital Marketing',
+    ],
+];
+
+$faqs = [
+    [
+        'q' => 'Do I need prior programming experience to enrol?',
+        'a' => 'No! Most of our programs are designed for absolute beginners. We start from the very fundamentals and progressively build to advanced levels. Our instructors use a "learn by doing" approach that makes complex concepts accessible to everyone regardless of background.',
+    ],
+    [
+        'q' => 'What does the placement support actually include?',
+        'a' => 'Our placement support begins from Day 1, not just at the end. It includes: resume building workshops, LinkedIn profile optimisation, technical interview preparation, mock HR rounds, aptitude training, soft skills coaching, and direct referrals to our 300+ hiring partners including MNCs and high-growth startups. We maintain a 98% placement rate.',
+    ],
+    [
+        'q' => 'Are the certifications globally recognised?',
+        'a' => 'Yes. Our programs prepare you for globally recognised certifications from Microsoft, Google, AWS, CompTIA, Adobe, and EC-Council. These credentials are accepted by employers worldwide and significantly boost your salary negotiation power.',
+    ],
+    [
+        'q' => 'Do you offer flexible batch timings and online classes?',
+        'a' => 'Absolutely. We offer morning, evening, and weekend batches — both offline (at our Chennai centres) and 100% online via our live virtual classroom. You can switch between online and offline at any time without any extra cost.',
+    ],
+    [
+        'q' => 'Is there an EMI or scholarship option available?',
+        'a' => 'Yes. We offer zero-cost EMI plans through our banking partners (3, 6, and 12-month options), and merit/need-based scholarships that cover up to 50% of the course fee. Talk to our career counsellor for a personalised financial plan — we ensure cost never blocks your career growth.',
+    ],
+    [
+        'q' => 'What happens if I miss a class?',
+        'a' => 'Every session is recorded and uploaded to our student portal within 24 hours in HD quality. You also get unlimited access to doubt-clearing sessions, a dedicated WhatsApp support group, and 1-on-1 mentor time. Your learning never stops even if life gets busy.',
+    ],
+    [
+        'q' => 'Is there a job guarantee?',
+        'a' => 'We offer a placement assistance guarantee — if you complete the program, maintain 80%+ attendance, submit all projects, and pass our internal assessments, we will keep supporting your job search until you are placed. We have maintained a 98% placement rate consistently.',
+    ],
+];
+
+$curriculum_weeks = [
+    ['Week 1-2',  'Foundations & Environment Setup',       'HTML5, CSS3, Git, VS Code, Linux Basics'],
+    ['Week 3-6',  'Frontend Development',                  'JavaScript ES6+, React 18, State Management, Tailwind CSS'],
+    ['Week 7-10', 'Backend Development',                   'Node.js, Express.js, REST APIs, Authentication & JWT'],
+    ['Week 11-14','Databases & DevOps',                    'MongoDB, PostgreSQL, Docker, CI/CD, AWS Deployment'],
+    ['Week 15-18','Capstone Projects & Interview Prep',    '3 Full Projects, Code Reviews, Mock Interviews, Portfolio'],
+    ['Week 19-24','Placement & Industry Exposure',         'Company Referrals, Hackathons, Alumni Networking Events'],
+];
+?>
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IUC Computers – Best IT Training Institute in Chennai | Python | Full Stack | Data Science | Digital Marketing | Cybersecurity Courses</title>
+  <meta name="description" content="IUC Computers – Premier IT training institute in Chennai. 50+ programs in Full Stack, Data Science, AI/ML, Cybersecurity, Cloud & Digital Marketing with 100% placement support and globally recognised certifications." />
+  <meta name="keywords" content="computer institute Chennai, Python course Chennai, full stack developer course Chennai, digital marketing course Chennai, data science course Chennai, cybersecurity course Chennai, software training institute Chennai, IT courses near me" />
+  <link rel="canonical" href="https://www.iucedu.com/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://www.iucedu.com/" />
+  <meta property="og:title"       content="IUC Computers – Launch Your Tech Career | Premier IT Institute Chennai" />
+  <meta property="og:description" content="50+ IT programs with 100% placement support, expert mentors & globally recognised certifications. 25,000+ graduates placed." />
+  <meta property="og:image"       content="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&q=80" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="IUC Computers – Launch Your Tech Career" />
+  <meta name="twitter:description" content="Premier IT training with 100% placement support." />
+  <meta name="twitter:image"       content="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&q=80" />
+
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-59Z22X38');</script>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H9L990V9Z2"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-H9L990V9Z2');</script>
+
+  <!-- Meta Pixel -->
+  <script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','1469800148033571');fbq('track','PageView');</script>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1469800148033571&ev=PageView&noscript=1"/></noscript>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans:    ['Plus Jakarta Sans', 'sans-serif'],
+            display: ['Sora', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50:  '#eff6ff',
+              100: '#dbeafe',
+              200: '#bfdbfe',
+              300: '#93c5fd',
+              400: '#60a5fa',
+              500: '#3b82f6',
+              600: '#1d4ed8',
+              700: '#1e3a8a',
+              800: '#1e2d6b',
+              900: '#0f172a',
+              950: '#060d1f',
+            },
+            cyan: {
+              DEFAULT: '#06b6d4',
+              light:   '#67e8f9',
+              dark:    '#0891b2',
+            },
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": "IUC Computers",
+    "url": "https://www.iucedu.com",
+    "logo": "https://www.iucedu.com/Logo_Text1.png",
+    "description": "Premier IT training institute in Chennai with 50+ programs, 100% placement support and globally recognised certifications.",
+    "address": [
+      {
+        "@type": "PostalAddress",
+        "streetAddress": "#1&2 Gold Nest Apts, 2nd Main Road, C.I.T Nagar",
+        "addressLocality": "Chennai",
+        "postalCode": "600035",
+        "addressCountry": "IN"
+      }
+    ],
+    "telephone": "+917418048039",
+    "email": "info@iucedu.com",
+    "sameAs": [
+      "https://www.facebook.com/IUCComputerEducation",
+      "https://www.instagram.com/iuc_computers/",
+      "https://www.linkedin.com/in/r-senthil-kumar-522213b9/"
+    ],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "IT Training Programs",
+      "itemListElement": [
+        {"@type": "Course", "name": "Full Stack Web Development", "description": "Master React, Node.js, databases & cloud deployment"},
+        {"@type": "Course", "name": "Data Science & AI/ML", "description": "Python, machine learning, deep learning and real-world data pipelines"},
+        {"@type": "Course", "name": "Cybersecurity & Ethical Hacking", "description": "Penetration testing, network security, CEH certification"},
+        {"@type": "Course", "name": "Cloud Computing (AWS/Azure)", "description": "Enterprise cloud infrastructure and dual certification"},
+        {"@type": "Course", "name": "UI/UX Design & Prototyping", "description": "Figma, user research, wireframing and design systems"},
+        {"@type": "Course", "name": "Digital Marketing & SEO", "description": "Google Ads, Meta Ads, SEO, analytics and growth hacking"}
+      ]
+    }
+  }
+  </script>
+
+  <style>
+    /* ═══════════════════════════════════════════
+       DESIGN SYSTEM — CSS CUSTOM PROPERTIES
+    ═══════════════════════════════════════════ */
+    :root {
+      --clr-bg-deep:   #060d1f;
+      --clr-bg-dark:   #0f172a;
+      --clr-bg-mid:    #0a1128;
+      --clr-brand:     #1d4ed8;
+      --clr-brand-2:   #1e3a8a;
+      --clr-accent:    #06b6d4;
+      --clr-accent-2:  #67e8f9;
+      --clr-purple:    #7c3aed;
+      --clr-success:   #22c55e;
+      --clr-warning:   #f59e0b;
+      --clr-danger:    #ef4444;
+      --clr-text:      #e2e8f0;
+      --clr-muted:     #94a3b8;
+      --clr-border:    rgba(255,255,255,.08);
+      --radius-card:   20px;
+      --radius-btn:    10px;
+      --shadow-glow:   0 0 40px rgba(6,182,212,.25);
+      --shadow-card:   0 20px 60px rgba(0,0,0,.4);
+      --transition:    .3s cubic-bezier(.4,0,.2,1);
+    }
+
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-tap-highlight-color: transparent; scroll-behavior: smooth; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--clr-bg-dark);
+      color: var(--clr-text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+    ::selection { background: rgba(6,182,212,.3); color: #fff; }
+
+    /* ── Gradient Mesh Backgrounds ── */
+    .bg-hero {
+      background:
+        radial-gradient(ellipse 80% 60% at 15% 25%, rgba(29,78,216,.18) 0%, transparent 60%),
+        radial-gradient(ellipse 70% 80% at 85% 75%, rgba(6,182,212,.12) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 50% at 50% 50%, rgba(124,58,237,.06) 0%, transparent 70%),
+        linear-gradient(160deg, #060d1f 0%, #0f172a 40%, #0a1128 70%, #060d1f 100%);
+    }
+    .bg-section-dark   { background: var(--clr-bg-dark); }
+    .bg-section-deeper { background: var(--clr-bg-deep); }
+    .bg-section-mid    { background: var(--clr-bg-mid); }
+
+    /* ── Glassmorphism ── */
+    .glass {
+      background: rgba(255,255,255,.04);
+      backdrop-filter: blur(20px) saturate(1.5);
+      -webkit-backdrop-filter: blur(20px) saturate(1.5);
+      border: 1px solid var(--clr-border);
+    }
+    .glass-medium {
+      background: rgba(255,255,255,.06);
+      backdrop-filter: blur(24px) saturate(1.8);
+      -webkit-backdrop-filter: blur(24px) saturate(1.8);
+      border: 1px solid rgba(255,255,255,.1);
+    }
+    .glass-strong {
+      background: rgba(255,255,255,.08);
+      backdrop-filter: blur(32px) saturate(2);
+      -webkit-backdrop-filter: blur(32px) saturate(2);
+      border: 1px solid rgba(255,255,255,.14);
+    }
+
+    /* ── Typography System ── */
+    .text-hero        { font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; }
+    .text-section-h   { font-size: clamp(1.75rem, 3vw, 3rem);  font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
+    .text-subhead     { font-size: clamp(1.25rem, 2vw, 2rem);  font-weight: 600; line-height: 1.3; }
+    .text-card-title  { font-size: 1.125rem; font-weight: 600; line-height: 1.4; }
+    .grad-text {
+      background: linear-gradient(135deg, #60a5fa 0%, #06b6d4 50%, #67e8f9 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .grad-text-warm {
+      background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .grad-text-purple {
+      background: linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── Section Divider ── */
+    .section-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 999px;
+      background: rgba(6,182,212,.1);
+      border: 1px solid rgba(6,182,212,.2);
+      color: #67e8f9;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .section-pill-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #06b6d4;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: .5; transform: scale(.6); }
+    }
+
+    /* ── Gradient Bar ── */
+    .grad-bar {
+      width: 48px; height: 4px;
+      border-radius: 4px;
+      background: linear-gradient(90deg, #1d4ed8, #06b6d4);
+    }
+
+    /* ── Navbar ── */
+    #navbar {
+      transition: background var(--transition), box-shadow var(--transition), border-color var(--transition);
+      border-bottom: 1px solid transparent;
+    }
+    #navbar.scrolled {
+      background: rgba(6,13,31,.92) !important;
+      backdrop-filter: blur(24px) saturate(1.8);
+      -webkit-backdrop-filter: blur(24px) saturate(1.8);
+      border-bottom-color: rgba(255,255,255,.06);
+      box-shadow: 0 4px 30px rgba(0,0,0,.3);
+    }
+    .nav-link {
+      position: relative;
+      font-weight: 500;
+      font-size: 0.875rem;
+      color: #94a3b8;
+      transition: color var(--transition);
+      padding: 4px 0;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0;
+      width: 0; height: 2px;
+      background: linear-gradient(90deg, #1d4ed8, #06b6d4);
+      border-radius: 2px;
+      transition: width var(--transition);
+    }
+    .nav-link:hover { color: #fff; }
+    .nav-link:hover::after { width: 100%; }
+    .nav-link.active { color: #fff; }
+    .nav-link.active::after { width: 100%; }
+
+    /* ── Dropdown ── */
+    .nav-dropdown { position: relative; }
+    .nav-dropdown-menu {
+      position: absolute;
+      top: calc(100% + 12px);
+      left: 50%;
+      transform: translateX(-50%) translateY(-8px);
+      width: 220px;
+      background: rgba(6,13,31,.97);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 16px;
+      padding: 8px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition), transform var(--transition);
+      backdrop-filter: blur(24px);
+      box-shadow: 0 20px 60px rgba(0,0,0,.5);
+      z-index: 100;
+    }
+    .nav-dropdown:hover .nav-dropdown-menu {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+    .nav-dropdown-item {
+      display: block;
+      padding: 8px 12px;
+      border-radius: 8px;
+      color: #94a3b8;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      transition: background var(--transition), color var(--transition);
+    }
+    .nav-dropdown-item:hover {
+      background: rgba(6,182,212,.1);
+      color: #06b6d4;
+    }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 0.9375rem;
+      border-radius: var(--radius-btn);
+      transition: transform var(--transition), box-shadow var(--transition), filter var(--transition), background var(--transition);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .btn:focus-visible {
+      outline: 2px solid #06b6d4;
+      outline-offset: 3px;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #1d4ed8 0%, #0891b2 100%);
+      color: #fff;
+      box-shadow: 0 8px 24px rgba(29,78,216,.35);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 40px rgba(6,182,212,.4);
+      filter: brightness(1.08);
+    }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-secondary {
+      background: rgba(255,255,255,.06);
+      color: #fff;
+      border: 1.5px solid rgba(255,255,255,.15);
+    }
+    .btn-secondary:hover {
+      background: rgba(255,255,255,.1);
+      border-color: rgba(255,255,255,.3);
+      transform: translateY(-2px);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: #06b6d4;
+      border: 1.5px solid rgba(6,182,212,.3);
+    }
+    .btn-ghost:hover {
+      background: rgba(6,182,212,.1);
+      border-color: #06b6d4;
+      transform: translateY(-2px);
+    }
+    .btn-success {
+      background: linear-gradient(135deg, #16a34a, #22c55e);
+      color: #fff;
+      box-shadow: 0 8px 24px rgba(34,197,94,.3);
+    }
+    .btn-success:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 40px rgba(34,197,94,.4);
+    }
+    .btn-sm  { padding: 8px 20px;  font-size: 0.8125rem; }
+    .btn-md  { padding: 12px 28px; font-size: 0.9375rem; }
+    .btn-lg  { padding: 16px 36px; font-size: 1rem; }
+    .btn-xl  { padding: 18px 44px; font-size: 1.0625rem; }
+
+    /* ── Cards ── */
+    .card {
+      background: linear-gradient(145deg, rgba(30,45,107,.45), rgba(10,17,40,.7));
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: var(--radius-card);
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+      overflow: hidden;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 30px 80px rgba(0,0,0,.5), 0 0 0 1px rgba(6,182,212,.15);
+      border-color: rgba(6,182,212,.2);
+    }
+    .card-img-wrap { overflow: hidden; }
+    .card-img-wrap img { transition: transform .6s cubic-bezier(.4,0,.2,1); }
+    .card:hover .card-img-wrap img { transform: scale(1.07); }
+
+    /* ── Stat Cards ── */
+    .stat-card {
+      background: linear-gradient(135deg,
+        rgba(29,78,216,.2) 0%,
+        rgba(6,182,212,.08) 100%
+      );
+      border: 1px solid rgba(6,182,212,.15);
+      border-radius: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(6,182,212,.4), transparent);
+    }
+
+    /* ── Testimonial Cards ── */
+    .testimonial-card {
+      background: linear-gradient(145deg, rgba(30,45,107,.4), rgba(10,17,40,.6));
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 20px;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .testimonial-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(0,0,0,.4);
+      border-color: rgba(6,182,212,.15);
+    }
+
+    /* ── Pricing Cards ── */
+    .pricing-card {
+      border-radius: 24px;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .pricing-card.featured {
+      background: linear-gradient(145deg, rgba(29,78,216,.4), rgba(6,182,212,.15));
+      border: 1px solid rgba(6,182,212,.3);
+      position: relative;
+    }
+    .pricing-card.featured::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 25px;
+      background: linear-gradient(135deg, #1d4ed8, #06b6d4);
+      z-index: -1;
+    }
+    .pricing-card:hover { transform: translateY(-6px); }
+
+    /* ── Feature Items ── */
+    .feature-item {
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 16px;
+      transition: background var(--transition), border-color var(--transition), transform var(--transition);
+    }
+    .feature-item:hover {
+      background: rgba(255,255,255,.06);
+      border-color: rgba(6,182,212,.2);
+      transform: translateY(-3px);
+    }
+
+    /* ── Mentor Cards ── */
+    .mentor-card {
+      background: linear-gradient(145deg, rgba(30,45,107,.4), rgba(10,17,40,.6));
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 20px;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    }
+    .mentor-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 60px rgba(0,0,0,.4);
+      border-color: rgba(6,182,212,.2);
+    }
+
+    /* ── Progress Bars ── */
+    .progress-track {
+      background: rgba(255,255,255,.08);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 6px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #1d4ed8, #06b6d4);
+      transition: width 1.2s cubic-bezier(.4,0,.2,1);
+      width: 0;
+    }
+    .progress-fill.animated { }
+
+    /* ── Roadmap ── */
+    .roadmap-step {
+      position: relative;
+      padding-left: 48px;
+    }
+    .roadmap-step::before {
+      content: '';
+      position: absolute;
+      left: 19px;
+      top: 48px;
+      bottom: -24px;
+      width: 2px;
+      background: linear-gradient(180deg, #1d4ed8, rgba(6,182,212,.1));
+    }
+    .roadmap-step:last-child::before { display: none; }
+    .roadmap-dot {
+      position: absolute;
+      left: 0;
+      top: 12px;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1d4ed8, #06b6d4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 0 4px rgba(29,78,216,.2), 0 0 20px rgba(6,182,212,.3);
+      z-index: 1;
+    }
+
+    /* ── Curriculum Accordion ── */
+    .curriculum-item {
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: border-color var(--transition);
+    }
+    .curriculum-item:has(details[open]) {
+      border-color: rgba(6,182,212,.25);
+    }
+    .curriculum-item details summary {
+      list-style: none;
+      cursor: pointer;
+    }
+    .curriculum-item details summary::-webkit-details-marker { display: none; }
+    .curriculum-item details[open] summary .curr-icon {
+      transform: rotate(45deg);
+      background: linear-gradient(135deg, #06b6d4, #1d4ed8);
+      color: #fff;
+    }
+    .curr-icon {
+      transition: transform var(--transition), background var(--transition), color var(--transition);
+    }
+    .curriculum-item details[open] .curr-body {
+      animation: slideDown .3s ease forwards;
+    }
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── FAQ ── */
+    .faq-item {
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: border-color var(--transition);
+    }
+    .faq-item:has(details[open]) { border-color: rgba(6,182,212,.25); }
+    .faq-item details summary { list-style: none; cursor: pointer; }
+    .faq-item details summary::-webkit-details-marker { display: none; }
+    .faq-item details[open] summary .faq-icon {
+      transform: rotate(45deg);
+      background: linear-gradient(135deg, #06b6d4, #1d4ed8);
+      color: #fff;
+    }
+    .faq-icon { transition: transform var(--transition), background var(--transition), color var(--transition); }
+    .faq-item details[open] .faq-body {
+      animation: slideDown .3s ease forwards;
+    }
+
+    /* ── Form Inputs ── */
+    .form-input {
+      width: 100%;
+      background: rgba(255,255,255,.04);
+      border: 1.5px solid rgba(255,255,255,.1);
+      border-radius: 12px;
+      padding: 14px 18px;
+      color: #fff;
+      font-size: 0.9375rem;
+      font-family: inherit;
+      transition: border-color var(--transition), background var(--transition), box-shadow var(--transition);
+    }
+    .form-input::placeholder { color: #475569; }
+    .form-input:focus {
+      outline: none;
+      border-color: rgba(6,182,212,.5);
+      background: rgba(255,255,255,.06);
+      box-shadow: 0 0 0 3px rgba(6,182,212,.1);
+    }
+    .form-input:valid:not(:placeholder-shown) { border-color: rgba(34,197,94,.3); }
+    .form-label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #64748b;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    /* ── Animations ── */
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-16px); }
+    }
+    @keyframes float-slow {
+      0%,100% { transform: translateY(0) rotate(0deg); }
+      50%      { transform: translateY(-12px) rotate(2deg); }
+    }
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(32px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes glow-pulse {
+      0%,100% { box-shadow: 0 0 20px rgba(6,182,212,.3); }
+      50%      { box-shadow: 0 0 50px rgba(6,182,212,.6), 0 0 80px rgba(29,78,216,.3); }
+    }
+    @keyframes shimmer {
+      0%   { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    @keyframes orbit {
+      from { transform: rotate(0deg) translateX(80px) rotate(0deg); }
+      to   { transform: rotate(360deg) translateX(80px) rotate(-360deg); }
+    }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    .animate-float      { animation: float 6s ease-in-out infinite; }
+    .animate-float-slow { animation: float-slow 9s ease-in-out infinite; }
+    .animate-float-alt  { animation: float-slow 7s ease-in-out infinite reverse; }
+    .animate-glow       { animation: glow-pulse 3s ease-in-out infinite; }
+
+    /* ── Scroll Reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .7s cubic-bezier(.4,0,.2,1), transform .7s cubic-bezier(.4,0,.2,1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-scale {
+      opacity: 0;
+      transform: scale(.94);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .reveal-scale.visible { opacity: 1; transform: scale(1); }
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-32px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(32px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+    /* Stagger children */
+    .stagger > * { transition-delay: calc(var(--i, 0) * 80ms); }
+
+    /* ── Badge ── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+    .badge-cyan   { background: rgba(6,182,212,.15);  color: #67e8f9;  border: 1px solid rgba(6,182,212,.2); }
+    .badge-green  { background: rgba(34,197,94,.15);  color: #4ade80;  border: 1px solid rgba(34,197,94,.2); }
+    .badge-yellow { background: rgba(245,158,11,.15); color: #fbbf24;  border: 1px solid rgba(245,158,11,.2); }
+    .badge-red    { background: rgba(239,68,68,.15);  color: #f87171;  border: 1px solid rgba(239,68,68,.2); }
+    .badge-purple { background: rgba(124,58,237,.15); color: #a78bfa;  border: 1px solid rgba(124,58,237,.2); }
+    .badge-pink   { background: rgba(236,72,153,.15); color: #f472b6;  border: 1px solid rgba(236,72,153,.2); }
+
+    /* ── Tag pills ── */
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      color: #94a3b8;
+      transition: background var(--transition), color var(--transition);
+    }
+    .tag:hover { background: rgba(6,182,212,.1); color: #06b6d4; }
+
+    /* ── WhatsApp Float ── */
+    #wa-float {
+      position: fixed;
+      bottom: 24px; right: 24px;
+      z-index: 999;
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #128c7e, #25d366);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 32px rgba(37,211,102,.4);
+      transition: transform .25s ease, box-shadow .25s ease;
+      animation: glow-pulse 3s ease-in-out infinite;
+    }
+    #wa-float:hover {
+      transform: scale(1.1) translateY(-2px);
+      box-shadow: 0 16px 48px rgba(37,211,102,.6);
+    }
+    #wa-float-tooltip {
+      position: absolute;
+      right: 72px;
+      white-space: nowrap;
+      background: rgba(6,13,31,.95);
+      border: 1px solid rgba(37,211,102,.3);
+      color: #fff;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      padding: 8px 14px;
+      border-radius: 10px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s ease;
+      backdrop-filter: blur(12px);
+    }
+    #wa-float:hover #wa-float-tooltip { opacity: 1; }
+
+    /* ── Scroll to top ── */
+    #scroll-top {
+      position: fixed;
+      bottom: 96px; right: 24px;
+      z-index: 998;
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: rgba(29,78,216,.8);
+      border: 1px solid rgba(6,182,212,.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity .3s ease, transform .3s ease, background .2s ease;
+      backdrop-filter: blur(12px);
+    }
+    #scroll-top.visible { opacity: 1; transform: translateY(0); }
+    #scroll-top:hover { background: rgba(6,182,212,.8); }
+
+    /* ── Ticker / Marquee ── */
+    .ticker-wrap { overflow: hidden; }
+    .ticker-track {
+      display: flex;
+      width: max-content;
+      animation: ticker 30s linear infinite;
+    }
+    .ticker-track:hover { animation-play-state: paused; }
+
+    /* ── Timeline ── */
+    .timeline-connector {
+      position: absolute;
+      left: 50%;
+      top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg,
+        transparent 0%,
+        rgba(6,182,212,.4) 20%,
+        rgba(29,78,216,.6) 50%,
+        rgba(6,182,212,.4) 80%,
+        transparent 100%
+      );
+      transform: translateX(-50%);
+    }
+
+    /* ── Loading shimmer skeleton ── */
+    .shimmer {
+      background: linear-gradient(90deg,
+        rgba(255,255,255,.03) 0%,
+        rgba(255,255,255,.08) 50%,
+        rgba(255,255,255,.03) 100%
+      );
+      background-size: 200% 100%;
+      animation: shimmer 2s ease infinite;
+    }
+
+    /* ── Gradient border ── */
+    .grad-border {
+      position: relative;
+      border-radius: 20px;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(29,78,216,.5), rgba(6,182,212,.5));
+    }
+    .grad-border-inner {
+      border-radius: 19px;
+      background: var(--clr-bg-mid);
+    }
+
+    /* ── Highlight box ── */
+    .highlight-box {
+      background: linear-gradient(135deg, rgba(29,78,216,.15), rgba(6,182,212,.08));
+      border: 1px solid rgba(6,182,212,.15);
+      border-radius: 16px;
+    }
+
+    /* ── Check list ── */
+    .check-item::before {
+      content: '';
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1d4ed8, #06b6d4);
+      flex-shrink: 0;
+    }
+
+    /* ── Star rating ── */
+    .stars { display: flex; gap: 2px; }
+    .stars svg { width: 14px; height: 14px; fill: #f59e0b; }
+
+    /* ── Announcement bar ── */
+    .announcement-bar {
+      background: linear-gradient(90deg, #1e2d6b, #1d4ed8, #0891b2, #1e2d6b);
+      background-size: 300% 100%;
+      animation: shimmer 6s linear infinite;
+    }
+
+    /* ── Mobile menu ── */
+    #mobile-menu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .4s cubic-bezier(.4,0,.2,1), opacity .3s ease;
+      opacity: 0;
+    }
+    #mobile-menu.open {
+      max-height: 600px;
+      opacity: 1;
+    }
+
+    /* ── Orb decorations ── */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(60px);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .text-hero { font-size: 2.25rem; }
+      .text-section-h { font-size: 1.625rem; }
+    }
+
+    /* ── Custom scrollbar ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(#1d4ed8, #06b6d4);
+      border-radius: 3px;
+    }
+
+    /* ── Accessibility: focus visible ── */
+    *:focus-visible {
+      outline: 2px solid #06b6d4;
+      outline-offset: 3px;
+    }
+
+    /* ── Print ── */
+    @media print {
+      #navbar, #wa-float, #scroll-top, .announcement-bar { display: none !important; }
+      body { background: #fff; color: #000; }
+    }
+
+    /* ── Course card badge position ── */
+    .card-badge-wrap { position: relative; }
+    .card-badge-abs {
+      position: absolute;
+      top: 14px; left: 14px;
+      z-index: 2;
+    }
+    .card-badge-live {
+      position: absolute;
+      top: 14px; right: 14px;
+      z-index: 2;
+    }
+
+    /* Salary growth indicator */
+    .salary-arrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: #4ade80;
+      font-weight: 700;
+      font-size: 0.75rem;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Google Tag Manager noscript -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-59Z22X38" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     ANNOUNCEMENT BAR
+══════════════════════════════════════════════════════════════ -->
+<div class="announcement-bar py-2.5 text-center text-xs font-semibold text-white/90 relative" role="banner" aria-label="Announcement">
+  <div class="ticker-wrap">
+    <div class="ticker-track">
+      <?php for($i=0;$i<2;$i++): ?>
+      <span class="px-8">🎓 New Batch Starting 5th Feb 2025 — Limited Seats Available</span>
+      <span class="px-3 text-cyan-300">|</span>
+      <span class="px-8">🏆 98% Placement Rate — Batch 2024</span>
+      <span class="px-3 text-cyan-300">|</span>
+      <span class="px-8">💼 300+ Hiring Partners including TCS, Infosys, Wipro & Amazon</span>
+      <span class="px-3 text-cyan-300">|</span>
+      <span class="px-8">📞 Call Now: +91 74180 48039 for Free Career Counselling</span>
+      <span class="px-3 text-cyan-300">|</span>
+      <span class="px-8">🎁 Scholarships Available — Apply Before 31st Jan 2025</span>
+      <span class="px-3 text-cyan-300">|</span>
+      <?php endfor; ?>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     STICKY NAVBAR
+══════════════════════════════════════════════════════════════ -->
+<header id="navbar" class="fixed top-8 left-0 right-0 z-50" role="banner">
+  <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between" aria-label="Main navigation">
+
+    <!-- Logo -->
+    <a href="#home" class="flex items-center gap-3 shrink-0" aria-label="IUC Computers - Home">
+      <img
+        src="Logo_Text1.png"
+        alt="IUC Computers"
+        class="h-10 w-auto"
+        loading="eager"
+        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+      />
+      <!-- Fallback logo -->
+      <div style="display:none" class="flex items-center gap-2">
+        <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:linear-gradient(135deg,#1d4ed8,#06b6d4)">
+          <span class="text-white font-extrabold text-sm font-display">IUC</span>
+        </div>
+        <span class="font-display font-bold text-white text-lg">Computers</span>
+      </div>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <ul class="hidden lg:flex items-center gap-1" role="list">
+      <li><a href="#home"     class="nav-link px-3 py-2">Home</a></li>
+      <li class="nav-dropdown">
+        <button class="nav-link px-3 py-2 flex items-center gap-1" aria-haspopup="true" aria-expanded="false">
+          Programs
+          <svg class="w-3.5 h-3.5 opacity-60" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="nav-dropdown-menu" role="menu">
+          <?php foreach($programs as $p): ?>
+          <a href="#programs" class="nav-dropdown-item" role="menuitem"><?= htmlspecialchars($p['title']) ?></a>
+          <?php endforeach; ?>
+        </div>
+      </li>
+      <li><a href="#learning-path" class="nav-link px-3 py-2">Learning Path</a></li>
+      <li><a href="#mentors"       class="nav-link px-3 py-2">Mentors</a></li>
+      <li><a href="#testimonials"  class="nav-link px-3 py-2">Success Stories</a></li>
+      <li><a href="#pricing"       class="nav-link px-3 py-2">Pricing</a></li>
+      <li><a href="#contact"       class="nav-link px-3 py-2">Contact</a></li>
+    </ul>
+
+    <!-- Desktop CTA -->
+    <div class="hidden lg:flex items-center gap-3">
+      <a href="tel:+917418048039" class="flex items-center gap-2 text-slate-400 hover:text-white transition text-sm font-medium">
+        <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+        +91 74180 48039
+      </a>
+      <a href="#contact" class="btn btn-primary btn-md">
+        Enrol Now
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <!-- Hamburger -->
+    <button
+      id="hamburger"
+      class="lg:hidden flex flex-col justify-center items-center w-10 h-10 rounded-xl glass gap-1.5 transition-all"
+      aria-label="Toggle navigation menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <span id="ham-1" class="w-5 h-0.5 bg-white rounded transition-all duration-300"></span>
+      <span id="ham-2" class="w-5 h-0.5 bg-white rounded transition-all duration-300"></span>
+      <span id="ham-3" class="w-4 h-0.5 bg-slate-400 rounded transition-all duration-300"></span>
+    </button>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="lg:hidden" role="navigation" aria-label="Mobile navigation">
+    <div class="mx-4 my-2 rounded-2xl glass-strong overflow-hidden">
+      <div class="p-4 space-y-1">
+        <?php
+        $mobileLinks = [
+          ['Home','#home'],
+          ['Programs','#programs'],
+          ['Learning Path','#learning-path'],
+          ['Mentors','#mentors'],
+          ['Success Stories','#testimonials'],
+          ['Pricing','#pricing'],
+          ['Contact','#contact'],
+        ];
+        foreach($mobileLinks as $ml): ?>
+        <a href="<?= $ml[1] ?>" class="flex items-center justify-between py-3 px-4 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 transition text-sm font-medium" aria-label="Navigate to <?= $ml[0] ?>">
+          <?= $ml[0] ?>
+          <svg class="w-4 h-4 opacity-40" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </a>
+        <?php endforeach; ?>
+        <div class="pt-3 grid grid-cols-2 gap-2">
+          <a href="tel:+917418048039" class="btn btn-secondary btn-sm text-center justify-center">
+            📞 Call Us
+          </a>
+          <a href="#contact" class="btn btn-primary btn-sm text-center justify-center">
+            Enrol Now →
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     HERO SECTION
+══════════════════════════════════════════════════════════════ -->
+<section id="home" class="bg-hero min-h-screen flex items-center pt-24 overflow-hidden relative" aria-label="Hero">
+
+  <!-- Decorative Orbs -->
+  <div class="orb w-[600px] h-[600px] top-[-200px] left-[-150px] opacity-20" style="background:radial-gradient(circle,#1d4ed8,transparent 70%)"></div>
+  <div class="orb w-[400px] h-[400px] bottom-[-100px] right-[-100px] opacity-15" style="background:radial-gradient(circle,#06b6d4,transparent 70%)"></div>
+  <div class="orb w-[300px] h-[300px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-10" style="background:radial-gradient(circle,#7c3aed,transparent 70%)"></div>
+
+  <!-- Grid pattern -->
+  <div class="absolute inset-0 opacity-[0.02] pointer-events-none" style="background-image:linear-gradient(rgba(255,255,255,.1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.1) 1px,transparent 1px);background-size:64px 64px"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 w-full">
+    <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+
+      <!-- Left: Content -->
+      <div class="space-y-8">
+
+        <!-- Announcement badge -->
+        <div class="reveal flex items-center gap-3 flex-wrap">
+          <div class="section-pill">
+            <span class="section-pill-dot"></span>
+            New Batch: 5th February 2025
+          </div>
+          <div class="badge badge-green">
+            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 8 8" aria-hidden="true"><circle cx="4" cy="4" r="3"/></svg>
+            Seats Filling Fast
+          </div>
+        </div>
+
+        <!-- Headline -->
+        <div class="reveal">
+          <h1 class="font-display text-hero text-white leading-[1.08]">
+            Launch Your<br/>
+            <span class="grad-text">Dream Tech Career</span><br/>
+            with IUC Computers
+          </h1>
+        </div>
+
+        <!-- Supporting text -->
+        <p class="reveal text-slate-400 text-lg leading-relaxed max-w-lg">
+          Chennai's most trusted IT institute since 2005 — delivering industry-aligned programs with
+          expert mentors, live projects, and <strong class="text-white font-semibold">100% placement assistance</strong>
+          for 25,000+ graduates.
+        </p>
+
+        <!-- CTAs -->
+        <div class="reveal flex flex-wrap gap-4 items-center">
+          <a href="#contact" class="btn btn-primary btn-lg">
+            Get Free Counselling
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#programs" class="btn btn-secondary btn-lg">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            Explore Programs
+          </a>
+        </div>
+
+        <!-- Trust signals row -->
+        <div class="reveal flex flex-wrap gap-6 pt-2">
+          <?php
+          $trust = [
+            ['ISO Certified Institute','M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z'],
+            ['Microsoft & Google Partner','M21 12a9 9 0 11-18 0 9 9 0 0118 0z M9 10a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z'],
+            ['100% Placement Support','M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z'],
+          ];
+          foreach($trust as $t): ?>
+          <div class="flex items-center gap-2 text-sm text-slate-400">
+            <svg class="w-4 h-4 text-cyan-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="<?= $t[1] ?>"/></svg>
+            <span><?= $t[0] ?></span>
+          </div>
+          <?php endforeach; ?>
+        </div>
+
+        <!-- Social proof mini -->
+        <div class="reveal flex items-center gap-5 pt-2">
+          <div class="flex -space-x-3">
+            <?php
+            $avatarIds = ['1544005313-94ddf0286df2','1494790108377-be9c29b29330','1507003211169-0a1dd7228f2d','1438761681033-6461ffad8d80','1472099645785-5658abf4ff4e'];
+            foreach($avatarIds as $aid): ?>
+            <img
+              src="https://images.unsplash.com/photo-<?= $aid ?>?w=48&q=80"
+              alt="IUC student"
+              class="w-9 h-9 rounded-full border-2 object-cover"
+              style="border-color:#060d1f"
+              loading="lazy"
+            />
+            <?php endforeach; ?>
+            <div class="w-9 h-9 rounded-full border-2 flex items-center justify-center text-xs font-bold text-cyan-400" style="border-color:#060d1f;background:rgba(6,182,212,.2)">+</div>
+          </div>
+          <div>
+            <div class="stars">
+              <?php for($i=0;$i<5;$i++): ?><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><?php endfor; ?>
+            </div>
+            <p class="text-slate-400 text-xs mt-0.5">
+              <span class="text-white font-semibold">4.9/5</span> from 10,000+ student reviews
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Hero Visual -->
+      <div class="relative reveal-right" aria-hidden="true">
+
+        <!-- Main image frame -->
+        <div class="relative rounded-[28px] overflow-hidden" style="box-shadow:0 40px 100px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.06)">
+          <img
+            src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80"
+            alt="Students learning technology at IUC Computers"
+            class="w-full h-[420px] lg:h-[480px] object-cover"
+            loading="eager"
+          />
+          <!-- Overlay gradient -->
+          <div class="absolute inset-0" style="background:linear-gradient(180deg,rgba(6,13,31,0) 40%,rgba(6,13,31,.85) 100%)"></div>
+          <!-- Overlay content -->
+          <div class="absolute bottom-0 left-0 right-0 p-6">
+            <div class="flex items-center gap-3">
+              <div class="flex-1">
+                <p class="text-white font-bold text-sm">Next Live Cohort</p>
+                <p class="text-cyan-400 text-xs font-semibold">Starts 5th February 2025</p>
+              </div>
+              <a href="#contact" class="btn btn-primary btn-sm shrink-0">Reserve Seat</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Floating card: Placement rate -->
+        <div class="glass animate-float absolute -top-6 -left-6 p-4 rounded-2xl" style="box-shadow:0 20px 40px rgba(0,0,0,.4)">
+          <div class="flex items-center gap-3">
+            <div class="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style="background:linear-gradient(135deg,#16a34a,#22c55e)">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <div>
+              <p class="text-white font-extrabold text-xl leading-none">98%</p>
+              <p class="text-slate-400 text-xs mt-0.5">Placement Rate</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Floating card: Programs -->
+        <div class="glass animate-float-alt absolute -bottom-6 -left-4 p-4 rounded-2xl" style="box-shadow:0 20px 40px rgba(0,0,0,.4)">
+          <div class="flex items-center gap-3">
+            <div class="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style="background:linear-gradient(135deg,#1d4ed8,#06b6d4)">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+            </div>
+            <div>
+              <p class="text-white font-extrabold text-xl leading-none">50+</p>
+              <p class="text-slate-400 text-xs mt-0.5">IT Programs</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Floating card: Rating — right side -->
+        <div class="glass animate-float-slow absolute top-1/2 -translate-y-1/2 -right-6 p-4 rounded-2xl hidden xl:block" style="box-shadow:0 20px 40px rgba(0,0,0,.4)">
+          <div class="text-center">
+            <p class="text-white font-extrabold text-2xl leading-none">4.9</p>
+            <div class="stars justify-center mt-1">
+              <?php for($i=0;$i<5;$i++): ?><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><?php endfor; ?>
+            </div>
+            <p class="text-slate-500 text-xs mt-1">10k+ Reviews</p>
+          </div>
+        </div>
+
+        <!-- Floating badge: Live classes -->
+        <div class="absolute top-5 right-5 flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold text-white" style="background:rgba(239,68,68,.85);backdrop-filter:blur(8px)">
+          <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+          LIVE CLASSES
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-600 text-xs" aria-hidden="true">
+    <span>Scroll to explore</span>
+    <div class="w-5 h-8 border border-slate-700 rounded-full flex items-start justify-center pt-1.5">
+      <div class="w-1 h-2 bg-cyan-400 rounded-full animate-bounce"></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     TRUSTED BY — COMPANY LOGOS TICKER
+══════════════════════════════════════════════════════════════ -->
+<section class="py-14 border-y" style="background:rgba(6,13,31,.8);border-color:rgba(255,255,255,.05)" aria-label="Hiring partners">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <p class="text-center text-slate-500 text-xs font-semibold uppercase tracking-widest mb-8">Our Graduates Are Hired By</p>
+    <div class="ticker-wrap">
+      <div class="ticker-track items-center gap-12" style="animation-duration:25s">
+        <?php
+        $companies = [
+          ['TCS','#0084BE'],
+          ['Infosys','#007CC3'],
+          ['Wipro','#451952'],
+          ['HCL','#E31837'],
+          ['Cognizant','#1264A3'],
+          ['Amazon','#FF9900'],
+          ['Zoho','#C8202A'],
+          ['Freshworks','#26C16A'],
+          ['Accenture','#A100FF'],
+          ['Capgemini','#003399'],
+          ['Hexaware','#003366'],
+          ['Mphasis','#DA3524'],
+        ];
+        for($j=0;$j<2;$j++):
+        foreach($companies as $c): ?>
+        <div class="shrink-0 flex items-center justify-center px-2" style="min-width:120px">
+          <span class="font-display font-extrabold text-lg tracking-tight" style="color:<?= $c[1] ?>; opacity:.7; filter:grayscale(.3)">
+            <?= $c[0] ?>
+          </span>
+        </div>
+        <?php endforeach; endfor; ?>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     STATISTICS
+══════════════════════════════════════════════════════════════ -->
+<section class="py-20" style="background:linear-gradient(180deg,#060d1f,#0a1128)" aria-label="Key statistics">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-5">
+      <?php
+      $stats = [
+        ['25000','+','Graduates Placed',  '#22c55e','M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z'],
+        ['50',    '+','IT Programs',      '#06b6d4','M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253'],
+        ['98',    '%','Placement Rate',   '#f59e0b','M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z'],
+        ['300',   '+','Hiring Partners',  '#7c3aed','M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'],
+        ['18',    '+','Years of Legacy',  '#06b6d4','M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z'],
+        ['140',   '%','Avg. Salary Hike', '#22c55e','M13 7h8m0 0v8m0-8l-8 8-4-4-6 6'],
+      ];
+      foreach($stats as $s): ?>
+      <div class="stat-card p-5 text-center reveal-scale">
+        <div class="w-10 h-10 mx-auto mb-3 rounded-xl flex items-center justify-center" style="background:linear-gradient(135deg,rgba(29,78,216,.25),rgba(6,182,212,.15))">
+          <svg class="w-5 h-5" style="color:<?= $s[3] ?>" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="<?= $s[4] ?>"/>
+          </svg>
+        </div>
+        <p class="font-display font-extrabold text-2xl xl:text-3xl text-white counter" data-target="<?= $s[0] ?>" aria-label="<?= $s[0] . $s[1] . ' ' . $s[2] ?>"><?= $s[0] ?><?= $s[1] ?></p>
+        <p class="text-slate-400 text-xs mt-1 font-medium"><?= $s[2] ?></p>
+      </div>
+      <?php endforeach; ?>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     ABOUT SECTION
+══════════════════════════════════════════════════════════════ -->
+<section id="about" class="py-24 bg-section-mid relative overflow-hidden" aria-labelledby="about-heading">
+
+  <!-- Background orb -->
+  <div class="orb w-96 h-96 top-1/2 left-0 -translate-y-1/2 opacity-10" style="background:radial-gradient(circle,#1d4ed8,transparent 70%)"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+      <!-- Image side -->
+      <div class="relative reveal-left">
+        <!-- Main image -->
+        <div class="rounded-3xl overflow-hidden" style="box-shadow:0 40px 100px rgba(0,0,0,.5)">
+          <img
+            src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=700&q=80"
+            alt="IUC Computers training lab with students"
+            class="w-full h-[360px] lg:h-[420px] object-cover"
+            loading="lazy"
+          />
+        </div>
+
+        <!-- Secondary image -->
+        <div class="absolute -bottom-8 -right-4 w-44 h-32 rounded-2xl overflow-hidden" style="border:3px solid #060d1f;box-shadow:0 20px 50px rgba(0,0,0,.5)">
+          <img
+            src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=300&q=80"
+            alt="Students collaborating on projects"
+            class="w-full h-full object-cover"
+            loading="lazy"
+          />
+        </div>
+
+        <!-- Experience bubble -->
+        <div class="glass-strong absolute -top-5 -left-5 p-4 rounded-2xl text-center" style="box-shadow:0 20px 40px rgba(0,0,0,.4)">
+          <p class="font-display font-extrabold text-3xl grad-text leading-none">18+</p>
+          <p class="text-slate-400 text-xs font-medium mt-1">Years of<br/>Excellence</p>
+        </div>
+
+        <!-- Certification logos strip -->
+        <div class="absolute bottom-12 -left-4 glass px-4 py-2.5 rounded-xl flex items-center gap-3">
+          <svg class="w-4 h-4 text-cyan-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+          <span class="text-white font-semibold text-xs">ISO Certified · Microsoft · Google Partner</span>
+        </div>
+      </div>
+
+      <!-- Content side -->
+      <div class="space-y-8 reveal-right">
+        <div>
+          <div class="section-pill mb-4">
+            <span class="section-pill-dot"></span>
+            Our Story
+          </div>
+          <h2 id="about-heading" class="font-display font-extrabold text-section-h text-white leading-tight">
+            More Than an Institute —<br/>
+            <span class="grad-text">Your Career Partner</span>
+          </h2>
+        </div>
+
+        <p class="text-slate-400 leading-relaxed">
+          Founded in 2005, IUC Computers has been at the forefront of IT education in Chennai, delivering globally recognised certifications and industry-ready skills to over 25,000 professionals. Our curriculum is co-designed with top tech companies to ensure every graduate is job-ready from day one.
+        </p>
+
+        <!-- Mission & Vision cards -->
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div class="highlight-box p-5 rounded-2xl">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style="background:linear-gradient(135deg,#1d4ed8,#06b6d4)">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            </div>
+            <h3 class="text-white font-bold mb-2 text-sm">Our Mission</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">Make world-class IT education accessible, practical, and transformative for every learner regardless of background.</p>
+          </div>
+          <div class="highlight-box p-5 rounded-2xl">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style="background:linear-gradient(135deg,#06b6d4,#1d4ed8)">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+            </div>
+            <h3 class="text-white font-bold mb-2 text-sm">Our Vision</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">To be the region's most trusted launchpad for tech careers, seamlessly bridging academia and the industry.</p>
+          </div>
+        </div>
+
+        <!-- Skill bars -->
+        <div class="space-y-5">
+          <?php
+          $skills = [
+            ['Placement Success Rate','98'],
+            ['Student Satisfaction',  '96'],
+            ['Industry Curriculum',   '99'],
+            ['Mentor Quality',        '97'],
+          ];
+          foreach($skills as $sk): ?>
+          <div>
+            <div class="flex justify-between items-center mb-2">
+              <span class="text-slate-300 font-medium text-sm"><?= $sk[0] ?></span>
+              <span class="text-cyan-400 font-bold text-sm"><?= $sk[1] ?>%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" data-width="<?= $sk[1] ?>" style="height:6px"></div>
+            </div>
+          </div>
+          <?php endforeach; ?>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     FEATURED PROGRAMS
+══════════════════════════════════════════════════════════════ -->
+<section id="programs" class="py-24 bg-section-dark relative overflow-hidden" aria-labelledby="programs-heading">
+
+  <!-- Background pattern -->
+  <div class="absolute inset-0 opacity-[0.015] pointer-events-none" style="background-image:radial-gradient(rgba(255,255,255,.5) 1px,transparent 1px);background-size:40px 40px"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+
+    <!-- Section header -->
+    <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+      <div class="section-pill mb-4">
+        <span class="section-pill-dot"></span>
+        50+ Industry Programs
+      </div>
+      <h2 id="programs-heading" class="font-display font-extrabold text-section-h text-white mb-5">
+        Flagship <span class="grad-text">Bootcamps</span>
+      </h2>
+      <p class="text-slate-400 text-lg">Industry-aligned courses crafted with top employers to give you the exact skills that land high-paying jobs.</p>
+    </div>
+
+    <!-- Program filter tabs -->
+    <div class="flex flex-wrap justify-center gap-2 mb-12 reveal" role="tablist" aria-label="Program categories">
+      <?php
+      $tabs = ['All Programs','Development','Data & AI','Security','Cloud','Design','Marketing'];
+      foreach($tabs as $i=>$tab): ?>
+      <button
+        class="tab-btn px-5 py-2 rounded-full text-sm font-semibold border transition-all <?= $i===0 ? 'bg-gradient-to-r from-brand-600 to-cyan-DEFAULT text-white border-transparent' : 'text-slate-400 border-white/10 hover:text-white hover:border-white/20 glass' ?>"
+        data-tab="<?= strtolower(str_replace(' ','',str_replace('&','',$tab))) ?>"
+        role="tab"
+        aria-selected="<?= $i===0?'true':'false' ?>"
+      ><?= $tab ?></button>
+      <?php endforeach; ?>
+    </div>
+
+    <!-- Program cards -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-7 stagger" id="programs-grid">
+      <?php foreach($programs as $idx=>$p): ?>
+      <article
+        class="card flex flex-col reveal"
+        style="--i:<?= $idx ?>"
+        aria-label="<?= htmlspecialchars($p['title']) ?> course"
+      >
+        <!-- Image -->
+        <div class="card-img-wrap h-48 relative">
+          <img
+            src="<?= htmlspecialchars($p['img']) ?>"
+            alt="<?= htmlspecialchars($p['title']) ?> course at IUC Computers"
+            class="w-full h-full object-cover"
+            loading="lazy"
+          />
+          <!-- Overlay -->
+          <div class="absolute inset-0" style="background:linear-gradient(180deg,rgba(6,13,31,0) 30%,rgba(6,13,31,.7) 100%)"></div>
+
+          <!-- Top badges -->
+          <div class="card-badge-abs">
+            <span class="badge text-white text-xs font-bold px-3 py-1.5 rounded-full" style="background:<?= htmlspecialchars($p['badge_color']) ?>">
+              <?= htmlspecialchars($p['badge']) ?>
+            </span>
+          </div>
+          <div class="card-badge-live">
+            <span class="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-white text-xs font-bold" style="background:rgba(239,68,68,.85)">
+              <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+              LIVE
+            </span>
+          </div>
+
+          <!-- Bottom: rating + enrolled -->
+          <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between">
+            <div class="flex items-center gap-1">
+              <svg class="w-3.5 h-3.5" style="fill:#f59e0b" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <span class="text-white text-xs font-bold"><?= htmlspecialchars($p['rating']) ?></span>
+            </div>
+            <span class="text-slate-300 text-xs"><?= htmlspecialchars($p['enrolled']) ?> enrolled</span>
+          </div>
+        </div>
+
+        <!-- Body -->
+        <div class="p-6 flex flex-col flex-1 gap-4">
+          <!-- Icon + title -->
+          <div class="flex items-start gap-3">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 mt-0.5" style="background:linear-gradient(135deg,<?= htmlspecialchars($p['grad_from']) ?>,<?= htmlspecialchars($p['grad_to']) ?>)">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="<?= htmlspecialchars($p['icon']) ?>"/>
+              </svg>
+            </div>
+            <h3 class="text-white font-bold text-base leading-snug"><?= htmlspecialchars($p['title']) ?></h3>
+          </div>
+
+          <p class="text-slate-400 text-sm leading-relaxed flex-1"><?= htmlspecialchars($p['desc']) ?></p>
+
+          <!-- Tech tags -->
+          <div class="flex flex-wrap gap-1.5">
+            <?php foreach($p['tags'] as $tag): ?>
+            <span class="tag"><?= htmlspecialchars($tag) ?></span>
+            <?php endforeach; ?>
+          </div>
+
+          <!-- Meta grid -->
+          <div class="grid grid-cols-3 gap-2">
+            <?php
+            $metas = [
+              [$p['duration'],'Duration'],
+              [$p['level'],   'Level'],
+              [$p['projects'],'Hands-on'],
+            ];
+            foreach($metas as $m): ?>
+            <div class="bg-white/[.04] border border-white/[.06] rounded-xl p-2.5 text-center">
+              <p class="text-white font-bold text-xs leading-snug"><?= htmlspecialchars($m[0]) ?></p>
+              <p class="text-slate-500 text-xs mt-0.5"><?= htmlspecialchars($m[1]) ?></p>
+            </div>
+            <?php endforeach; ?>
+          </div>
+
+          <!-- Price row -->
+          <div class="flex items-center justify-between pt-1 border-t border-white/[.06]">
+            <div>
+              <span class="text-white font-extrabold text-lg"><?= htmlspecialchars($p['price']) ?></span>
+              <span class="text-slate-500 text-xs ml-1">or <?= htmlspecialchars($p['emi']) ?> EMI</span>
+            </div>
+            <a href="#contact" class="btn btn-primary btn-sm" aria-label="Enrol in <?= htmlspecialchars($p['title']) ?>">
+              Enrol Now
+            </a>
+          </div>
+        </div>
+      </article>
+      <?php endforeach; ?>
+    </div>
+
+    <!-- View all CTA -->
+    <div class="text-center mt-12 reveal">
+      <a href="#contact" class="btn btn-secondary btn-lg">
+        View All 50+ Programs
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     LEARNING PATH / ROADMAP
+══════════════════════════════════════════════════════════════ -->
+<section id="learning-path" class="py-24 bg-section-mid relative overflow-hidden" aria-labelledby="path-heading">
+
+  <div class="orb w-80 h-80 top-1/2 right-0 -translate-y-1/2 opacity-10" style="background:radial-gradient(circle,#7c3aed,transparent 70%)"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+      <div class="section-pill mb-4">
+        <span class="section-pill-dot"></span>
+        Your Growth Journey
+      </div>
+      <h2 id="path-heading" class="font-display font-extrabold text-section-h text-white mb-5">
+        The <span class="grad-text">Learning Roadmap</span>
+      </h2>
+      <p class="text-slate-400 text-lg">A structured, industry-proven pathway from complete beginner to placed professional.</p>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+      <!-- Roadmap steps -->
+      <div class="space-y-8 reveal-left">
+        <?php
+        $roadmap = [
+          ['01','Foundation',         'week1-2',  'Beginner',    '#22c55e','Core computing concepts, command line, Git version control, and professional development tools. No prior experience needed.',   'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13'],
+          ['02','Core Skills',        'week3-8',  'Beginner+',   '#06b6d4','Programming fundamentals, data structures, algorithms, and your first working projects. Building real confidence.',            'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18'],
+          ['03','Specialisation',     'week9-14', 'Intermediate','#1d4ed8','Deep dive into your chosen track — frontend, backend, data, cloud, or security. Industry-grade tools and frameworks.',       'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4'],
+          ['04','Live Projects',      'week15-18','Advanced',    '#7c3aed','3 industry capstone projects with real client briefs, code reviews, agile sprints, and GitHub portfolio building.',             'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2'],
+          ['05','Interview Prep',     'week19-22','Pre-Placement','#f59e0b','Technical rounds, HR mock interviews, aptitude training, resume reviews, and LinkedIn profile optimisation.',                 'M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745'],
+          ['06','Placement & Beyond', 'week23+',  'Placed!',     '#22c55e','Direct referrals, hackathons, alumni networks, and lifetime career support. Your journey continues after placement.',           'M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0'],
+        ];
+        foreach($roadmap as $ri=>$r): ?>
+        <div class="roadmap-step">
+          <div class="roadmap-dot" style="background:linear-gradient(135deg,<?= $r[4] ?>,<?= $r[4] ?>88)" aria-hidden="true">
+            <span class="text-white font-display font-bold text-xs"><?= $r[0] ?></span>
+          </div>
+          <div class="glass p-5 rounded-2xl ml-2 transition-all hover:border-white/15">
+            <div class="flex items-start justify-between gap-3 mb-2">
+              <h3 class="text-white font-bold text-base"><?= htmlspecialchars($r[1]) ?></h3>
+              <div class="flex gap-2 shrink-0">
+                <span class="badge badge-cyan text-xs"><?= htmlspecialchars($r[2]) ?></span>
+                <span class="badge" style="background:<?= $r[4] ?>20;color:<?= $r[4] ?>;border-color:<?= $r[4] ?>30"><?= htmlspecialchars($r[3]) ?></span>
+              </div>
+            </div>
+            <p class="text-slate-400 text-sm leading-relaxed"><?= htmlspecialchars($r[5]) ?></p>
+          </div>
+        </div>
+        <?php endforeach; ?>
+      </div>
+
+      <!-- Right: Visual summary -->
+      <div class="reveal-right space-y-6">
+
+        <!-- Outcome card -->
+        <div class="grad-border">
+          <div class="grad-border-inner p-7 rounded-[19px]">
+            <h3 class="font-display font-bold text-xl text-white mb-6">What You'll Achieve</h3>
+            <div class="space-y-4">
+              <?php
+              $outcomes = [
+                ['Job-ready portfolio with 3+ real projects',           '#22c55e'],
+                ['Globally recognised industry certifications',         '#06b6d4'],
+                ['40–140% salary increase in first job',                '#f59e0b'],
+                ['Access to 300+ hiring partner network',               '#7c3aed'],
+                ['Lifetime alumni community access',                    '#22c55e'],
+                ['Continuous learning & upskilling support',            '#06b6d4'],
+              ];
+              foreach($outcomes as $o): ?>
+              <div class="flex items-center gap-3">
+                <div class="w-5 h-5 rounded-full shrink-0 flex items-center justify-center" style="background:<?= $o[1] ?>20">
+                  <svg class="w-3 h-3" style="color:<?= $o[1] ?>" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                </div>
+                <span class="text-slate-300 text-sm"><?= htmlspecialchars($o[0]) ?></span>
+              </div>
+              <?php endforeach; ?>
+            </div>
+            <a href="#contact" class="btn btn-primary btn-md w-full mt-7 justify-center">
+              Start Your Journey Today →
+            </a>
+          </div>
+        </div>
+
+        <!-- Mini stats -->
+        <div class="grid grid-cols-3 gap-3">
+          <?php
+          $miniStats = [
+            ['6 mo','Avg. Program','#06b6d4'],
+            ['24/7','Support','#22c55e'],
+            ['100%','Job Assist','#f59e0b'],
+          ];
+          foreach($miniStats as $ms): ?>
+          <div class="stat-card p-4 text-center">
+            <p class="font-display font-extrabold text-xl" style="color:<?= $ms[2] ?>"><?= $ms[0] ?></p>
+            <p class="text-slate-500 text-xs mt-1"><?= $ms[1] ?></p>
+          </div>
+          <?php endforeach; ?>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     CURRICULUM ACCORDION
+══════════════════════════════════════════════════════════════ -->
+<section class="py-24 bg-section-dark" aria-labelledby="curriculum-heading">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16 reveal">
+      <div class="section-pill mb-4 mx-auto">
+        <span class="section-pill-dot"></span>
+        Full Stack — Sample Curriculum
+      </div>
+      <h2 id="curriculum-heading" class="font-display font-extrabold text-section-h text-white mb-5">
+        Week-by-Week <span class="grad-text">Curriculum</span>
+      </h2>
+      <p class="text-slate-400 text-lg max-w-xl mx-auto">See exactly what you'll learn, week by week. Every module is industry-reviewed and project-driven.</p>
+    </div>
+
+    <div class="space-y-3">
+      <?php foreach($curriculum_weeks as $ci=>[$weeks,$title,$content]): ?>
+      <div class="curriculum-item reveal" style="transition-delay:<?= $ci * 60 ?>ms">
+        <details <?= $ci===0?'open':'' ?>>
+          <summary class="flex items-center justify-between p-5 gap-4 select-none">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 text-sm font-display font-bold" style="background:linear-gradient(135deg,rgba(29,78,216,.3),rgba(6,182,212,.15));color:#60a5fa">
+                <?= sprintf('%02d', $ci+1) ?>
+              </div>
+              <div>
+                <span class="text-slate-500 text-xs font-semibold"><?= htmlspecialchars($weeks) ?></span>
+                <h3 class="text-white font-bold text-base"><?= htmlspecialchars($title) ?></h3>
+              </div>
+            </div>
+            <span class="curr-icon w-8 h-8 rounded-lg border border-white/15 flex items-center justify-center text-slate-400 shrink-0">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+            </span>
+          </summary>
+          <div class="curr-body px-5 pb-5">
+            <div class="ml-16 p-4 rounded-xl highlight-box">
+              <p class="text-slate-400 text-sm mb-3 font-semibold text-cyan-400/80">Topics covered:</p>
+              <div class="flex flex-wrap gap-2">
+                <?php foreach(explode(', ', $content) as $topic): ?>
+                <span class="tag"><?= htmlspecialchars(trim($topic)) ?></span>
+                <?php endforeach; ?>
+              </div>
+              <div class="flex items-center gap-4 mt-4 text-xs text-slate-500">
+                <span class="flex items-center gap-1">
+                  <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                  1–2 Projects
+                </span>
+                <span class="flex items-center gap-1">
+                  <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  Live Sessions
+                </span>
+                <span class="flex items-center gap-1">
+                  <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.069A1 1 0 0121 8.869v6.262a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                  Recorded Access
+                </span>
+              </div>
+            </div>
+          </div>
+        </details>
+      </div>
+      <?php endforeach; ?>
+    </div>
+    <div class="text-center mt-8 reveal">
+      <a href="#contact" class="btn btn-ghost btn-md">
+        Download Full Curriculum PDF
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     WHY CHOOSE US
+══════════════════════════════════════════════════════════════ -->
+<section class="py-24 bg-section-mid relative overflow-hidden" aria-labelledby="why-heading">
+
+  <div class="orb w-96 h-96 bottom-0 left-1/2 -translate-x-1/2 opacity-[.08]" style="background:radial-gradient(circle,#06b6d4,transparent 70%)"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+    <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+      <div class="section-pill mb-4">
+        <span class="section-pill-dot"></span>
+        The IUC Advantage
+      </div>
+      <h2 id="why-heading" class="font-display font-extrabold text-section-h text-white mb-5">
+        Why Thousands Choose<br/><span class="grad-text">IUC Computers</span>
+      </h2>
+      <p class="text-slate-400 text-lg">We don't just teach — we build careers, transform lives, and deliver results.</p>
+    </div>
+
+<div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+    <?php
+    $whys = [
+        [
+            '100% Placement Support',
+            'Job assistance with 300+ hiring partners — MNCs, startups, and product companies. We keep helping until you\'re placed.',
+            'M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',
+            '#22c55e'
+        ],
+        [
+            'Expert Industry Mentors',
+            'Learn from veterans with 10–20 years at top tech firms. Real experience, not just theory.',
+            'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z',
+            '#06b6d4'
+        ],
+        [
+            'Live Industry Projects',
+            'Build a portfolio with real projects, hackathons, agile sprints, and GitHub contributions — not toy examples.',
+            'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',
+            '#7c3aed'
+        ],
+        [
+            'Flexible Learning',
+            'Morning, evening, weekend, online, and hybrid batches. Learn at your pace without disrupting your current commitments.',
+            'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z',
+            '#f59e0b'
+        ],
+        [
+            'Global Certifications',
+            'Microsoft, Google, AWS, CompTIA, Adobe & EC-Council certifications that employers worldwide recognise and value.',
+            'M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z',
+            '#22c55e'
+        ],
+        [
+            'Scholarships & EMI',
+            'Zero-cost EMI plans and merit/need-based scholarships covering up to 50%. Cost should never block your career growth.',
+            'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
+            '#06b6d4'
+        ],
+        [
+            'State-of-the-Art Labs',
+            'Ultra-modern computer labs with latest hardware, licensed software, fibre-optic internet, and 24/7 access for students.',
+            'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18',
+            '#7c3aed'
+        ],
+        [
+            '25,000+ Alumni Network',
+            'Join graduates placed at top companies worldwide for networking, referrals, job leads, mentoring, and lifelong community.',
+            'M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
+            '#f59e0b'
+        ],
+    ];
+
+    foreach ($whys as $wi => $w):
+    ?>
+        <div class="feature-item p-6 reveal"
+             style="transition-delay: <?= ($wi % 4) * 80 ?>ms;">
+
+            <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-4 transition-transform group-hover:scale-110"
+                 style="background: <?= $w[3] ?>15;">
+
+                <svg class="w-6 h-6"
+                     style="color: <?= $w[3] ?>;"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.8"
+                     viewBox="0 0 24 24"
+                     aria-hidden="true">
+
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="<?= htmlspecialchars($w[2]) ?>" />
+                </svg>
+
+            </div>
+
+            <h3 class="text-white font-bold mb-2 text-sm">
+                <?= htmlspecialchars($w[0]) ?>
+            </h3>
+
+            <p class="text-slate-400 text-sm leading-relaxed">
+                <?= htmlspecialchars($w[1]) ?>
+            </p>
+
+        </div>
+    <?php endforeach; ?>
+</div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     MENTORS
+══════════════════════════════════════════════════════════════ -->
+<section id="mentors" class="py-24 bg-section-dark" aria-labelledby="mentors-heading">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+      <div class="section-pill mb-4">
+        <span class="section-pill-dot"></span>
+        World-Class Faculty
+      </div>
+      <h2 id="mentors-heading" class="font-display font-extrabold text-section-h text-white mb-5">
+        Learn from <span class="grad-text">Industry Legends</span>
+      </h2>
+      <p class="text-slate-400 text-lg">Our mentors bring decades of real-world experience from the world's top technology companies.</p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <?php foreach($mentors as $mi=>$m): ?>
+      <div class="mentor-card p-6 text-center reveal" style="transition-delay:<?= $mi * 100 ?>ms">
+        <!-- Avatar -->
+        <div class="relative inline-block mb-4">
+          <img
+            src="<?= htmlspecialchars($m['img']) ?>"
+            alt="<?= htmlspecialchars($m['name']) ?> — IUC Computers mentor"
+            class="w-20 h-20 rounded-2xl object-cover mx-auto"
+            style="box-shadow:0 8px 24px rgba(6,182,212,.2)"
+            loading="lazy"
+          />
+          <!-- Online indicator -->
+          <div class="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-green-500 border-2" style="border-color:#060d1f"></div>
+        </div>
+
+        <h3 class="text-white font-bold text-sm mb-0.5"><?= htmlspecialchars($m['name']) ?></h3>
+        <p class="text-cyan-400 text-xs font-semibold mb-1"><?= htmlspecialchars($m['role']) ?></p>
+        <p class="text-slate-500 text-xs mb-4"><?= htmlspecialchars($m['company']) ?> · <?= htmlspecialchars($m['exp']) ?></p>
+
+        <!-- Spec badge -->
+        <span class="badge badge-cyan mb-4 mx-auto"><?= htmlspecialchars($m['spec']) ?></span>
+
+        <!-- Stats row -->
+        <div class="grid grid-cols-2 gap-2 mt-4">
+          <div class="bg-white/[.04] rounded-xl p-2">
+            <p class="text-white font-bold text-sm"><?= htmlspecialchars($m['exp']) ?></p>
+            <p class="text-slate-500 text-xs">Experience</p>
+          </div>
+          <div class="bg-white/[.04] rounded-xl p-2">
+            <p class="text-white font-bold text-sm"><?= htmlspecialchars($m['courses']) ?>+</p>
+            <p class="text-slate-500 text-xs">Courses</p>
+          </div>
+        </div>
+
+        <!-- LinkedIn link -->
+        <a
+          href="<?= htmlspecialchars($m['linkedin']) ?>"
+          class="flex items-center justify-center gap-2 mt-4 text-xs text-slate-500 hover:text-cyan-400 transition"
+          aria-label="View <?= htmlspecialchars($m['name']) ?>'s LinkedIn profile"
+        >
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          LinkedIn Profile
+        </a>
+      </div>
+      <?php endforeach; ?>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     TESTIMONIALS
+══════════════════════════════════════════════════════════════ -->
+<section id="testimonials" class="py-24 bg-section-mid relative overflow-hidden" aria-labelledby="testimonials-heading">
+
+  <div class="orb w-96 h-96 top-0 right-0 opacity-10" style="background:radial-gradient(circle,#22c55e,transparent 70%)"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+    <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+      <div class="section-pill mb-4">
+        <span class="section-pill-dot"></span>
+        Real Results
+      </div>
+      <h2 id="testimonials-heading" class="font-display font-extrabold text-section-h text-white mb-5">
+        Success <span class="grad-text">Stories</span> That<br/>Speak for Themselves
+      </h2>
+      <p class="text-slate-400 text-lg">25,000+ careers transformed. Here are a few of their stories.</p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <?php foreach($testimonials as $ti=>$t): ?>
+      <div class="testimonial-card p-6 flex flex-col gap-5 reveal" style="transition-delay:<?= ($ti%3) * 80 ?>ms" aria-label="Testimonial from <?= htmlspecialchars($t['name']) ?>">
+
+        <!-- Stars + course badge -->
+        <div class="flex items-center justify-between">
+          <div class="stars" aria-label="<?= $t['rating'] ?> out of 5 stars">
+            <?php for($i=0;$i<$t['rating'];$i++): ?>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <?php endfor; ?>
+          </div>
+          <span class="badge badge-cyan"><?= htmlspecialchars($t['course']) ?></span>
+        </div>
+
+        <!-- Quote -->
+        <blockquote class="text-slate-300 text-sm leading-relaxed flex-1">
+          <span class="text-cyan-400 text-2xl font-serif leading-none">"</span>
+          <?= htmlspecialchars($t['quote']) ?>
+          <span class="text-cyan-400 text-2xl font-serif leading-none">"</span>
+        </blockquote>
+
+        <!-- Salary growth -->
+        <div class="highlight-box p-3 rounded-xl flex items-center justify-between">
+          <div>
+            <p class="text-slate-500 text-xs mb-0.5">Previous salary</p>
+            <p class="text-slate-400 font-bold text-sm line-through"><?= htmlspecialchars($t['prev']) ?></p>
+          </div>
+          <div class="text-center">
+            <svg class="w-5 h-5 text-green-400 mx-auto" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+          </div>
+          <div class="text-right">
+            <p class="text-slate-500 text-xs mb-0.5">Current salary</p>
+            <p class="text-green-400 font-extrabold text-sm"><?= htmlspecialchars($t['salary']) ?></p>
+          </div>
+        </div>
+
+        <!-- Author -->
+        <div class="flex items-center gap-3 pt-1 border-t border-white/[.07]">
+          <img
+            src="https://images.unsplash.com/photo-<?= htmlspecialchars($t['img']) ?>?w=80&q=80"
+            alt="<?= htmlspecialchars($t['name']) ?>"
+            class="w-11 h-11 rounded-xl object-cover border"
+            style="border-color:rgba(6,182,212,.2)"
+            loading="lazy"
+          />
+          <div class="flex-1 min-w-0">
+            <p class="text-white font-semibold text-sm truncate"><?= htmlspecialchars($t['name']) ?></p>
+            <p class="text-cyan-400 text-xs truncate"><?= htmlspecialchars($t['role']) ?></p>
+          </div>
+          <span class="badge badge-green shrink-0"><?= htmlspecialchars($t['batch']) ?></span>
+        </div>
+      </div>
+      <?php endforeach; ?>
+    </div>
+
+    <!-- View more CTA -->
+    <div class="text-center mt-12 reveal">
+      <a href="#contact" class="btn btn-secondary btn-lg">
+        Read 10,000+ More Stories
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     CAREER OUTCOMES
+══════════════════════════════════════════════════════════════ -->
+<section class="py-24 bg-section-dark" aria-labelledby="outcomes-heading">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+      <!-- Left: Stats -->
+      <div class="reveal-left">
+        <div class="section-pill mb-4">
+          <span class="section-pill-dot"></span>
+          Career Outcomes 2024
+        </div>
+        <h2 id="outcomes-heading" class="font-display font-extrabold text-section-h text-white mb-8 leading-tight">
+          Numbers That<br/><span class="grad-text">Prove Our Promise</span>
+        </h2>
+
+        <div class="space-y-6">
+          <?php
+          $careerStats = [
+            ['98%',  'Placement Rate',           'Of graduates placed within 90 days of batch completion', '#22c55e', 98],
+            ['140%', 'Average Salary Hike',       'Average salary increase across all programs and batches',  '#06b6d4', 85],
+            ['300+', 'Hiring Partners',           'Companies actively hiring from our placement drives',      '#7c3aed', 90],
+            ['25k+', 'Graduates Placed',          'Careers launched and transformed since 2005',              '#f59e0b', 95],
+          ];
+          foreach($careerStats as $cs): ?>
+          <div>
+            <div class="flex items-start gap-4">
+              <div class="shrink-0 text-right w-16">
+                <p class="font-display font-extrabold text-2xl" style="color:<?= $cs[3] ?>"><?= $cs[0] ?></p>
+              </div>
+              <div class="flex-1">
+                <p class="text-white font-bold text-sm mb-1"><?= $cs[1] ?></p>
+                <p class="text-slate-500 text-xs mb-2"><?= $cs[2] ?></p>
+                <div class="progress-track">
+                  <div class="progress-fill" data-width="<?= $cs[4] ?>" style="height:5px;background:linear-gradient(90deg,<?= $cs[3] ?>88,<?= $cs[3] ?>)"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <?php endforeach; ?>
+        </div>
+      </div>
+
+      <!-- Right: Salary range cards -->
+      <div class="reveal-right space-y-4">
+        <h3 class="font-display font-bold text-xl text-white mb-6">Salary Ranges After IUC Training</h3>
+        <?php
+        $salaries = [
+          ['Full Stack Developer',   '₹5L – ₹18L',  'p.a.',  '#06b6d4', 80],
+          ['Data Scientist',         '₹7L – ₹25L',  'p.a.',  '#7c3aed', 90],
+          ['Cloud Architect',        '₹8L – ₹22L',  'p.a.',  '#22c55e', 85],
+          ['Cybersecurity Analyst',  '₹6L – ₹20L',  'p.a.',  '#f59e0b', 75],
+          ['UI/UX Designer',         '₹4L – ₹15L',  'p.a.',  '#ec4899', 65],
+          ['Digital Marketer',       '₹4L – ₹14L',  'p.a.',  '#06b6d4', 60],
+        ];
+        foreach($salaries as $sal): ?>
+        <div class="glass p-4 rounded-xl flex items-center gap-4">
+          <div class="flex-1 min-w-0">
+            <p class="text-white font-semibold text-sm"><?= htmlspecialchars($sal[0]) ?></p>
+            <div class="progress-track mt-2">
+              <div class="progress-fill" data-width="<?= $sal[4] ?>" style="height:4px;background:linear-gradient(90deg,<?= $sal[3] ?>60,<?= $sal[3] ?>)"></div>
+            </div>
+          </div>
+          <div class="text-right shrink-0">
+            <p class="font-display font-extrabold text-base" style="color:<?= $sal[3] ?>"><?= htmlspecialchars($sal[1]) ?></p>
+            <p class="text-slate-500 text-xs"><?= htmlspecialchars($sal[2]) ?></p>
+          </div>
+        </div>
+        <?php endforeach; ?>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     PRICING SECTION
+══════════════════════════════════════════════════════════════ -->
+<section id="pricing" class="py-24 bg-section-mid relative overflow-hidden" aria-labelledby="pricing-heading">
+
+  <div class="orb w-96 h-96 top-1/4 left-0 opacity-10" style="background:radial-gradient(circle,#1d4ed8,transparent 70%)"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+    <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+      <div class="section-pill mb-4">
+        <span class="section-pill-dot"></span>
+        Transparent Pricing
+      </div>
+      <h2 id="pricing-heading" class="font-display font-extrabold text-section-h text-white mb-5">
+        Simple, <span class="grad-text">Honest Pricing</span>
+      </h2>
+      <p class="text-slate-400 text-lg">No hidden fees. No surprises. Scholarships and EMI available for everyone.</p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-7 items-start">
+      <?php
+      $plans = [
+        [
+          'name'     => 'Essential',
+          'subtitle' => 'Get started with fundamentals',
+          'price'    => '₹12,000',
+          'period'   => '/ course',
+          'emi'      => '₹1,200/mo',
+          'featured' => false,
+          'color'    => '#06b6d4',
+          'features' => [
+            ['Recorded lectures (lifetime access)','yes'],
+            ['Course completion certificate',       'yes'],
+            ['Email support',                       'yes'],
+            ['Community forum access',              'yes'],
+            ['Projects (1)',                        'yes'],
+            ['Live mentoring sessions',             'no'],
+            ['Mock interviews',                     'no'],
+            ['Placement assistance',                'no'],
+            ['Resume review',                       'no'],
+            ['Job referrals',                       'no'],
+          ],
+          'cta' => 'Get Started',
+        ],
+        [
+          'name'     => 'Professional',
+          'subtitle' => 'Complete career transformation',
+          'price'    => '₹35,000',
+          'period'   => '/ program',
+          'emi'      => '₹3,500/mo',
+          'featured' => true,
+          'color'    => '#22c55e',
+          'badge'    => 'Most Popular',
+          'features' => [
+            ['Live + recorded classes',             'yes'],
+            ['Industry certification',              'yes'],
+            ['Priority support (24/7)',             'yes'],
+            ['Private community + alumni',          'yes'],
+            ['Projects (3+ capstone)',              'yes'],
+            ['Live mentoring (weekly)',             'yes'],
+            ['5 mock interviews',                   'yes'],
+            ['Resume + LinkedIn review',            'yes'],
+            ['100% placement assistance',           'yes'],
+            ['Direct job referrals',                'no'],
+          ],
+          'cta' => 'Enrol Now — Best Value',
+        ],
+        [
+          'name'     => 'Enterprise',
+          'subtitle' => 'For teams & corporates',
+          'price'    => 'Custom',
+          'period'   => '/ team',
+          'emi'      => 'Invoiced billing',
+          'featured' => false,
+          'color'    => '#7c3aed',
+          'features' => [
+            ['Custom curriculum design',            'yes'],
+            ['Batch training at your premises',     'yes'],
+            ['Dedicated account manager',           'yes'],
+            ['LMS integration',                     'yes'],
+            ['Unlimited projects & labs',           'yes'],
+            ['Executive mentoring',                 'yes'],
+            ['Competency assessments',              'yes'],
+            ['Progress dashboards',                 'yes'],
+            ['Co-branded certification',            'yes'],
+            ['Priority direct job referrals',       'yes'],
+          ],
+          'cta' => 'Contact for Quote',
+        ],
+      ];
+      foreach($plans as $plan): ?>
+      <div class="pricing-card <?= $plan['featured'] ? 'featured' : 'glass' ?> p-7 reveal flex flex-col relative">
+
+        <?php if(isset($plan['badge'])): ?>
+        <div class="absolute -top-3 left-1/2 -translate-x-1/2">
+          <span class="badge badge-green px-4 py-1.5 text-xs font-bold">
+            ⭐ <?= htmlspecialchars($plan['badge']) ?>
+          </span>
+        </div>
+        <?php endif; ?>
+
+        <!-- Plan header -->
+        <div class="mb-6">
+          <div class="flex items-center gap-2 mb-1">
+            <div class="w-3 h-3 rounded-full" style="background:<?= $plan['color'] ?>"></div>
+            <span class="text-slate-400 text-xs font-semibold uppercase tracking-wider"><?= htmlspecialchars($plan['name']) ?></span>
+          </div>
+          <h3 class="text-white font-display font-bold text-xl mb-1"><?= htmlspecialchars($plan['subtitle']) ?></h3>
+
+          <div class="flex items-baseline gap-1 mt-4">
+            <span class="font-display font-extrabold text-3xl text-white"><?= htmlspecialchars($plan['price']) ?></span>
+            <span class="text-slate-400 text-sm"><?= htmlspecialchars($plan['period']) ?></span>
+          </div>
+          <p class="text-slate-500 text-xs mt-1">or <?= htmlspecialchars($plan['emi']) ?> · No-cost EMI available</p>
+        </div>
+
+        <!-- Features -->
+        <ul class="space-y-3 mb-7 flex-1">
+          <?php foreach($plan['features'] as [$feat,$has]): ?>
+          <li class="flex items-start gap-3 text-sm">
+            <?php if($has==='yes'): ?>
+            <svg class="w-4 h-4 shrink-0 mt-0.5" style="color:<?= $plan['color'] ?>" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            <span class="text-slate-300"><?= htmlspecialchars($feat) ?></span>
+            <?php else: ?>
+            <svg class="w-4 h-4 shrink-0 mt-0.5 text-slate-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+            <span class="text-slate-600"><?= htmlspecialchars($feat) ?></span>
+            <?php endif; ?>
+          </li>
+          <?php endforeach; ?>
+        </ul>
+
+        <a href="#contact" class="btn btn-md w-full justify-center <?= $plan['featured'] ? 'btn-success' : 'btn-ghost' ?>">
+          <?= htmlspecialchars($plan['cta']) ?>
+        </a>
+      </div>
+      <?php endforeach; ?>
+    </div>
+
+    <!-- Trust row -->
+    <div class="flex flex-wrap justify-center gap-6 mt-12 reveal">
+      <?php
+      $priceTrust = [
+        ['🔒','No hidden charges — ever'],
+        ['🎓','Scholarship up to 50% off'],
+        ['📆','No-cost EMI (3/6/12 months)'],
+        ['🔄','Money-back if not satisfied'],
+      ];
+      foreach($priceTrust as $pt): ?>
+      <div class="flex items-center gap-2 text-sm text-slate-400">
+        <span><?= $pt[0] ?></span>
+        <span><?= htmlspecialchars($pt[1]) ?></span>
+      </div>
+      <?php endforeach; ?>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     FAQ
+══════════════════════════════════════════════════════════════ -->
+<section class="py-24 bg-section-dark" aria-labelledby="faq-heading">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16 reveal">
+      <div class="section-pill mb-4 mx-auto">
+        <span class="section-pill-dot"></span>
+        Got Questions?
+      </div>
+      <h2 id="faq-heading" class="font-display font-extrabold text-section-h text-white mb-5">
+        Frequently Asked <span class="grad-text">Questions</span>
+      </h2>
+      <p class="text-slate-400 text-lg">Everything you need to know before you enrol.</p>
+    </div>
+
+    <div class="space-y-3" role="list">
+      <?php foreach($faqs as $fi=>$faq): ?>
+      <div class="faq-item reveal" style="transition-delay:<?= $fi * 50 ?>ms" role="listitem">
+        <details>
+          <summary class="flex items-center justify-between p-5 gap-4 select-none group">
+            <div class="flex items-center gap-4">
+              <span class="font-display font-bold text-cyan-400 text-sm w-5 shrink-0"><?= sprintf('%02d', $fi+1) ?></span>
+              <h3 class="text-white font-semibold text-sm leading-snug"><?= htmlspecialchars($faq['q']) ?></h3>
+            </div>
+            <span class="faq-icon w-8 h-8 rounded-lg border border-white/10 flex items-center justify-center text-slate-400 shrink-0" aria-hidden="true">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+            </span>
+          </summary>
+          <div class="faq-body px-5 pb-5">
+            <div class="ml-9 text-slate-400 text-sm leading-relaxed pl-4 border-l border-white/[.07]">
+              <?= htmlspecialchars($faq['a']) ?>
+            </div>
+          </div>
+        </details>
+      </div>
+      <?php endforeach; ?>
+    </div>
+
+    <div class="text-center mt-10 reveal">
+      <p class="text-slate-500 text-sm mb-4">Still have questions? We're here to help.</p>
+      <div class="flex flex-wrap gap-3 justify-center">
+        <a href="tel:+917418048039" class="btn btn-secondary btn-md">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+          Call Now
+        </a>
+        <a href="https://wa.me/917418048039" target="_blank" rel="noopener noreferrer" class="btn btn-success btn-md">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp Us
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     FINAL CTA — JOIN NEXT COHORT
+══════════════════════════════════════════════════════════════ -->
+<section class="py-24 relative overflow-hidden" style="background:linear-gradient(135deg,#060d1f 0%,#0f172a 40%,#0a1128 70%,#060d1f 100%)" aria-labelledby="cta-heading">
+
+  <!-- Decorative elements -->
+  <div class="orb w-[500px] h-[500px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[.12]" style="background:radial-gradient(circle,#1d4ed8,transparent 70%)"></div>
+  <div class="absolute inset-0 opacity-[.015] pointer-events-none" style="background-image:linear-gradient(rgba(255,255,255,.3) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.3) 1px,transparent 1px);background-size:48px 48px"></div>
+
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative">
+
+    <div class="reveal">
+      <!-- Urgency badge -->
+      <div class="inline-flex items-center gap-2 glass px-5 py-2.5 rounded-full text-sm font-semibold text-yellow-300 border border-yellow-500/20 mb-8">
+        <span class="w-2 h-2 rounded-full bg-yellow-400 animate-pulse shrink-0"></span>
+        ⚡ Next Batch: 5th February 2025 — Only 12 Seats Left
+      </div>
+
+      <h2 id="cta-heading" class="font-display font-extrabold text-hero text-white mb-6">
+        Your Dream Career<br/>Starts <span class="grad-text">Right Now</span>
+      </h2>
+
+      <p class="text-slate-400 text-xl leading-relaxed mb-10 max-w-2xl mx-auto">
+        Join 25,000+ graduates who chose IUC Computers and transformed their lives.
+        Free counselling. Zero pressure. 100% commitment to your success.
+      </p>
+
+      <!-- Countdown -->
+      <div class="flex justify-center gap-4 mb-10" id="countdown-wrap" aria-label="Time until next batch">
+        <?php foreach(['Days'=>'days','Hours'=>'hrs','Minutes'=>'mins','Seconds'=>'secs'] as $label=>$id): ?>
+        <div class="glass px-5 py-4 rounded-2xl text-center min-w-[70px]">
+          <p id="cd-<?= $id ?>" class="font-display font-extrabold text-2xl text-white">--</p>
+          <p class="text-slate-500 text-xs mt-1 font-medium"><?= $label ?></p>
+        </div>
+        <?php endforeach; ?>
+      </div>
+
+      <!-- CTA buttons -->
+      <div class="flex flex-wrap justify-center gap-4 mb-10">
+        <a href="#contact" class="btn btn-primary btn-xl animate-glow">
+          Claim Your Seat — Free Counselling
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </a>
+        <a href="tel:+917418048039" class="btn btn-secondary btn-xl">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+          +91 74180 48039
+        </a>
+      </div>
+
+      <!-- Micro trust signals -->
+      <div class="flex flex-wrap justify-center gap-6 text-sm text-slate-500">
+        <?php foreach(['No payment required to apply','Free career counselling','Results in 90 days or we keep helping'] as $trust): ?>
+        <div class="flex items-center gap-2">
+          <svg class="w-4 h-4 text-green-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          <?= htmlspecialchars($trust) ?>
+        </div>
+        <?php endforeach; ?>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     CONTACT / LEAD GENERATION
+══════════════════════════════════════════════════════════════ -->
+<section id="contact" class="py-24 bg-section-mid" aria-labelledby="contact-heading">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid lg:grid-cols-2 gap-16 items-start">
+
+      <!-- Left: Info -->
+      <div class="space-y-8 reveal-left">
+        <div>
+          <div class="section-pill mb-4">
+            <span class="section-pill-dot"></span>
+            Free Career Counselling
+          </div>
+          <h2 id="contact-heading" class="font-display font-extrabold text-section-h text-white mb-5 leading-tight">
+            Start Your<br/><span class="grad-text">Journey Today</span>
+          </h2>
+          <p class="text-slate-400 text-lg leading-relaxed">
+            Fill in your details and our expert career counsellor will reach out within 24 hours to guide you toward the right program — completely free, zero pressure.
+          </p>
+        </div>
+
+        <!-- Contact details -->
+        <div class="space-y-3">
+          <?php
+          $contactItems = [
+            ['M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z', 'Phone', '+91 74180 48039 | 044 43539196 | 044 4794 0112', 'tel:+917418048039', '#22c55e'],
+            ['M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z', 'Email', 'info@iucedu.com', 'mailto:info@iucedu.com', '#06b6d4'],
+            ['M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z', 'Head Office', '#1&2 Gold Nest Apts, 2nd Main Road, C.I.T Nagar, Chennai – 600 035', '#contact', '#7c3aed'],
+            ['M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z', 'Branch', '19/11 Balakrishna Colony 1st St, Kaladipet, Thiruvottiyur, Chennai – 600 019', '#contact', '#f59e0b'],
+          ];
+          foreach($contactItems as $ci): ?>
+          <a href="<?= htmlspecialchars($ci[3]) ?>" class="flex items-start gap-4 glass p-4 rounded-2xl hover:border-white/15 transition-all group">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 mt-0.5" style="background:<?= $ci[4] ?>15">
+              <svg class="w-5 h-5" style="color:<?= $ci[4] ?>" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="<?= $ci[0] ?>"/>
+              </svg>
+            </div>
+            <div class="min-w-0">
+              <p class="text-slate-500 text-xs font-semibold uppercase tracking-wider mb-1"><?= htmlspecialchars($ci[1]) ?></p>
+              <p class="text-white font-semibold text-sm leading-snug"><?= htmlspecialchars($ci[2]) ?></p>
+            </div>
+          </a>
+          <?php endforeach; ?>
+        </div>
+
+        <!-- WhatsApp CTA -->
+        <a
+          href="https://wa.me/917418048039?text=Hi!%20I%27m%20interested%20in%20IUC%20Computers%20programs.%20Please%20guide%20me."
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center gap-4 p-5 rounded-2xl transition-all hover:-translate-y-1 group"
+          style="background:linear-gradient(135deg,rgba(18,140,126,.9),rgba(37,211,102,.9));box-shadow:0 12px 40px rgba(37,211,102,.25)"
+          aria-label="Chat with us on WhatsApp"
+        >
+          <svg class="w-8 h-8 text-white shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          <div class="flex-1">
+            <p class="text-white font-bold">Chat on WhatsApp</p>
+            <p class="text-green-100 text-sm opacity-90">Instant responses · 9 AM to 9 PM daily</p>
+          </div>
+          <svg class="w-5 h-5 text-white opacity-70 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </a>
+
+        <!-- Business hours -->
+        <div class="glass p-5 rounded-2xl">
+          <h4 class="text-white font-bold text-sm mb-3">Business Hours</h4>
+          <div class="space-y-2">
+            <?php
+            $hours = [
+              ['Monday – Friday', '9:00 AM – 8:00 PM'],
+              ['Saturday',        '9:00 AM – 6:00 PM'],
+              ['Sunday',          '10:00 AM – 4:00 PM'],
+            ];
+            foreach($hours as $h): ?>
+            <div class="flex justify-between text-sm">
+              <span class="text-slate-400"><?= htmlspecialchars($h[0]) ?></span>
+              <span class="text-cyan-400 font-semibold"><?= htmlspecialchars($h[1]) ?></span>
+            </div>
+            <?php endforeach; ?>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Form -->
+      <div class="glass-strong p-8 rounded-3xl reveal-right" style="box-shadow:0 40px 100px rgba(0,0,0,.4)">
+        <div class="mb-7">
+          <h3 class="font-display font-bold text-xl text-white">Get Free Career Counselling</h3>
+          <p class="text-slate-400 text-sm mt-1">Fill in the form below. We'll call you within 24 hours.</p>
+        </div>
+
+        <?php if($formSuccess): ?>
+        <!-- Success State -->
+        <div class="text-center py-8">
+          <div class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-5" style="background:linear-gradient(135deg,rgba(34,197,94,.2),rgba(34,197,94,.1))">
+            <svg class="w-10 h-10 text-green-400" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <h4 class="text-white font-display font-bold text-xl mb-2">Thank You! We'll Be in Touch.</h4>
+          <p class="text-slate-400 text-sm mb-6">Our counsellor will call you within 24 hours. For immediate assistance, WhatsApp us!</p>
+          <a
+            href="https://wa.me/917418048039?text=Hi!%20I%20just%20submitted%20an%20enquiry%20on%20iucedu.com"
+            target="_blank" rel="noopener noreferrer"
+            class="btn btn-success btn-md"
+          >
+            Continue on WhatsApp →
+          </a>
+        </div>
+
+        <?php else: ?>
+
+        <?php if($formError): ?>
+        <div class="glass p-4 rounded-xl border border-red-500/20 text-red-400 text-sm mb-5 flex items-start gap-3" role="alert">
+          <svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <?= htmlspecialchars($formError) ?>
+        </div>
+        <?php endif; ?>
+
+        <form method="POST" action="#contact" class="space-y-5" novalidate>
+
+          <!-- CSRF -->
+          <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>" />
+
+          <!-- Row 1: Name + Phone -->
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label for="name" class="form-label">Full Name *</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="e.g. Rohith Kumar"
+                value="<?= htmlspecialchars($_POST['name'] ?? '') ?>"
+                required
+                autocomplete="name"
+                class="form-input"
+                aria-required="true"
+              />
+            </div>
+            <div>
+              <label for="phone" class="form-label">Phone Number *</label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                placeholder="+91 XXXXX XXXXX"
+                value="<?= htmlspecialchars($_POST['phone'] ?? '') ?>"
+                required
+                autocomplete="tel"
+                class="form-input"
+                aria-required="true"
+              />
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div>
+            <label for="email" class="form-label">Email Address *</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="you@example.com"
+              value="<?= htmlspecialchars($_POST['email'] ?? '') ?>"
+              required
+              autocomplete="email"
+              class="form-input"
+              aria-required="true"
+            />
+          </div>
+
+          <!-- Course interest -->
+          <div>
+            <label for="course" class="form-label">Course Interest *</label>
+            <select id="course" name="course" required class="form-input" style="color:<?= empty($_POST['course'])?'#475569':'#fff' ?>" aria-required="true">
+              <option value="" disabled <?= empty($_POST['course'])?'selected':'' ?>>Select a program you're interested in…</option>
+              <?php
+              $courseOptions = [
+                'Full Stack Web Development',
+                'Cybersecurity & Ethical Hacking',
+                'Data Science & AI/ML',
+                'Cloud Computing (AWS / Azure)',
+                'UI/UX Design & Prototyping',
+                'Digital Marketing & SEO',
+                'Tally & Accounting Software',
+                'MS Office & Computer Basics',
+                'Other / Not Sure Yet',
+              ];
+              foreach($courseOptions as $co): ?>
+              <option value="<?= htmlspecialchars($co) ?>" <?= (($_POST['course'] ?? '')===$co)?'selected':'' ?>>
+                <?= htmlspecialchars($co) ?>
+              </option>
+              <?php endforeach; ?>
+            </select>
+          </div>
+
+          <!-- Message -->
+          <div>
+            <label for="message" class="form-label">Message (Optional)</label>
+            <textarea
+              id="message"
+              name="message"
+              rows="3"
+              placeholder="Any specific questions, requirements, or preferred batch timing…"
+              class="form-input resize-none"
+            ><?= htmlspecialchars($_POST['message'] ?? '') ?></textarea>
+          </div>
+
+          <!-- CAPTCHA -->
+          <div>
+            <label class="form-label">Security Verification *</label>
+            <div class="flex items-center gap-3 mb-3">
+              <div class="px-6 py-3 rounded-xl font-display font-extrabold tracking-[6px] text-xl text-cyan-400 border select-none" style="background:rgba(6,182,212,.08);border-color:rgba(6,182,212,.2);letter-spacing:.4em">
+                <?= $_SESSION['captcha'] ?>
+              </div>
+              <p class="text-slate-500 text-xs">Enter the 4-digit code shown</p>
+            </div>
+            <input
+              type="text"
+              name="captcha"
+              placeholder="Enter the code above"
+              required
+              maxlength="4"
+              class="form-input"
+              aria-label="CAPTCHA verification code"
+              aria-required="true"
+            />
+          </div>
+
+          <!-- Submit -->
+          <button type="submit" name="contact_submit" class="btn btn-primary btn-lg w-full justify-center">
+            Get Free Counselling — It's 100% Free
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+          </button>
+
+          <!-- Trust micro-copy -->
+          <div class="flex items-center justify-center gap-4 text-xs text-slate-600">
+            <div class="flex items-center gap-1">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+              256-bit SSL secured
+            </div>
+            <div class="flex items-center gap-1">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+              Data never shared
+            </div>
+            <div class="flex items-center gap-1">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              Reply within 24 hrs
+            </div>
+          </div>
+        </form>
+        <?php endif; ?>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     PREMIUM FOOTER
+══════════════════════════════════════════════════════════════ -->
+<footer style="background:#040a18;border-top:1px solid rgba(255,255,255,.05)" role="contentinfo">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
+
+      <!-- Brand column -->
+      <div class="sm:col-span-2 space-y-5">
+        <!-- Logo -->
+        <div>
+          <img
+            src="Logo_Text1.png"
+            alt="IUC Computers"
+            class="h-12 w-auto"
+            loading="lazy"
+            onerror="this.style.display='none'"
+          />
+        </div>
+        <p class="text-slate-400 text-sm leading-relaxed max-w-xs">
+          Premier IT training institute in Chennai delivering world-class technology education since 2005. 25,000+ careers launched and counting.
+        </p>
+
+        <!-- Contact info -->
+        <div class="space-y-2 text-sm text-slate-500">
+          <p><span class="text-cyan-400 font-semibold">Head Office:</span> C.I.T Nagar, Chennai – 600 035</p>
+          <p><span class="text-cyan-400 font-semibold">Branch:</span> Thiruvottiyur, Chennai – 600 019</p>
+          <p><span class="text-cyan-400 font-semibold">Phone:</span> +91 74180 48039</p>
+          <p><span class="text-cyan-400 font-semibold">Email:</span> info@iucedu.com</p>
+        </div>
+
+        <!-- Social links -->
+        <div class="flex gap-2.5">
+          <?php
+          $socials = [
+            ['Facebook',  'https://www.facebook.com/IUCComputerEducation', 'M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z'],
+            ['Instagram', 'https://www.instagram.com/iuc_computers/',      'M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zm1.5-4.87h.01M6.5 19.5h11a3 3 0 003-3v-11a3 3 0 00-3-3h-11a3 3 0 00-3 3v11a3 3 0 003 3z'],
+            ['LinkedIn',  'https://www.linkedin.com/in/r-senthil-kumar-522213b9/', 'M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z M4 6a2 2 0 100-4 2 2 0 000 4z'],
+            ['YouTube',   'https://www.youtube.com/@iuccomputers5136',     'M22.54 6.42a2.78 2.78 0 00-1.94-1.96C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 1.96A29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.4 19.54C5.12 20 12 20 12 20s6.88 0 8.6-.46a2.78 2.78 0 001.94-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z'],
+          ];
+          foreach($socials as $soc): ?>
+          <a
+            href="<?= htmlspecialchars($soc[1]) ?>"
+            aria-label="Follow IUC Computers on <?= $soc[0] ?>"
+            class="w-9 h-9 rounded-xl glass flex items-center justify-center text-slate-500 hover:text-cyan-400 hover:border-cyan-500/30 transition-all"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="<?= $soc[2] ?>"/></svg>
+          </a>
+          <?php endforeach; ?>
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-5">Quick Links</h4>
+        <ul class="space-y-2.5" role="list">
+          <?php foreach(['Home'=>'#home','Programs'=>'#programs','Learning Path'=>'#learning-path','Mentors'=>'#mentors','Success Stories'=>'#testimonials','Pricing'=>'#pricing','Contact'=>'#contact'] as $label=>$href): ?>
+          <li>
+            <a href="<?= htmlspecialchars($href) ?>" class="text-slate-500 hover:text-cyan-400 text-sm transition flex items-center gap-1.5 group">
+              <svg class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+              <?= htmlspecialchars($label) ?>            </a>
+          </li>
+          <?php endforeach; ?>
+        </ul>
+      </div>
+
+      <!-- Programs -->
+      <div>
+        <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-5">Programs</h4>
+        <ul class="space-y-2.5" role="list">
+          <?php foreach($programs as $p): ?>
+          <li>
+            <a href="#programs" class="text-slate-500 hover:text-cyan-400 text-sm transition flex items-center gap-1.5 group">
+              <svg class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+              <?= htmlspecialchars($p['title']) ?>
+            </a>
+          </li>
+          <?php endforeach; ?>
+        </ul>
+      </div>
+
+      <!-- Contact & Legal -->
+      <div>
+        <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-5">Support</h4>
+        <ul class="space-y-2.5" role="list">
+          <?php
+          $supportLinks = [
+            ['Free Counselling',    '#contact'],
+            ['Download Brochure',   '#contact'],
+            ['Scholarship Info',    '#pricing'],
+            ['EMI Options',         '#pricing'],
+            ['Student Login',       '#contact'],
+            ['Alumni Network',      '#contact'],
+            ['Privacy Policy',      '#'],
+            ['Terms of Service',    '#'],
+            ['Refund Policy',       '#'],
+          ];
+          foreach($supportLinks as $sl): ?>
+          <li>
+            <a href="<?= htmlspecialchars($sl[1]) ?>" class="text-slate-500 hover:text-cyan-400 text-sm transition flex items-center gap-1.5 group">
+              <svg class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+              <?= htmlspecialchars($sl[0]) ?>
+            </a>
+          </li>
+          <?php endforeach; ?>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Footer bottom bar -->
+    <div class="border-t pt-8 flex flex-col sm:flex-row items-center justify-between gap-4" style="border-color:rgba(255,255,255,.06)">
+      <p class="text-slate-600 text-xs text-center sm:text-left">
+        © <?= date('Y') ?> IUC Computers. All rights reserved. Designed &amp; developed with ❤️ in Chennai.
+      </p>
+      <div class="flex flex-wrap items-center justify-center gap-4">
+        <?php foreach(['Privacy Policy'=>'#','Terms of Service'=>'#','Refund Policy'=>'#','Sitemap'=>'#'] as $label=>$href): ?>
+        <a href="<?= htmlspecialchars($href) ?>" class="text-slate-600 hover:text-slate-400 text-xs transition">
+          <?= htmlspecialchars($label) ?>
+        </a>
+        <?php endforeach; ?>
+      </div>
+      <div class="flex items-center gap-2 text-xs text-slate-600">
+        <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+        All systems operational
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     WHATSAPP FLOATING BUTTON
+══════════════════════════════════════════════════════════════ -->
+<a
+  id="wa-float"
+  href="https://wa.me/917418048039?text=Hi!%20I%27m%20interested%20in%20IUC%20Computers%20programs.%20Please%20guide%20me."
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Chat with IUC Computers on WhatsApp"
+>
+  <span id="wa-float-tooltip">Chat with us on WhatsApp</span>
+  <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     SCROLL TO TOP
+══════════════════════════════════════════════════════════════ -->
+<button
+  id="scroll-top"
+  aria-label="Scroll back to top"
+  onclick="window.scrollTo({top:0,behavior:'smooth'})"
+>
+  <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/>
+  </svg>
+</button>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════════════════════════ -->
+<script>
+(function () {
+  'use strict';
+
+  /* ── 1. Navbar scroll effect ─────────────────────────────── */
+  const navbar = document.getElementById('navbar');
+  const onScroll = () => {
+    if (window.scrollY > 60) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+
+  /* ── 2. Mobile menu toggle ───────────────────────────────── */
+  const hamburger   = document.getElementById('hamburger');
+  const mobileMenu  = document.getElementById('mobile-menu');
+  const ham1        = document.getElementById('ham-1');
+  const ham2        = document.getElementById('ham-2');
+  const ham3        = document.getElementById('ham-3');
+  let menuOpen      = false;
+
+  hamburger.addEventListener('click', () => {
+    menuOpen = !menuOpen;
+    hamburger.setAttribute('aria-expanded', menuOpen);
+    mobileMenu.classList.toggle('open', menuOpen);
+
+    if (menuOpen) {
+      ham1.style.transform = 'translateY(8px) rotate(45deg)';
+      ham2.style.opacity   = '0';
+      ham3.style.transform = 'translateY(-8px) rotate(-45deg)';
+      ham3.style.width     = '20px';
+      ham3.style.background = '#fff';
+    } else {
+      ham1.style.transform = '';
+      ham2.style.opacity   = '1';
+      ham3.style.transform = '';
+      ham3.style.width     = '16px';
+      ham3.style.background = '';
+    }
+  });
+
+  // Close mobile menu when a link is clicked
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      menuOpen = false;
+      hamburger.setAttribute('aria-expanded', 'false');
+      mobileMenu.classList.remove('open');
+      ham1.style.transform = '';
+      ham2.style.opacity   = '1';
+      ham3.style.transform = '';
+      ham3.style.width     = '16px';
+      ham3.style.background = '';
+    });
+  });
+
+
+  /* ── 3. Active nav link on scroll ───────────────────────── */
+  const sections  = document.querySelectorAll('section[id], div[id]');
+  const navLinks  = document.querySelectorAll('.nav-link');
+
+  const activateLink = () => {
+    let current = '';
+    sections.forEach(sec => {
+      if (window.scrollY >= sec.offsetTop - 100) current = sec.id;
+    });
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === '#' + current) {
+        link.classList.add('active');
+      }
+    });
+  };
+  window.addEventListener('scroll', activateLink, { passive: true });
+
+
+  /* ── 4. Scroll reveal (Intersection Observer) ────────────── */
+  const revealEls = document.querySelectorAll(
+    '.reveal, .reveal-scale, .reveal-left, .reveal-right'
+  );
+
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+  );
+
+  revealEls.forEach(el => revealObserver.observe(el));
+
+
+  /* ── 5. Counter animation ────────────────────────────────── */
+  const counters = document.querySelectorAll('.counter');
+
+  const animateCounter = (el) => {
+    const target   = parseInt(el.dataset.target, 10);
+    const suffix   = el.textContent.replace(/[0-9]/g, '').trim();
+    const duration = 1800;
+    const step     = 16;
+    const increment = target / (duration / step);
+    let current    = 0;
+
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= target) {
+        current = target;
+        clearInterval(timer);
+      }
+      el.textContent = Math.floor(current).toLocaleString('en-IN') + suffix;
+    }, step);
+  };
+
+  const counterObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.5 }
+  );
+
+  counters.forEach(c => counterObserver.observe(c));
+
+
+  /* ── 6. Progress bar animation ───────────────────────────── */
+  const progressFills = document.querySelectorAll('.progress-fill');
+
+  const progressObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const target = entry.target.dataset.width || '0';
+          entry.target.style.width = target + '%';
+          progressObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.3 }
+  );
+
+  progressFills.forEach(bar => {
+    bar.style.width = '0%';
+    progressObserver.observe(bar);
+  });
+
+
+  /* ── 7. Program filter tabs ──────────────────────────────── */
+  const tabBtns    = document.querySelectorAll('.tab-btn');
+  const programCards = document.querySelectorAll('#programs-grid article');
+
+  const categoryMap = {
+    'allprograms'  : null,
+    'development'  : ['Full Stack Web Development'],
+    'data&ai'      : ['Data Science & AI/ML'],
+    'dataai'       : ['Data Science & AI/ML'],
+    'security'     : ['Cybersecurity & Ethical Hacking'],
+    'cloud'        : ['Cloud Computing (AWS / Azure)'],
+    'design'       : ['UI/UX Design & Prototyping'],
+    'marketing'    : ['Digital Marketing & SEO'],
+  };
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Update active state
+      tabBtns.forEach(b => {
+        b.classList.remove('bg-gradient-to-r', 'from-brand-600', 'to-cyan-DEFAULT', 'text-white', 'border-transparent');
+        b.classList.add('text-slate-400', 'border-white/10', 'glass');
+        b.setAttribute('aria-selected', 'false');
+      });
+      btn.classList.add('bg-gradient-to-r', 'from-brand-600', 'to-cyan-DEFAULT', 'text-white', 'border-transparent');
+      btn.classList.remove('text-slate-400', 'border-white/10', 'glass');
+      btn.setAttribute('aria-selected', 'true');
+
+      const tab     = btn.dataset.tab;
+      const allowed = categoryMap[tab];
+
+      programCards.forEach(card => {
+        if (!allowed) {
+          card.style.display = '';
+          return;
+        }
+        const title = card.querySelector('h3') ? card.querySelector('h3').textContent.trim() : '';
+        const match = allowed.some(t => title.includes(t));
+        card.style.display = match ? '' : 'none';
+      });
+    });
+  });
+
+
+  /* ── 8. Scroll-to-top button ─────────────────────────────── */
+  const scrollTopBtn = document.getElementById('scroll-top');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 400) {
+      scrollTopBtn.classList.add('visible');
+    } else {
+      scrollTopBtn.classList.remove('visible');
+    }
+  }, { passive: true });
+
+
+  /* ── 9. Countdown timer ──────────────────────────────────── */
+  const countdownTarget = new Date('2025-02-05T09:00:00+05:30').getTime();
+
+  const cdDays = document.getElementById('cd-days');
+  const cdHrs  = document.getElementById('cd-hrs');
+  const cdMins = document.getElementById('cd-mins');
+  const cdSecs = document.getElementById('cd-secs');
+
+  const updateCountdown = () => {
+    const now  = Date.now();
+    const diff = countdownTarget - now;
+
+    if (diff <= 0) {
+      if (cdDays) cdDays.textContent = '00';
+      if (cdHrs)  cdHrs.textContent  = '00';
+      if (cdMins) cdMins.textContent = '00';
+      if (cdSecs) cdSecs.textContent = '00';
+      return;
+    }
+
+    const days = Math.floor(diff / 86400000);
+    const hrs  = Math.floor((diff % 86400000) / 3600000);
+    const mins = Math.floor((diff % 3600000)  / 60000);
+    const secs = Math.floor((diff % 60000)    / 1000);
+
+    if (cdDays) cdDays.textContent = String(days).padStart(2, '0');
+    if (cdHrs)  cdHrs.textContent  = String(hrs).padStart(2, '0');
+    if (cdMins) cdMins.textContent = String(mins).padStart(2, '0');
+    if (cdSecs) cdSecs.textContent = String(secs).padStart(2, '0');
+  };
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+
+  /* ── 10. Smooth anchor scroll (offset for fixed navbar) ──── */
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (!target) return;
+      e.preventDefault();
+      const offset = 80;
+      const top    = target.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
+    });
+  });
+
+
+  /* ── 11. Form select color fix ───────────────────────────── */
+  const courseSelect = document.getElementById('course');
+  if (courseSelect) {
+    courseSelect.addEventListener('change', function () {
+      this.style.color = this.value ? '#fff' : '#475569';
+    });
+  }
+
+
+  /* ── 12. Stagger animation index injection ───────────────── */
+  document.querySelectorAll('.stagger > *').forEach((el, i) => {
+    el.style.setProperty('--i', i);
+  });
+
+
+  /* ── 13. Curriculum item — only one open at a time ───────── */
+  document.querySelectorAll('.curriculum-item details').forEach(detail => {
+    detail.addEventListener('toggle', function () {
+      if (this.open) {
+        document.querySelectorAll('.curriculum-item details').forEach(other => {
+          if (other !== this) other.open = false;
+        });
+      }
+    });
+  });
+
+
+  /* ── 14. FAQ item — only one open at a time ──────────────── */
+  document.querySelectorAll('.faq-item details').forEach(detail => {
+    detail.addEventListener('toggle', function () {
+      if (this.open) {
+        document.querySelectorAll('.faq-item details').forEach(other => {
+          if (other !== this) other.open = false;
+        });
+      }
+    });
+  });
+
+
+  /* ── 15. Google Analytics — form submit event ────────────── */
+  const contactForm = document.querySelector('form[method="POST"]');
+  if (contactForm) {
+    contactForm.addEventListener('submit', () => {
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'form_submit', {
+          event_category: 'Lead',
+          event_label:    'Contact Form',
+        });
+      }
+      if (typeof fbq !== 'undefined') {
+        fbq('track', 'Lead');
+      }
+    });
+  }
+
+
+  /* ── 16. Lazy load images polyfill (native fallback) ────── */
+  if ('loading' in HTMLImageElement.prototype === false) {
+    document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+      img.src = img.src;
+    });
+  }
+
+})();
+</script>
+
+</body>
+</html>
