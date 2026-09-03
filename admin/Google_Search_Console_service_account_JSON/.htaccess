@@ -1,0 +1,2 @@
+# Service-account credentials must never be served over HTTP.
+Require all denied

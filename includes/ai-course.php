@@ -36,7 +36,7 @@
 
             <div data-aos="fade-left" style="position:relative">
                 <div style="border-radius:var(--radius-2xl);overflow:hidden;box-shadow:var(--shadow-lg)">
-                    <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=700&q=80" alt="AI & ML Course" style="width:100%;height:380px;object-fit:cover" loading="lazy" />
+                    <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=700&q=80" alt="Artificial intelligence and machine learning course at IUC Edu Chennai" style="width:100%;height:380px;object-fit:cover" loading="lazy" />
                 </div>
                 <div style="position:relative;background:var(--clr-white);padding:0.75rem 1rem;border-radius:var(--radius-xl);box-shadow:var(--shadow-lg);display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:1rem" data-aos="fade-up" data-aos-delay="300">
                     <div style="display:flex;gap:0.75rem">

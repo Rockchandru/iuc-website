@@ -1,29 +1,157 @@
+<?php
+$escape = static function ($value) {
+    return htmlspecialchars((string) $value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+};
+
+$seoTitle = $pageTitle ?? SITE_NAME . ' – IT Training Institute in Chennai';
+$seoDescription = $metaDesc ?? 'Explore industry-focused IT courses in Chennai with live projects, expert mentors, flexible batches and placement assistance from IUC Edu.';
+$seoRobots = $robotsMeta ?? 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
+$seoOgTitle = $ogTitle ?? $seoTitle;
+$seoOgDescription = $ogDesc ?? $seoDescription;
+$seoOgImage = $ogImage ?? SITE_URL . '/assets/images/about-education.jpg';
+$seoOgImageAlt = $ogImageAlt ?? SITE_NAME . ' IT training institute in Chennai';
+$seoOgType = $ogType ?? 'website';
+$canonicalUrl = null;
+
+if (!isset($canonical) || $canonical !== false) {
+    $canonicalPath = trim((string) ($canonical ?? ''), '/');
+    $canonicalUrl = SITE_URL . ($canonicalPath === '' ? '/' : '/' . $canonicalPath);
+}
+
+$organizationId = SITE_URL . '/#organization';
+$branchOrganizationId = SITE_URL . '/#thiruvottiyur-centre';
+$websiteId = SITE_URL . '/#website';
+$schemaGraph = [
+    [
+        '@type' => ['EducationalOrganization', 'LocalBusiness'],
+        '@id' => $organizationId,
+        'name' => SITE_NAME,
+        'alternateName' => 'IUC Computers',
+        'url' => SITE_URL . '/',
+        'logo' => [
+            '@type' => 'ImageObject',
+            'url' => SITE_URL . '/assets/images/Brandlogo.png',
+            'width' => 836,
+            'height' => 450,
+        ],
+        'description' => 'Computer and IT training institute in Chennai offering programming, software and career-focused technology courses with practical training.',
+        'address' => [
+            '@type' => 'PostalAddress',
+            'streetAddress' => '#1&2 Gold Nest Apts, 2nd Main Road, C.I.T Nagar',
+            'addressLocality' => 'Chennai',
+            'addressRegion' => 'Tamil Nadu',
+            'postalCode' => '600035',
+            'addressCountry' => 'IN',
+        ],
+        'telephone' => '+91' . SITE_PHONE,
+        'email' => SITE_EMAIL,
+        'priceRange' => '₹₹',
+        'areaServed' => ['@type' => 'City', 'name' => 'Chennai'],
+        'hasMap' => 'https://www.google.com/maps/search/?api=1&query=Gold%20Nest%20Apartments%2C%202nd%20Main%20Road%2C%20C.I.T%20Nagar%2C%20Nandanam%2C%20Chennai%2C%20Tamil%20Nadu%20600035',
+        'contactPoint' => [
+            '@type' => 'ContactPoint',
+            'telephone' => '+91' . SITE_PHONE,
+            'contactType' => 'admissions',
+            'areaServed' => 'IN',
+            'availableLanguage' => ['English', 'Tamil'],
+        ],
+        'department' => ['@id' => $branchOrganizationId],
+        'sameAs' => [FACEBOOK_URL, INSTAGRAM_URL, LINKEDIN_URL, YOUTUBE_URL],
+    ],
+    [
+        '@type' => ['EducationalOrganization', 'LocalBusiness'],
+        '@id' => $branchOrganizationId,
+        'name' => 'IUC Edu - Thiruvottiyur Centre',
+        'url' => SITE_URL . '/#contact',
+        'parentOrganization' => ['@id' => $organizationId],
+        'address' => [
+            '@type' => 'PostalAddress',
+            'streetAddress' => '19/11 Balakrishna Colony 1st Street, Kaladipet, Thiruvottiyur',
+            'addressLocality' => 'Chennai',
+            'addressRegion' => 'Tamil Nadu',
+            'postalCode' => '600019',
+            'addressCountry' => 'IN',
+        ],
+        'telephone' => BRANCH_LANDLINE,
+        'priceRange' => '₹₹',
+        'hasMap' => 'https://www.google.com/maps/search/?api=1&query=IUC%20Computers%2C%20Kaladipet%2C%20Thiruvottiyur%2C%20Chennai%2C%20Tamil%20Nadu%20600019',
+    ],
+    [
+        '@type' => 'WebSite',
+        '@id' => $websiteId,
+        'url' => SITE_URL . '/',
+        'name' => SITE_NAME,
+        'publisher' => ['@id' => $organizationId],
+        'inLanguage' => 'en-IN',
+    ],
+];
+
+if ($canonicalUrl !== null) {
+    $schemaGraph[] = [
+        '@type' => $schemaPageType ?? 'WebPage',
+        '@id' => $canonicalUrl . '#webpage',
+        'url' => $canonicalUrl,
+        'name' => $seoTitle,
+        'description' => $seoDescription,
+        'isPartOf' => ['@id' => $websiteId],
+        'about' => ['@id' => $organizationId],
+        'primaryImageOfPage' => [
+            '@type' => 'ImageObject',
+            'url' => $seoOgImage,
+        ],
+        'inLanguage' => 'en-IN',
+    ];
+}
+
+if (!empty($structuredData) && is_array($structuredData)) {
+    $additionalSchemas = isset($structuredData['@type']) ? [$structuredData] : $structuredData;
+    foreach ($additionalSchemas as $additionalSchema) {
+        if (is_array($additionalSchema) && isset($additionalSchema['@type'])) {
+            $schemaGraph[] = $additionalSchema;
+        }
+    }
+}
+?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IN">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?= $pageTitle ?? SITE_NAME . ' – Premier IT Training Institute in Chennai' ?></title>
-    <meta name="description" content="<?= $metaDesc ?? 'IUC Edu – Premier IT training institute in Chennai. 50+ programs in AI/ML, Full Stack, Data Science, Cyber Security, Cloud Computing & Digital Marketing with 98% placement support.' ?>" />
-    <meta name="keywords" content="IT training institute Chennai, programming courses, AI ML course, data science course, full stack development, cyber security training, digital marketing course, IUC Edu" />
-    <link rel="canonical" href="<?= SITE_URL ?>/<?= $canonical ?? '' ?>" />
+    <title><?= $escape($seoTitle) ?></title>
+    <meta name="description" content="<?= $escape($seoDescription) ?>" />
+    <meta name="robots" content="<?= $escape($seoRobots) ?>" />
+    <?php if ($canonicalUrl !== null): ?>
+    <link rel="canonical" href="<?= $escape($canonicalUrl) ?>" />
+    <?php endif; ?>
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="<?= BASE_URL ?>/assets/images/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="<?= BASE_URL ?>/assets/images/iuc_pyramid_logo.png" />
 
     <!-- Open Graph -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="<?= SITE_URL ?>/<?= $canonical ?? '' ?>" />
-    <meta property="og:title" content="<?= $ogTitle ?? SITE_NAME . ' – Launch Your Tech Career' ?>" />
-    <meta property="og:description" content="<?= $ogDesc ?? '50+ IT programs with 98% placement support. Expert mentors & globally recognized certifications.' ?>" />
-    <meta property="og:image" content="<?= $ogImage ?? 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&q=80' ?>" />
+    <meta property="og:locale" content="en_IN" />
+    <meta property="og:type" content="<?= $escape($seoOgType) ?>" />
+    <?php if ($canonicalUrl !== null): ?>
+    <meta property="og:url" content="<?= $escape($canonicalUrl) ?>" />
+    <?php endif; ?>
+    <meta property="og:site_name" content="<?= $escape(SITE_NAME) ?>" />
+    <meta property="og:title" content="<?= $escape($seoOgTitle) ?>" />
+    <meta property="og:description" content="<?= $escape($seoOgDescription) ?>" />
+    <meta property="og:image" content="<?= $escape($seoOgImage) ?>" />
+    <meta property="og:image:alt" content="<?= $escape($seoOgImageAlt) ?>" />
+    <?php if (!empty($articlePublishedTime)): ?>
+    <meta property="article:published_time" content="<?= $escape($articlePublishedTime) ?>" />
+    <?php endif; ?>
+    <?php if (!empty($articleAuthor)): ?>
+    <meta property="article:author" content="<?= $escape($articleAuthor) ?>" />
+    <?php endif; ?>
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="<?= $ogTitle ?? SITE_NAME . ' – Launch Your Tech Career' ?>" />
-    <meta name="twitter:description" content="<?= $ogDesc ?? 'Premier IT training with 98% placement support.' ?>" />
-    <meta name="twitter:image" content="<?= $ogImage ?? 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&q=80' ?>" />
+    <meta name="twitter:title" content="<?= $escape($seoOgTitle) ?>" />
+    <meta name="twitter:description" content="<?= $escape($seoOgDescription) ?>" />
+    <meta name="twitter:image" content="<?= $escape($seoOgImage) ?>" />
+    <meta name="twitter:image:alt" content="<?= $escape($seoOgImageAlt) ?>" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -41,36 +169,14 @@
     <script>var BASE_URL = '<?= BASE_URL ?>';</script>
 
     <!-- Analytics Tracker (tracks visitors, sessions & UTM campaigns) -->
-    <script src="<?= BASE_URL ?>/assets/js/tracker.js?v=<?= @filemtime(__DIR__ . '/../assets/js/tracker.js') ?>"></script>
+    <script defer src="<?= BASE_URL ?>/assets/js/tracker.js?v=<?= @filemtime(__DIR__ . '/../assets/js/tracker.js') ?>"></script>
 
     <!-- Structured Data -->
     <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "EducationalOrganization",
-        "name": "IUC Edu",
-        "url": "<?= SITE_URL ?>",
-        "description": "Premier IT training institute in Chennai with 50+ programs and 98% placement support.",
-        "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "#1&2 Gold Nest Apts, 2nd Main Road, C.I.T Nagar",
-            "addressLocality": "Chennai",
-            "postalCode": "600035",
-            "addressCountry": "IN"
-        },
-        "telephone": "+91<?= SITE_PHONE ?>",
-        "email": "<?= SITE_EMAIL ?>",
-        "sameAs": ["<?= FACEBOOK_URL ?>", "<?= INSTAGRAM_URL ?>", "<?= LINKEDIN_URL ?>"],
-        "hasOfferCatalog": {
-            "@type": "OfferCatalog",
-            "name": "IT Training Programs",
-            "itemListElement": [
-                <?php $ci = 0; foreach(array_slice($courses, 0, 12) as $courseSlug => $courseEntry): ?>
-                {"@type": "Course", "name": "<?= $courseEntry['title'] ?>"}<?= ++$ci < min(12, count($courses)) ? ',' : '' ?>
-                <?php endforeach; ?>
-            ]
-        }
-    }
+    <?= json_encode(
+        ['@context' => 'https://schema.org', '@graph' => $schemaGraph],
+        JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT
+    ) ?>
     </script>
 </head>
 <body>
@@ -80,7 +186,7 @@
     <div class="container navbar-inner">
         <a href="<?= BASE_URL ?>/" class="navbar-logo" aria-label="<?= SITE_NAME ?> - Home">
             <!-- <img src="<?= BASE_URL ?>/assets/images/iuc_pyramid_logo.png" alt="" class="navbar-logo-mark" aria-hidden="true" /> -->
-            <img src="<?= BASE_URL ?>/assets/images/Brandlogo.png" alt="" class="navbar-logo-mark" aria-hidden="true" />
+            <img src="<?= BASE_URL ?>/assets/images/Brandlogo.png" alt="" class="navbar-logo-mark" width="836" height="450" aria-hidden="true" />
            <!--  <div class="logo-text ">
                 <span class="logo-iuc">IUC</span>
                 <span class="logo-edutech">Computers</span>
@@ -94,7 +200,7 @@
         </nav>
 
         <div class="navbar-actions">
-            <a href="<?= BASE_URL ?>/admin/" class="btn btn-ghost btn-sm" title="Admin Login">
+            <a href="<?= BASE_URL ?>/admin/" class="btn btn-ghost btn-sm" title="Admin Login" rel="nofollow">
                 <i class="bi bi-person-gear"></i> <span class="admin-login-label">Admin</span>
             </a>
             <a href="tel:+91<?= SITE_PHONE ?>" class="btn btn-ghost btn-sm">

@@ -6,7 +6,7 @@
         <div class="footer-grid">
             <!-- Brand -->
             <div class="footer-brand">
-                <img src="<?= BASE_URL ?>/assets/images/logo.png" alt="<?= SITE_NAME ?>" class="footer-logo" style="margin-bottom:0.75rem" />
+                <img src="<?= BASE_URL ?>/assets/images/logo.png" alt="IUC Edu computer education institute" class="footer-logo" width="836" height="450" style="margin-bottom:0.75rem" loading="lazy" />
                 <p>Premier IT training institute in Chennai delivering world-class technology education with 98% placement support. 25,000+ careers launched and counting.</p>
                 <div class="footer-social">
                     <a href="<?= FACEBOOK_URL ?>" aria-label="Facebook" target="_blank" rel="noopener"><i class="bi bi-facebook"></i></a>
@@ -23,6 +23,11 @@
                     <?php foreach ($navLinks as $link): ?>
                     <a href="<?= BASE_URL ?>/#<?= $link[1] ?>" class="footer-link"><?= $link[0] ?></a>
                     <?php endforeach; ?>
+                    <a href="<?= BASE_URL ?>/computer-training-in-chennai" class="footer-link">Computer Training in Chennai</a>
+                    <a href="<?= BASE_URL ?>/programming-courses-in-chennai" class="footer-link">Programming Courses</a>
+                    <a href="<?= BASE_URL ?>/it-courses-for-beginners" class="footer-link">Beginner IT Courses</a>
+                    <a href="<?= BASE_URL ?>/online-it-courses" class="footer-link">Online IT Courses</a>
+                    <a href="<?= BASE_URL ?>/blog" class="footer-link">Learning Blog</a>
                     <a href="<?= BASE_URL ?>/sitemap.xml" class="footer-link">Sitemap</a>
                 </div>
             </div>
@@ -77,9 +82,9 @@
         <div class="footer-bottom">
             <span>&copy; <?= date('Y') ?> <?= SITE_NAME ?>. All rights reserved.</span>
             <div>
-                <a href="#" class="footer-link" style="margin-right:1rem">Privacy Policy</a>
-                <a href="#" class="footer-link" style="margin-right:1rem">Terms of Service</a>
-                <a href="#" class="footer-link">Refund Policy</a>
+                <span class="footer-link" style="margin-right:1rem">Privacy Policy</span>
+                <span class="footer-link" style="margin-right:1rem">Terms of Service</span>
+                <span class="footer-link">Refund Policy</span>
             </div>
         </div>
     </div>

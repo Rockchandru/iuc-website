@@ -3,6 +3,7 @@
    IUC Edu — Data & Functions
    ═══════════════════════════════════════════════════════════════ */
 
+date_default_timezone_set('Asia/Kolkata');
 session_start();
 
 if (empty($_SESSION['csrf_token'])) {
@@ -1095,16 +1096,16 @@ $companies = [
 
 // ── FAQ Data ──────────────────────────────────────────
 $faqs = [
-    ['q' => 'What courses does IUC Edu offer?', 'a' => 'We offer 50+ courses across AI/ML, Data Science, Python, Java, Full Stack, Spring Boot, React, Angular, Node.js, UI/UX, Software Testing, DevOps, Cloud Computing, Cyber Security, Digital Marketing, and Internship programs.'],
-    ['q' => 'Do I need prior programming experience?', 'a' => 'No! Most of our programs are designed for absolute beginners. We start from fundamentals and progressively build to advanced levels. Our instructors use a hands-on approach that makes complex concepts easy to understand.'],
-    ['q' => 'What is the placement support process?', 'a' => 'Our placement support includes resume building, LinkedIn optimization, mock interviews (technical + HR), aptitude training, and direct referrals to 300+ hiring partners. We maintain a 98% placement rate.'],
-    ['q' => 'Are the certifications globally recognized?', 'a' => 'Yes. We prepare you for certifications from Microsoft, Google, AWS, CompTIA, Adobe, and EC-Council. You also receive an IUC Edu certificate upon completion.'],
-    ['q' => 'Do you offer online and offline classes?', 'a' => 'Yes. We offer both online (live virtual classroom) and offline (at our Chennai centers) modes. You can switch between modes anytime at no extra cost.'],
-    ['q' => 'What are the batch timings?', 'a' => 'We offer morning (7-9 AM), daytime (10 AM-1 PM), evening (6-9 PM), and weekend batches to accommodate students and working professionals.'],
-    ['q' => 'Is there an internship program?', 'a' => 'Yes! Our 3-month internship program includes real client projects, mentoring, a completion certificate, and hiring support. It\'s designed to bridge the gap between learning and industry.'],
-    ['q' => 'What is the fee structure and EMI options?', 'a' => 'Course fees start from ₹45,000 and go up to ₹55,000. We offer flexible no-cost EMI plans for 3, 6, and 12 months through our banking partners, with monthly payments starting as low as ₹4,500. Merit-based scholarships cover up to 50% of fees.'],
-    ['q' => 'What if I miss a class?', 'a' => 'All sessions are recorded and uploaded to our student portal within 24 hours. You also get access to doubt-clearing sessions, WhatsApp support groups, and 1-on-1 mentor sessions.'],
-    ['q' => 'How do I enroll?', 'a' => 'You can enroll by filling the contact form on our website, calling us, or visiting our center. Our career counselor will guide you through the process.'],
+    ['q' => 'Which IT course is best for beginners?', 'a' => 'The right starting point depends on your goal. C and C++ build programming fundamentals, Python offers a beginner-friendly path into coding and data, while software testing, UI/UX design and digital marketing are options for learners exploring other technology roles.'],
+    ['q' => 'Do I need programming experience to join?', 'a' => 'No prior programming experience is required for selected beginner courses. Every course page lists its eligibility and level so you can choose a program that matches your current skills.'],
+    ['q' => 'Does IUC Edu provide programming and coding classes in Chennai?', 'a' => 'Yes. IUC Edu provides instructor-led programming classes in Chennai for C, C++, Python, Java, frontend, backend and full stack development, with practical exercises and projects.'],
+    ['q' => 'What are the fees for computer courses?', 'a' => 'Fees vary by course, duration and learning track. Current fees and available payment options are shown on each course page; contact the admissions team to confirm the latest fee for your chosen batch.'],
+    ['q' => 'Does IUC Edu provide placement assistance?', 'a' => 'Yes. Placement assistance includes resume preparation, LinkedIn guidance, mock technical and HR interviews, aptitude preparation and job referrals where suitable.'],
+    ['q' => 'Are certificates provided after course completion?', 'a' => 'Yes. Students receive an IUC Edu course-completion certificate for the program they complete. Selected courses also include preparation for relevant external certification exams.'],
+    ['q' => 'Can working professionals join the courses?', 'a' => 'Yes. Morning, evening and weekend batch options are designed to accommodate students and working professionals. Batch availability varies by course.'],
+    ['q' => 'Are online computer and IT classes available?', 'a' => 'Yes. IUC Edu offers live instructor-led online classes as well as classroom training at its Chennai centres. Course pages identify the available training mode.'],
+    ['q' => 'Where is IUC Edu located in Chennai?', 'a' => 'The head office is in C.I.T Nagar near Nandanam, Chennai, and another training centre is in Kaladipet, Thiruvottiyur. Maps and directions are available in the contact section.'],
+    ['q' => 'How can I choose the right computer course?', 'a' => 'Compare the eligibility, curriculum, projects and career paths on each course page, or request counselling for guidance based on your experience and career goal.'],
 ];
 
 // ── Blog Posts Data ──────────────────────────────────
@@ -1113,6 +1114,8 @@ $blogPosts = [
         'slug' => 'top-programming-languages-2026',
         'title' => 'Top 10 Programming Languages to Learn in 2026',
         'excerpt' => 'Discover the most in-demand programming languages that will boost your career in 2026 and beyond.',
+        'seo_title' => 'Top Programming Languages to Learn in 2026',
+        'seo_description' => 'Discover the most in-demand programming languages to build your technology career in 2026, with practical learning guidance from IUC Edu in Chennai.',
         'content' => 'The technology landscape is evolving faster than ever. As we move through 2026, certain programming languages have emerged as must-learn skills for anyone looking to build a successful tech career. Here are the top 10 programming languages you should consider learning this year.
 
 1. **Python** – Continues to dominate AI, ML, data science, and backend development. Its simplicity and vast ecosystem make it the #1 choice for beginners and experts alike.
@@ -1145,6 +1148,8 @@ At IUC Edu, we offer comprehensive training in Python, Java, JavaScript, and man
         'slug' => 'crack-data-science-interviews',
         'title' => 'How to Crack Data Science Interviews at Top Tech Companies',
         'excerpt' => 'Expert tips and strategies to ace data science interviews at FAANG and top product-based companies.',
+        'seo_title' => 'Data Science Interview Preparation Guide',
+        'seo_description' => 'Prepare for data science interviews with practical guidance on statistics, machine learning, SQL, Python, portfolio projects and behavioral questions.',
         'content' => 'Landing a data science role at a top tech company requires more than just technical knowledge. Here\'s our comprehensive guide to cracking data science interviews at FAANG and other top companies.
 
 ## 1. Master the Fundamentals
@@ -1192,6 +1197,8 @@ At IUC Edu, our Data Science program includes dedicated interview preparation, m
         'slug' => 'future-of-ai-generative-ai-2026',
         'title' => 'The Future of AI: Generative AI Trends in 2026',
         'excerpt' => 'Explore how Generative AI, LLMs, and Prompt Engineering are reshaping the technology landscape.',
+        'seo_title' => 'Generative AI Trends to Watch in 2026',
+        'seo_description' => 'Explore 2026 generative AI trends, including multimodal models, AI agents, enterprise adoption, governance and the technology skills employers need.',
         'content' => 'Generative AI has moved beyond novelty to become a core business tool. Here are the key trends shaping AI in 2026.
 
 ## 1. Multimodal AI Models
@@ -1263,6 +1270,57 @@ function formatPrice($price) {
 function excerpt($text, $length = 120) {
     if (strlen($text) <= $length) return $text;
     return substr($text, 0, $length) . '...';
+}
+
+function renderBlogContent($text) {
+    $lines = preg_split('/\R/', (string) $text);
+    $html = '';
+    $listOpen = false;
+
+    foreach ($lines as $line) {
+        $trimmed = trim($line);
+        if ($trimmed === '') {
+            if ($listOpen) {
+                $html .= '</ul>';
+                $listOpen = false;
+            }
+            continue;
+        }
+
+        $safe = htmlspecialchars($trimmed, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+        $safe = preg_replace('/\*\*(.+?)\*\*/', '<strong>$1</strong>', $safe);
+
+        if (strpos($trimmed, '## ') === 0) {
+            if ($listOpen) {
+                $html .= '</ul>';
+                $listOpen = false;
+            }
+            $heading = substr($safe, 3);
+            $html .= '<h2>' . $heading . '</h2>';
+            continue;
+        }
+
+        if (strpos($trimmed, '- ') === 0) {
+            if (!$listOpen) {
+                $html .= '<ul>';
+                $listOpen = true;
+            }
+            $html .= '<li>' . substr($safe, 2) . '</li>';
+            continue;
+        }
+
+        if ($listOpen) {
+            $html .= '</ul>';
+            $listOpen = false;
+        }
+        $html .= '<p>' . $safe . '</p>';
+    }
+
+    if ($listOpen) {
+        $html .= '</ul>';
+    }
+
+    return $html;
 }
 
 function socialIcon($platform) {

@@ -59,6 +59,8 @@ if (!defined('ANALYTICS_LOADED')) {
                 campaign VARCHAR(100) DEFAULT NULL,
                 content VARCHAR(100) DEFAULT NULL,
                 term VARCHAR(100) DEFAULT NULL,
+                search_engine VARCHAR(40) DEFAULT NULL,
+                search_term VARCHAR(255) DEFAULT NULL,
                 referrer VARCHAR(512) DEFAULT NULL,
                 landing_page VARCHAR(512) DEFAULT NULL,
                 exit_page VARCHAR(512) DEFAULT NULL,
@@ -102,6 +104,8 @@ if (!defined('ANALYTICS_LOADED')) {
                 campaign VARCHAR(100) DEFAULT NULL,
                 content VARCHAR(100) DEFAULT NULL,
                 term VARCHAR(100) DEFAULT NULL,
+                search_engine VARCHAR(40) DEFAULT NULL,
+                search_term VARCHAR(255) DEFAULT NULL,
                 landing_page VARCHAR(512) DEFAULT NULL,
                 created_at DATETIME DEFAULT NULL,
                 KEY idx_campaigns_source (source),
@@ -117,6 +121,7 @@ if (!defined('ANALYTICS_LOADED')) {
                 event_label VARCHAR(255) DEFAULT NULL,
                 event_value FLOAT DEFAULT 0,
                 page_url VARCHAR(512) DEFAULT NULL,
+                enquiry_id INT UNSIGNED DEFAULT NULL,
                 created_at DATETIME DEFAULT NULL,
                 KEY idx_events_type (event_type),
                 KEY idx_events_created (created_at),
@@ -136,10 +141,79 @@ if (!defined('ANALYTICS_LOADED')) {
             "CREATE TABLE IF NOT EXISTS analytics_campaign_meta (
                 campaign VARCHAR(100) PRIMARY KEY,
                 cost FLOAT DEFAULT 0,
+                landing_page VARCHAR(512) DEFAULT NULL,
                 note VARCHAR(255) DEFAULT NULL,
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
         ];
+    }
+
+    function an_column_exists($conn, $table, $column) {
+        $stmt = $conn->prepare("SELECT COUNT(*) AS c FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ? AND COLUMN_NAME = ?");
+        if (!$stmt) return false;
+        $stmt->bind_param('ss', $table, $column);
+        $stmt->execute();
+        $row = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
+        return !empty($row['c']);
+    }
+
+    function an_index_exists($conn, $table, $index) {
+        $stmt = $conn->prepare("SELECT COUNT(*) AS c FROM information_schema.STATISTICS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ? AND INDEX_NAME = ?");
+        if (!$stmt) return false;
+        $stmt->bind_param('ss', $table, $index);
+        $stmt->execute();
+        $row = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
+        return !empty($row['c']);
+    }
+
+    function an_schema_errors() {
+        return $GLOBALS['AN_SCHEMA_ERRORS'] ?? [];
+    }
+
+    function an_schema_migrations() {
+        return $GLOBALS['AN_SCHEMA_MIGRATIONS'] ?? [];
+    }
+
+    function an_migrate_schema($conn) {
+        $columns = [
+            ['analytics_sessions', 'search_engine', "ALTER TABLE analytics_sessions ADD COLUMN search_engine VARCHAR(40) DEFAULT NULL AFTER term"],
+            ['analytics_sessions', 'search_term', "ALTER TABLE analytics_sessions ADD COLUMN search_term VARCHAR(255) DEFAULT NULL AFTER search_engine"],
+            ['analytics_campaigns', 'search_engine', "ALTER TABLE analytics_campaigns ADD COLUMN search_engine VARCHAR(40) DEFAULT NULL AFTER term"],
+            ['analytics_campaigns', 'search_term', "ALTER TABLE analytics_campaigns ADD COLUMN search_term VARCHAR(255) DEFAULT NULL AFTER search_engine"],
+            ['analytics_events', 'enquiry_id', "ALTER TABLE analytics_events ADD COLUMN enquiry_id INT UNSIGNED DEFAULT NULL AFTER page_url"],
+            ['analytics_campaign_meta', 'cost', "ALTER TABLE analytics_campaign_meta ADD COLUMN cost FLOAT DEFAULT 0"],
+            ['analytics_campaign_meta', 'landing_page', "ALTER TABLE analytics_campaign_meta ADD COLUMN landing_page VARCHAR(512) DEFAULT NULL AFTER cost"],
+            ['analytics_campaign_meta', 'note', "ALTER TABLE analytics_campaign_meta ADD COLUMN note VARCHAR(255) DEFAULT NULL AFTER landing_page"],
+            ['analytics_campaign_meta', 'updated_at', "ALTER TABLE analytics_campaign_meta ADD COLUMN updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"],
+        ];
+        foreach ($columns as $migration) {
+            [$table, $column, $sql] = $migration;
+            if (!an_column_exists($conn, $table, $column)) {
+                if ($conn->query($sql)) {
+                    $GLOBALS['AN_SCHEMA_MIGRATIONS'][] = $table . '.' . $column;
+                } else {
+                    $GLOBALS['AN_SCHEMA_ERRORS'][] = $table . '.' . $column . ': ' . $conn->error;
+                }
+            }
+        }
+
+        $indexes = [
+            ['analytics_sessions', 'idx_sessions_search_term', "ALTER TABLE analytics_sessions ADD KEY idx_sessions_search_term (search_term(191))"],
+            ['analytics_campaigns', 'idx_campaigns_search_term', "ALTER TABLE analytics_campaigns ADD KEY idx_campaigns_search_term (search_term(191))"],
+            ['analytics_events', 'idx_events_enquiry', "ALTER TABLE analytics_events ADD KEY idx_events_enquiry (enquiry_id)"],
+        ];
+        foreach ($indexes as $migration) {
+            [$table, $index, $sql] = $migration;
+            if (!an_index_exists($conn, $table, $index)) {
+                if ($conn->query($sql)) {
+                    $GLOBALS['AN_SCHEMA_MIGRATIONS'][] = $table . '.' . $index;
+                } else {
+                    $GLOBALS['AN_SCHEMA_ERRORS'][] = $table . '.' . $index . ': ' . $conn->error;
+                }
+            }
+        }
     }
 
     function an_ensure_tables($conn = null) {
@@ -149,13 +223,17 @@ if (!defined('ANALYTICS_LOADED')) {
             global $conn;
         }
         if (!$conn) return false;
+        $GLOBALS['AN_SCHEMA_ERRORS'] = [];
+        $GLOBALS['AN_SCHEMA_MIGRATIONS'] = [];
         foreach (an_schema() as $sql) {
             if (!$conn->query($sql)) {
-                error_log('Analytics schema error: ' . $conn->error);
+                $GLOBALS['AN_SCHEMA_ERRORS'][] = $conn->error;
             }
         }
-        $done = true;
-        return true;
+        an_migrate_schema($conn);
+        foreach (an_schema_errors() as $error) error_log('Analytics schema error: ' . $error);
+        $done = empty(an_schema_errors());
+        return $done;
     }
 
     /* ── Channel attribution (UTM + referrer, no external APIs) ── */
@@ -206,6 +284,32 @@ if (!defined('ANALYTICS_LOADED')) {
             $m = ($channel === 'Direct') ? 'none' : 'referral';
         }
         return [$channel, $s, $m];
+    }
+
+    /* Search engines usually hide organic query text. Capture it when a
+       referrer exposes it and always retain explicit utm_term values. */
+    function an_search_details($referrer, $utmTerm = null, $channel = '') {
+        $keyword = an_clean_utm($utmTerm, 255);
+        $engine = null;
+        $host = '';
+        $query = [];
+        if ($referrer) {
+            $host = strtolower((string)parse_url((string)$referrer, PHP_URL_HOST));
+            $rawQuery = (string)parse_url((string)$referrer, PHP_URL_QUERY);
+            if ($rawQuery !== '') parse_str($rawQuery, $query);
+        }
+        $param = null;
+        if (strpos($host, 'google.') !== false) { $engine = 'Google'; $param = 'q'; }
+        elseif (strpos($host, 'bing.') !== false) { $engine = 'Bing'; $param = 'q'; }
+        elseif (strpos($host, 'search.yahoo.') !== false) { $engine = 'Yahoo'; $param = 'p'; }
+        elseif (strpos($host, 'duckduckgo.') !== false) { $engine = 'DuckDuckGo'; $param = 'q'; }
+        elseif (strpos($host, 'ecosia.') !== false) { $engine = 'Ecosia'; $param = 'q'; }
+        elseif (stripos((string)$channel, 'Search') !== false || $channel === 'Google Ads') { $engine = str_replace([' Search', ' Ads'], '', (string)$channel); }
+
+        if ($keyword === null && $param && isset($query[$param])) {
+            $keyword = an_clean_utm($query[$param], 255);
+        }
+        return ['engine' => $engine, 'keyword' => $keyword];
     }
 
     /* ── Client IP ─────────────────────────────────────────── */
@@ -284,7 +388,7 @@ if (!defined('ANALYTICS_LOADED')) {
     function an_clean_utm($v, $max = 100) {
         $v = trim((string)$v);
         if ($v === '') return null;
-        $v = preg_replace('/[^A-Za-z0-9_\-\+\s\.@%]/', '', $v);
+        $v = preg_replace('/[^\p{L}\p{N}_\-\+\s\.@%]/u', '', $v);
         if (mb_strlen($v) > $max) $v = mb_substr($v, 0, $max);
         return $v;
     }

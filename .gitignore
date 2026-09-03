@@ -1,0 +1,11 @@
+# Local secrets
+includes/search-console-config.php
+*service-account*.json
+
+*iucedu-6baf125afec0*.json
+
+# Never deploy local agent files or Search Console credentials.
+.codex/
+admin/Google_Search_Console_service_account_JSON/*
+!admin/Google_Search_Console_service_account_JSON/.gitkeep
+!admin/Google_Search_Console_service_account_JSON/.htaccess

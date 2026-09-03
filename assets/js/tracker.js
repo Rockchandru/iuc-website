@@ -11,6 +11,7 @@
   var VK = 'iuc_visitor_id';
   var SK = 'iuc_session_id';
   var SA = 'iuc_session_activity';
+  var AK = 'iuc_session_attribution';
   var TIMEOUT = 30 * 60 * 1000; // 30 min session timeout
 
   /* Do not self-track the analytics dashboard / endpoints. */
@@ -51,9 +52,11 @@
 
   var sessionId = read(SK);
   var lastAct = parseInt(read(SA) || '0', 10) || 0;
+  var isNewSession = false;
   if (!sessionId || (Date.now() - lastAct) > TIMEOUT) {
     sessionId = uuid();
     write(SK, sessionId);
+    isNewSession = true;
   }
   function touch() { write(SA, String(Date.now())); }
   touch();
@@ -76,6 +79,22 @@
       if (k === 'ref') utm.ref = v;
     });
   } catch (e) {}
+
+  /* Keep first-touch details for the whole session, including the enquiry form. */
+  var attribution = {};
+  try {
+    if (!isNewSession) attribution = JSON.parse(read(AK) || '{}') || {};
+  } catch (e) { attribution = {}; }
+  if (isNewSession || !attribution.landing_page) {
+    attribution = {
+      landing_page: String(w.location.href || '').slice(0, 500),
+      referrer: String(d.referrer || '').slice(0, 500)
+    };
+  }
+  ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'gclid'].forEach(function (key) {
+    if (utm[key] && !attribution[key]) attribution[key] = utm[key];
+  });
+  try { write(AK, JSON.stringify(attribution)); } catch (e) {}
 
   /* ── Device / browser / OS detection ────────────────────── */
   function detect() {
@@ -116,6 +135,7 @@
       page_url: String(w.location.href).slice(0, 500),
       page_title: String(w.document.title || '').slice(0, 255),
       referrer: String(w.document.referrer || '').slice(0, 500),
+      landing_page: String(attribution.landing_page || w.location.href).slice(0, 500),
       device: info.device,
       browser: info.browser,
       os: info.os,
@@ -123,7 +143,7 @@
       language: String(w.navigator.language || '').slice(0, 16)
     };
     var keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'gclid'];
-    for (var i = 0; i < keys.length; i++) if (utm[keys[i]]) d[keys[i]] = utm[keys[i]];
+    for (var i = 0; i < keys.length; i++) if (attribution[keys[i]]) d[keys[i]] = attribution[keys[i]];
     if (extra) for (var k in extra) if (extra[k] !== undefined) d[k] = extra[k];
     return d;
   }
@@ -174,6 +194,29 @@
   }
   w.__iucTrackEvent = trackEvent;
 
+  function syncEnquiryAttribution(form) {
+    if (!form) return;
+    var values = {
+      page_url: String(w.location.href || '').slice(0, 500),
+      landing_page: String(attribution.landing_page || w.location.href || '').slice(0, 500),
+      referrer: String(attribution.referrer || d.referrer || '').slice(0, 500),
+      visitor_id: visitorId,
+      session_id: sessionId,
+      utm_source: attribution.utm_source || '',
+      utm_medium: attribution.utm_medium || '',
+      utm_campaign: attribution.utm_campaign || '',
+      utm_content: attribution.utm_content || '',
+      utm_term: attribution.utm_term || ''
+    };
+    Object.keys(values).forEach(function (name) {
+      var input = form.querySelector('[name="' + name + '"]');
+      if (input) input.value = values[name];
+    });
+  }
+
+  var enquiryForm = d.querySelector('form [name="contact_submit"]');
+  if (enquiryForm) syncEnquiryAttribution(enquiryForm.form);
+
   /* ── Automatic event tracking (event delegation) ────────── */
   function trackAttr(el, name) {
     var n = 'data-' + name;
@@ -201,7 +244,10 @@
     d.addEventListener('submit', function (e) {
       var f = e.target;
       if (!f || !f.tagName || f.tagName.toLowerCase() !== 'form') return;
-      if (f.querySelector('[name="contact_submit"]')) trackEvent('contact_form', 'Contact Form Submitted');
+      if (f.querySelector('[name="contact_submit"]')) {
+        syncEnquiryAttribution(f);
+        trackEvent('contact_form_attempt', 'Contact Form Submission Attempt');
+      }
       else if (f.className.indexOf('newsletter-form') !== -1) trackEvent('registration', 'Newsletter Signup');
     }, true);
   }

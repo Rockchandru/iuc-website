@@ -39,7 +39,7 @@
 
             <div data-aos="fade-left">
                 <div style="border-radius:var(--radius-2xl);overflow:hidden;box-shadow:var(--shadow-lg)">
-                    <img src="assets/images/internship program.jpg" alt="Internship program" style="width:100%;height:400px;object-fit:cover" loading="lazy" />
+                    <img src="assets/images/internship program.jpg" alt="Students working on live projects in the IUC Edu internship program" width="1535" height="1024" style="width:100%;height:400px;object-fit:cover" loading="lazy" />
                 </div>
             </div>
         </div>

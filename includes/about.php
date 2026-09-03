@@ -12,7 +12,7 @@
         <div style="display:grid;gap:2.5rem;align-items:center" class="about-grid">
             <div data-aos="fade-right">
                 <div style="border-radius:var(--radius-2xl);overflow:hidden;box-shadow:var(--shadow-lg);position:relative;width:100%;max-width:700px" class="about-image-wrap">
-                    <img style="width:100%;height:auto;min-height:280px;max-height:700px;object-fit:cover" src="<?= BASE_URL ?>/assets/images/Established1997.jpg" alt="IUC Edu campus — Established 1997, Chennai" loading="lazy" />
+                    <img style="width:100%;height:auto;min-height:280px;max-height:700px;object-fit:cover" src="<?= BASE_URL ?>/assets/images/Established1997.jpg" alt="IUC Edu computer education centre established in Chennai in 1997" width="1535" height="1024" loading="lazy" />
                     <div style="position:absolute;bottom:0;left:0;right:0;padding:1.25rem 1.5rem;background:linear-gradient(180deg,transparent,rgba(6,13,31,.85));color:#fff;display:flex;align-items:center;gap:1rem">
                         <div style="width:3rem;height:3rem;border-radius:var(--radius-lg);background:linear-gradient(135deg,var(--clr-primary),var(--clr-accent));display:flex;align-items:center;justify-content:center;font-size:1.25rem;flex-shrink:0"><i class="bi bi-mortarboard"></i></div>
                         <div>
@@ -117,7 +117,7 @@
 
         <div class="founder-card" data-aos="fade-up">
             <div class="founder-photo">
-                <img src="<?= BASE_URL ?>/assets/images/mentors/Tamilselvi.png" alt="Tamil Selvi S — Founder & Lead Instructor, IUC Edu" loading="lazy" />
+                <img src="<?= BASE_URL ?>/assets/images/mentors/Tamilselvi.png" alt="Tamil Selvi S — Founder and lead instructor at IUC Edu" width="465" height="536" loading="lazy" />
             </div>
             <div class="founder-info">
                 <span class="founder-tag"><i class="bi bi-star-fill"></i> Founder &amp; Lead Instructor</span>

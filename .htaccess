@@ -5,21 +5,42 @@
 # Enable Rewrite Engine
 RewriteEngine On
 
-# Force HTTPS (uncomment on production)
-# RewriteCond %{HTTPS} off
-# RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+# Canonical production host: HTTPS + www. Conditions exclude localhost/XAMPP.
+RewriteCond %{HTTP_HOST} ^iucedu\.com$ [NC,OR]
+RewriteCond %{HTTPS} !=on
+RewriteCond %{HTTP_HOST} ^(?:www\.)?iucedu\.com$ [NC]
+RewriteRule ^ https://www.iucedu.com%{REQUEST_URI} [R=301,L,NE]
 
-# Redirect www to non-www (uncomment on production)
-# RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
-# RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+# Redirect legacy query-string detail URLs to clean canonical URLs.
+RewriteCond %{HTTP_HOST} ^(?:www\.)?iucedu\.com$ [NC]
+RewriteCond %{THE_REQUEST} \s/+.*?course\.php(?:[?\s]) [NC]
+RewriteCond %{QUERY_STRING} (?:^|&)slug=([a-z0-9-]+)(?:&|$) [NC]
+RewriteRule ^course\.php$ https://www.iucedu.com/course/%1? [R=301,L,NE]
+
+RewriteCond %{HTTP_HOST} ^(?:www\.)?iucedu\.com$ [NC]
+RewriteCond %{THE_REQUEST} \s/+.*?blog\.php(?:[?\s]) [NC]
+RewriteCond %{QUERY_STRING} (?:^|&)slug=([a-z0-9-]+)(?:&|$) [NC]
+RewriteRule ^blog\.php$ https://www.iucedu.com/blog/%1? [R=301,L,NE]
+
+RewriteCond %{HTTP_HOST} ^(?:www\.)?iucedu\.com$ [NC]
+RewriteCond %{THE_REQUEST} \s/+.*?index\.php(?:[?\s]) [NC]
+RewriteRule ^index\.php$ https://www.iucedu.com/ [R=301,L]
+
+# Use extensionless URLs without a trailing slash (real directories are exempt).
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{THE_REQUEST} \s/+(.+?)/[?\s] [NC]
+RewriteRule ^(.+)/$ /%1 [R=301,L,NE]
 
 # ── SEO Friendly URLs ────────────────────────────────────
 
 # Course detail pages
-RewriteRule ^course/([a-z0-9-]+)/?$ course.php?slug=$1 [L,QSA,NC]
+RewriteRule ^course/([a-z0-9-]+)$ course.php?slug=$1 [L,QSA,NC]
 
 # Blog detail pages
-RewriteRule ^blog/([a-z0-9-]+)/?$ blog.php?slug=$1 [L,QSA,NC]
+RewriteRule ^blog/([a-z0-9-]+)$ blog.php?slug=$1 [L,QSA,NC]
+
+# Intent-focused training pages (one substantial page per search intent)
+RewriteRule ^(computer-training-in-chennai|programming-courses-in-chennai|it-courses-for-beginners|online-it-courses)$ landing.php?page=$1 [L,QSA,NC]
 
 # Remove .php extension
 RewriteCond %{REQUEST_FILENAME} !-d
@@ -61,22 +82,20 @@ RewriteRule ^ - [F,L]
 
 # ── Directory protection ─────────────────────────────────
 Options -Indexes
-<FilesMatch "\.(env|sql|log|ini)$">
+<FilesMatch "(^\.|\.(env|sql|log|ini|json|bak|md)$)">
     Order Allow,Deny
     Deny from all
 </FilesMatch>
 
 # ── Custom error pages ───────────────────────────────────
+# Serve the project-level 404 page from both a subdirectory and the domain root.
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ 404.php [L]
+
 ErrorDocument 404 /404.php
-ErrorDocument 500 /404.php
 
 # Redirect 404.php to the correct path if in subdirectory
 RewriteCond %{REQUEST_URI} ^/404\.php$ [NC]
 RewriteCond %{DOCUMENT_ROOT}/404.php !-f
 RewriteRule ^ /iuc-website/404.php [R=302,L]
-
-# ── Redirect trailing slash (skip directories) ────────────
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_URI} (.+)/$
-RewriteRule ^ %1 [R=301,L]

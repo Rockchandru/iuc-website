@@ -30,7 +30,7 @@
         </div>
 
         <div style="text-align:center;margin-top:2rem" data-aos="fade-up">
-            <a href="<?= BASE_URL ?>/#blog" class="btn btn-outline">View All Articles <i class="bi bi-arrow-right"></i></a>
+            <a href="<?= BASE_URL ?>/blog" class="btn btn-outline">View All Articles <i class="bi bi-arrow-right"></i></a>
         </div>
     </div>
 </section>

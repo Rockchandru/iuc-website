@@ -11,15 +11,14 @@
                 </div>
 
                 <h1 class="text-display-xl hero-title fade-in">
-                    Launch Your<br/>
-                    <span class="gradient-text">Dream Tech Career</span><br/>
-                    with IUC Edu
+                    Computer &amp; IT Training<br/>
+                    <span class="gradient-text">Institute in Chennai</span>
                 </h1>
 
                 <p class="hero-description fade-in">
-                    Chennai's most trusted IT institute since 1997 — delivering industry-aligned programs with
-                    expert mentors, live projects, and <strong>98% placement assistance</strong>
-                    for 25,000+ graduates.
+                    Build practical computer and IT skills through industry-focused training in programming,
+                    software development, data science, artificial intelligence, cloud computing, cyber security
+                    and digital marketing, with hands-on projects and placement assistance.
                 </p>
 
                 <div class="hero-actions fade-in">
@@ -29,8 +28,8 @@
                     <a href="<?= BASE_URL ?>/#courses" class="btn btn-outline btn-lg">
                         <i class="bi bi-play-circle"></i> Explore Courses
                     </a>
-                    <a href="#" class="btn btn-ghost btn-lg">
-                        <i class="bi bi-download"></i> Brochure
+                    <a href="<?= BASE_URL ?>/#contact" class="btn btn-ghost btn-lg">
+                        <i class="bi bi-file-earmark-text"></i> Request Brochure
                     </a>
                 </div>
 
@@ -38,7 +37,7 @@
                     <div class="avatar-group">
                         <?php $avatars = ['1531123897727-8f129e1688ce','1573497019940-1c28c88b4f3e','1635402689379-545b134e58ed','1519085360753-af0119f7cbe7','1560250097-0b93528c311a']; ?>
                         <?php foreach ($avatars as $aid): ?>
-                        <img src="https://images.unsplash.com/photo-<?= $aid ?>?w=64&q=80" alt="Student" class="avatar-group-item" loading="lazy" />
+                        <img src="https://images.unsplash.com/photo-<?= $aid ?>?w=64&q=80" alt="" class="avatar-group-item" loading="lazy" aria-hidden="true" />
                         <?php endforeach; ?>
                         <span class="avatar-group-more">+</span>
                     </div>
@@ -63,7 +62,7 @@
 
             <div class="hero-image-wrapper">
                 <div class="hero-image">
-                    <img src="assets/images/about-education.jpg" alt="Students at IUC Edu" loading="eager" />
+                    <img src="assets/images/about-education.jpg" alt="Students receiving practical IT training at IUC Edu in Chennai" width="1536" height="1024" loading="eager" fetchpriority="high" />
                 </div>
                 <div class="hero-float-card hero-float-card-1" data-aos="fade-right" data-aos-delay="300">
                     <div class="hero-float-icon" style="background:var(--clr-accent-light);color:var(--clr-accent-dark)">

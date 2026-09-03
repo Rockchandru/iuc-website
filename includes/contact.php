@@ -113,6 +113,16 @@ unset($b);
 
                 <form method="POST" action="<?= BASE_URL ?>/#contact" data-validate>
                     <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>" />
+                    <input type="hidden" name="page_url" value="" />
+                    <input type="hidden" name="landing_page" value="" />
+                    <input type="hidden" name="referrer" value="" />
+                    <input type="hidden" name="visitor_id" value="" />
+                    <input type="hidden" name="session_id" value="" />
+                    <input type="hidden" name="utm_source" value="" />
+                    <input type="hidden" name="utm_medium" value="" />
+                    <input type="hidden" name="utm_campaign" value="" />
+                    <input type="hidden" name="utm_content" value="" />
+                    <input type="hidden" name="utm_term" value="" />
 
                     <div class="form-group">
                         <label for="name" class="form-label">Full Name *</label>

@@ -1,36 +1,103 @@
-<?php
-/* ═══════════════════════════════════════════════════════════════
-   IUC Edu — Dynamic XML Sitemap
-   ═══════════════════════════════════════════════════════════════ */
-
-require_once __DIR__ . '/includes/functions.php';
-
-header('Content-Type: application/xml; charset=utf-8');
-
-echo '<?xml version="1.0" encoding="UTF-8"?>';
-?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-
-    <url>
-        <loc><?= SITE_URL ?>/</loc>
-        <lastmod><?= date('Y-m-d') ?></lastmod>
-        <changefreq>daily</changefreq>
-        <priority>1.0</priority>
-    </url>
-
-    <?php foreach ($courses as $slug => $course): ?>
-    <url>
-        <loc><?= SITE_URL ?>/course/<?= $slug ?></loc>
-        <lastmod><?= date('Y-m-d') ?></lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.9</priority>
-        <image:image>
-            <image:loc><?= $course['image'] ?></image:loc>
-            <image:title><?= htmlspecialchars($course['title']) ?></image:title>
-        </image:image>
-    </url>
-    <?php endforeach; ?>
-
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://www.iucedu.com/</loc>
+    <lastmod>2026-08-25</lastmod>
+  </url>
+  <url>
+    <loc>https://www.iucedu.com/computer-training-in-chennai</loc>
+    <lastmod>2026-08-25</lastmod>
+  </url>
+  <url>
+    <loc>https://www.iucedu.com/programming-courses-in-chennai</loc>
+    <lastmod>2026-08-25</lastmod>
+  </url>
+  <url>
+    <loc>https://www.iucedu.com/it-courses-for-beginners</loc>
+    <lastmod>2026-08-25</lastmod>
+  </url>
+  <url>
+    <loc>https://www.iucedu.com/online-it-courses</loc>
+    <lastmod>2026-08-25</lastmod>
+  </url>
+  <url>
+    <loc>https://www.iucedu.com/blog</loc>
+    <lastmod>2026-08-25</lastmod>
+  </url>
+  <url>
+    <loc>https://www.iucedu.com/course/ai-ml</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://www.iucedu.com/course/data-science</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://www.iucedu.com/course/python</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://www.iucedu.com/course/java</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://www.iucedu.com/course/full-stack-java</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://www.iucedu.com/course/spring-boot</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://www.iucedu.com/course/react</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://www.iucedu.com/course/angular</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://www.iucedu.com/course/node-js</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://www.iucedu.com/course/ui-ux</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://www.iucedu.com/course/software-testing</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://www.iucedu.com/course/devops</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://www.iucedu.com/course/cloud-computing</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://www.iucedu.com/course/cyber-security</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://www.iucedu.com/course/digital-marketing</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://www.iucedu.com/course/c-cpp</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://www.iucedu.com/blog/top-programming-languages-2026</loc>
+    <lastmod>2026-01-15</lastmod>
+  </url>
+  <url>
+    <loc>https://www.iucedu.com/blog/crack-data-science-interviews</loc>
+    <lastmod>2026-01-10</lastmod>
+  </url>
+  <url>
+    <loc>https://www.iucedu.com/blog/future-of-ai-generative-ai-2026</loc>
+    <lastmod>2026-01-05</lastmod>
+  </url>
 </urlset>

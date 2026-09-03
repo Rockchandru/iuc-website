@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin/
+Disallow: /track.php
+Disallow: /_probe.php
+Disallow: /download-syllabus.php
+Disallow: /landing.php
+Disallow: /index_iuc29072026.php.bak
+
+Sitemap: https://www.iucedu.com/sitemap.xml

@@ -1,6 +1,10 @@
 <?php
 require_once __DIR__ . '/includes/functions.php';
+http_response_code(404);
 $pageTitle = 'Page Not Found – IUC Edu';
+$metaDesc = 'The requested page could not be found. Explore IUC Edu courses or contact our Chennai training centre for assistance.';
+$robotsMeta = 'noindex, follow';
+$canonical = false;
 require __DIR__ . '/includes/header.php';
 ?>
 <div class="container" style="padding:8rem 0;text-align:center">

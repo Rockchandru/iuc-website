@@ -15,7 +15,11 @@ if (!$conn) {
     echo json_encode(['ok' => 0]);
     exit;
 }
-an_ensure_tables($conn);
+if (!an_ensure_tables($conn)) {
+    http_response_code(503);
+    echo json_encode(['ok' => 0, 'error' => 'analytics schema unavailable']);
+    exit;
+}
 
 $in = $_POST;
 if (empty($in) || (isset($_SERVER['CONTENT_TYPE']) && stripos($_SERVER['CONTENT_TYPE'], 'json') !== false)) {
@@ -42,6 +46,7 @@ if (!$sessionId || !an_valid_uuid($sessionId)) {
 $ip       = an_client_ip();
 $now      = date('Y-m-d H:i:s');
 $pageUrl  = an_clean(isset($in['page_url']) ? $in['page_url'] : '');
+$landingPage = an_clean(isset($in['landing_page']) ? $in['landing_page'] : '') ?: $pageUrl;
 $pageTitle= an_clean(isset($in['page_title']) ? $in['page_title'] : '', 255);
 $referrer = an_clean(isset($in['referrer']) ? $in['referrer'] : '');
 $ua       = an_clean(isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '', 512);
@@ -86,8 +91,8 @@ $visitor = $res->fetch_assoc();
 $stmt->close();
 
 if ($visitor) {
-    $newTotalViews = $visitor['total_views'] + 1;
-    $isReturning = ($visitor['total_sessions'] + 1 > 1) ? 1 : $visitor['is_returning'];
+    $newTotalViews = (int)$visitor['total_views'] + ($eventType === 'pageview' ? 1 : 0);
+    $isReturning = (int)$visitor['is_returning'];
     $stmt = $conn->prepare("UPDATE analytics_visitors
         SET last_seen = ?, ip = ?, user_agent = ?, device = ?, browser = ?, os = ?, screen = ?, language = ?,
             country = ?, country_code = ?, state = ?, city = ?, total_views = ?, is_returning = ?
@@ -97,15 +102,15 @@ if ($visitor) {
     $stmt->execute();
     $stmt->close();
     $visitorSessions = $visitor['total_sessions'];
-    $newSessions = $visitorSessions + 1;
-    $returningNow = ($newSessions > 1);
+    $returningNow = $isReturning === 1;
 } else {
+    $initialViews = $eventType === 'pageview' ? 1 : 0;
     $stmt = $conn->prepare("INSERT INTO analytics_visitors
         (visitor_id, first_seen, last_seen, ip, user_agent, device, browser, os, screen, language,
          country, country_code, state, city, total_sessions, total_views, is_returning)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 1, 0)");
-    $stmt->bind_param('ssssssssssssss', $visitorId, $now, $now, $ip, $ua, $device, $browser, $os, $screen, $lang,
-        $geo['country'], $geo['country_code'], $geo['state'], $geo['city']);
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?, 0)");
+    $stmt->bind_param('ssssssssssssssi', $visitorId, $now, $now, $ip, $ua, $device, $browser, $os, $screen, $lang,
+        $geo['country'], $geo['country_code'], $geo['state'], $geo['city'], $initialViews);
     $stmt->execute();
     $stmt->close();
     $visitorSessions = 0;
@@ -117,6 +122,9 @@ list($channel, $srcClean, $medClean) = an_channel($utmSource, $utmMedium, $refer
 if ($channel === 'Direct' && $utmSource) {
     list($channel, $srcClean, $medClean) = an_channel($utmSource, $utmMedium, $referrer, $hasGclid);
 }
+$search = an_search_details($referrer, $utmTerm, $channel);
+$searchEngine = $search['engine'];
+$searchTerm = $search['keyword'];
 
 /* ── Session upsert ──────────────────────────────────────────── */
 $stmt = $conn->prepare("SELECT id, page_views FROM analytics_sessions WHERE session_id = ?");
@@ -125,9 +133,10 @@ $stmt->execute();
 $res = $stmt->get_result();
 $sess = $res->fetch_assoc();
 $stmt->close();
+$isNewSession = !$sess;
 
 if ($sess) {
-    $newPv = $sess['page_views'] + 1;
+    $newPv = (int)$sess['page_views'] + ($eventType === 'pageview' ? 1 : 0);
     $bounce = ($newPv <= 1) ? 1 : 0;
     $stmt = $conn->prepare("UPDATE analytics_sessions
         SET last_activity = ?, ended_at = ?, page_views = ?, is_bounce = ?, exit_page = ?
@@ -137,14 +146,16 @@ if ($sess) {
     $stmt->close();
     $sessPv = $newPv;
 } else {
+    $initialPageViews = $eventType === 'pageview' ? 1 : 0;
+    $initialBounce = $initialPageViews === 1 ? 1 : 0;
     $stmt = $conn->prepare("INSERT INTO analytics_sessions
         (session_id, visitor_id, ip, started_at, last_activity, ended_at, page_views, is_bounce,
-         channel, source, medium, campaign, content, term, referrer, landing_page, exit_page,
+         channel, source, medium, campaign, content, term, search_engine, search_term, referrer, landing_page, exit_page,
          device, browser, os, country, state, city)
-        VALUES (?, ?, ?, ?, ?, ?, 1, 1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param('sssssssssssssssssssss',
-        $sessionId, $visitorId, $ip, $now, $now, $now,
-        $channel, $srcClean, $medClean, $utmCampaign, $utmContent, $utmTerm, $referrer, $pageUrl, $pageUrl,
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param('ssssssiisssssssssssssssss',
+        $sessionId, $visitorId, $ip, $now, $now, $now, $initialPageViews, $initialBounce,
+        $channel, $srcClean, $medClean, $utmCampaign, $utmContent, $utmTerm, $searchEngine, $searchTerm, $referrer, $landingPage, $pageUrl,
         $device, $browser, $os, $geo['country'], $geo['state'], $geo['city']);
     $stmt->execute();
     $stmt->close();
@@ -155,7 +166,8 @@ if ($sess) {
     $stmt->bind_param('iis', $newSessionCount, $ret, $visitorId);
     $stmt->execute();
     $stmt->close();
-    $sessPv = 1;
+    $returningNow = $ret === 1;
+    $sessPv = $initialPageViews;
 }
 
 /* ── Pageview / heartbeat handling ───────────────────────────── */
@@ -187,17 +199,17 @@ if ($eventType === 'pageview') {
 }
 
 /* ── Campaign row (UTM present) ──────────────────────────────── */
-if ($utmSource || $utmCampaign || $hasGclid) {
+if ($isNewSession && ($utmSource || $utmCampaign || $hasGclid)) {
     $stmt = $conn->prepare("INSERT INTO analytics_campaigns
-        (visitor_id, session_id, source, medium, campaign, content, term, landing_page, created_at)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param('sssssssss', $visitorId, $sessionId, $srcClean, $medClean, $utmCampaign, $utmContent, $utmTerm, $pageUrl, $now);
+        (visitor_id, session_id, source, medium, campaign, content, term, search_engine, search_term, landing_page, created_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param('sssssssssss', $visitorId, $sessionId, $srcClean, $medClean, $utmCampaign, $utmContent, $utmTerm, $searchEngine, $searchTerm, $landingPage, $now);
     $stmt->execute();
     $stmt->close();
 }
 
 /* ── Conversion / event row ──────────────────────────────────── */
-if ($eventType !== 'pageview' && $eventType !== 'heartbeat' && in_array($eventType, ['call_click', 'whatsapp_click', 'brochure_download', 'contact_form', 'admission', 'registration', 'outbound_click', 'custom'], true)) {
+if ($eventType !== 'pageview' && $eventType !== 'heartbeat' && in_array($eventType, ['call_click', 'whatsapp_click', 'brochure_download', 'contact_form_attempt', 'admission', 'registration', 'outbound_click', 'custom'], true)) {
     $stmt = $conn->prepare("INSERT INTO analytics_events (visitor_id, session_id, event_type, event_label, event_value, page_url, created_at) VALUES (?, ?, ?, ?, 1, ?, ?)");
     $stmt->bind_param('ssssss', $visitorId, $sessionId, $eventType, $label, $pageUrl, $now);
     $stmt->execute();

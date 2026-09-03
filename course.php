@@ -11,18 +11,93 @@ $course = getCourseBySlug($slug);
 if (!$course) {
     header('HTTP/1.0 404 Not Found');
     $pageTitle = 'Course Not Found – IUC Edu';
+    $metaDesc = 'The requested IUC Edu course page could not be found.';
+    $robotsMeta = 'noindex, follow';
+    $canonical = false;
     require __DIR__ . '/includes/header.php';
-    echo '<div class="container" style="padding:8rem 0;text-align:center"><h1>Course Not Found</h1><p style="color:var(--clr-text-secondary);margin:1rem 0">The course you\'re looking for doesn\'t exist.</p><a href="<?= BASE_URL ?>/" class="btn btn-primary">Back to Home</a></div>';
+    echo '<div class="container" style="padding:8rem 0;text-align:center"><h1>Course Not Found</h1><p style="color:var(--clr-text-secondary);margin:1rem 0">The course you\'re looking for doesn\'t exist.</p><a href="' . htmlspecialchars(BASE_URL . '/', ENT_QUOTES, 'UTF-8') . '" class="btn btn-primary">Back to Home</a></div>';
     require __DIR__ . '/includes/footer.php';
     exit;
 }
 
-$pageTitle = $course['title'] . ' – IUC Edu';
-$metaDesc = $course['description'];
-$ogTitle = $course['title'] . ' – IUC Edu';
-$ogDesc = $course['short_desc'];
+$courseSeoMap = [
+    'ai-ml' => ['title' => 'AI & Machine Learning Course in Chennai | IUC Edu', 'h1' => 'AI & Machine Learning Course in Chennai', 'description' => 'Learn AI, machine learning, deep learning and generative AI in Chennai with practical projects, expert guidance and placement assistance at IUC Edu.'],
+    'data-science' => ['title' => 'Data Science Course in Chennai | IUC Edu', 'h1' => 'Data Science Course in Chennai', 'description' => 'Learn Python, SQL, statistics, machine learning and data visualisation through practical Data Science training in Chennai at IUC Edu.'],
+    'python' => ['title' => 'Python Training in Chennai | IUC Edu', 'h1' => 'Python Training in Chennai', 'description' => 'Learn Python from fundamentals to application development with practical exercises, projects, flexible batches and certification at IUC Edu Chennai.'],
+    'java' => ['title' => 'Java Training in Chennai | IUC Edu', 'h1' => 'Java Training in Chennai', 'description' => 'Build Core Java, J2EE, Spring Boot and Hibernate skills through instructor-led Java training with projects at IUC Edu in Chennai.'],
+    'full-stack-java' => ['title' => 'Full Stack Java Course in Chennai | IUC Edu', 'h1' => 'Full Stack Java Developer Course in Chennai', 'description' => 'Learn frontend, Core Java, Spring Boot, databases and deployment in a practical Full Stack Java course at IUC Edu Chennai.'],
+    'spring-boot' => ['title' => 'Spring Boot Training in Chennai | IUC Edu', 'h1' => 'Spring Boot & Microservices Training in Chennai', 'description' => 'Learn Spring Boot, REST APIs, microservices, security and cloud-native deployment through advanced practical training at IUC Edu Chennai.'],
+    'react' => ['title' => 'React JS Course in Chennai | IUC Edu', 'h1' => 'React JS Course in Chennai', 'description' => 'Build modern web interfaces with React, Redux, Next.js and TypeScript through practical frontend training at IUC Edu Chennai.'],
+    'angular' => ['title' => 'Angular Training in Chennai | IUC Edu', 'h1' => 'Angular Training in Chennai', 'description' => 'Learn Angular, TypeScript, RxJS and frontend application development with guided projects and flexible training at IUC Edu Chennai.'],
+    'node-js' => ['title' => 'Node.js Training in Chennai | IUC Edu', 'h1' => 'Node.js Backend Training in Chennai', 'description' => 'Learn Node.js, Express, databases and API development through practical backend programming training at IUC Edu in Chennai.'],
+    'ui-ux' => ['title' => 'UI/UX Design Course in Chennai | IUC Edu', 'h1' => 'UI/UX Design Course in Chennai', 'description' => 'Learn user research, wireframing, prototyping and interface design with Figma through practical UI/UX training at IUC Edu Chennai.'],
+    'software-testing' => ['title' => 'Software Testing Course in Chennai | IUC Edu', 'h1' => 'Software Testing Course in Chennai', 'description' => 'Learn manual testing, automation, Selenium and QA practices through project-based Software Testing training at IUC Edu Chennai.'],
+    'devops' => ['title' => 'DevOps Course in Chennai | IUC Edu', 'h1' => 'DevOps & Cloud Engineering Course in Chennai', 'description' => 'Learn CI/CD, Docker, Kubernetes, Jenkins, Terraform and cloud practices through hands-on DevOps training at IUC Edu Chennai.'],
+    'cloud-computing' => ['title' => 'Cloud Computing Course in Chennai | IUC Edu', 'h1' => 'Cloud Computing Course in Chennai', 'description' => 'Build practical AWS and Azure cloud skills, from core services to deployment and architecture, with training at IUC Edu Chennai.'],
+    'cyber-security' => ['title' => 'Cyber Security Course in Chennai | IUC Edu', 'h1' => 'Cyber Security & Ethical Hacking Course in Chennai', 'description' => 'Learn network security, ethical hacking, vulnerability testing and security tools through practical cyber security training at IUC Edu Chennai.'],
+    'digital-marketing' => ['title' => 'Digital Marketing Course in Chennai | IUC Edu', 'h1' => 'Digital Marketing & SEO Course in Chennai', 'description' => 'Learn SEO, Google Ads, social media and analytics through a practical Digital Marketing course with live guidance at IUC Edu Chennai.'],
+    'c-cpp' => ['title' => 'C & C++ Programming Course in Chennai | IUC Edu', 'h1' => 'C & C++ Programming Course in Chennai', 'description' => 'Build programming fundamentals with C, C++, data structures, OOP and practical coding exercises at IUC Edu in Chennai.'],
+];
+$courseSeo = $courseSeoMap[$slug] ?? [
+    'title' => $course['short_title'] . ' Course in Chennai | IUC Edu',
+    'h1' => $course['title'] . ' Course in Chennai',
+    'description' => 'Learn ' . $course['short_title'] . ' through practical online or classroom training, flexible batches and placement assistance at IUC Edu Chennai.',
+];
+
+$programmingCourseSlugs = ['c-cpp', 'python', 'java', 'full-stack-java', 'spring-boot', 'react', 'angular', 'node-js'];
+$courseHubUrl = in_array($slug, $programmingCourseSlugs, true) ? 'programming-courses-in-chennai' : 'computer-training-in-chennai';
+$courseHubLabel = in_array($slug, $programmingCourseSlugs, true) ? 'Programming courses in Chennai' : 'Computer training courses in Chennai';
+
+$courseFaqs = [
+    ['q' => 'What will I learn in the ' . $course['short_title'] . ' course?', 'a' => $course['description']],
+    ['q' => 'Who can join this ' . $course['short_title'] . ' training?', 'a' => $course['eligibility']],
+    ['q' => 'Is ' . $course['short_title'] . ' training available online and in Chennai?', 'a' => 'The listed training mode is ' . $course['mode'] . '. Contact IUC Edu to confirm the current online or classroom batch before enrolling.'],
+    ['q' => 'Will I receive a certificate after completing the course?', 'a' => 'Yes. The certification for this program is: ' . $course['certification'] . '.'],
+    ['q' => 'How can I check the next batch and course fee?', 'a' => 'Use the enquiry form, call +91 ' . SITE_PHONE . ' or visit an IUC Edu Chennai centre to confirm the current schedule, fee and seat availability.'],
+];
+
+$pageTitle = $courseSeo['title'];
+$metaDesc = $courseSeo['description'];
+$ogTitle = $pageTitle;
+$ogDesc = $metaDesc;
 $ogImage = $course['image'];
+$ogImageAlt = $course['title'] . ' training course at IUC Edu in Chennai';
 $canonical = 'course/' . $slug;
+$courseUrl = SITE_URL . '/' . $canonical;
+$structuredData = [
+    [
+        '@type' => 'Course',
+        '@id' => $courseUrl . '#course',
+        'name' => $course['title'],
+        'description' => $course['description'],
+        'url' => $courseUrl,
+        'image' => $course['image'],
+        'provider' => ['@id' => SITE_URL . '/#organization'],
+        'educationalLevel' => $course['level'],
+        'courseMode' => $course['mode'],
+        'inLanguage' => 'en-IN',
+    ],
+    [
+        '@type' => 'BreadcrumbList',
+        '@id' => $courseUrl . '#breadcrumb',
+        'itemListElement' => [
+            ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => SITE_URL . '/'],
+            ['@type' => 'ListItem', 'position' => 2, 'name' => 'Courses', 'item' => SITE_URL . '/#courses'],
+            ['@type' => 'ListItem', 'position' => 3, 'name' => $course['title'], 'item' => $courseUrl],
+        ],
+    ],
+    [
+        '@type' => 'FAQPage',
+        '@id' => $courseUrl . '#faq',
+        'mainEntity' => array_map(static function ($faq) {
+            return [
+                '@type' => 'Question',
+                'name' => $faq['q'],
+                'acceptedAnswer' => ['@type' => 'Answer', 'text' => $faq['a']],
+            ];
+        }, $courseFaqs),
+    ],
+];
 
 require __DIR__ . '/includes/header.php';
 ?>
@@ -41,10 +116,18 @@ require __DIR__ . '/includes/header.php';
         <div class="course-hero-grid">
             <div class="course-hero-content" data-aos="fade-right">
                 <div class="section-label"><?= $course['category'] ?></div>
-                <h1 class="text-display-lg" style="margin-bottom:0.75rem"><?= $course['title'] ?></h1>
+                <h1 class="text-display-lg" style="margin-bottom:0.75rem"><?= htmlspecialchars($courseSeo['h1'], ENT_QUOTES, 'UTF-8') ?></h1>
                 <p style="font-size:1.0625rem;color:var(--clr-text-secondary);line-height:1.7;margin-bottom:1.25rem">
                     <?= $course['description'] ?>
                 </p>
+
+                <div style="display:flex;flex-wrap:wrap;gap:0.5rem 1rem;margin-bottom:1.25rem;font-size:0.875rem" aria-label="Related training guides">
+                    <a href="<?= BASE_URL ?>/<?= $courseHubUrl ?>" style="color:var(--clr-primary);font-weight:600"><?= $courseHubLabel ?></a>
+                    <?php if (stripos($course['level'], 'Beginner') !== false): ?>
+                    <a href="<?= BASE_URL ?>/it-courses-for-beginners" style="color:var(--clr-primary);font-weight:600">IT courses for beginners</a>
+                    <?php endif; ?>
+                    <a href="<?= BASE_URL ?>/online-it-courses" style="color:var(--clr-primary);font-weight:600">Online IT course options</a>
+                </div>
 
                 <div class="course-info-grid">
                     <div class="course-info-item">
@@ -72,7 +155,7 @@ require __DIR__ . '/includes/header.php';
             </div>
 
             <div class="course-hero-image" data-aos="fade-left">
-                <img src="<?= $course['image'] ?>" alt="<?= $course['title'] ?>" loading="eager" />
+                <img src="<?= $course['image'] ?>" alt="<?= htmlspecialchars($courseSeo['h1'], ENT_QUOTES, 'UTF-8') ?> at IUC Edu" loading="eager" fetchpriority="high" />
             </div>
         </div>
     </div>
@@ -267,9 +350,30 @@ require __DIR__ . '/includes/header.php';
 
         <div style="display:grid;gap:1.5rem" class="related-courses-grid" data-aos="fade-up">
             <?php
-            $related = getCoursesByCategory($course['category']);
-            $related = array_filter($related, function($k) use ($slug) { return $k !== $slug; }, ARRAY_FILTER_USE_KEY);
-            $related = array_slice($related, 0, 3);
+            $relatedCourseMap = [
+                'ai-ml' => ['python', 'data-science', 'cloud-computing'],
+                'data-science' => ['python', 'ai-ml', 'cloud-computing'],
+                'python' => ['c-cpp', 'data-science', 'ai-ml'],
+                'java' => ['c-cpp', 'full-stack-java', 'spring-boot'],
+                'full-stack-java' => ['java', 'spring-boot', 'angular'],
+                'spring-boot' => ['java', 'full-stack-java', 'node-js'],
+                'react' => ['angular', 'node-js', 'full-stack-java'],
+                'angular' => ['react', 'node-js', 'full-stack-java'],
+                'node-js' => ['react', 'angular', 'full-stack-java'],
+                'ui-ux' => ['react', 'angular', 'digital-marketing'],
+                'software-testing' => ['java', 'python', 'devops'],
+                'devops' => ['cloud-computing', 'spring-boot', 'cyber-security'],
+                'cloud-computing' => ['devops', 'cyber-security', 'ai-ml'],
+                'cyber-security' => ['cloud-computing', 'devops', 'software-testing'],
+                'digital-marketing' => ['ui-ux', 'data-science', 'python'],
+                'c-cpp' => ['python', 'java', 'full-stack-java'],
+            ];
+            $related = [];
+            foreach ($relatedCourseMap[$slug] ?? [] as $relatedSlug) {
+                if (isset($courses[$relatedSlug])) {
+                    $related[$relatedSlug] = $courses[$relatedSlug];
+                }
+            }
             ?>
             <?php if (count($related) > 0): ?>
                 <?php foreach ($related as $rSlug => $rCourse): ?>
@@ -286,7 +390,7 @@ require __DIR__ . '/includes/header.php';
                                 <span class="course-emi">No-Cost EMI · <?= $rCourse['emi'] ?></span>
                             </div>
                             <div class="course-actions">
-                                <a href="<?= BASE_URL ?>/course/<?= $rSlug ?>" class="btn btn-sm btn-ghost">Learn More</a>
+                                <a href="<?= BASE_URL ?>/course/<?= $rSlug ?>" class="btn btn-sm btn-ghost">View <?= htmlspecialchars($rCourse['short_title'], ENT_QUOTES, 'UTF-8') ?> course</a>
                             </div>
                         </div>
                     </div>
@@ -314,7 +418,7 @@ require __DIR__ . '/includes/header.php';
         </div>
 
         <div data-aos="fade-up">
-            <?php foreach (array_slice($faqs, 0, 5) as $i => $faq): ?>
+            <?php foreach ($courseFaqs as $i => $faq): ?>
             <div class="accordion-item">
                 <details>
                     <summary>

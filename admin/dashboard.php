@@ -9,7 +9,8 @@ require_once __DIR__ . '/../includes/analytics.php';
 require_once __DIR__ . '/_auth.php';
 
 admin_require();
-an_ensure_tables($conn);
+if ($conn) an_ensure_tables($conn);
+if (empty($_SESSION['admin_csrf_token'])) $_SESSION['admin_csrf_token'] = bin2hex(random_bytes(32));
 
 $from = isset($_GET['from']) ? preg_replace('/[^0-9\-]/', '', $_GET['from']) : date('Y-m-d', strtotime('-30 days'));
 $to   = isset($_GET['to'])   ? preg_replace('/[^0-9\-]/', '', $_GET['to'])   : date('Y-m-d');
@@ -27,9 +28,9 @@ $SITE_BASE  = BASE_URL;
 <meta name="robots" content="noindex, nofollow" />
 <link rel="icon" type="image/png" href="<?= BASE_URL ?>/assets/images/iuc_pyramid_logo.png" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
-<link rel="stylesheet" href="admin.css?v=1" />
+<link rel="stylesheet" href="admin.css?v=3" />
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-<script>var ADMIN_BASE = '<?= $ADMIN_BASE ?>'; var SITE_BASE = '<?= $SITE_BASE ?>';</script>
+<script>var ADMIN_BASE = '<?= $ADMIN_BASE ?>'; var SITE_BASE = '<?= $SITE_BASE ?>'; var ADMIN_CSRF = '<?= htmlspecialchars($_SESSION['admin_csrf_token'], ENT_QUOTES, 'UTF-8') ?>';</script>
 </head>
 <body>
 
@@ -49,6 +50,8 @@ $SITE_BASE  = BASE_URL;
             <button class="nav-item" data-tab="visitors"><i class="bi bi-people"></i> Visitors</button>
             <button class="nav-item" data-tab="campaigns"><i class="bi bi-megaphone"></i> Campaigns</button>
             <button class="nav-item" data-tab="pages"><i class="bi bi-file-earmark-text"></i> Pages</button>
+            <button class="nav-item" data-tab="seo"><i class="bi bi-search"></i> SEO Monitor</button>
+            <button class="nav-item" data-tab="enquiries"><i class="bi bi-inbox"></i> Enquiries</button>
             <button class="nav-item" data-tab="conversions"><i class="bi bi-graph-up"></i> Conversions</button>
             <button class="nav-item" data-tab="live"><i class="bi bi-broadcast"></i> Live Visitors <span class="live-dot" id="liveDot"></span></button>
             <button class="nav-item" data-tab="reports"><i class="bi bi-filetype-xlsx"></i> Reports</button>
@@ -88,6 +91,12 @@ $SITE_BASE  = BASE_URL;
             <section class="tab-panel active" id="tab-overview">
                 <div class="kpi-grid" id="kpiGrid"></div>
 
+                <div class="card">
+                    <div class="card-title"><i class="bi bi-heart-pulse"></i> Data Collection Health <span class="muted" id="healthChecked"></span></div>
+                    <div class="health-grid" id="healthGrid"></div>
+                    <div class="health-message" id="healthMessage"></div>
+                </div>
+
                 <div class="chart-grid chart-grid-2">
                     <div class="card"><div class="card-title"><i class="bi bi-calendar-week"></i> Daily Visitors Trend</div><div class="chart-box"><canvas id="dailyTrend"></canvas></div></div>
                     <div class="card"><div class="card-title"><i class="bi bi-device-ssd"></i> Device Distribution</div><div class="chart-box"><canvas id="devicePie"></canvas></div></div>
@@ -99,6 +108,114 @@ $SITE_BASE  = BASE_URL;
                 <div class="chart-grid chart-grid-2">
                     <div class="card"><div class="card-title"><i class="bi bi-globe"></i> Browser Share</div><div class="chart-box"><canvas id="browserPie"></canvas></div></div>
                     <div class="card"><div class="card-title"><i class="bi bi-signpost"></i> Top Landing Pages</div><div class="chart-box"><canvas id="landingBar"></canvas></div></div>
+                </div>
+            </section>
+
+            <!-- SEO MONITOR -->
+            <section class="tab-panel" id="tab-seo">
+                <div class="seo-panel-head">
+                    <div>
+                        <div class="section-eyebrow">Google Search Console</div>
+                        <h2>Full Keyword Performance</h2>
+                        <p>Clicks, impressions, CTR, average position and previous-period movement from Google's Search Analytics API.</p>
+                    </div>
+                    <button type="button" class="btn btn-outline" id="gscRefresh"><i class="bi bi-arrow-clockwise"></i> Refresh GSC</button>
+                </div>
+                <div class="gsc-status is-loading" id="gscStatus">
+                    <i class="bi bi-cloud-arrow-down"></i>
+                    <div><strong>Search Console not loaded</strong><span>Open this tab to load the selected date range.</span></div>
+                </div>
+                <div class="card gsc-connect-card" id="gscConnectCard" hidden>
+                    <div class="card-title"><i class="bi bi-google"></i> Connect real Search Console data</div>
+                    <p>Upload a Google Cloud service-account JSON key. The key stays only in this authenticated admin session; it is not written to the website files or database.</p>
+                    <form id="gscConnectForm" enctype="multipart/form-data">
+                        <label class="gsc-field">
+                            <span>Search Console property</span>
+                            <input type="text" id="gscProperty" name="property" value="sc-domain:iucedu.com" maxlength="500" required />
+                            <small>Use the exact verified property. Domain property example: sc-domain:iucedu.com</small>
+                        </label>
+                        <label class="gsc-field">
+                            <span>Service-account JSON key</span>
+                            <input type="file" id="gscCredentials" name="credentials" accept="application/json,.json" required />
+                            <small>Create it in Google Cloud, then add its client_email as a Search Console property user.</small>
+                        </label>
+                        <div class="gsc-connect-actions">
+                            <button type="submit" class="btn btn-primary" id="gscConnectButton"><i class="bi bi-shield-lock"></i> Connect this session</button>
+                            <span id="gscConnectMessage" role="status"></span>
+                        </div>
+                    </form>
+                </div>
+                <div class="gsc-session-actions" id="gscSessionActions" hidden>
+                    <span><i class="bi bi-shield-check"></i> Session-only credential is active.</span>
+                    <button type="button" class="btn btn-outline" id="gscDisconnect">Forget credential</button>
+                </div>
+                <div class="kpi-grid kpi-4" id="gscKpi"></div>
+                <div class="chart-grid chart-grid-2">
+                    <div class="card"><div class="card-title"><i class="bi bi-graph-up-arrow"></i> Google Search Trend</div><div class="chart-box tall"><canvas id="gscDailyTrend"></canvas></div></div>
+                    <div class="card"><div class="card-title"><i class="bi bi-pie-chart"></i> Brand vs Non-brand Queries</div><div class="chart-box tall"><canvas id="gscBrandPie"></canvas></div></div>
+                </div>
+                <div class="card">
+                    <div class="card-title seo-table-title">
+                        <span><i class="bi bi-key"></i> Search Console Queries <span class="muted" id="gscQueryCount"></span></span>
+                        <input type="search" class="seo-filter" id="gscQuerySearch" placeholder="Filter keywords…" autocomplete="off" />
+                    </div>
+                    <div class="table-wrap"><table class="table gsc-query-table" id="gscQueryTable"></table></div>
+                </div>
+                <div class="card opportunity-card">
+                    <div class="card-title"><i class="bi bi-lightbulb"></i> SEO Opportunities <span class="muted">Position 4–20, impressions ≥10 and CTR below 8%</span></div>
+                    <div class="table-wrap"><table class="table" id="gscOpportunityTable"></table></div>
+                </div>
+                <div class="chart-grid chart-grid-2">
+                    <div class="card">
+                        <div class="card-title"><i class="bi bi-file-earmark-bar-graph"></i> Google Landing Pages</div>
+                        <div class="table-wrap"><table class="table" id="gscPageTable"></table></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title"><i class="bi bi-phone"></i> Device Performance</div>
+                        <div class="table-wrap"><table class="table" id="gscDeviceTable"></table></div>
+                    </div>
+                </div>
+                <div class="chart-grid chart-grid-2">
+                    <div class="card">
+                        <div class="card-title"><i class="bi bi-globe-asia-australia"></i> Search Countries</div>
+                        <div class="table-wrap"><table class="table" id="gscCountryTable"></table></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title"><i class="bi bi-stars"></i> Search Appearance</div>
+                        <div class="table-wrap"><table class="table" id="gscAppearanceTable"></table></div>
+                    </div>
+                </div>
+
+                <div class="seo-subsection-head">
+                    <div class="section-eyebrow">On-site attribution</div>
+                    <h2>Visitor & Campaign Keywords</h2>
+                    <p>UTM terms and the limited keyword data exposed by browser referrers, connected to sessions and conversions.</p>
+                </div>
+                <div class="kpi-grid kpi-4" id="seoKpi"></div>
+                <div class="notice-card">
+                    <i class="bi bi-info-circle"></i>
+                    <div><strong>Attribution limitation</strong><span>Search Console metrics are aggregated and cannot identify an individual searcher. Enquiry-level keyword attribution is available only when a campaign supplies utm_term.</span></div>
+                </div>
+                <div class="chart-grid chart-grid-2">
+                    <div class="card"><div class="card-title"><i class="bi bi-key"></i> Most-used Search Keywords</div><div class="chart-box"><canvas id="seoKeywordBar"></canvas></div></div>
+                    <div class="card"><div class="card-title"><i class="bi bi-search-heart"></i> Search Engines</div><div class="chart-box"><canvas id="searchEnginePie"></canvas></div></div>
+                </div>
+                <div class="card">
+                    <div class="card-title"><i class="bi bi-table"></i> Keyword Performance</div>
+                    <div class="table-wrap"><table class="table" id="seoKeywordTable"></table></div>
+                </div>
+                <div class="card">
+                    <div class="card-title"><i class="bi bi-signpost"></i> Search Landing Pages</div>
+                    <div class="table-wrap"><table class="table" id="seoLandingTable"></table></div>
+                </div>
+            </section>
+
+            <!-- ENQUIRIES -->
+            <section class="tab-panel" id="tab-enquiries">
+                <div class="kpi-grid kpi-4" id="enquiryKpi"></div>
+                <div class="card">
+                    <div class="card-title"><i class="bi bi-inbox"></i> Saved Contact Enquiries <span class="muted">Page, time and campaign attribution</span></div>
+                    <div class="table-wrap"><table class="table wide-table" id="enquiryTable"></table></div>
                 </div>
             </section>
 
@@ -212,6 +329,6 @@ $SITE_BASE  = BASE_URL;
     </main>
 </div>
 
-<script src="admin.js?v=1"></script>
+<script src="admin.js?v=4"></script>
 </body>
 </html>
