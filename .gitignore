@@ -1,5 +1,6 @@
 # Local secrets
 includes/search-console-config.php
+includes/whatsapp-config.php
 *service-account*.json
 
 *iucedu-6baf125afec0*.json

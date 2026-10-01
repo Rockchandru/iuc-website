@@ -1,0 +1,50 @@
+- generic [active] [ref=f31e1]:
+  - link "Skip to main content" [ref=f31e2] [cursor=pointer]:
+    - /url: "#content"
+  - generic [ref=f31e3]:
+    - link "Skip to main content" [ref=f31e4] [cursor=pointer]:
+      - /url: "#content"
+    - generic [ref=f31e5]:
+      - banner [ref=f31e6]:
+        - generic [ref=f31e11]:
+          - button "Open main menu" [ref=f31e16] [cursor=pointer]:
+            - generic [ref=f31e17]: 
+          - link [ref=f31e26] [cursor=pointer]:
+            - /url: ../index.html
+            - img "cPanel logo" [ref=f31e27]
+          - generic [ref=f31e28]:
+            - button "Search" [ref=f31e32] [cursor=pointer]:
+              - generic [ref=f31e33]: 
+            - text:  
+            - generic [ref=f31e39]:
+              - link "Notifications" [ref=f31e46] [cursor=pointer]:
+                - /url: ../notifications/index.html.tt
+                - generic [ref=f31e47]: 
+              - button "User Menu" [ref=f31e58] [cursor=pointer]:
+                - generic [ref=f31e59]: 
+      - generic [ref=f31e65]:
+        - heading "Terminal" [level=1] [ref=f31e66]
+        - paragraph [ref=f31e69]: This interface provides command line access to your account on the server.
+      - contentinfo [ref=f31e70]:
+        - generic [ref=f31e75]:
+          - generic [ref=f31e76]:
+            - link [ref=f31e80] [cursor=pointer]:
+              - /url: https://www.cpanel.net
+              - img "cPanel logo" [ref=f31e81]
+            - generic [ref=f31e82]: 110.0.144
+          - list [ref=f31e84]:
+            - listitem [ref=f31e85]:
+              - link "Home" [ref=f31e86] [cursor=pointer]:
+                - /url: ../index.html
+            - listitem [ref=f31e87]:
+              - link "Trademarks" [ref=f31e88] [cursor=pointer]:
+                - /url: ../trademarks.html
+            - listitem [ref=f31e89]:
+              - link "Privacy Policy" [ref=f31e90] [cursor=pointer]:
+                - /url: https://go.cpanel.net/privacy
+            - listitem [ref=f31e91]:
+              - link "Documentation" [ref=f31e92] [cursor=pointer]:
+                - /url: https://go.cpanel.net/cpaneldocsHome
+            - listitem [ref=f31e93]:
+              - link "Give Feedback" [ref=f31e94] [cursor=pointer]:
+                - /url: https://surveys.webpros.com/to/efKeF6N7?utm_source=cpanel-feedback&cpanel_productversion=11.110.0.144&companyid=2045&cpanel_appkey=terminal

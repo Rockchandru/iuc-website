@@ -1,0 +1,3 @@
+[   81586ms] [ERROR] Failed to load resource: the server responded with a status of 403 () @ https://www.iucedu.com/whatsapp-webhook.php?hub_mode=subscribe&hub_verify_token=wrong&hub_challenge=123:0
+[   85593ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://www.iucedu.com/whatsapp-worker.php:0
+[   90605ms] [ERROR] Failed to load resource: the server responded with a status of 403 () @ https://www.iucedu.com/WHATSAPP_SETUP.md:0

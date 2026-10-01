@@ -7,11 +7,13 @@ require_once __DIR__ . '/includes/functions.php';
 
 require_once __DIR__ . '/db.php';
 require_once __DIR__ . '/includes/analytics.php';
+require_once __DIR__ . '/includes/whatsapp-enquiry.php';
 
 // ── Contact Form Handler ──────────────────────────────────
 $formSuccess = !empty($_SESSION['contact_success']);
 unset($_SESSION['contact_success']);
 $formError   = '';
+$isModalSubmit = $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['modal_submit']);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_submit'])) {
     if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'] ?? '')) {
@@ -73,6 +75,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_submit'])) {
                     error_log('Enquiry insert failed: ' . $insertError);
                 } else {
                     if (an_ensure_tables($conn)) {
+                        /* A phone number is only known after the visitor submits it. */
+                        if ($visitorId) {
+                            $visitorPhone = $conn->prepare("UPDATE analytics_visitors SET phone = ? WHERE visitor_id = ?");
+                            if ($visitorPhone) {
+                                $visitorPhone->bind_param('ss', $phone, $visitorId);
+                                if (!$visitorPhone->execute()) error_log('Visitor phone link failed: ' . $visitorPhone->error);
+                                $visitorPhone->close();
+                            }
+                        }
+
                         $eventType = 'contact_form';
                         $eventLabel = 'Enquiry #' . $enquiryId . ' saved';
                         $eventTime = date('Y-m-d H:i:s');
@@ -86,6 +98,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_submit'])) {
                         }
                     }
 
+                    /* WhatsApp is secondary: the saved enquiry and analytics conversion above
+                       remain successful even if configuration or provider delivery fails. */
+                    try {
+                        $whatsappOptIn = isset($_POST['whatsapp_opt_in']) && (string)$_POST['whatsapp_opt_in'] === '1';
+                        $whatsappRequestKey = trim((string)($_POST['enquiry_request_key'] ?? ''));
+                        $whatsappQueue = wa_enqueue_enquiry($conn, $enquiryId, $whatsappRequestKey, $whatsappOptIn);
+                        if (!empty($whatsappQueue['queued']) && !empty($whatsappQueue['message_id'])
+                            && ($whatsappQueue['status'] ?? '') === 'PENDING') {
+                            wa_process_message($conn, (int)$whatsappQueue['message_id']);
+                        }
+                        if (empty($whatsappQueue['ok'])) {
+                            error_log('WhatsApp enquiry queue failed for enquiry ID ' . $enquiryId . '.');
+                        }
+                    } catch (Throwable $whatsappError) {
+                        error_log('WhatsApp enquiry processing failed for enquiry ID ' . $enquiryId . '.');
+                    }
+
                     $safeMailName = str_replace(["\r", "\n"], ' ', $name);
                     $to = SITE_EMAIL;
                     $subject = "New Inquiry from $safeMailName – " . SITE_NAME;
@@ -93,9 +122,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_submit'])) {
                     $headers = "From: noreply@" . str_replace('www.', '', parse_url(SITE_URL, PHP_URL_HOST));
                     @mail($to, $subject, $body, $headers);
 
-                    $_SESSION['contact_success'] = true;
+                    if (!$isModalSubmit) $_SESSION['contact_success'] = true;
                     $_SESSION['captcha'] = rand(1000, 9999);
                     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+                    if ($isModalSubmit) {
+                        header('Content-Type: application/json; charset=UTF-8');
+                        echo json_encode(['success' => true, 'message' => 'Thank you! We will contact you within 24 hours.',
+                            'csrf_token' => $_SESSION['csrf_token'], 'captcha' => $_SESSION['captcha'],
+                            'enquiry_request_key' => wa_new_request_key()]);
+                        exit;
+                    }
                     header('Location: ' . BASE_URL . '/#contact', true, 303);
                     exit;
                 }
@@ -104,8 +140,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_submit'])) {
     }
 }
 
-$pageTitle = 'Computer & IT Training Institute in Chennai | IUC Edu';
-$metaDesc = 'IUC Edu is a computer and IT training institute in Chennai offering programming, coding, software and beginner IT courses with practical training and placement support.';
+if ($isModalSubmit) {
+    http_response_code(422);
+    header('Content-Type: application/json; charset=UTF-8');
+    echo json_encode(['success' => false, 'message' => $formError ?: 'We could not submit your enquiry. Please try again.', 'csrf_token' => $_SESSION['csrf_token'], 'captcha' => $_SESSION['captcha']]);
+    exit;
+}
+
+$pageTitle = 'IUC Edu | Computer Courses & IT Training in Chennai';
+$metaDesc = 'Explore career-focused computer courses and IT training in Chennai at IUC Edu, with practical classes, live projects, flexible batches and placement assistance.';
 $ogTitle = $pageTitle;
 $ogDesc = $metaDesc;
 $ogImage = SITE_URL . '/assets/images/about-education.jpg';

@@ -26,6 +26,17 @@ RewriteCond %{HTTP_HOST} ^(?:www\.)?iucedu\.com$ [NC]
 RewriteCond %{THE_REQUEST} \s/+.*?index\.php(?:[?\s]) [NC]
 RewriteRule ^index\.php$ https://www.iucedu.com/ [R=301,L]
 
+# Consolidate the retired public login path into the protected, noindex admin area.
+RewriteCond %{HTTP_HOST} ^(?:www\.)?iucedu\.com$ [NC]
+RewriteRule ^login(?:/index\.php)?$ https://www.iucedu.com/admin/ [R=301,L,NE]
+
+# Preserve search equity from URLs still present in Google's legacy index.
+RewriteCond %{HTTP_HOST} ^(?:www\.)?iucedu\.com$ [NC]
+RewriteRule ^contact\.htm$ https://www.iucedu.com/ [R=301,L,NE]
+
+RewriteCond %{HTTP_HOST} ^(?:www\.)?iucedu\.com$ [NC]
+RewriteRule ^training-courses/Java-training/core-java-training-institute-in-chennai\.htm$ https://www.iucedu.com/course/java [R=301,L,NE,NC]
+
 # Use extensionless URLs without a trailing slash (real directories are exempt).
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{THE_REQUEST} \s/+(.+?)/[?\s] [NC]
@@ -82,7 +93,7 @@ RewriteRule ^ - [F,L]
 
 # ── Directory protection ─────────────────────────────────
 Options -Indexes
-<FilesMatch "(^\.|\.(env|sql|log|ini|json|bak|md)$)">
+<FilesMatch "(^\.|\.(env|sql|log|ini|json|bak|md|zip)$)">
     Order Allow,Deny
     Deny from all
 </FilesMatch>

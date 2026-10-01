@@ -6,9 +6,9 @@
 date_default_timezone_set('Asia/Kolkata');
 
 $db_host = 'localhost';
-$db_user = 'root';
-$db_pass = '';
-$db_name = 'iuc_website';
+$db_user = 'iucteoxs_admin';
+$db_pass = 'iuctech@123';
+$db_name = 'iucteoxs_contact';
 $conn = null;
 $db_status = ['connected' => false, 'errors' => [], 'migrations' => []];
 

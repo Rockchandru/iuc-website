@@ -28,15 +28,15 @@ $SITE_BASE  = BASE_URL;
 <meta name="robots" content="noindex, nofollow" />
 <link rel="icon" type="image/png" href="<?= BASE_URL ?>/assets/images/iuc_pyramid_logo.png" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
-<link rel="stylesheet" href="admin.css?v=3" />
+<link rel="stylesheet" href="admin.css?v=<?= @filemtime(__DIR__ . '/admin.css') ?>" />
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-<script>var ADMIN_BASE = '<?= $ADMIN_BASE ?>'; var SITE_BASE = '<?= $SITE_BASE ?>'; var ADMIN_CSRF = '<?= htmlspecialchars($_SESSION['admin_csrf_token'], ENT_QUOTES, 'UTF-8') ?>';</script>
+<script>var ADMIN_BASE = '<?= $ADMIN_BASE ?>'; var SITE_BASE = '<?= $SITE_BASE ?>'; var SITE_ORIGIN = '<?= htmlspecialchars(SITE_URL, ENT_QUOTES, 'UTF-8') ?>'; var ADMIN_CSRF = '<?= htmlspecialchars($_SESSION['admin_csrf_token'], ENT_QUOTES, 'UTF-8') ?>';</script>
 </head>
 <body>
 
 <div class="app">
     <!-- ── Sidebar ─────────────────────────────────────────── -->
-    <aside class="sidebar">
+    <aside class="sidebar" id="adminSidebar" aria-label="Analytics navigation">
         <div class="sidebar-brand">
             <img src="<?= BASE_URL ?>/assets/images/iuc_pyramid_logo.png" alt="IUC" />
             <div>
@@ -62,13 +62,19 @@ $SITE_BASE  = BASE_URL;
             <a class="nav-item" href="logout.php"><i class="bi bi-box-arrow-right"></i> Logout</a>
         </div>
     </aside>
+    <button type="button" class="sidebar-backdrop" id="sidebarBackdrop" aria-label="Close analytics navigation"></button>
 
     <!-- ── Main ────────────────────────────────────────────── -->
     <main class="main">
         <header class="topbar">
-            <div class="topbar-title">
-                <h1 id="pageTitle">Overview</h1>
-                <p id="periodLabel"></p>
+            <div class="topbar-heading">
+                <button type="button" class="mobile-sidebar-toggle" id="mobileSidebarToggle" aria-label="Open analytics navigation" aria-controls="adminSidebar" aria-expanded="false">
+                    <i class="bi bi-list"></i>
+                </button>
+                <div class="topbar-title">
+                    <h1 id="pageTitle">Overview</h1>
+                    <p id="periodLabel"></p>
+                </div>
             </div>
             <div class="topbar-controls">
                 <div class="range-group">
@@ -162,7 +168,7 @@ $SITE_BASE  = BASE_URL;
                     <div class="table-wrap"><table class="table gsc-query-table" id="gscQueryTable"></table></div>
                 </div>
                 <div class="card opportunity-card">
-                    <div class="card-title"><i class="bi bi-lightbulb"></i> SEO Opportunities <span class="muted">Position 4–20, impressions ≥10 and CTR below 8%</span></div>
+                    <div class="card-title"><i class="bi bi-lightbulb"></i> SEO Opportunities <span class="muted">Prioritised by page match, position, impressions and a position-aware CTR benchmark</span></div>
                     <div class="table-wrap"><table class="table" id="gscOpportunityTable"></table></div>
                 </div>
                 <div class="chart-grid chart-grid-2">
@@ -188,7 +194,7 @@ $SITE_BASE  = BASE_URL;
 
                 <div class="seo-subsection-head">
                     <div class="section-eyebrow">On-site attribution</div>
-                    <h2>Visitor & Campaign Keywords</h2>
+                    <h2>Visitor &amp; Campaign Attribution</h2>
                     <p>UTM terms and the limited keyword data exposed by browser referrers, connected to sessions and conversions.</p>
                 </div>
                 <div class="kpi-grid kpi-4" id="seoKpi"></div>
@@ -196,12 +202,18 @@ $SITE_BASE  = BASE_URL;
                     <i class="bi bi-info-circle"></i>
                     <div><strong>Attribution limitation</strong><span>Search Console metrics are aggregated and cannot identify an individual searcher. Enquiry-level keyword attribution is available only when a campaign supplies utm_term.</span></div>
                 </div>
+                <div class="card attribution-guide">
+                    <div class="card-title"><i class="bi bi-link-45deg"></i> Campaign keyword tracking setup</div>
+                    <p>Organic Google searches are measured in Search Console as aggregate query data. For Google Ads, add this in the campaign's <strong>Final URL suffix</strong> so sessions and enquiries can be attributed without changing the destination page.</p>
+                    <code>utm_source=google&amp;utm_medium=cpc&amp;utm_campaign=python_chennai&amp;utm_term={keyword}</code>
+                    <small><strong>{keyword}</strong> is a Google Ads ValueTrack parameter and may be blank for keywordless campaign types. For other managed campaigns, use a consistent lowercase targeting term.</small>
+                </div>
                 <div class="chart-grid chart-grid-2">
-                    <div class="card"><div class="card-title"><i class="bi bi-key"></i> Most-used Search Keywords</div><div class="chart-box"><canvas id="seoKeywordBar"></canvas></div></div>
-                    <div class="card"><div class="card-title"><i class="bi bi-search-heart"></i> Search Engines</div><div class="chart-box"><canvas id="searchEnginePie"></canvas></div></div>
+                    <div class="card"><div class="card-title"><i class="bi bi-key"></i> Attributed Campaign Keywords</div><div class="chart-box"><canvas id="seoKeywordBar"></canvas></div></div>
+                    <div class="card"><div class="card-title"><i class="bi bi-search-heart"></i> Search Traffic by Engine</div><div class="chart-box"><canvas id="searchEnginePie"></canvas></div></div>
                 </div>
                 <div class="card">
-                    <div class="card-title"><i class="bi bi-table"></i> Keyword Performance</div>
+                    <div class="card-title"><i class="bi bi-table"></i> Session-Level Campaign Attribution</div>
                     <div class="table-wrap"><table class="table" id="seoKeywordTable"></table></div>
                 </div>
                 <div class="card">
@@ -251,6 +263,13 @@ $SITE_BASE  = BASE_URL;
 
             <!-- ══════════ CAMPAIGNS ══════════ -->
             <section class="tab-panel" id="tab-campaigns">
+                <div class="card attribution-guide">
+                    <div class="card-title"><i class="bi bi-link-45deg"></i> Campaign Link Standard</div>
+                    <p>Use a unique UTM campaign and content value on every ad or post. This is the only reliable way to identify traffic when an app or browser hides its referrer. <strong>gad_source is a Google click marker, not a source or campaign name.</strong></p>
+                    <code>https://www.iucedu.com/?utm_source=youtube&amp;utm_medium=paid_video&amp;utm_campaign=python_chennai_sep&amp;utm_content=video_ad_01</code>
+                    <code>https://www.iucedu.com/?utm_source=facebook&amp;utm_medium=paid_social&amp;utm_campaign=python_chennai_sep&amp;utm_content=carousel_ad_01</code>
+                    <small>For a normal unpaid YouTube post, use <strong>utm_medium=organic_social</strong>. Keep values lowercase and change utm_content for each creative.</small>
+                </div>
                 <div class="chart-grid chart-grid-2">
                     <div class="card"><div class="card-title"><i class="bi bi-share"></i> Traffic Channels</div><div class="chart-box"><canvas id="channelPie"></canvas></div></div>
                     <div class="card"><div class="card-title"><i class="bi bi-diagram-2"></i> Source Performance</div><div class="chart-box"><canvas id="sourceBar2"></canvas></div></div>
@@ -298,12 +317,15 @@ $SITE_BASE  = BASE_URL;
             <!-- ══════════ LIVE ══════════ -->
             <section class="tab-panel" id="tab-live">
                 <div class="kpi-grid kpi-4" id="liveKpi"></div>
+                <div class="live-source-note" id="liveSourceNote" role="status" aria-live="polite">
+                    <i class="bi bi-arrow-repeat"></i><div><strong>Checking Google Analytics Realtime</strong><span>Loading the connected GA4 active user count.</span></div>
+                </div>
                 <div class="card">
-                    <div class="card-title"><i class="bi bi-activity"></i> Active Visitors — Last 30 min <span class="live-badge" id="liveBadge"></span></div>
+                    <div class="card-title"><i class="bi bi-activity"></i> IUC Activity Trend — Last 30 min <span class="live-badge" id="liveBadge"></span></div>
                     <div class="chart-box"><canvas id="liveTrend"></canvas></div>
                 </div>
                 <div class="card">
-                    <div class="card-title"><i class="bi bi-radioactive"></i> Currently Active <span class="muted" id="liveActiveLabel"></span></div>
+                    <div class="card-title"><i class="bi bi-radioactive"></i> Recently Active IUC Visitors <span class="muted" id="liveActiveLabel"></span></div>
                     <div class="table-wrap"><table class="table" id="liveTable"></table></div>
                 </div>
             </section>
@@ -329,6 +351,6 @@ $SITE_BASE  = BASE_URL;
     </main>
 </div>
 
-<script src="admin.js?v=4"></script>
+<script src="admin.js?v=<?= @filemtime(__DIR__ . '/admin.js') ?>"></script>
 </body>
 </html>

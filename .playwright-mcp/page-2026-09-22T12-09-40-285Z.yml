@@ -1,0 +1,698 @@
+- generic [ref=e1]:
+  - iframe [ref=e2]
+  - generic [ref=e3]:
+    - navigation [ref=e4]:
+      - generic [ref=e5]:
+        - link [ref=e6] [cursor=pointer]:
+          - /url: ../index.html
+          - img "cPanel" [ref=e7]
+        - text: File Manager
+      - generic [ref=e8]:
+        - generic [ref=e9]:
+          - generic [ref=e10]:
+            - generic [ref=e11]: Search
+            - combobox "Search" [ref=e12]:
+              - option "All Your Files" [selected]
+              - option "Only public_html"
+              - option "Current Directory"
+          - generic [ref=e13]:
+            - generic [ref=e14]: for
+            - textbox "for" [ref=e15]
+          - button "Go" [ref=e17] [cursor=pointer]
+        - link " Settings" [ref=e19] [cursor=pointer]:
+          - /url: javascript:void(0)
+          - generic [ref=e20]: 
+          - text: Settings
+    - list [ref=e22]:
+      - listitem [ref=e23]:
+        - link "+ File" [ref=e24] [cursor=pointer]:
+          - /url: javascript:void(0)
+          - generic [ref=e25]: +
+          - text: File
+      - listitem [ref=e26]:
+        - link "+ Folder" [ref=e27] [cursor=pointer]:
+          - /url: javascript:void(0)
+          - generic [ref=e28]: +
+          - text: Folder
+      - listitem [ref=e29]:
+        - link " Copy" [ref=e30] [cursor=pointer]:
+          - /url: copymove.html.tt
+          - generic [ref=e31]: 
+          - text: Copy
+      - listitem [ref=e32]:
+        - link " Move" [ref=e33] [cursor=pointer]:
+          - /url: copymove.html.tt
+          - generic [ref=e34]: 
+          - text: Move
+      - listitem [ref=e35]:
+        - link " Upload" [ref=e36] [cursor=pointer]:
+          - /url: javascript:void(0)
+          - generic [ref=e37]: 
+          - text: Upload
+      - listitem [ref=e38]:
+        - link " Download" [ref=e39] [cursor=pointer]:
+          - /url: javascript:void(0)
+          - generic [ref=e40]: 
+          - text: Download
+      - listitem [ref=e41]:
+        - link " Delete" [ref=e42] [cursor=pointer]:
+          - /url: javascript:void(0)
+          - generic [ref=e43]: 
+          - text: Delete
+      - listitem [ref=e44]:
+        - link " Restore" [ref=e45]:
+          - /url: javascript:void(0)
+          - generic [ref=e46]: 
+          - text: Restore
+      - listitem [ref=e47]:
+        - link " Rename" [ref=e48] [cursor=pointer]:
+          - /url: javascript:void(0)
+          - generic [ref=e49]: 
+          - text: Rename
+      - listitem [ref=e50]:
+        - link " Edit" [active] [ref=e51] [cursor=pointer]:
+          - /url: javascript:void(0)
+          - generic [ref=e52]: 
+          - text: Edit
+      - listitem [ref=e53]:
+        - link " Permissions" [ref=e54] [cursor=pointer]:
+          - /url: javascript:void(0)
+          - generic [ref=e55]: 
+          - text: Permissions
+      - listitem [ref=e56]:
+        - link " View" [ref=e57] [cursor=pointer]:
+          - /url: javascript:void(0)
+          - generic [ref=e58]: 
+          - text: View
+      - listitem [ref=e59]:
+        - link " Extract" [ref=e60]:
+          - /url: javascript:void(0)
+          - generic [ref=e61]: 
+          - text: Extract
+      - listitem [ref=e62]:
+        - link " Compress" [ref=e63] [cursor=pointer]:
+          - /url: javascript:void(0)
+          - generic [ref=e64]: 
+          - text: Compress
+  - generic [ref=e65]:
+    - generic [ref=e67]:
+      - generic [ref=e68]: 
+      - textbox [ref=e70]: public_html/iucedu.com/assets/css
+      - button "Go" [ref=e72] [cursor=pointer]
+    - generic [ref=e73]:
+      - generic [ref=e76]:
+        - button "Collapse All" [ref=e78] [cursor=pointer]
+        - generic [ref=e83]:
+          - table [ref=e84]:
+            - rowgroup [ref=e85]:
+              - row [ref=e86]:
+                - cell [ref=e87] [cursor=pointer]:
+                  - text: 
+                  - link [ref=e88]:
+                    - /url: "#"
+                  - text: 
+                - cell " (/home4/iucteoxs)" [ref=e89]:
+                  - generic [ref=e90] [cursor=pointer]:
+                    - generic [ref=e91]: 
+                    - text: (/home4/iucteoxs)
+          - generic [ref=e92]:
+            - table [ref=e2831]:
+              - rowgroup [ref=e2832]:
+                - row [ref=e2833]:
+                  - cell [ref=e2834]
+                  - cell [ref=e2836] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e2837]:
+                      - /url: "#"
+                    - text: 
+                  - cell ".cpanel" [ref=e2838]
+            - table [ref=e2840]:
+              - rowgroup [ref=e2841]:
+                - row [ref=e2842]:
+                  - cell [ref=e2843]
+                  - cell [ref=e2845] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e2846]:
+                      - /url: "#"
+                    - text: 
+                  - cell ".cphorde" [ref=e2847]
+            - table [ref=e2849]:
+              - rowgroup [ref=e2850]:
+                - row [ref=e2851]:
+                  - cell [ref=e2852]
+                  - cell [ref=e2854] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e2855]:
+                      - /url: "#"
+                  - cell ".htpasswds" [ref=e2856]
+            - table [ref=e2858]:
+              - rowgroup [ref=e2859]:
+                - row [ref=e2860]:
+                  - cell [ref=e2861]
+                  - cell [ref=e2863] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e2864]:
+                      - /url: "#"
+                  - cell ".koality" [ref=e2865]
+            - table [ref=e2867]:
+              - rowgroup [ref=e2868]:
+                - row [ref=e2869]:
+                  - cell [ref=e2870]
+                  - cell [ref=e2872] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e2873]:
+                      - /url: "#"
+                    - text: 
+                  - cell ".pki" [ref=e2874]
+            - table [ref=e2876]:
+              - rowgroup [ref=e2877]:
+                - row [ref=e2878]:
+                  - cell [ref=e2879]
+                  - cell [ref=e2881] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e2882]:
+                      - /url: "#"
+                  - cell ".quarantine" [ref=e2883]
+            - table [ref=e2885]:
+              - rowgroup [ref=e2886]:
+                - row [ref=e2887]:
+                  - cell [ref=e2888]
+                  - cell [ref=e2890] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e2891]:
+                      - /url: "#"
+                    - text: 
+                  - cell ".softaculous" [ref=e2892]
+            - table [ref=e2894]:
+              - rowgroup [ref=e2895]:
+                - row [ref=e2896]:
+                  - cell [ref=e2897]
+                  - cell [ref=e2899] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e2900]:
+                      - /url: "#"
+                  - cell ".spamassassin" [ref=e2901]
+            - table [ref=e2903]:
+              - rowgroup [ref=e2904]:
+                - row [ref=e2905]:
+                  - cell [ref=e2906]
+                  - cell [ref=e2908] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e2909]:
+                      - /url: "#"
+                  - cell ".ssh" [ref=e2910]
+            - table [ref=e2912]:
+              - rowgroup [ref=e2913]:
+                - row [ref=e2914]:
+                  - cell [ref=e2915]
+                  - cell [ref=e2917] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e2918]:
+                      - /url: "#"
+                  - cell ".subaccounts" [ref=e2919]
+            - table [ref=e2921]:
+              - rowgroup [ref=e2922]:
+                - row [ref=e2923]:
+                  - cell [ref=e2924]
+                  - cell [ref=e2926] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e2927]:
+                      - /url: "#"
+                    - text: 
+                  - cell ".trash" [ref=e2928]
+            - table [ref=e2930]:
+              - rowgroup [ref=e2931]:
+                - row [ref=e2932]:
+                  - cell [ref=e2933]
+                  - cell [ref=e2935] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e2936]:
+                      - /url: "#"
+                    - text: 
+                  - cell ".wp-cli" [ref=e2937]
+            - table [ref=e2939]:
+              - rowgroup [ref=e2940]:
+                - row [ref=e2941]:
+                  - cell [ref=e2942]
+                  - cell [ref=e2944] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e2945]:
+                      - /url: "#"
+                    - text: 
+                  - cell "carnivalenterprises.com" [ref=e2946]
+            - table [ref=e2948]:
+              - rowgroup [ref=e2949]:
+                - row [ref=e2950]:
+                  - cell [ref=e2951]
+                  - cell [ref=e2953] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e2954]:
+                      - /url: "#"
+                    - text: 
+                  - cell "etc" [ref=e2955]
+            - table [ref=e2957]:
+              - rowgroup [ref=e2958]:
+                - row [ref=e2959]:
+                  - cell [ref=e2960]
+                  - cell [ref=e2962] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e2963]:
+                      - /url: "#"
+                    - text: 
+                  - cell "home4" [ref=e2964]
+            - table [ref=e2966]:
+              - rowgroup [ref=e2967]:
+                - row [ref=e2968]:
+                  - cell [ref=e2969]
+                  - cell [ref=e2971] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e2972]:
+                      - /url: "#"
+                    - text: 
+                  - cell "iuctech.com" [ref=e2973]
+            - table [ref=e2975]:
+              - rowgroup [ref=e2976]:
+                - row [ref=e2977]:
+                  - cell [ref=e2978]
+                  - cell [ref=e2980] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e2981]:
+                      - /url: "#"
+                    - text: 
+                  - cell "logs" [ref=e2982]
+            - table [ref=e2984]:
+              - rowgroup [ref=e2985]:
+                - row [ref=e2986]:
+                  - cell [ref=e2987]
+                  - cell [ref=e2989] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e2990]:
+                      - /url: "#"
+                    - text: 
+                  - cell "mail" [ref=e2991]
+            - table [ref=e2993]:
+              - rowgroup [ref=e2994]:
+                - row [ref=e2995]:
+                  - cell [ref=e2996]
+                  - cell [ref=e2998] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e2999]:
+                      - /url: "#"
+                  - cell "perl5" [ref=e3000]
+            - table [ref=e3002]:
+              - rowgroup [ref=e3003]:
+                - row [ref=e3004]:
+                  - cell [ref=e3005]
+                  - cell [ref=e3007] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e3008]:
+                      - /url: "#"
+                    - text: 
+                  - cell "public_ftp" [ref=e3009]
+            - table [ref=e3011]:
+              - rowgroup [ref=e3012]:
+                - row [ref=e3013]:
+                  - cell [ref=e3014]
+                  - cell [ref=e3016] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e3017]:
+                      - /url: "#"
+                    - text: 
+                  - cell "public_html" [ref=e3018]
+            - table [ref=e3020]:
+              - rowgroup [ref=e3021]:
+                - row [ref=e3022]:
+                  - cell [ref=e3023]
+                  - cell [ref=e3025] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e3026]:
+                      - /url: "#"
+                    - text: 
+                  - cell "ssl" [ref=e3027]
+            - table [ref=e3029]:
+              - rowgroup [ref=e3030]:
+                - row [ref=e3031]:
+                  - cell [ref=e3032]
+                  - cell [ref=e3034] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e3035]:
+                      - /url: "#"
+                    - text: 
+                  - cell "tamizhahomemadefoods.com" [ref=e3036]
+            - table [ref=e3038]:
+              - rowgroup [ref=e3039]:
+                - row [ref=e3040]:
+                  - cell [ref=e3041]
+                  - cell [ref=e3043] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e3044]:
+                      - /url: "#"
+                    - text: 
+                  - cell "tamsen.in" [ref=e3045]
+            - table [ref=e3047]:
+              - rowgroup [ref=e3048]:
+                - row [ref=e3049]:
+                  - cell [ref=e3050]
+                  - cell [ref=e3052] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e3053]:
+                      - /url: "#"
+                    - text: 
+                  - cell "tmp" [ref=e3054]
+      - paragraph [ref=e320]
+  - generic [ref=e321]:
+    - list [ref=e323]:
+      - listitem [ref=e324]:
+        - link " Home" [ref=e325] [cursor=pointer]:
+          - /url: javascript:void(0)
+          - generic [ref=e326]: 
+          - text: Home
+      - listitem [ref=e327]:
+        - link " Up One Level" [ref=e328] [cursor=pointer]:
+          - /url: javascript:void(0)
+          - generic [ref=e329]: 
+          - text: Up One Level
+      - listitem [ref=e330]:
+        - link " Back" [ref=e331] [cursor=pointer]:
+          - /url: javascript:void(0)
+          - generic [ref=e332]: 
+          - text: Back
+      - listitem [ref=e333]:
+        - link " Forward" [ref=e334]:
+          - /url: javascript:void(0)
+          - generic [ref=e335]: 
+          - text: Forward
+      - listitem [ref=e336]:
+        - link " Reload" [ref=e337] [cursor=pointer]:
+          - /url: javascript:void(0)
+          - generic [ref=e338]: 
+          - text: Reload
+      - listitem [ref=e339]:
+        - link " Select All" [ref=e340] [cursor=pointer]:
+          - /url: javascript:void(0)
+          - generic [ref=e341]: 
+          - text: Select All
+      - listitem [ref=e342]:
+        - link " Unselect All" [ref=e343] [cursor=pointer]:
+          - /url: javascript:void(0)
+          - generic [ref=e344]: 
+          - text: Unselect All
+      - listitem [ref=e345]:
+        - link " View Trash" [ref=e346] [cursor=pointer]:
+          - /url: javascript:void(0)
+          - generic [ref=e347]: 
+          - text: View Trash
+      - listitem [ref=e348]:
+        - link " Empty Trash" [ref=e349]:
+          - /url: javascript:void(0)
+          - generic [ref=e350]: 
+          - text: Empty Trash
+    - generic [ref=e351]:
+      - table [ref=e353]:
+        - rowgroup [ref=e361]:
+          - row "Name Size Last Modified Type Permissions" [ref=e362]:
+            - columnheader [ref=e363]
+            - columnheader [ref=e365] [cursor=pointer]:
+              - link "Name" [ref=e368]:
+                - /url: yui-dt8-href-file
+            - columnheader [ref=e369] [cursor=pointer]:
+              - link "Size" [ref=e372]:
+                - /url: yui-dt8-href-size
+            - columnheader [ref=e373] [cursor=pointer]:
+              - link "Last Modified" [ref=e376]:
+                - /url: yui-dt8-href-mtime
+            - columnheader [ref=e377] [cursor=pointer]:
+              - link "Type" [ref=e380]:
+                - /url: yui-dt8-href-mimetype
+            - columnheader [ref=e381] [cursor=pointer]:
+              - link "Permissions" [ref=e384]:
+                - /url: yui-dt8-href-nicemode
+      - table [ref=e386]:
+        - rowgroup:
+          - row "Name Size Last Modified Type Permissions":
+            - columnheader [ref=e387]
+            - columnheader "Name" [ref=e388]
+            - columnheader "Size" [ref=e389]
+            - columnheader "Last Modified" [ref=e390]
+            - columnheader "Type" [ref=e391]
+            - columnheader "Permissions" [ref=e392]
+        - rowgroup [ref=e393]:
+          - row [ref=e3069]:
+            - cell [ref=e3070]:
+              - generic [aria-hidden] [ref=e3072]: 
+            - cell "style.css" [ref=e3073]
+            - cell "57.13 KB" [ref=e3075]
+            - cell "Sep 5, 2026, 12:33 PM" [ref=e3077]
+            - cell "text/css" [ref=e3079]
+            - cell "0666" [ref=e3081] [cursor=pointer]
+  - option "(auto-detect)" [selected]
+  - option "ansi_x3.110-1983"
+  - option "ansi_x3.4-1968"
+  - option "armscii-8"
+  - option "ascii"
+  - option "asmo_449"
+  - option "big5"
+  - option "big5-eten"
+  - option "big5-hkscs"
+  - option "brf"
+  - option "bs_4730"
+  - option "bs_viewdata"
+  - option "cp10007"
+  - option "cp1125"
+  - option "cp1250"
+  - option "cp1251"
+  - option "cp1252"
+  - option "cp1253"
+  - option "cp1254"
+  - option "cp1255"
+  - option "cp1256"
+  - option "cp1257"
+  - option "cp1258"
+  - option "cp737"
+  - option "cp770"
+  - option "cp771"
+  - option "cp772"
+  - option "cp773"
+  - option "cp774"
+  - option "cp775"
+  - option "cp936"
+  - option "cp949"
+  - option "csa_z243.4-1985-1"
+  - option "csa_z243.4-1985-2"
+  - option "csa_z243.4-1985-gr"
+  - option "csn_369103"
+  - option "cwi"
+  - option "dec-mcs"
+  - option "din_66003"
+  - option "ds_2089"
+  - option "ebcdic-at-de"
+  - option "ebcdic-at-de-a"
+  - option "ebcdic-ca-fr"
+  - option "ebcdic-dk-no"
+  - option "ebcdic-dk-no-a"
+  - option "ebcdic-es"
+  - option "ebcdic-es-a"
+  - option "ebcdic-es-s"
+  - option "ebcdic-fi-se"
+  - option "ebcdic-fi-se-a"
+  - option "ebcdic-fr"
+  - option "ebcdic-is-friss"
+  - option "ebcdic-it"
+  - option "ebcdic-pt"
+  - option "ebcdic-uk"
+  - option "ebcdic-us"
+  - option "ecma-cyrillic"
+  - option "es"
+  - option "es2"
+  - option "euc-cn"
+  - option "euc-jisx0213"
+  - option "euc-jp"
+  - option "euc-jp-ms"
+  - option "euc-kr"
+  - option "euc-tw"
+  - option "gb18030"
+  - option "gb2312"
+  - option "gb_1988-80"
+  - option "gbk"
+  - option "georgian-academy"
+  - option "georgian-ps"
+  - option "gost_19768-74"
+  - option "greek-ccitt"
+  - option "greek7"
+  - option "greek7-old"
+  - option "gsm03.38"
+  - option "hp-greek8"
+  - option "hp-roman8"
+  - option "hp-roman9"
+  - option "hp-thai8"
+  - option "hp-turkish8"
+  - option "hz"
+  - option "hz-gb-2312"
+  - option "ibm037"
+  - option "ibm038"
+  - option "ibm1004"
+  - option "ibm1026"
+  - option "ibm1047"
+  - option "ibm1124"
+  - option "ibm1129"
+  - option "ibm1132"
+  - option "ibm1133"
+  - option "ibm1160"
+  - option "ibm1161"
+  - option "ibm1162"
+  - option "ibm1163"
+  - option "ibm1164"
+  - option "ibm256"
+  - option "ibm273"
+  - option "ibm274"
+  - option "ibm275"
+  - option "ibm277"
+  - option "ibm278"
+  - option "ibm280"
+  - option "ibm281"
+  - option "ibm284"
+  - option "ibm285"
+  - option "ibm290"
+  - option "ibm297"
+  - option "ibm420"
+  - option "ibm423"
+  - option "ibm424"
+  - option "ibm437"
+  - option "ibm500"
+  - option "ibm850"
+  - option "ibm851"
+  - option "ibm852"
+  - option "ibm855"
+  - option "ibm856"
+  - option "ibm857"
+  - option "ibm858"
+  - option "ibm860"
+  - option "ibm861"
+  - option "ibm862"
+  - option "ibm863"
+  - option "ibm864"
+  - option "ibm865"
+  - option "ibm866"
+  - option "ibm866nav"
+  - option "ibm868"
+  - option "ibm869"
+  - option "ibm870"
+  - option "ibm871"
+  - option "ibm874"
+  - option "ibm875"
+  - option "ibm880"
+  - option "ibm891"
+  - option "ibm903"
+  - option "ibm904"
+  - option "ibm905"
+  - option "ibm918"
+  - option "ibm922"
+  - option "iec_p27-1"
+  - option "inis"
+  - option "inis-8"
+  - option "inis-cyrillic"
+  - option "invariant"
+  - option "isiri-3342"
+  - option "iso-8859-1"
+  - option "iso-8859-10"
+  - option "iso-8859-11"
+  - option "iso-8859-13"
+  - option "iso-8859-14"
+  - option "iso-8859-15"
+  - option "iso-8859-16"
+  - option "iso-8859-2"
+  - option "iso-8859-3"
+  - option "iso-8859-4"
+  - option "iso-8859-5"
+  - option "iso-8859-6"
+  - option "iso-8859-7"
+  - option "iso-8859-8"
+  - option "iso-8859-9"
+  - option "iso-8859-9e"
+  - option "iso-ir-197"
+  - option "iso-ir-209"
+  - option "iso-ir-90"
+  - option "iso_10367-box"
+  - option "iso_10646"
+  - option "iso_11548-1"
+  - option "iso_2033-1983"
+  - option "iso_5427"
+  - option "iso_5427-ext"
+  - option "iso_5428"
+  - option "iso_646.basic"
+  - option "iso_646.irv"
+  - option "iso_6937"
+  - option "iso_6937-2-25"
+  - option "iso_6937-2-add"
+  - option "iso_8859-1,gl"
+  - option "iso_8859-supp"
+  - option "it"
+  - option "jis_c6220-1969-jp"
+  - option "jis_c6220-1969-ro"
+  - option "jis_c6229-1984-a"
+  - option "jis_c6229-1984-b"
+  - option "jis_c6229-1984-b-add"
+  - option "jis_c6229-1984-hand"
+  - option "jis_c6229-1984-hand-add"
+  - option "jis_c6229-1984-kana"
+  - option "jis_x0201"
+  - option "johab"
+  - option "jus_i.b1.002"
+  - option "jus_i.b1.003-mac"
+  - option "jus_i.b1.003-serb"
+  - option "koi-8"
+  - option "koi8-r"
+  - option "koi8-ru"
+  - option "koi8-t"
+  - option "koi8-u"
+  - option "ks_c_5601"
+  - option "ks_c_5601-1987"
+  - option "ksc5636"
+  - option "latin-greek"
+  - option "latin-greek-1"
+  - option "mac-centraleurope"
+  - option "mac-cyrillic"
+  - option "mac-is"
+  - option "mac-sami"
+  - option "mac-uk"
+  - option "macintosh"
+  - option "mik"
+  - option "msz_7795.3"
+  - option "nats-dano"
+  - option "nats-dano-add"
+  - option "nats-sefi"
+  - option "nats-sefi-add"
+  - option "nc_nc00-10"
+  - option "nextstep"
+  - option "nf_z_62-010"
+  - option "nf_z_62-010_1973"
+  - option "ns_4551-1"
+  - option "ns_4551-2"
+  - option "pt"
+  - option "pt154"
+  - option "pt2"
+  - option "rk1048"
+  - option "sami"
+  - option "sami-ws2"
+  - option "sen_850200_b"
+  - option "sen_850200_c"
+  - option "shift_jis"
+  - option "shift_jisx0213"
+  - option "t.101-g2"
+  - option "t.61-7bit"
+  - option "t.61-8bit"
+  - option "tcvn5712-1"
+  - option "tis-620"
+  - option "tscii"
+  - option "unicode-1-1-utf-7"
+  - option "us-ascii"
+  - option "utf-7"
+  - option "utf-8"
+  - option "utf-8-strict"
+  - option "videotex-suppl"
+  - option "viscii"
+  - option "windows-1251"
+  - option "windows-1252"
+  - option "windows-31j"
+  - text:      
+  - iframe

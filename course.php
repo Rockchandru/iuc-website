@@ -149,7 +149,7 @@ require __DIR__ . '/includes/header.php';
                 </div>
 
                 <div style="display:flex;flex-wrap:wrap;gap:0.75rem;margin-top:1.5rem">
-                    <a href="<?= BASE_URL ?>/#contact" class="btn btn-primary btn-lg">Apply Now <i class="bi bi-arrow-right"></i></a>
+                    <a href="<?= BASE_URL ?>/#contact" class="btn btn-primary btn-lg apply-now-trigger" data-course="<?= htmlspecialchars($course['title'], ENT_QUOTES, 'UTF-8') ?>">Apply Now <i class="bi bi-arrow-right"></i></a>
                     <a href="<?= BASE_URL ?>/download-syllabus.php?course=<?= $slug ?>" class="btn btn-outline btn-lg"><i class="bi bi-file-earmark-pdf"></i> Download Syllabus (PDF)</a>
                 </div>
             </div>
@@ -200,10 +200,10 @@ require __DIR__ . '/includes/header.php';
                         <div class="sidebar-feature"><i class="bi bi-check-lg"></i> Flexible batch timings</div>
                     </div>
 
-                    <a href="<?= BASE_URL ?>/#contact" class="btn btn-primary btn-lg btn-block" style="margin-bottom:0.75rem">
+                    <a href="<?= BASE_URL ?>/#contact" class="btn btn-primary btn-lg btn-block apply-now-trigger" data-course="<?= htmlspecialchars($course['title'], ENT_QUOTES, 'UTF-8') ?>" style="margin-bottom:0.75rem">
                         Enquire Now <i class="bi bi-arrow-right"></i>
                     </a>
-                    <a href="https://wa.me/<?= WHATSAPP_NUMBER ?>?text=Hi!%20I'm%20interested%20in%20<?= urlencode($course['title']) ?>%20at%20IUC%20Edu." target="_blank" rel="noopener" class="btn btn-accent btn-lg btn-block">
+                    <a href="https://wa.me/<?= WHATSAPP_NUMBER ?>?text=Hi!%20I'm%20interested%20in%20<?= urlencode($course['title']) ?>%20at%20IUC%20Edu." target="_blank" rel="noopener" class="btn btn-accent btn-lg btn-block whatsapp-action">
                         <i class="bi bi-whatsapp"></i> Chat on WhatsApp
                     </a>
 
@@ -335,7 +335,7 @@ require __DIR__ . '/includes/header.php';
         <h2 class="text-display-md section-title">Ready to Start Your <span class="gradient-text">Journey?</span></h2>
         <p style="font-size:1rem;color:var(--clr-text-secondary);margin-bottom:1.5rem">Join <?= $course['enrolled'] ?> students who have already enrolled in this program.</p>
         <div style="display:flex;flex-wrap:wrap;gap:0.75rem;justify-content:center">
-            <a href="<?= BASE_URL ?>/#contact" class="btn btn-primary btn-lg">Apply Now <i class="bi bi-arrow-right"></i></a>
+            <a href="<?= BASE_URL ?>/#contact" class="btn btn-primary btn-lg apply-now-trigger" data-course="<?= htmlspecialchars($course['title'], ENT_QUOTES, 'UTF-8') ?>">Apply Now <i class="bi bi-arrow-right"></i></a>
             <a href="tel:+91<?= SITE_PHONE ?>" class="btn btn-outline btn-lg"><i class="bi bi-telephone"></i> Call Us</a>
         </div>
     </div>

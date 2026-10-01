@@ -38,11 +38,12 @@ function ex_q($conn, $sql, $types = '', $args = []) {
     return $rows;
 }
 
-$sessions = ex_q($conn, "SELECT s.visitor_id, s.channel, s.source, s.medium, s.campaign, s.search_engine, s.search_term,
+$sessions = ex_q($conn, "SELECT s.visitor_id, v.phone, s.channel, s.source, s.medium, s.campaign, s.search_engine, s.search_term,
     s.landing_page, s.exit_page, s.referrer, s.device, s.browser, s.os, s.country, s.state, s.city,
     COALESCE(pv.c,0) AS page_views, s.duration_sec,
     CASE WHEN COALESCE(pv.c,0) <= 1 THEN 1 ELSE 0 END AS is_bounce, s.started_at, s.last_activity
     FROM analytics_sessions s
+    LEFT JOIN analytics_visitors v ON v.visitor_id = s.visitor_id
     LEFT JOIN (SELECT session_id, COUNT(*) AS c FROM analytics_pageviews GROUP BY session_id) pv ON pv.session_id = s.session_id
     WHERE s.started_at BETWEEN ? AND ? ORDER BY s.last_activity DESC", 'ss', [$fromDt, $toDt]);
 
@@ -69,10 +70,10 @@ if ($format === 'csv') {
     header('Content-Disposition: attachment; filename="iuc-analytics-' . $fromRaw . '_' . $toRaw . '.csv"');
     echo "\xEF\xBB\xBF"; // BOM for Excel
     $out = fopen('php://output', 'w');
-    fputcsv($out, ['Visitor ID', 'Channel', 'Source', 'Medium', 'Campaign', 'Search Engine', 'Search Keyword', 'Landing Page', 'Exit Page', 'Referrer', 'Device', 'Browser', 'OS', 'Country', 'State', 'City', 'Page Views', 'Duration (sec)', 'Bounce', 'Started', 'Last Activity']);
+    fputcsv($out, ['Visitor ID', 'Mobile Number', 'Channel', 'Source', 'Medium', 'Campaign', 'Search Engine', 'Search Keyword', 'Landing Page', 'Exit Page', 'Referrer', 'Device', 'Browser', 'OS', 'Country', 'State', 'City', 'Page Views', 'Duration (sec)', 'Bounce', 'Started', 'Last Activity']);
     foreach ($sessions as $r) {
         fputcsv($out, [
-            $r['visitor_id'], $r['channel'], $r['source'], $r['medium'], $r['campaign'], $r['search_engine'], $r['search_term'],
+            $r['visitor_id'], $r['phone'], $r['channel'], $r['source'], $r['medium'], $r['campaign'], $r['search_engine'], $r['search_term'],
             $r['landing_page'], $r['exit_page'], $r['referrer'], $r['device'], $r['browser'], $r['os'],
             $r['country'], $r['state'], $r['city'], $r['page_views'], $r['duration_sec'],
             $r['is_bounce'] ? 'Yes' : 'No', $r['started_at'], $r['last_activity'],
@@ -121,9 +122,9 @@ if ($format === 'excel') {
     foreach ($convTypes as $r) echo '<tr><td>' . htmlspecialchars((string)$r['event_type']) . '</td><td>' . $r['c'] . '</td></tr>';
     echo '</table><br/>';
 
-    echo '<table><tr><th>Channel</th><th>Source</th><th>Medium</th><th>Campaign</th><th>Search Keyword</th><th>Landing Page</th><th>Device</th><th>Browser</th><th>OS</th><th>Country</th><th>City</th><th>Views</th><th>Duration(sec)</th><th>Bounce</th><th>Started</th></tr>';
+    echo '<table><tr><th>Mobile Number</th><th>Channel</th><th>Source</th><th>Medium</th><th>Campaign</th><th>Search Keyword</th><th>Landing Page</th><th>Device</th><th>Browser</th><th>OS</th><th>Country</th><th>City</th><th>Views</th><th>Duration(sec)</th><th>Bounce</th><th>Started</th></tr>';
     foreach ($sessions as $r) {
-        echo '<tr><td>' . htmlspecialchars((string)$r['channel']) . '</td><td>' . htmlspecialchars((string)$r['source']) . '</td><td>' . htmlspecialchars((string)$r['medium']) . '</td><td>' . htmlspecialchars((string)$r['campaign']) . '</td><td>' . htmlspecialchars((string)$r['search_term']) . '</td><td>' . htmlspecialchars((string)$r['landing_page']) . '</td><td>' . htmlspecialchars((string)$r['device']) . '</td><td>' . htmlspecialchars((string)$r['browser']) . '</td><td>' . htmlspecialchars((string)$r['os']) . '</td><td>' . htmlspecialchars((string)$r['country']) . '</td><td>' . htmlspecialchars((string)$r['city']) . '</td><td>' . $r['page_views'] . '</td><td>' . $r['duration_sec'] . '</td><td>' . ($r['is_bounce'] ? 'Yes' : 'No') . '</td><td>' . $r['started_at'] . '</td></tr>';
+        echo '<tr><td>' . htmlspecialchars((string)$r['phone']) . '</td><td>' . htmlspecialchars((string)$r['channel']) . '</td><td>' . htmlspecialchars((string)$r['source']) . '</td><td>' . htmlspecialchars((string)$r['medium']) . '</td><td>' . htmlspecialchars((string)$r['campaign']) . '</td><td>' . htmlspecialchars((string)$r['search_term']) . '</td><td>' . htmlspecialchars((string)$r['landing_page']) . '</td><td>' . htmlspecialchars((string)$r['device']) . '</td><td>' . htmlspecialchars((string)$r['browser']) . '</td><td>' . htmlspecialchars((string)$r['os']) . '</td><td>' . htmlspecialchars((string)$r['country']) . '</td><td>' . htmlspecialchars((string)$r['city']) . '</td><td>' . $r['page_views'] . '</td><td>' . $r['duration_sec'] . '</td><td>' . ($r['is_bounce'] ? 'Yes' : 'No') . '</td><td>' . $r['started_at'] . '</td></tr>';
     }
     echo '</table></body></html>';
     exit;
@@ -273,9 +274,9 @@ r_table(['Page', 'Views'], $rows, [330, 100]);
 r_section('Recent Visits (latest 20)');
 $rows = [];
 foreach (array_slice($sessions, 0, 20) as $r) {
-    $rows[] = [pclean($r['channel']), pclean($r['landing_page']), pclean($r['device']), pclean($r['country']), $r['page_views'], pclean($r['started_at'])];
+    $rows[] = [pclean($r['phone'] ?: 'Not provided'), pclean($r['exit_page'] ?: $r['landing_page']), pclean($r['channel']), pclean($r['device']), $r['page_views'], pclean($r['started_at'])];
 }
-r_table(['Channel', 'Landing Page', 'Device', 'Country', 'Views', 'Started'], $rows, [95, 155, 65, 75, 45, 100]);
+r_table(['Mobile', 'Page URL', 'Channel', 'Device', 'Views', 'Started'], $rows, [85, 145, 75, 60, 40, 90]);
 
 /* contact band */
 r_ensure(64);

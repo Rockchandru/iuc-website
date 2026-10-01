@@ -19,7 +19,7 @@
         <!-- Course Grid -->
         <div style="display:grid;gap:1.5rem" class="courses-grid">
             <?php $idx = 0; foreach ($courses as $slug => $course): $idx++; ?>
-            <article class="card course-card" data-filter-item="<?= $course['category'] ?>" data-aos="fade-up" data-aos-delay="<?= ($idx % 6) * 80 ?>">
+            <article class="card course-card" data-filter-item="<?= $course['category'] ?>" data-course-url="<?= BASE_URL ?>/course/<?= rawurlencode($slug) ?>" tabindex="0" role="link" aria-label="View <?= htmlspecialchars($course['short_title'], ENT_QUOTES, 'UTF-8') ?> course" data-aos="fade-up" data-aos-delay="<?= ($idx % 6) * 80 ?>">
                 <div class="course-card-image">
                     <img src="<?= $course['image'] ?>" alt="<?= $course['title'] ?>" loading="lazy" />
                     <span class="course-card-badge" style="background:<?= $course['badge_color'] ?>"><?= $course['badge'] ?></span>
@@ -49,7 +49,7 @@
                         </div>
                         <div class="course-actions">
                             <a href="<?= BASE_URL ?>/course/<?= $slug ?>" class="btn btn-sm btn-ghost">Learn More</a>
-                            <a href="<?= BASE_URL ?>/#contact" class="btn btn-sm btn-primary">Apply Now</a>
+                            <a href="<?= BASE_URL ?>/#contact" class="btn btn-sm btn-primary apply-now-trigger" data-course="<?= htmlspecialchars($course['title'], ENT_QUOTES, 'UTF-8') ?>">Apply Now</a>
                         </div>
                     </div>
                 </div>

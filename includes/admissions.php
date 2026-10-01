@@ -30,7 +30,7 @@
         </div>
 
         <div style="text-align:center;margin-top:2.5rem" data-aos="fade-up">
-            <a href="<?= BASE_URL ?>/#contact" class="btn btn-primary btn-lg" data-track-event="admission">Apply Now <i class="bi bi-arrow-right"></i></a>
+            <a href="<?= BASE_URL ?>/#contact" class="btn btn-primary btn-lg apply-now-trigger" data-track-event="admission">Apply Now <i class="bi bi-arrow-right"></i></a>
         </div>
     </div>
 </section>

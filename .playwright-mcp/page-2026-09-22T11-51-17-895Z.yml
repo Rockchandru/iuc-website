@@ -1,0 +1,477 @@
+- generic [active] [ref=f25e1]:
+  - banner [ref=f25e2]:
+    - generic [ref=f25e3]:
+      - link "IUC Edu - Home" [ref=f25e4] [cursor=pointer]:
+        - /url: /iuc-website/
+      - text:    
+      - button "Toggle menu" [ref=f25e6] [cursor=pointer]
+  - main [ref=f25e10]:
+    - generic [ref=f25e12]:
+      - navigation "Breadcrumb" [ref=f25e13]:
+        - link "Home" [ref=f25e14] [cursor=pointer]:
+          - /url: /iuc-website/
+        - generic [ref=f25e15]: /
+        - link "Courses" [ref=f25e16] [cursor=pointer]:
+          - /url: /iuc-website/#courses
+        - generic [ref=f25e17]: /
+        - generic [ref=f25e18]: C & C++ Programming
+      - generic [ref=f25e20]:
+        - generic [ref=f25e21]: programming
+        - heading "Cloud Computing Course in Chennai" [level=1] [ref=f25e22]
+        - paragraph [ref=f25e23]: Master C and C++ programming from fundamentals to advanced concepts including pointers, memory management, OOP, data structures, STL, and system-level programming. Build a strong foundation for competitive programming and software development.
+        - generic "Related training guides" [ref=f25e24]:
+          - link "Computer training courses in Chennai" [ref=f25e25] [cursor=pointer]:
+            - /url: /iuc-website/computer-training-in-chennai
+          - link "IT courses for beginners" [ref=f25e26] [cursor=pointer]:
+            - /url: /iuc-website/it-courses-for-beginners
+          - link "Online IT course options" [ref=f25e27] [cursor=pointer]:
+            - /url: /iuc-website/online-it-courses
+        - generic [ref=f25e28]:
+          - generic [ref=f25e29]:
+            - generic [ref=f25e30]:
+              - generic [ref=f25e31]: 
+              - text: 4 Months
+            - generic [ref=f25e32]: Duration
+          - generic [ref=f25e33]:
+            - generic [ref=f25e34]:
+              - generic [ref=f25e35]: 
+              - text: Online / Offline
+            - generic [ref=f25e36]: Training Mode
+          - generic [ref=f25e37]:
+            - generic [ref=f25e38]:
+              - generic [ref=f25e39]: 
+              - text: Beginner to Advanced
+            - generic [ref=f25e40]: Level
+          - generic [ref=f25e41]:
+            - generic [ref=f25e42]:
+              - generic [ref=f25e43]: 
+              - text: "4.8"
+            - generic [ref=f25e44]: Rating
+        - generic [ref=f25e45]:
+          - link "Apply Now " [ref=f25e46] [cursor=pointer]:
+            - /url: /iuc-website/#contact
+            - text: Apply Now
+            - generic [ref=f25e47]: 
+          - link " Download Syllabus (PDF)" [ref=f25e48] [cursor=pointer]:
+            - /url: /iuc-website/download-syllabus.php?course=c-cpp
+            - generic [ref=f25e49]: 
+            - text: Download Syllabus (PDF)
+    - region "Course Overview" [ref=f25e50]:
+      - generic [ref=f25e52]:
+        - generic:
+          - heading "Course Overview" [level=2]
+          - paragraph: Master C and C++ programming from fundamentals to advanced concepts including pointers, memory management, OOP, data structures, STL, and system-level programming. Build a strong foundation for competitive programming and software development.
+          - heading "Eligibility" [level=3]
+          - paragraph: Any student or professional wanting to build a strong programming foundation. No prior coding experience required.
+          - heading "Course Highlights" [level=3]
+          - generic:
+            - generic:
+              - generic: 
+              - text: Strong programming foundation
+            - generic:
+              - generic: 
+              - text: 15+ hands-on projects
+            - generic:
+              - generic: 
+              - text: Memory management mastery
+            - generic:
+              - generic: 
+              - text: Placement assistance
+            - generic:
+              - generic: 
+              - text: Lifetime access to materials
+            - generic:
+              - generic: 
+              - text: 1-on-1 mentorship
+        - generic:
+          - generic:
+            - generic:
+              - generic: ₹40,500
+              - generic: or ₹2,500/mo EMI
+            - paragraph: Zero-cost EMI available · Scholarship up to 50%
+            - generic:
+              - generic:
+                - generic: 
+                - text: Industry-recognized certification
+              - generic:
+                - generic: 
+                - text: 6+ real-world projects
+              - generic:
+                - generic: 
+                - text: Lifetime access to materials
+              - generic:
+                - generic: 
+                - text: 1-on-1 mentorship
+              - generic:
+                - generic: 
+                - text: 100% placement assistance
+              - generic:
+                - generic: 
+                - text: Flexible batch timings
+            - link "Enquire Now ":
+              - /url: /iuc-website/#contact
+              - text: Enquire Now
+              - generic: 
+            - link " Chat on WhatsApp":
+              - /url: https://wa.me/917418048039?text=Hi!%20I'm%20interested%20in%20C+%26+C%2B%2B+Programming%20at%20IUC%20Edu.
+              - generic: 
+              - text: Chat on WhatsApp
+            - generic:
+              - generic: 
+              - text: 1,500+ students enrolled
+    - region "Technologies & Tools" [ref=f25e53]:
+      - generic [ref=f25e54]:
+        - generic:
+          - heading "Technologies & Tools" [level=2]
+          - paragraph: Master these industry-standard technologies and tools in this program.
+        - generic:
+          - generic: C
+          - generic: C++
+          - generic: GCC
+          - generic: GDB
+          - generic: STL
+          - generic: Data Structures
+          - generic: Algorithms
+          - generic: Make
+          - generic: VS Code
+          - generic: Code::Blocks
+          - generic: CLion
+          - generic: Git
+          - generic: Valgrind
+          - generic: GDB Debugger
+          - generic: Linux Terminal
+    - region "Module-Wise Curriculum" [ref=f25e55]:
+      - generic [ref=f25e56]:
+        - generic:
+          - generic: Curriculum
+          - heading "Module-Wise Curriculum" [level=2]
+          - paragraph: A structured, industry-reviewed curriculum designed to take you from beginner to job-ready professional.
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - generic: "01"
+                - generic: Introduction to C
+              - generic: 
+            - generic:
+              - paragraph: History of C, setting up environment, first program, compilation process, data types, variables, constants
+              - generic:
+                - generic: History of C
+                - generic: setting up environment
+                - generic: first program
+                - generic: compilation process
+                - generic: data types
+                - generic: variables
+                - generic: constants
+          - generic:
+            - generic:
+              - generic:
+                - generic: "02"
+                - generic: Operators & Expressions
+              - generic: 
+          - generic:
+            - generic:
+              - generic:
+                - generic: "03"
+                - generic: Control Flow
+              - generic: 
+          - generic:
+            - generic:
+              - generic:
+                - generic: "04"
+                - generic: Functions in C
+              - generic: 
+          - generic:
+            - generic:
+              - generic:
+                - generic: "05"
+                - generic: Arrays & Strings
+              - generic: 
+          - generic:
+            - generic:
+              - generic:
+                - generic: "06"
+                - generic: Pointers & Memory
+              - generic: 
+          - generic:
+            - generic:
+              - generic:
+                - generic: "07"
+                - generic: Structures & Unions
+              - generic: 
+          - generic:
+            - generic:
+              - generic:
+                - generic: "08"
+                - generic: C++ Fundamentals
+              - generic: 
+          - generic:
+            - generic:
+              - generic:
+                - generic: "09"
+                - generic: OOP in C++
+              - generic: 
+          - generic:
+            - generic:
+              - generic:
+                - generic: "10"
+                - generic: Advanced C++
+              - generic: 
+          - generic:
+            - generic:
+              - generic:
+                - generic: "11"
+                - generic: Data Structures
+              - generic: 
+          - generic:
+            - generic:
+              - generic:
+                - generic: "12"
+                - generic: Project & Practice
+              - generic: 
+    - region "Hands-On Projects" [ref=f25e57]:
+      - generic [ref=f25e58]:
+        - generic:
+          - generic: Projects
+          - heading "Hands-On Projects" [level=2]
+          - paragraph: Build a professional portfolio with real-world projects that demonstrate your skills.
+        - generic:
+          - generic:
+            - generic: "1"
+            - generic: Student Record Management System
+          - generic:
+            - generic: "2"
+            - generic: Library Management System using File I/O
+          - generic:
+            - generic: "3"
+            - generic: Singly & Doubly Linked List Implementation
+          - generic:
+            - generic: "4"
+            - generic: Student Database with Binary File Handling
+          - generic:
+            - generic: "5"
+            - generic: Custom Memory Allocator
+          - generic:
+            - generic: "6"
+            - generic: Mini STL – Vector, Map, Sort Implementation
+    - region "Get Certified" [ref=f25e59]:
+      - generic:
+        - generic: 
+        - heading "Get Certified" [level=2]
+        - paragraph: IUC Edu C & C++ Programming Certification
+        - paragraph: Our certifications are recognized by leading companies and designed to boost your career prospects.
+    - region "Your Career Path" [ref=f25e60]:
+      - generic [ref=f25e61]:
+        - generic:
+          - generic: Career Opportunities
+          - heading "Your Career Path" [level=2]
+          - paragraph: Roles you can target after completing this program.
+        - generic:
+          - generic:
+            - generic: Systems Programmer
+            - generic: ₹5L to ₹15L PA
+          - generic:
+            - generic: Embedded Systems Engineer
+            - generic: ₹6L to ₹18L PA
+          - generic:
+            - generic: Software Developer (C/C++)
+            - generic: ₹5L to ₹16L PA
+          - generic:
+            - generic: Game Developer
+            - generic: ₹6L to ₹20L PA
+          - generic:
+            - generic: Competitive Programmer
+            - generic: ₹4L to ₹12L PA
+    - region "Enroll CTA" [ref=f25e62]:
+      - generic:
+        - heading "Ready to Start Your Journey?" [level=2]
+        - paragraph: Join 1,500+ students who have already enrolled in this program.
+        - generic:
+          - link "Apply Now ":
+            - /url: /iuc-website/#contact
+            - text: Apply Now
+            - generic: 
+          - link " Call Us":
+            - /url: tel:+917418048039
+            - generic: 
+            - text: Call Us
+    - region "Related Courses" [ref=f25e63]:
+      - generic [ref=f25e64]:
+        - generic:
+          - heading "Related Courses" [level=2]
+        - generic:
+          - article:
+            - generic:
+              - img "Python Programming"
+            - generic:
+              - heading "Python" [level=3]
+              - paragraph: Learn Python from basics to advanced with real-world projects.
+              - generic:
+                - generic:
+                  - generic: ₹35,000
+                  - generic: No-Cost EMI · ₹2,500/mo
+                - generic:
+                  - link "View Python course":
+                    - /url: /iuc-website/course/python
+          - article:
+            - generic:
+              - img "Java & J2EE Programming"
+            - generic:
+              - heading "Java" [level=3]
+              - paragraph: Master Java, Spring Boot & J2EE for enterprise application development.
+              - generic:
+                - generic:
+                  - generic: ₹46,000
+                  - generic: No-Cost EMI · ₹2,500/mo
+                - generic:
+                  - link "View Java course":
+                    - /url: /iuc-website/course/java
+          - article:
+            - generic:
+              - img "Full Stack Java Development"
+            - generic:
+              - heading "Full Stack Java" [level=3]
+              - paragraph: Build complete web apps with Java, Spring Boot & Angular/React.
+              - generic:
+                - generic:
+                  - generic: ₹66,000
+                  - generic: No-Cost EMI · ₹5,500/mo
+                - generic:
+                  - link "View Full Stack Java course":
+                    - /url: /iuc-website/course/full-stack-java
+    - region "Frequently Asked Questions" [ref=f25e65]:
+      - generic [ref=f25e66]:
+        - generic:
+          - generic: FAQ
+          - heading "Frequently Asked Questions" [level=2]
+        - generic:
+          - generic:
+            - group:
+              - generic "What will I learn in the Cloud Computing course? ":
+                - text: What will I learn in the Cloud Computing course?
+                - generic: 
+          - generic:
+            - group:
+              - generic "Who can join this Cloud Computing training? ":
+                - text: Who can join this Cloud Computing training?
+                - generic: 
+          - generic:
+            - group:
+              - generic "Is Cloud Computing training available online and in Chennai? ":
+                - text: Is Cloud Computing training available online and in Chennai?
+                - generic: 
+          - generic:
+            - group:
+              - generic "Will I receive a certificate after completing the course? ":
+                - text: Will I receive a certificate after completing the course?
+                - generic: 
+          - generic:
+            - group:
+              - generic "How can I check the next batch and course fee? ":
+                - text: How can I check the next batch and course fee?
+                - generic: 
+  - contentinfo [ref=f25e67]:
+    - generic [ref=f25e68]:
+      - generic [ref=f25e69]:
+        - generic [ref=f25e70]:
+          - img "IUC Edu computer education institute" [ref=f25e71]
+          - paragraph [ref=f25e72]: Premier IT training institute in Chennai delivering world-class technology education with 98% placement support. 25,000+ careers launched and counting.
+          - generic [ref=f25e73]:
+            - link "Facebook" [ref=f25e74] [cursor=pointer]:
+              - /url: https://www.facebook.com/IUCComputerEducation
+              - generic [ref=f25e75]: 
+            - link "Instagram" [ref=f25e76] [cursor=pointer]:
+              - /url: https://www.instagram.com/iuc_computers/
+              - generic [ref=f25e77]: 
+            - link "LinkedIn" [ref=f25e78] [cursor=pointer]:
+              - /url: https://www.linkedin.com/in/r-senthil-kumar-522213b9/
+              - generic [ref=f25e79]: 
+            - link "YouTube" [ref=f25e80] [cursor=pointer]:
+              - /url: https://www.youtube.com/@iuccomputers5136
+              - generic [ref=f25e81]: 
+        - generic [ref=f25e82]:
+          - heading "Quick Links" [level=4] [ref=f25e83]
+          - generic [ref=f25e84]:
+            - link "Home" [ref=f25e85] [cursor=pointer]:
+              - /url: /iuc-website/#home
+            - link "About" [ref=f25e86] [cursor=pointer]:
+              - /url: /iuc-website/#about
+            - link "Courses" [ref=f25e87] [cursor=pointer]:
+              - /url: /iuc-website/#courses
+            - link "Placements" [ref=f25e88] [cursor=pointer]:
+              - /url: /iuc-website/#placements
+            - link "Testimonials" [ref=f25e89] [cursor=pointer]:
+              - /url: /iuc-website/#testimonials
+            - link "Blog" [ref=f25e90] [cursor=pointer]:
+              - /url: /iuc-website/#blog
+            - link "Contact" [ref=f25e91] [cursor=pointer]:
+              - /url: /iuc-website/#contact
+            - link "Computer Training in Chennai" [ref=f25e92] [cursor=pointer]:
+              - /url: /iuc-website/computer-training-in-chennai
+            - link "Programming Courses" [ref=f25e93] [cursor=pointer]:
+              - /url: /iuc-website/programming-courses-in-chennai
+            - link "Beginner IT Courses" [ref=f25e94] [cursor=pointer]:
+              - /url: /iuc-website/it-courses-for-beginners
+            - link "Online IT Courses" [ref=f25e95] [cursor=pointer]:
+              - /url: /iuc-website/online-it-courses
+            - link "Learning Blog" [ref=f25e96] [cursor=pointer]:
+              - /url: /iuc-website/blog
+            - link "Sitemap" [ref=f25e97] [cursor=pointer]:
+              - /url: /iuc-website/sitemap.xml
+        - generic [ref=f25e98]:
+          - heading "Top Courses" [level=4] [ref=f25e99]
+          - generic [ref=f25e100]:
+            - link "AI & ML" [ref=f25e101] [cursor=pointer]:
+              - /url: /iuc-website/course/ai-ml
+            - link "Data Science" [ref=f25e102] [cursor=pointer]:
+              - /url: /iuc-website/course/data-science
+            - link "Python" [ref=f25e103] [cursor=pointer]:
+              - /url: /iuc-website/course/python
+            - link "Java" [ref=f25e104] [cursor=pointer]:
+              - /url: /iuc-website/course/java
+            - link "Full Stack Java" [ref=f25e105] [cursor=pointer]:
+              - /url: /iuc-website/course/full-stack-java
+            - link "Spring Boot" [ref=f25e106] [cursor=pointer]:
+              - /url: /iuc-website/course/spring-boot
+        - generic [ref=f25e107]:
+          - heading "Contact Us" [level=4] [ref=f25e108]
+          - generic [ref=f25e109]:
+            - link " +91 7418048039" [ref=f25e110] [cursor=pointer]:
+              - /url: tel:+917418048039
+              - generic [ref=f25e111]: 
+              - text: +91 7418048039
+            - link " 04443539196" [ref=f25e112] [cursor=pointer]:
+              - /url: tel:04443539196
+              - generic [ref=f25e113]: 
+              - text: "04443539196"
+            - link " 04447940112" [ref=f25e114] [cursor=pointer]:
+              - /url: tel:04447940112
+              - generic [ref=f25e115]: 
+              - text: "04447940112"
+            - link " info@iucedu.com" [ref=f25e116] [cursor=pointer]:
+              - /url: mailto:info@iucedu.com
+              - generic [ref=f25e117]: 
+              - text: info@iucedu.com
+            - generic [ref=f25e118]:
+              - generic [ref=f25e119]: 
+              - text: "#1&2 Gold Nest Apts, 2nd Main Road, C.I.T Nagar, Chennai – 600 035"
+            - generic [ref=f25e120]:
+              - generic [ref=f25e121]: 
+              - text: 19/11 Balakrishna Colony 1st St, Kaladipet, Thiruvottiyur, Chennai – 600 019
+            - generic [ref=f25e122]:
+              - heading "Newsletter" [level=4] [ref=f25e123]
+              - generic [ref=f25e124]:
+                - textbox "Email for newsletter" [ref=f25e125]:
+                  - /placeholder: Your email
+                - button "" [ref=f25e126] [cursor=pointer]
+      - generic [ref=f25e128]:
+        - generic [ref=f25e129]: © 2026 IUC Edu. All rights reserved.
+        - generic [ref=f25e130]: Privacy Policy Terms of Service Refund Policy
+  - text: 
+  - link "Chat on WhatsApp" [ref=f25e131] [cursor=pointer]:
+    - /url: https://wa.me/917418048039?text=Hi!%20I'm%20interested%20in%20IUC%20Edu%20programs.%20Please%20guide%20me.
+    - generic: Chat with us on WhatsApp
+    - generic [ref=f25e132]: 
+  - link "Back to top":
+    - /url: "#"
+    - generic: 

@@ -1,0 +1,35 @@
+- generic [ref=f2e1]:
+  - generic [ref=f2e3]:
+    - link [ref=f2e4] [cursor=pointer]:
+      - /url: ../index.html
+      - img "cPanel" [ref=f2e5]
+    - text: File Upload
+  - generic [ref=f2e8]:
+    - heading "Select the file you want to upload to “/home4/iucteoxs/public_html/iucedu.com/includes”." [level=3] [ref=f2e9]
+    - generic [ref=f2e10]: "Maximum file size allowed for upload: 500 MB"
+    - generic [ref=f2e12]:
+      - generic [ref=f2e15] [cursor=pointer]:
+        - checkbox "Overwrite existing files" [checked] [ref=f2e16]
+        - text: Overwrite existing files
+      - generic [ref=f2e17]:
+        - generic [ref=f2e18]:
+          - paragraph [ref=f2e19]: Drop files here to start uploading
+          - paragraph [ref=f2e20]: or
+        - button "Select File" [active] [ref=f2e22] [cursor=pointer]
+    - generic [ref=f2e23]:
+      - generic [ref=f2e29]:
+        - generic [ref=f2e30]: analytics.php
+        - progressbar [ref=f2e32]: 100%
+        - generic [ref=f2e33]: 36.45 KB complete
+      - generic [ref=f2e36]:
+        - generic [ref=f2e37]: google-analytics.php
+        - progressbar [ref=f2e39]: 100%
+        - generic [ref=f2e40]: 6.82 KB complete
+      - generic [ref=f2e43]:
+        - generic [ref=f2e44]: search-console-config.php
+        - progressbar [ref=f2e46]: 100%
+        - generic [ref=f2e47]: 518 Bytes complete
+    - link " Go Back to “/home4/iucteoxs/public_html/iucedu.com/includes”" [ref=f2e25] [cursor=pointer]:
+      - /url: ./index.html?dir=%2fhome4%2fiucteoxs%2fpublic_html%2fiucedu.com%2fincludes
+      - generic [ref=f2e26]: 
+      - text: Go Back to “/home4/iucteoxs/public_html/iucedu.com/includes”

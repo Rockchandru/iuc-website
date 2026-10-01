@@ -1,0 +1,44 @@
+- generic [ref=e1]:
+  - generic [ref=e4]:
+    - generic [ref=e6]:
+      - img "logo" [ref=e8]
+      - generic [ref=e10]:
+        - generic [ref=e11]: Username
+        - textbox "Username" [active] [ref=e13]:
+          - /placeholder: Enter your username.
+        - generic [ref=e14]: Password
+        - textbox "Password" [ref=e16]:
+          - /placeholder: Enter your account password.
+        - button "Log in" [ref=e18] [cursor=pointer]
+    - list [ref=e21]:
+      - listitem [ref=e22]:
+        - link "العربية" [ref=e23] [cursor=pointer]:
+          - /url: /?locale=ar
+      - listitem [ref=e24]:
+        - link "български" [ref=e25] [cursor=pointer]:
+          - /url: /?locale=bg
+      - listitem [ref=e26]:
+        - link "čeština" [ref=e27] [cursor=pointer]:
+          - /url: /?locale=cs
+      - listitem [ref=e28]:
+        - link "dansk" [ref=e29] [cursor=pointer]:
+          - /url: /?locale=da
+      - listitem [ref=e30]:
+        - link "Deutsch" [ref=e31] [cursor=pointer]:
+          - /url: /?locale=de
+      - listitem [ref=e32]:
+        - link "Ελληνικά" [ref=e33] [cursor=pointer]:
+          - /url: /?locale=el
+      - listitem [ref=e34]:
+        - link "English" [ref=e35] [cursor=pointer]:
+          - /url: /?locale=en
+      - listitem [ref=e36]:
+        - link "español" [ref=e37] [cursor=pointer]:
+          - /url: /?locale=es
+      - listitem [ref=e38]:
+        - link "…" [ref=e39] [cursor=pointer]:
+          - /url: javascript:void(0)
+  - generic [ref=e40]:
+    - text: Copyright© 2026 cPanel, L.L.C.
+    - link "Privacy Policy" [ref=e41] [cursor=pointer]:
+      - /url: https://go.cpanel.net/privacy

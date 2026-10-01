@@ -7,14 +7,16 @@
   var API = (typeof ADMIN_BASE !== 'undefined' ? ADMIN_BASE : '/admin') + '/api.php';
   var charts = {};
   var state = {
-    from: '', to: '', data: null, period: 'daily', liveSeries: [], liveInterval: null,
+    from: '', to: '', data: null, period: 'daily', liveInterval: null,
     activeTab: 'overview', gscData: null, gscLoaded: false, gscLoading: false
   };
 
   var PALETTE = ['#2563eb', '#06b6d4', '#8b5cf6', '#f59e0b', '#10b981', '#ef4444', '#ec4899', '#14b8a6', '#6366f1', '#f97316', '#84cc16', '#0ea5e9', '#a855f7', '#e11d48', '#64748b'];
   var CHIP = {
-    'Facebook': 'chip-s', 'Instagram': 'chip-m', 'YouTube': 'chip-r', 'LinkedIn': 'chip-s',
+    'Facebook': 'chip-s', 'Facebook Ads': 'chip-s', 'Instagram': 'chip-m', 'Instagram Ads': 'chip-m',
+    'YouTube': 'chip-r', 'YouTube Ads': 'chip-r', 'LinkedIn': 'chip-s', 'LinkedIn Ads': 'chip-s',
     'WhatsApp': 'chip-l', 'Email': 'chip-g', 'QR Code': 'chip-m', 'Twitter': 'chip-b',
+    'Twitter Ads': 'chip-b', 'TikTok': 'chip-b', 'TikTok Ads': 'chip-b',
     'Google Search': 'chip-s', 'Google Ads': 'chip-l', 'Direct': 'chip-b', 'Referral': 'chip-b',
     'Bing Search': 'chip-s', 'Yahoo Search': 'chip-s', 'DuckDuckGo': 'chip-s', 'Unknown': 'chip-b'
   };
@@ -24,10 +26,14 @@
     outbound_click: 'Outbound Clicks'
   };
   var SOCIAL_META = {
-    Facebook: ['bi-facebook', '#1877f2'], Instagram: ['bi-instagram', '#e1306c'],
-    YouTube: ['bi-youtube', '#ff0000'], LinkedIn: ['bi-linkedin', '#0a66c2'],
+    Facebook: ['bi-facebook', '#1877f2'], 'Facebook Ads': ['bi-facebook', '#1877f2'],
+    Instagram: ['bi-instagram', '#e1306c'], 'Instagram Ads': ['bi-instagram', '#e1306c'],
+    YouTube: ['bi-youtube', '#ff0000'], 'YouTube Ads': ['bi-youtube', '#ff0000'],
+    LinkedIn: ['bi-linkedin', '#0a66c2'], 'LinkedIn Ads': ['bi-linkedin', '#0a66c2'],
     WhatsApp: ['bi-whatsapp', '#25d366'], Email: ['bi-envelope-fill', '#ea4335'],
-    'QR Code': ['bi-qr-code-scan', '#8b5cf6'], Twitter: ['bi-twitter-x', '#0f1419']
+    'QR Code': ['bi-qr-code-scan', '#8b5cf6'], Twitter: ['bi-twitter-x', '#0f1419'],
+    'Twitter Ads': ['bi-twitter-x', '#0f1419'], TikTok: ['bi-music-note-beamed', '#111827'],
+    'TikTok Ads': ['bi-music-note-beamed', '#111827']
   };
 
   /* ── helpers ───────────────────────────────────────────────── */
@@ -43,6 +49,42 @@
       return (a.pathname || '/') + (a.search ? a.search.slice(0, 40) : '');
     } catch (e) { return u; }
   }
+  function pageHref(u) {
+    var base = (typeof SITE_ORIGIN !== 'undefined' && SITE_ORIGIN) ? SITE_ORIGIN : window.location.origin;
+    try { return new URL(u || '/', base + '/').href; } catch (e) { return u || '/'; }
+  }
+  function pageLink(u, full) {
+    var href = pageHref(u);
+    var label = full ? href : shortUrl(href);
+    return '<a class="page-link" href="' + esc(href) + '" target="_blank" rel="noopener noreferrer" title="Open exact page: ' + esc(href) + '">' + esc(label) + ' <i class="bi bi-box-arrow-up-right"></i></a>';
+  }
+  function formatKeyword(value) {
+    var acronyms = { iuc: 'IUC', it: 'IT', ai: 'AI', ml: 'ML', seo: 'SEO', ui: 'UI', ux: 'UX', qa: 'QA', js: 'JS', sql: 'SQL', aws: 'AWS', c: 'C', 'c++': 'C++' };
+    var minor = { a: true, an: true, and: true, as: true, at: true, but: true, by: true, for: true, from: true, in: true, of: true, on: true, or: true, the: true, to: true, with: true, vs: true };
+    return String(value || '').trim().split(/\s+/).map(function (word, index) {
+      var key = word.toLowerCase();
+      if (acronyms[key]) return acronyms[key];
+      if (index > 0 && minor[key]) return key;
+      return key.split('-').map(function (part) { return part.charAt(0).toUpperCase() + part.slice(1); }).join('-');
+    }).join(' ');
+  }
+  function keywordHtml(value) {
+    return '<span title="Raw query: ' + esc(value || '') + '">' + esc(formatKeyword(value)) + '</span>';
+  }
+  function setChartEmpty(id, empty, message) {
+    var canvas = el(id);
+    if (!canvas || !canvas.parentNode) return;
+    var box = canvas.parentNode;
+    var old = box.querySelector('.chart-empty-state');
+    if (old) old.remove();
+    canvas.hidden = !!empty;
+    if (empty) {
+      var stateEl = document.createElement('div');
+      stateEl.className = 'chart-empty-state';
+      stateEl.textContent = message;
+      box.appendChild(stateEl);
+    }
+  }
   function fmtInt(n) { return Number(n || 0).toLocaleString('en-IN'); }
   function fmtDur(sec) {
     sec = Number(sec || 0);
@@ -57,8 +99,8 @@
   function makeChart(id, cfg) {
     if (charts[id]) { charts[id].destroy(); }
     var ctx = el(id);
-    if (!ctx) return null;
-    var defaults = {
+    if (!ctx || typeof Chart === 'undefined') return null;
+    var defaultOptions = {
       responsive: true, maintainAspectRatio: false,
       plugins: {
         legend: { labels: { boxWidth: 12, boxHeight: 12, font: { size: 11 } } },
@@ -66,8 +108,11 @@
       },
       animation: { duration: 400 }
     };
-    var merged = Object.assign({}, defaults, cfg);
-    merged.options = Object.assign({}, defaults.plugins && {}, cfg.options || {});
+    var suppliedOptions = cfg.options || {};
+    var merged = Object.assign({}, cfg);
+    merged.options = Object.assign({}, defaultOptions, suppliedOptions, {
+      plugins: Object.assign({}, defaultOptions.plugins, suppliedOptions.plugins || {})
+    });
     charts[id] = new Chart(ctx, merged);
     return charts[id];
   }
@@ -127,7 +172,7 @@
     el('kpiGrid').innerHTML =
       kpiCard('bi-people', '#1d4ed8', fmtInt(k.total_visitors), 'Total Visitors', 'All time', '#dbeafe') +
       kpiCard('bi-calendar-day', '#166534', fmtInt(k.today_visitors), "Today's Visitors", dateLabel(), '#dcfce7') +
-      kpiCard('bi-broadcast', '#b91c1c', fmtInt(k.active_now), 'Active Now', 'Last 5 minutes', '#fee2e2') +
+      kpiCard('bi-broadcast', '#b91c1c', fmtInt(k.active_now), 'Active Users', 'Last 30 minutes', '#fee2e2') +
       kpiCard('bi-person-badge', '#7e22ce', fmtInt(k.unique_visitors), 'Unique Visitors', 'Period', '#f3e8ff') +
       kpiCard('bi-person-check', '#b45309', fmtInt(k.returning_visitors), 'Returning Visitors', 'Period', '#fef3c7') +
       kpiCard('bi-eye', '#0f766e', fmtInt(k.total_views), 'Total Page Views', 'Period', '#ccfbf1') +
@@ -306,14 +351,15 @@
   function renderRecent(d) {
     var rows = d.recent;
     el('recentCount').textContent = '(' + rows.length + ' sessions)';
-    var h = '<thead><tr><th>Channel</th><th>Page</th><th>Device / Browser / OS</th><th>Country / City</th><th>Views</th><th>Duration</th><th>Bounce</th><th>Last Activity</th></tr></thead><tbody>';
+    var h = '<thead><tr><th>Platform / Channel</th><th>Exact Page URL</th><th>Mobile Number</th><th>Device / Browser / OS</th><th>Country / City</th><th>Views</th><th>Engaged Time</th><th>Bounce</th><th>Last Activity</th></tr></thead><tbody>';
     if (!rows.length) {
-      h += '<tr><td colspan="8" style="text-align:center;color:#94a3b8;padding:1.5rem">No sessions recorded yet in this period.</td></tr>';
+      h += '<tr><td colspan="9" style="text-align:center;color:#94a3b8;padding:1.5rem">No sessions recorded yet in this period.</td></tr>';
     }
     rows.forEach(function (r) {
       h += '<tr>' +
-        '<td>' + chip(r.channel || 'Unknown') + '</td>' +
-        '<td style="max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + esc(shortUrl(r.exit_page || r.landing_page || '/')) + '</td>' +
+        '<td>' + chip(r.source_label || r.channel || 'Unattributed') + '<div class="cell-sub">' + esc(r.channel || '-') + '</div></td>' +
+        '<td class="url-cell">' + pageLink(r.exit_page || r.landing_page || '/', true) + '</td>' +
+        '<td>' + esc(r.phone || 'Not provided') + '</td>' +
         '<td>' + esc(r.device || '-') + ' · ' + esc(r.browser || '-') + ' · ' + esc(r.os || '-') + '</td>' +
         '<td>' + esc(r.country || '-') + (r.city ? ' / ' + esc(r.city) : '') + '</td>' +
         '<td>' + fmtInt(r.page_views) + '</td>' +
@@ -328,15 +374,16 @@
 
   function renderCampaigns(d) {
     var rows = d.campaigns;
-    var h = '<thead><tr><th>Campaign</th><th>Source / Medium</th><th>Landing Page</th><th>First / Last Visit</th><th>Sessions</th><th>Views</th><th>Conversions</th><th>Cost (₹)</th><th>Note</th><th>Save</th></tr></thead><tbody>';
+    var h = '<thead><tr><th>Campaign</th><th>Creative / Ad</th><th>Platform / Medium</th><th>Landing Page</th><th>First / Last Visit</th><th>Sessions</th><th>Views</th><th>Conversions</th><th>Campaign Cost (₹)</th><th>Note</th><th>Save</th></tr></thead><tbody>';
     if (!rows.length) {
-      h += '<tr><td colspan="10" style="text-align:center;color:#94a3b8;padding:1.5rem">No UTM campaigns recorded yet. Add ?utm_source=facebook&amp;utm_medium=social&amp;utm_campaign=course_name to campaign links.</td></tr>';
+      h += '<tr><td colspan="11" style="text-align:center;color:#94a3b8;padding:1.5rem">No tagged campaigns recorded yet. Add utm_source, utm_medium, utm_campaign and a unique utm_content value to each campaign link.</td></tr>';
     }
     rows.forEach(function (r) {
       h += '<tr>' +
-        '<td style="font-weight:700">' + esc(r.campaign) + '</td>' +
-        '<td>' + chip(r.source || 'Unknown') + '<div class="cell-sub">' + esc(r.medium || '-') + '</div></td>' +
-        '<td class="url-cell" title="' + esc(r.landing_page || '') + '">' + esc(shortUrl(r.landing_page || '/')) + '</td>' +
+        '<td style="font-weight:700">' + esc(r.campaign) + (r.campaign_id ? '<div class="cell-sub">ID ' + esc(r.campaign_id) + '</div>' : '') + '</td>' +
+        '<td>' + esc(r.content || 'Not tagged') + '</td>' +
+        '<td>' + chip(r.source_label || r.source || 'Unattributed') + '<div class="cell-sub">' + esc(r.medium || '-') + '</div></td>' +
+        '<td class="url-cell">' + pageLink(r.landing_page || '/', true) + '</td>' +
         '<td><span>' + esc(r.first_seen || '-') + '</span><div class="cell-sub">' + esc(r.last_seen || '-') + '</div></td>' +
         '<td>' + fmtInt(r.sessions) + '</td>' +
         '<td>' + fmtInt(r.views) + '</td>' +
@@ -380,7 +427,7 @@
   }
 
   function renderSocial(d) {
-    var order = ['Facebook', 'Instagram', 'YouTube', 'LinkedIn', 'WhatsApp', 'Email', 'QR Code', 'Twitter'];
+    var order = ['Facebook Ads', 'Facebook', 'Instagram Ads', 'Instagram', 'YouTube Ads', 'YouTube', 'LinkedIn Ads', 'LinkedIn', 'TikTok Ads', 'TikTok', 'WhatsApp', 'Email', 'QR Code', 'Twitter Ads', 'Twitter'];
     var map = {};
     d.social.forEach(function (s) { map[s.channel] = s; });
     var h = '';
@@ -448,7 +495,7 @@
       ['Avg Duration', fmtDur(d.kpis.avg_duration)],
       ['Conversions', fmtInt(d.conversions.total)],
       ['Conversion Rate', fmtPct(d.conversions.rate, 2)],
-      ['Active Now', fmtInt(d.kpis.active_now)]
+      ['Active Users (30 min)', fmtInt(d.kpis.active_now)]
     ];
     el('summaryGrid').innerHTML = items.map(function (it) {
       return '<div class="summary-item"><span class="si-label">' + it[0] + '</span><span class="si-value">' + it[1] + '</span></div>';
@@ -460,24 +507,26 @@
     el('seoKpi').innerHTML =
       kpiCard('bi-search', '#1d4ed8', fmtInt(s.organic_sessions), 'Organic Search', 'Sessions', '#dbeafe') +
       kpiCard('bi-badge-ad', '#7e22ce', fmtInt(s.paid_search_sessions), 'Paid Search', 'Google Ads sessions', '#f3e8ff') +
-      kpiCard('bi-key', '#166534', fmtInt(s.known_keyword_sessions), 'Known Keywords', 'UTM/referrer sessions', '#dcfce7') +
+      kpiCard('bi-key', '#166534', fmtInt(s.known_keyword_sessions), 'Known Campaign Terms', 'UTM/referrer sessions', '#dcfce7') +
       kpiCard('bi-eye-slash', '#b45309', fmtInt(s.not_provided_sessions), 'Not Provided', 'Hidden by search engines', '#fef3c7');
     makeChart('seoKeywordBar', {
       type: 'bar',
       data: { labels: s.keywords.slice(0, 12).map(function (x) { return x.keyword; }), datasets: [{ label: 'Sessions', data: s.keywords.slice(0, 12).map(function (x) { return x.sessions; }), backgroundColor: PALETTE[4], borderRadius: 4 }] },
       options: { indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, ticks: { precision: 0 } }, y: { grid: { display: false } } } }
     });
+    setChartEmpty('seoKeywordBar', !s.keywords.length, 'No session-level campaign keywords yet. Add utm_term to managed campaign URLs.');
     makeChart('searchEnginePie', {
       type: 'doughnut',
       data: { labels: s.engines.map(function (x) { return x.engine; }), datasets: [{ data: s.engines.map(function (x) { return x.sessions; }), backgroundColor: PALETTE }] },
       options: { plugins: { legend: { position: 'bottom' } } }
     });
+    setChartEmpty('searchEnginePie', !s.engines.length, 'No organic or paid search sessions were recorded in this period.');
 
-    var kh = '<thead><tr><th>Keyword</th><th>Engine / Source</th><th>Landing Page</th><th>Sessions</th><th>Visitors</th><th>Views</th><th>Conversions</th><th>Last Seen</th></tr></thead><tbody>';
-    if (!s.keywords.length) kh += '<tr><td colspan="8" class="empty-cell">No visible keyword data yet. Use utm_term on managed campaign links.</td></tr>';
+    var kh = '<thead><tr><th>Campaign Term</th><th>Engine / Source</th><th>Landing Page</th><th>Sessions</th><th>Visitors</th><th>Views</th><th>Conversions</th><th>Last Seen</th></tr></thead><tbody>';
+    if (!s.keywords.length) kh += '<tr><td colspan="8" class="empty-cell"><strong>No attributed campaign keywords in this period.</strong><br>Google hides most organic search terms from browser referrers. Use Search Console Queries above for organic performance, and utm_term on paid or managed campaign links for session and conversion attribution.</td></tr>';
     s.keywords.forEach(function (r) {
-      kh += '<tr><td style="font-weight:700">' + esc(r.keyword) + '</td><td>' + esc(r.engine || '-') + '</td>' +
-        '<td class="url-cell" title="' + esc(r.landing_page || '') + '">' + esc(shortUrl(r.landing_page || '/')) + '</td>' +
+      kh += '<tr><td style="font-weight:700">' + keywordHtml(r.keyword) + '</td><td>' + esc(r.engine || '-') + '</td>' +
+        '<td class="url-cell">' + pageLink(r.landing_page || '/', false) + '</td>' +
         '<td>' + fmtInt(r.sessions) + '</td><td>' + fmtInt(r.visitors) + '</td><td>' + fmtInt(r.views) + '</td>' +
         '<td>' + fmtInt(r.conversions) + '</td><td>' + esc(r.last_seen || '-') + '</td></tr>';
     });
@@ -487,7 +536,7 @@
     var lh = '<thead><tr><th>Search Landing Page</th><th>Sessions</th><th>Visitors</th><th>Sessions with Known Keyword</th></tr></thead><tbody>';
     if (!s.landing_pages.length) lh += '<tr><td colspan="4" class="empty-cell">No search landing-page traffic recorded in this period.</td></tr>';
     s.landing_pages.forEach(function (r) {
-      lh += '<tr><td class="url-cell" title="' + esc(r.page || '') + '">' + esc(shortUrl(r.page || '/')) + '</td><td>' + fmtInt(r.sessions) + '</td><td>' + fmtInt(r.visitors) + '</td><td>' + fmtInt(r.known_keywords) + '</td></tr>';
+      lh += '<tr><td class="url-cell">' + pageLink(r.page || '/', true) + '</td><td>' + fmtInt(r.sessions) + '</td><td>' + fmtInt(r.visitors) + '</td><td>' + fmtInt(r.known_keywords) + '</td></tr>';
     });
     lh += '</tbody>';
     el('seoLandingTable').innerHTML = lh;
@@ -643,15 +692,19 @@
   function renderGscQueries(rows) {
     var search = (el('gscQuerySearch').value || '').trim().toLowerCase();
     var filtered = rows.filter(function (row) {
-      return !search || String(row.query || '').toLowerCase().indexOf(search) !== -1 || String(row.page || '').toLowerCase().indexOf(search) !== -1;
+      return !search || String(row.query || '').toLowerCase().indexOf(search) !== -1 ||
+        String(row.page || '').toLowerCase().indexOf(search) !== -1 ||
+        String(row.recommended_page || '').toLowerCase().indexOf(search) !== -1 ||
+        String(row.intent || '').toLowerCase().indexOf(search) !== -1;
     });
     el('gscQueryCount').textContent = filtered.length + ' of ' + rows.length;
-    var html = '<thead><tr><th>Query</th><th>Type</th><th>Top Page</th><th>Clicks</th><th>Δ Clicks</th><th>Impressions</th><th>Δ Impr.</th><th>CTR</th><th>Position</th><th>Δ Position</th></tr></thead><tbody>';
-    if (!filtered.length) html += '<tr><td colspan="10" class="empty-cell">No matching Search Console queries.</td></tr>';
+    var html = '<thead><tr><th>Search Query</th><th>Type</th><th>Current Google Page</th><th>Recommended Target</th><th>Clicks</th><th>Δ Clicks</th><th>Impressions</th><th>Δ Impr.</th><th>CTR</th><th>Position</th><th>Δ Position</th></tr></thead><tbody>';
+    if (!filtered.length) html += '<tr><td colspan="11" class="empty-cell">No matching Search Console queries.</td></tr>';
     filtered.slice(0, 500).forEach(function (row) {
-      html += '<tr><td class="keyword-cell">' + esc(row.query) + '</td>' +
+      html += '<tr><td class="keyword-cell">' + keywordHtml(row.query) + '<span class="cell-sub">' + esc(row.intent || '') + '</span></td>' +
         '<td><span class="query-type ' + (row.is_brand ? 'brand' : 'non-brand') + '">' + (row.is_brand ? 'Brand' : 'Non-brand') + '</span></td>' +
-        '<td class="url-cell" title="' + esc(row.page || '') + '">' + esc(shortUrl(row.page || '/')) + '</td>' +
+        '<td class="url-cell">' + pageLink(row.page || '/', false) + '</td>' +
+        '<td class="url-cell">' + pageLink(row.recommended_page || '/', false) + (row.target_match ? '<span class="target-state match">Matched</span>' : '<span class="target-state review">Review</span>') + '</td>' +
         '<td>' + fmtInt(row.clicks) + '</td><td>' + gscDelta(row.changes && row.changes.clicks) + '</td>' +
         '<td>' + fmtInt(row.impressions) + '</td><td>' + gscDelta(row.changes && row.changes.impressions) + '</td>' +
         '<td>' + fmtPct(Number(row.ctr || 0) * 100, 2) + '</td><td>' + Number(row.position || 0).toFixed(1) + '</td>' +
@@ -662,13 +715,13 @@
   }
 
   function renderGscOpportunities(rows) {
-    var html = '<thead><tr><th>Query</th><th>Top Page</th><th>Impressions</th><th>Clicks</th><th>CTR</th><th>Position</th><th>Recommended Focus</th></tr></thead><tbody>';
-    if (!rows.length) html += '<tr><td colspan="7" class="empty-cell">No opportunity queries match the current thresholds.</td></tr>';
+    var html = '<thead><tr><th>Priority</th><th>Search Query</th><th>Current Google Page</th><th>Recommended Target</th><th>Impressions</th><th>Clicks</th><th>CTR</th><th>Position</th><th>Click Gap</th><th>Recommended Action</th></tr></thead><tbody>';
+    if (!rows.length) html += '<tr><td colspan="10" class="empty-cell">No actionable opportunity queries match the current thresholds.</td></tr>';
     rows.forEach(function (row) {
-      var focus = row.position <= 10 ? 'Improve title/meta CTR' : 'Strengthen page content and internal links';
-      html += '<tr><td class="keyword-cell">' + esc(row.query) + '</td><td class="url-cell" title="' + esc(row.page || '') + '">' + esc(shortUrl(row.page || '/')) + '</td>' +
+      var focus = row.recommendation || (row.position <= 10 ? 'Improve title and snippet CTR.' : 'Strengthen page content and internal links.');
+      html += '<tr><td><span class="priority priority-' + esc(String(row.priority || 'low').toLowerCase()) + '">' + esc(row.priority || 'Low') + '</span></td><td class="keyword-cell">' + keywordHtml(row.query) + '</td><td class="url-cell">' + pageLink(row.page || '/', false) + '</td><td class="url-cell">' + pageLink(row.recommended_page || '/', false) + '</td>' +
         '<td>' + fmtInt(row.impressions) + '</td><td>' + fmtInt(row.clicks) + '</td><td>' + fmtPct(Number(row.ctr || 0) * 100, 2) + '</td>' +
-        '<td>' + Number(row.position || 0).toFixed(1) + '</td><td>' + esc(focus) + '</td></tr>';
+        '<td>' + Number(row.position || 0).toFixed(1) + '</td><td title="Estimated extra clicks if this query reaches the dashboard CTR benchmark">' + fmtInt(row.estimated_click_gap) + '</td><td>' + esc(focus) + '</td></tr>';
     });
     html += '</tbody>';
     el('gscOpportunityTable').innerHTML = html;
@@ -679,9 +732,9 @@
     if (!rows.length) html += '<tr><td colspan="5" class="empty-cell">No ' + esc(heading.toLowerCase()) + ' data for this period.</td></tr>';
     rows.slice(0, limit).forEach(function (row) {
       var label = row[key] || '-';
-      if (key === 'page') label = shortUrl(label);
+      if (key === 'page') label = pageLink(label, true);
       if (key === 'country') label = String(label).toUpperCase();
-      html += '<tr><td class="' + (key === 'page' ? 'url-cell' : '') + '" title="' + esc(row[key] || '') + '">' + esc(label) + '</td>' + gscMetricRowCells(row) + '</tr>';
+      html += '<tr><td class="' + (key === 'page' ? 'url-cell' : '') + '" title="' + esc(row[key] || '') + '">' + (key === 'page' ? label : esc(label)) + '</td>' + gscMetricRowCells(row) + '</tr>';
     });
     html += '</tbody>';
     el(id).innerHTML = html;
@@ -749,6 +802,17 @@
     }).join('');
   }
 
+  function whatsappEnquiryStatus(r) {
+    var status = String(r.whatsapp_status || 'Not requested').toUpperCase();
+    var tone = status === 'SENT' ? 'sent' : (status === 'FAILED' ? 'failed' : (status === 'PENDING' || status === 'PROCESSING' ? 'pending' : 'none'));
+    var detail = r.whatsapp_delivery_status ? 'Delivery: ' + r.whatsapp_delivery_status : '';
+    if (r.whatsapp_error_code) detail = 'Error: ' + r.whatsapp_error_code;
+    return '<span class="wa-delivery-status ' + tone + '">' + esc(status) + '</span>' +
+      (detail ? '<div class="cell-sub">' + esc(detail) + '</div>' : '') +
+      (r.whatsapp_attempt_count ? '<div class="cell-sub">Attempts: ' + fmtInt(r.whatsapp_attempt_count) + '</div>' : '') +
+      (r.whatsapp_sent_at ? '<div class="cell-sub">Sent: ' + esc(r.whatsapp_sent_at) + '</div>' : '');
+  }
+
   function renderEnquiries(d) {
     var e = d.enquiries || { rows: [], by_status: [], total: 0, latest: null };
     var statusMap = {};
@@ -759,17 +823,18 @@
       kpiCard('bi-telephone-outbound', '#7e22ce', fmtInt(statusMap.contacted), 'Contacted', 'Selected period', '#f3e8ff') +
       kpiCard('bi-mortarboard', '#166534', fmtInt(statusMap.enrolled), 'Enrolled', e.latest ? 'Latest: ' + e.latest : 'No saved rows', '#dcfce7');
 
-    var h = '<thead><tr><th>ID / Time</th><th>Contact</th><th>Course / Message</th><th>Submitted Page</th><th>Landing / Referrer</th><th>UTM Attribution</th><th>Status / Admin Note</th><th>Save</th></tr></thead><tbody>';
-    if (!e.rows.length) h += '<tr><td colspan="8" class="empty-cell">No enquiries saved in this date range. Check Data Collection Health for the table and latest insert time.</td></tr>';
+    var h = '<thead><tr><th>ID / Time</th><th>Contact</th><th>Course / Message</th><th>Submitted Page</th><th>Landing / Referrer</th><th>UTM Attribution</th><th>WhatsApp</th><th>Status / Admin Note</th><th>Save</th></tr></thead><tbody>';
+    if (!e.rows.length) h += '<tr><td colspan="9" class="empty-cell">No enquiries saved in this date range. Check Data Collection Health for the table and latest insert time.</td></tr>';
     e.rows.forEach(function (r) {
-      var utm = [r.utm_source, r.utm_medium, r.utm_campaign, r.utm_term].filter(function (v) { return v; }).join(' / ') || 'Direct / unavailable';
+      var utm = [r.source_label || r.attributed_source, r.attributed_medium, r.attributed_campaign, r.attributed_content, r.utm_term].filter(function (v) { return v; }).join(' / ') || 'Direct / unavailable';
       h += '<tr data-enquiry-id="' + r.id + '">' +
         '<td><strong>#' + r.id + '</strong><div class="cell-sub">' + esc(r.created_at || '-') + '</div></td>' +
         '<td><strong>' + esc(r.full_name) + '</strong><div class="cell-sub">' + esc(r.phone) + '</div><div class="cell-sub">' + esc(r.email) + '</div></td>' +
         '<td><strong>' + esc(r.course) + '</strong><div class="cell-sub message-cell" title="' + esc(r.message || '') + '">' + esc(r.message || '-') + '</div></td>' +
-        '<td class="url-cell" title="' + esc(r.page_url || '') + '">' + esc(shortUrl(r.page_url || '/')) + '</td>' +
-        '<td><div class="url-cell" title="' + esc(r.landing_page || '') + '">' + esc(shortUrl(r.landing_page || '/')) + '</div><div class="cell-sub url-cell" title="' + esc(r.referrer || '') + '">Ref: ' + esc(shortUrl(r.referrer || '-')) + '</div></td>' +
-        '<td>' + esc(utm) + '<div class="cell-sub">Session: ' + esc((r.session_id || '-').slice(0, 8)) + '</div></td>' +
+        '<td class="url-cell">' + pageLink(r.page_url || '/', true) + '</td>' +
+        '<td><div class="url-cell">' + pageLink(r.landing_page || '/', true) + '</div><div class="cell-sub url-cell" title="' + esc(r.referrer || '') + '">Ref: ' + esc(shortUrl(r.referrer || '-')) + '</div></td>' +
+        '<td>' + esc(utm) + (r.campaign_id ? '<div class="cell-sub">Campaign ID: ' + esc(r.campaign_id) + '</div>' : '') + '<div class="cell-sub">Session: ' + esc((r.session_id || '-').slice(0, 8)) + '</div></td>' +
+        '<td>' + whatsappEnquiryStatus(r) + '</td>' +
         '<td><select class="enquiry-status">' + enquiryStatusOptions(r.status || 'new') + '</select><textarea class="enquiry-note" maxlength="2000" placeholder="Follow-up note">' + esc(r.admin_note || '') + '</textarea></td>' +
         '<td><button type="button" class="btn btn-primary enquiry-save">Save</button><div class="save-state">' + esc(r.updated_at || '') + '</div></td></tr>';
     });
@@ -814,46 +879,57 @@
   /* ── Live ──────────────────────────────────────────────────── */
   function renderLiveKpi(d) {
     el('liveKpi').innerHTML =
-      kpiCard('bi-broadcast', '#b91c1c', fmtInt(d.kpis.active_now), 'Active Now', 'Last 5 minutes', '#fee2e2') +
+      kpiCard('bi-broadcast', '#b91c1c', fmtInt(d.kpis.active_now), 'Active Users', 'Last 30 minutes', '#fee2e2') +
       kpiCard('bi-people', '#1d4ed8', fmtInt(d.kpis.today_visitors), "Today's Visitors", '', '#dbeafe') +
       kpiCard('bi-person-badge', '#7e22ce', fmtInt(d.kpis.unique_visitors), 'Unique Visitors', 'Period', '#f3e8ff') +
       kpiCard('bi-check-circle', '#166534', fmtInt(d.conversions.total), 'Conversions', 'Period', '#dcfce7');
   }
 
   function pollLive() {
+    if (state.liveLoading) return;
+    state.liveLoading = true;
     fetch(API + '?action=live', { credentials: 'same-origin' }).then(function (r) { return r.json(); }).then(function (d) {
       if (!d || d.error) return;
       var dot = el('liveDot');
-      if (dot) { dot.classList.toggle('on', d.active_count > 0); }
+      if (dot) { dot.classList.toggle('on', d.active_users_5m > 0); }
 
       var kpi = el('liveKpi');
+      var usingGa4 = d.live_source === 'ga4' && d.ga4 && d.ga4.ok;
       if (kpi) kpi.innerHTML =
-        kpiCard('bi-broadcast', '#b91c1c', fmtInt(d.active_count), 'Active Now', 'Last 5 minutes', '#fee2e2') +
-        kpiCard('bi-people', '#1d4ed8', fmtInt(d.total_visitors), 'Total Visitors', 'All time', '#dbeafe') +
-        kpiCard('bi-alarm', '#b45309', fmtInt(state.data ? state.data.kpis.today_visitors : 0), "Today's Visitors", '', '#fef3c7') +
+        kpiCard('bi-broadcast', '#b91c1c', fmtInt(d.active_users_30m), usingGa4 ? 'GA4 Active Users' : 'Active Users', 'Last 30 minutes', '#fee2e2') +
+        kpiCard('bi-lightning', '#1d4ed8', fmtInt(d.active_users_5m), 'Recently Active', 'Last 5 minutes', '#dbeafe') +
+        kpiCard('bi-people', '#b45309', fmtInt(d.total_visitors), 'Total Visitors', 'All time', '#fef3c7') +
         kpiCard('bi-check-circle', '#166534', fmtInt(state.data ? state.data.conversions.total : 0), 'Conversions', 'Period', '#dcfce7');
 
-      /* rolling series */
-      state.liveSeries.push({ t: new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' }), v: d.active_count });
-      if (state.liveSeries.length > 30) state.liveSeries.shift();
+      var sourceNote = el('liveSourceNote');
+      if (sourceNote) {
+        sourceNote.className = 'live-source-note ' + (usingGa4 ? 'is-connected' : 'is-fallback');
+        sourceNote.innerHTML = usingGa4
+          ? '<i class="bi bi-google"></i><div><strong>Google Analytics Realtime connected</strong><span>' + esc(d.ga4.measurement_id || 'G-H9L990V9Z2') + ' activeUsers is the main 30-minute number. The table below keeps IUC visitor details.</span></div>'
+          : '<i class="bi bi-exclamation-circle"></i><div><strong>Google Analytics Realtime connection pending</strong><span>Showing the IUC 30-minute count temporarily. ' + esc((d.ga4 && d.ga4.error) || 'GA4 is unavailable.') + '</span></div>';
+      }
+
+      /* Server-side minute buckets persist across dashboard refreshes. */
+      var liveTrend = d.trend || [];
       makeChart('liveTrend', {
         type: 'line',
-        data: { labels: state.liveSeries.map(function (x) { return x.t; }), datasets: [{ label: 'Active Visitors', data: state.liveSeries.map(function (x) { return x.v; }), borderColor: '#ef4444', backgroundColor: 'rgba(239,68,68,.14)', fill: true, tension: .3, pointRadius: 2 }] },
+        data: { labels: liveTrend.map(function (x) { return String(x.minute || '').slice(11, 16); }), datasets: [{ label: 'Distinct Active Users', data: liveTrend.map(function (x) { return x.active_users; }), borderColor: '#ef4444', backgroundColor: 'rgba(239,68,68,.14)', fill: true, tension: .3, pointRadius: 2 }] },
         options: lineOpts()
       });
 
       var badge = el('liveBadge');
-      if (badge) badge.textContent = d.active_count + ' active now';
+      if (badge) badge.textContent = (usingGa4 ? 'GA4: ' : 'IUC: ') + d.active_users_30m + ' users / 30 min';
       var lbl = el('liveActiveLabel');
-      if (lbl) lbl.textContent = '(' + d.active.length + ' sessions in last 5 min)';
+      if (lbl) lbl.textContent = '(' + d.active.length + ' distinct users in last 5 min; ' + d.active_sessions_5m + ' sessions)';
 
-      var h = '<thead><tr><th>Channel</th><th>Campaign</th><th>Page</th><th>Device</th><th>City</th><th>Views</th><th>Last Activity</th></tr></thead><tbody>';
-      if (!d.active.length) h += '<tr><td colspan="7" style="text-align:center;color:#94a3b8;padding:1.5rem">No active visitors right now.</td></tr>';
+      var h = '<thead><tr><th>Platform</th><th>Campaign / Traffic Type</th><th>Exact Page URL</th><th>Mobile Number</th><th>Device</th><th>City</th><th>Views</th><th>Last Activity</th></tr></thead><tbody>';
+      if (!d.active.length) h += '<tr><td colspan="8" style="text-align:center;color:#94a3b8;padding:1.5rem">No active visitors right now.</td></tr>';
       d.active.forEach(function (r) {
         h += '<tr>' +
-          '<td>' + chip(r.channel || 'Unknown') + '</td>' +
-          '<td>' + esc(r.campaign || '—') + '</td>' +
-          '<td style="max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + esc(shortUrl(r.exit_page || r.landing_page || '/')) + '</td>' +
+          '<td>' + chip(r.source_label || r.channel || 'Unattributed') + '<div class="cell-sub">' + esc(r.channel || '-') + '</div></td>' +
+          '<td>' + esc(r.campaign || (r.campaign_id ? 'Campaign ID ' + r.campaign_id : 'Not tagged')) + '<div class="cell-sub">' + esc(r.medium || '-') + '</div></td>' +
+          '<td class="url-cell">' + pageLink(r.exit_page || r.landing_page || '/', true) + '</td>' +
+          '<td>' + esc(r.phone || 'Not provided') + '</td>' +
           '<td>' + esc(r.device || '-') + '</td>' +
           '<td>' + esc(r.city || r.country || '-') + '</td>' +
           '<td>' + fmtInt(r.page_views) + '</td>' +
@@ -863,7 +939,9 @@
       h += '</tbody>';
       var t = el('liveTable');
       if (t) t.innerHTML = h;
-    }).catch(function () {});
+    }).catch(function () {}).then(function () {
+      state.liveLoading = false;
+    });
   }
 
   /* ── Tabs ──────────────────────────────────────────────────── */
@@ -895,8 +973,39 @@
     state.from = el('fromDate').value;
     state.to = el('toDate').value;
 
+    var sidebar = el('adminSidebar');
+    var sidebarToggle = el('mobileSidebarToggle');
+    var sidebarBackdrop = el('sidebarBackdrop');
+    function closeSidebar() {
+      if (!sidebar || !sidebarToggle || !sidebarBackdrop) return;
+      sidebar.classList.remove('open');
+      sidebarBackdrop.classList.remove('open');
+      sidebarToggle.setAttribute('aria-expanded', 'false');
+      sidebarToggle.setAttribute('aria-label', 'Open analytics navigation');
+      document.body.classList.remove('sidebar-open');
+    }
+    if (sidebar && sidebarToggle && sidebarBackdrop) {
+      sidebarToggle.addEventListener('click', function () {
+        var isOpen = sidebar.classList.toggle('open');
+        sidebarBackdrop.classList.toggle('open', isOpen);
+        sidebarToggle.setAttribute('aria-expanded', String(isOpen));
+        sidebarToggle.setAttribute('aria-label', isOpen ? 'Close analytics navigation' : 'Open analytics navigation');
+        document.body.classList.toggle('sidebar-open', isOpen);
+      });
+      sidebarBackdrop.addEventListener('click', closeSidebar);
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') closeSidebar();
+      });
+      window.addEventListener('resize', function () {
+        if (window.innerWidth > 900) closeSidebar();
+      }, { passive: true });
+    }
+
     document.querySelectorAll('.nav-item[data-tab]').forEach(function (b) {
-      b.addEventListener('click', function () { switchTab(b.dataset.tab); });
+      b.addEventListener('click', function () {
+        switchTab(b.dataset.tab);
+        closeSidebar();
+      });
     });
 
     el('applyRange').addEventListener('click', function () {

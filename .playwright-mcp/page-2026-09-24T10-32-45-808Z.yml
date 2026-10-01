@@ -1,0 +1,105 @@
+- generic [ref=f4e2]:
+  - complementary "Analytics navigation" [ref=f4e3]:
+    - generic [ref=f4e4]:
+      - img "IUC" [ref=f4e5]
+      - generic [ref=f4e6]:
+        - generic [ref=f4e7]: IUC Analytics
+        - generic [ref=f4e8]: Marketing Dashboard
+    - navigation [ref=f4e9]:
+      - button " Overview" [ref=f4e10] [cursor=pointer]:
+        - generic [ref=f4e11]: 
+        - text: Overview
+      - button " Visitors" [ref=f4e12] [cursor=pointer]:
+        - generic [ref=f4e13]: 
+        - text: Visitors
+      - button " Campaigns" [ref=f4e14] [cursor=pointer]:
+        - generic [ref=f4e15]: 
+        - text: Campaigns
+      - button " Pages" [ref=f4e16] [cursor=pointer]:
+        - generic [ref=f4e17]: 
+        - text: Pages
+      - button " SEO Monitor" [ref=f4e18] [cursor=pointer]:
+        - generic [ref=f4e19]: 
+        - text: SEO Monitor
+      - button " Enquiries" [ref=f4e20] [cursor=pointer]:
+        - generic [ref=f4e21]: 
+        - text: Enquiries
+      - button " Conversions" [ref=f4e22] [cursor=pointer]:
+        - generic [ref=f4e23]: 
+        - text: Conversions
+      - button " Live Visitors" [active] [ref=f4e24] [cursor=pointer]:
+        - generic [ref=f4e25]: 
+        - text: Live Visitors
+      - button " Reports" [ref=f4e27] [cursor=pointer]:
+        - generic [ref=f4e28]: 
+        - text: Reports
+    - generic [ref=f4e29]:
+      - link " View Website" [ref=f4e30] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f4e31]: 
+        - text: View Website
+      - link " Logout" [ref=f4e32] [cursor=pointer]:
+        - /url: logout.php
+        - generic [ref=f4e33]: 
+        - text: Logout
+  - main [ref=f4e34]:
+    - generic [ref=f4e35]:
+      - generic [ref=f4e36]:
+        - text: 
+        - generic [ref=f4e37]:
+          - heading "Live Visitors" [level=1] [ref=f4e704]
+          - paragraph [ref=f4e39]: "Report period: 2026-08-25 → 2026-09-24"
+      - generic [ref=f4e40]:
+        - generic [ref=f4e41]:
+          - textbox [ref=f4e42]: 2026-08-25
+          - generic [ref=f4e43]: to
+          - textbox [ref=f4e44]: 2026-09-24
+          - button " Apply" [ref=f4e45] [cursor=pointer]:
+            - generic [ref=f4e46]: 
+            - text: Apply
+        - generic [ref=f4e47]:
+          - link " Excel" [ref=f4e48] [cursor=pointer]:
+            - /url: export.php?format=excel&from=2026-08-25&to=2026-09-24
+            - generic [ref=f4e49]: 
+            - text: Excel
+          - link " PDF" [ref=f4e50] [cursor=pointer]:
+            - /url: export.php?format=pdf&from=2026-08-25&to=2026-09-24
+            - generic [ref=f4e51]: 
+            - text: PDF
+          - link " CSV" [ref=f4e52] [cursor=pointer]:
+            - /url: export.php?format=csv&from=2026-08-25&to=2026-09-24
+            - generic [ref=f4e53]: 
+            - text: CSV
+    - generic [ref=f4e54]:
+      - text:                                                                                                                                                                                  
+      - generic [ref=f4e705]:
+        - generic [ref=f4e706]:
+          - generic [ref=f4e707]:
+            - generic [ref=f4e708]: 
+            - generic [ref=f4e710]: "0"
+            - generic [ref=f4e711]: Active Users
+            - generic [ref=f4e712]: Last 30 minutes
+          - generic [ref=f4e713]:
+            - generic [ref=f4e714]: 
+            - generic [ref=f4e716]: "0"
+            - generic [ref=f4e717]: Today's Visitors
+          - generic [ref=f4e718]:
+            - generic [ref=f4e719]: 
+            - generic [ref=f4e721]: 5,488
+            - generic [ref=f4e722]: Unique Visitors
+            - generic [ref=f4e723]: Period
+          - generic [ref=f4e724]:
+            - generic [ref=f4e725]: 
+            - generic [ref=f4e727]: "167"
+            - generic [ref=f4e728]: Conversions
+            - generic [ref=f4e729]: Period
+        - generic [ref=f4e731]:
+          - generic [ref=f4e732]: 
+          - text: Distinct Active Users — Last 30 min
+        - generic [ref=f4e736]:
+          - generic [ref=f4e737]:
+            - generic [ref=f4e738]: 
+            - text: Recently Active Users
+          - generic:
+            - table
+      - text:     

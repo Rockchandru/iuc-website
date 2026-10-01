@@ -14,27 +14,37 @@ if (admin_logged_in()) {
 }
 
 $error = '';
-$hint = '';
+$hint = 'Access is restricted to authorised IUC Edu administrators.';
+$loginWindow = 15 * 60;
+$loginFailures = array_values(array_filter(
+    (array)($_SESSION['admin_login_failures'] ?? []),
+    static function ($attempt) use ($loginWindow) {
+        return is_int($attempt) && $attempt >= time() - $loginWindow;
+    }
+));
+$_SESSION['admin_login_failures'] = $loginFailures;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $u = trim($_POST['username'] ?? '');
     $p = (string)($_POST['password'] ?? '');
-    $hint = 'Default credentials — Username: <strong>IUCEducation</strong> · Password: <strong>Iuc@12345</strong>';
-    if ($u === '' || $p === '') {
+    $loginToken = (string)($_POST['csrf_token'] ?? '');
+    if (count($loginFailures) >= 5) {
+        $error = 'Too many login attempts. Please wait 15 minutes and try again.';
+    } elseif (empty($_SESSION['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $loginToken)) {
+        $error = 'Security validation failed. Refresh the page and try again.';
+    } elseif ($u === '' || $p === '') {
         $error = 'Please enter both username and password.';
     } elseif (admin_verify($u, $p)) {
         session_regenerate_id(true);
         $_SESSION['admin_logged_in'] = true;
         $_SESSION['admin_user'] = $u;
+        unset($_SESSION['admin_login_failures']);
         header('Location: dashboard.php');
         exit;
     } else {
+        $_SESSION['admin_login_failures'][] = time();
         $error = 'Invalid username or password.';
     }
-}
-
-if (empty($error) && empty($hint)) {
-    $hint = 'Default credentials — Username: <strong>IUCEducation</strong> · Password: <strong>Iuc@12345</strong>';
 }
 
 $pageTitle = 'Admin Login – IUC Edu Analytics';
@@ -70,6 +80,7 @@ $pageTitle = 'Admin Login – IUC Edu Analytics';
             <?php endif; ?>
 
             <form method="POST" action="" autocomplete="off" id="loginForm">
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>" />
                 <div class="field">
                     <label class="field-label" for="loginUsername">Username</label>
                     <div class="input-icon">
@@ -90,7 +101,7 @@ $pageTitle = 'Admin Login – IUC Edu Analytics';
                 </button>
             </form>
 
-            <div class="login-hint"><i class="bi bi-info-circle"></i> <span><?= $hint ?></span></div>
+            <div class="login-hint"><i class="bi bi-shield-lock"></i> <span><?= htmlspecialchars($hint, ENT_QUOTES, 'UTF-8') ?></span></div>
         </div>
 
         <div class="login-card-foot">

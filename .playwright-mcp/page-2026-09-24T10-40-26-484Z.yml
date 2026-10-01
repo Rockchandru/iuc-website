@@ -1,0 +1,22 @@
+- generic [active] [ref=f1e1]:
+  - generic [ref=f1e3]:
+    - link [ref=f1e4] [cursor=pointer]:
+      - /url: ../index.html
+      - img "cPanel" [ref=f1e5]
+    - text: File Upload
+  - generic [ref=f1e8]:
+    - heading "Select the file you want to upload to “/home4/iucteoxs/public_html/iucedu.com/admin”." [level=3] [ref=f1e9]
+    - generic [ref=f1e10]: "Maximum file size allowed for upload: 500 MB"
+    - generic [ref=f1e12]:
+      - generic [ref=f1e15] [cursor=pointer]:
+        - checkbox "Overwrite existing files" [ref=f1e16]
+        - text: Overwrite existing files
+      - generic [ref=f1e17]:
+        - generic [ref=f1e18]:
+          - paragraph [ref=f1e19]: Drop files here to start uploading
+          - paragraph [ref=f1e20]: or
+        - button "Select File" [ref=f1e22] [cursor=pointer]
+    - link " Go Back to “/home4/iucteoxs/public_html/iucedu.com/admin”" [ref=f1e25] [cursor=pointer]:
+      - /url: ./index.html?dir=%2fhome4%2fiucteoxs%2fpublic_html%2fiucedu.com%2fadmin
+      - generic [ref=f1e26]: 
+      - text: Go Back to “/home4/iucteoxs/public_html/iucedu.com/admin”

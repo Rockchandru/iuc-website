@@ -1,0 +1,718 @@
+- generic [ref=f9e2]:
+  - complementary "Analytics navigation" [ref=f9e3]:
+    - generic [ref=f9e4]:
+      - img "IUC" [ref=f9e5]
+      - generic [ref=f9e6]:
+        - generic [ref=f9e7]: IUC Analytics
+        - generic [ref=f9e8]: Marketing Dashboard
+    - navigation [ref=f9e9]:
+      - button " Overview" [ref=f9e10] [cursor=pointer]:
+        - generic [ref=f9e11]: 
+        - text: Overview
+      - button " Visitors" [ref=f9e12] [cursor=pointer]:
+        - generic [ref=f9e13]: 
+        - text: Visitors
+      - button " Campaigns" [active] [ref=f9e14] [cursor=pointer]:
+        - generic [ref=f9e15]: 
+        - text: Campaigns
+      - button " Pages" [ref=f9e16] [cursor=pointer]:
+        - generic [ref=f9e17]: 
+        - text: Pages
+      - button " SEO Monitor" [ref=f9e18] [cursor=pointer]:
+        - generic [ref=f9e19]: 
+        - text: SEO Monitor
+      - button " Enquiries" [ref=f9e20] [cursor=pointer]:
+        - generic [ref=f9e21]: 
+        - text: Enquiries
+      - button " Conversions" [ref=f9e22] [cursor=pointer]:
+        - generic [ref=f9e23]: 
+        - text: Conversions
+      - button " Live Visitors" [ref=f9e24] [cursor=pointer]:
+        - generic [ref=f9e25]: 
+        - text: Live Visitors
+      - button " Reports" [ref=f9e27] [cursor=pointer]:
+        - generic [ref=f9e28]: 
+        - text: Reports
+    - generic [ref=f9e29]:
+      - link " View Website" [ref=f9e30] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f9e31]: 
+        - text: View Website
+      - link " Logout" [ref=f9e32] [cursor=pointer]:
+        - /url: logout.php
+        - generic [ref=f9e33]: 
+        - text: Logout
+  - main [ref=f9e34]:
+    - generic [ref=f9e35]:
+      - generic [ref=f9e36]:
+        - text: 
+        - generic [ref=f9e37]:
+          - heading "Campaigns" [level=1] [ref=f9e452]
+          - paragraph [ref=f9e39]: "Report period: 2026-08-25 → 2026-09-24"
+      - generic [ref=f9e40]:
+        - generic [ref=f9e41]:
+          - textbox [ref=f9e42]: 2026-08-25
+          - generic [ref=f9e43]: to
+          - textbox [ref=f9e44]: 2026-09-24
+          - button " Apply" [ref=f9e45] [cursor=pointer]:
+            - generic [ref=f9e46]: 
+            - text: Apply
+        - generic [ref=f9e47]:
+          - link " Excel" [ref=f9e48] [cursor=pointer]:
+            - /url: export.php?format=excel&from=2026-08-25&to=2026-09-24
+            - generic [ref=f9e49]: 
+            - text: Excel
+          - link " PDF" [ref=f9e50] [cursor=pointer]:
+            - /url: export.php?format=pdf&from=2026-08-25&to=2026-09-24
+            - generic [ref=f9e51]: 
+            - text: PDF
+          - link " CSV" [ref=f9e52] [cursor=pointer]:
+            - /url: export.php?format=csv&from=2026-08-25&to=2026-09-24
+            - generic [ref=f9e53]: 
+            - text: CSV
+    - generic [ref=f9e54]:
+      - text:                                                                                                                                          
+      - generic [ref=f9e453]:
+        - generic [ref=f9e454]:
+          - generic [ref=f9e455]:
+            - generic [ref=f9e456]: 
+            - text: Campaign Link Standard
+          - paragraph [ref=f9e457]:
+            - text: Use a unique UTM campaign and content value on every ad or post. This is the only reliable way to identify traffic when an app or browser hides its referrer.
+            - strong [ref=f9e458]: gad_source is a Google click marker, not a source or campaign name.
+          - code [ref=f9e459]: https://www.iucedu.com/?utm_source=youtube&utm_medium=paid_video&utm_campaign=python_chennai_sep&utm_content=video_ad_01
+          - code [ref=f9e460]: https://www.iucedu.com/?utm_source=facebook&utm_medium=paid_social&utm_campaign=python_chennai_sep&utm_content=carousel_ad_01
+          - generic [ref=f9e461]:
+            - text: For a normal unpaid YouTube post, use
+            - strong [ref=f9e462]: utm_medium=organic_social
+            - text: . Keep values lowercase and change utm_content for each creative.
+        - generic [ref=f9e463]:
+          - generic [ref=f9e465]:
+            - generic [ref=f9e466]: 
+            - text: Traffic Channels
+          - generic [ref=f9e470]:
+            - generic [ref=f9e471]: 
+            - text: Source Performance
+        - generic [ref=f9e474]:
+          - generic [ref=f9e476]:
+            - generic [ref=f9e477]: 
+            - text: Medium Performance
+          - generic [ref=f9e480]:
+            - generic [ref=f9e481]:
+              - generic [ref=f9e482]: 
+              - text: Top Campaigns
+            - table [ref=f9e484]:
+              - rowgroup [ref=f9e485]:
+                - row [ref=f9e486]:
+                  - columnheader "Campaign" [ref=f9e487]
+                  - columnheader "Creative / Ad" [ref=f9e488]
+                  - columnheader "Platform / Medium" [ref=f9e489]
+                  - columnheader "Landing Page" [ref=f9e490]
+                  - columnheader "First / Last Visit" [ref=f9e491]
+                  - columnheader "Sessions" [ref=f9e492]
+                  - columnheader "Views" [ref=f9e493]
+                  - columnheader "Conversions" [ref=f9e494]
+                  - columnheader "Campaign Cost (₹)" [ref=f9e495]
+                  - columnheader "Note" [ref=f9e496]
+                  - columnheader "Save" [ref=f9e497]
+              - rowgroup [ref=f9e498]:
+                - row [ref=f9e499]:
+                  - cell "Campaign ID 24202657386 ID 24202657386" [ref=f9e500]:
+                    - text: Campaign ID 24202657386
+                    - generic [ref=f9e501]: ID 24202657386
+                  - cell "Not tagged" [ref=f9e502]
+                  - cell "YouTube paid_video" [ref=f9e503]:
+                    - generic [ref=f9e504]: YouTube
+                    - generic [ref=f9e505]: paid_video
+                  - cell [ref=f9e506]:
+                    - link "https://www.iucedu.com/ " [ref=f9e507] [cursor=pointer]:
+                      - /url: https://www.iucedu.com/
+                      - text: https://www.iucedu.com/
+                      - generic [ref=f9e508]: 
+                  - cell "2026-09-02 13:53:56 2026-09-12 07:56:32" [ref=f9e509]:
+                    - text: 2026-09-02 13:53:56
+                    - generic [ref=f9e510]: 2026-09-12 07:56:32
+                  - cell "2,789" [ref=f9e511]
+                  - cell "3,163" [ref=f9e512]
+                  - cell "43" [ref=f9e513]
+                  - cell [ref=f9e514]:
+                    - spinbutton [ref=f9e515]: "0"
+                  - cell [ref=f9e516]:
+                    - textbox "Campaign note" [ref=f9e517]
+                  - cell [ref=f9e518]:
+                    - button "Save" [ref=f9e519] [cursor=pointer]
+                - row [ref=f9e520]:
+                  - cell "Campaign ID 24250180730 ID 24250180730" [ref=f9e521]:
+                    - text: Campaign ID 24250180730
+                    - generic [ref=f9e522]: ID 24250180730
+                  - cell "Not tagged" [ref=f9e523]
+                  - cell "YouTube paid_video" [ref=f9e524]:
+                    - generic [ref=f9e525]: YouTube
+                    - generic [ref=f9e526]: paid_video
+                  - cell [ref=f9e527]:
+                    - link "https://www.iucedu.com/ " [ref=f9e528] [cursor=pointer]:
+                      - /url: https://www.iucedu.com/
+                      - text: https://www.iucedu.com/
+                      - generic [ref=f9e529]: 
+                  - cell "2026-09-15 04:52:48 2026-09-22 04:51:37" [ref=f9e530]:
+                    - text: 2026-09-15 04:52:48
+                    - generic [ref=f9e531]: 2026-09-22 04:51:37
+                  - cell "1,412" [ref=f9e532]
+                  - cell "1,624" [ref=f9e533]
+                  - cell "46" [ref=f9e534]
+                  - cell [ref=f9e535]:
+                    - spinbutton [ref=f9e536]: "0"
+                  - cell [ref=f9e537]:
+                    - textbox "Campaign note" [ref=f9e538]
+                  - cell [ref=f9e539]:
+                    - button "Save" [ref=f9e540] [cursor=pointer]
+                - row [ref=f9e541]:
+                  - cell "Campaign ID 24148510965 ID 24148510965" [ref=f9e542]:
+                    - text: Campaign ID 24148510965
+                    - generic [ref=f9e543]: ID 24148510965
+                  - cell "Not tagged" [ref=f9e544]
+                  - cell "YouTube paid_video" [ref=f9e545]:
+                    - generic [ref=f9e546]: YouTube
+                    - generic [ref=f9e547]: paid_video
+                  - cell [ref=f9e548]:
+                    - link "https://www.iucedu.com/ " [ref=f9e549] [cursor=pointer]:
+                      - /url: https://www.iucedu.com/
+                      - text: https://www.iucedu.com/
+                      - generic [ref=f9e550]: 
+                  - cell "2026-08-25 00:21:55 2026-08-27 09:44:45" [ref=f9e551]:
+                    - text: 2026-08-25 00:21:55
+                    - generic [ref=f9e552]: 2026-08-27 09:44:45
+                  - cell "645" [ref=f9e553]
+                  - cell "727" [ref=f9e554]
+                  - cell "17" [ref=f9e555]
+                  - cell [ref=f9e556]:
+                    - spinbutton [ref=f9e557]: "0"
+                  - cell [ref=f9e558]:
+                    - textbox "Campaign note" [ref=f9e559]
+                  - cell [ref=f9e560]:
+                    - button "Save" [ref=f9e561] [cursor=pointer]
+                - row [ref=f9e562]:
+                  - cell "Campaign ID 24202657386 ID 24202657386" [ref=f9e563]:
+                    - text: Campaign ID 24202657386
+                    - generic [ref=f9e564]: ID 24202657386
+                  - cell "Not tagged" [ref=f9e565]
+                  - cell "Google cpc" [ref=f9e566]:
+                    - generic [ref=f9e567]: Google
+                    - generic [ref=f9e568]: cpc
+                  - cell [ref=f9e569]:
+                    - link "https://www.iucedu.com/ " [ref=f9e570] [cursor=pointer]:
+                      - /url: https://www.iucedu.com/
+                      - text: https://www.iucedu.com/
+                      - generic [ref=f9e571]: 
+                  - cell "2026-09-02 15:41:21 2026-09-20 12:10:51" [ref=f9e572]:
+                    - text: 2026-09-02 15:41:21
+                    - generic [ref=f9e573]: 2026-09-20 12:10:51
+                  - cell "468" [ref=f9e574]
+                  - cell "506" [ref=f9e575]
+                  - cell "5" [ref=f9e576]
+                  - cell [ref=f9e577]:
+                    - spinbutton [ref=f9e578]: "0"
+                  - cell [ref=f9e579]:
+                    - textbox "Campaign note" [ref=f9e580]
+                  - cell [ref=f9e581]:
+                    - button "Save" [ref=f9e582] [cursor=pointer]
+                - row [ref=f9e583]:
+                  - cell "Campaign ID 24230519751 ID 24230519751" [ref=f9e584]:
+                    - text: Campaign ID 24230519751
+                    - generic [ref=f9e585]: ID 24230519751
+                  - cell "Not tagged" [ref=f9e586]
+                  - cell "YouTube paid_video" [ref=f9e587]:
+                    - generic [ref=f9e588]: YouTube
+                    - generic [ref=f9e589]: paid_video
+                  - cell [ref=f9e590]:
+                    - link "https://www.iucedu.com/ " [ref=f9e591] [cursor=pointer]:
+                      - /url: https://www.iucedu.com/
+                      - text: https://www.iucedu.com/
+                      - generic [ref=f9e592]: 
+                  - cell "2026-09-10 21:35:55 2026-09-15 15:21:40" [ref=f9e593]:
+                    - text: 2026-09-10 21:35:55
+                    - generic [ref=f9e594]: 2026-09-15 15:21:40
+                  - cell "440" [ref=f9e595]
+                  - cell "483" [ref=f9e596]
+                  - cell "7" [ref=f9e597]
+                  - cell [ref=f9e598]:
+                    - spinbutton [ref=f9e599]: "0"
+                  - cell [ref=f9e600]:
+                    - textbox "Campaign note" [ref=f9e601]
+                  - cell [ref=f9e602]:
+                    - button "Save" [ref=f9e603] [cursor=pointer]
+                - row [ref=f9e604]:
+                  - cell "Campaign ID 24250180730 ID 24250180730" [ref=f9e605]:
+                    - text: Campaign ID 24250180730
+                    - generic [ref=f9e606]: ID 24250180730
+                  - cell "Not tagged" [ref=f9e607]
+                  - cell "Google cpc" [ref=f9e608]:
+                    - generic [ref=f9e609]: Google
+                    - generic [ref=f9e610]: cpc
+                  - cell [ref=f9e611]:
+                    - link "https://www.iucedu.com/ " [ref=f9e612] [cursor=pointer]:
+                      - /url: https://www.iucedu.com/
+                      - text: https://www.iucedu.com/
+                      - generic [ref=f9e613]: 
+                  - cell "2026-09-15 09:57:10 2026-09-21 21:15:10" [ref=f9e614]:
+                    - text: 2026-09-15 09:57:10
+                    - generic [ref=f9e615]: 2026-09-21 21:15:10
+                  - cell "340" [ref=f9e616]
+                  - cell "375" [ref=f9e617]
+                  - cell "10" [ref=f9e618]
+                  - cell [ref=f9e619]:
+                    - spinbutton [ref=f9e620]: "0"
+                  - cell [ref=f9e621]:
+                    - textbox "Campaign note" [ref=f9e622]
+                  - cell [ref=f9e623]:
+                    - button "Save" [ref=f9e624] [cursor=pointer]
+                - row [ref=f9e625]:
+                  - cell "Campaign ID 24230519751 ID 24230519751" [ref=f9e626]:
+                    - text: Campaign ID 24230519751
+                    - generic [ref=f9e627]: ID 24230519751
+                  - cell "Not tagged" [ref=f9e628]
+                  - cell "Google cpc" [ref=f9e629]:
+                    - generic [ref=f9e630]: Google
+                    - generic [ref=f9e631]: cpc
+                  - cell [ref=f9e632]:
+                    - link "https://www.iucedu.com/ " [ref=f9e633] [cursor=pointer]:
+                      - /url: https://www.iucedu.com/
+                      - text: https://www.iucedu.com/
+                      - generic [ref=f9e634]: 
+                  - cell "2026-09-10 21:42:15 2026-09-15 16:41:44" [ref=f9e635]:
+                    - text: 2026-09-10 21:42:15
+                    - generic [ref=f9e636]: 2026-09-15 16:41:44
+                  - cell "87" [ref=f9e637]
+                  - cell "90" [ref=f9e638]
+                  - cell "2" [ref=f9e639]
+                  - cell [ref=f9e640]:
+                    - spinbutton [ref=f9e641]: "0"
+                  - cell [ref=f9e642]:
+                    - textbox "Campaign note" [ref=f9e643]
+                  - cell [ref=f9e644]:
+                    - button "Save" [ref=f9e645] [cursor=pointer]
+                - row [ref=f9e646]:
+                  - cell "Campaign ID 24228045803 ID 24228045803" [ref=f9e647]:
+                    - text: Campaign ID 24228045803
+                    - generic [ref=f9e648]: ID 24228045803
+                  - cell "Not tagged" [ref=f9e649]
+                  - cell "Google cpc" [ref=f9e650]:
+                    - generic [ref=f9e651]: Google
+                    - generic [ref=f9e652]: cpc
+                  - cell [ref=f9e653]:
+                    - link "https://www.iucedu.com/ " [ref=f9e654] [cursor=pointer]:
+                      - /url: https://www.iucedu.com/
+                      - text: https://www.iucedu.com/
+                      - generic [ref=f9e655]: 
+                  - cell "2026-09-11 18:21:44 2026-09-15 12:52:34" [ref=f9e656]:
+                    - text: 2026-09-11 18:21:44
+                    - generic [ref=f9e657]: 2026-09-15 12:52:34
+                  - cell "30" [ref=f9e658]
+                  - cell "32" [ref=f9e659]
+                  - cell "10" [ref=f9e660]
+                  - cell [ref=f9e661]:
+                    - spinbutton [ref=f9e662]: "0"
+                  - cell [ref=f9e663]:
+                    - textbox "Campaign note" [ref=f9e664]
+                  - cell [ref=f9e665]:
+                    - button "Save" [ref=f9e666] [cursor=pointer]
+                - row [ref=f9e667]:
+                  - cell "Campaign ID 24148510965 ID 24148510965" [ref=f9e668]:
+                    - text: Campaign ID 24148510965
+                    - generic [ref=f9e669]: ID 24148510965
+                  - cell "Not tagged" [ref=f9e670]
+                  - cell "Google cpc" [ref=f9e671]:
+                    - generic [ref=f9e672]: Google
+                    - generic [ref=f9e673]: cpc
+                  - cell [ref=f9e674]:
+                    - link "https://www.iucedu.com/ " [ref=f9e675] [cursor=pointer]:
+                      - /url: https://www.iucedu.com/
+                      - text: https://www.iucedu.com/
+                      - generic [ref=f9e676]: 
+                  - cell "2026-08-25 01:02:45 2026-09-13 17:02:16" [ref=f9e677]:
+                    - text: 2026-08-25 01:02:45
+                    - generic [ref=f9e678]: 2026-09-13 17:02:16
+                  - cell "19" [ref=f9e679]
+                  - cell "19" [ref=f9e680]
+                  - cell "0" [ref=f9e681]
+                  - cell [ref=f9e682]:
+                    - spinbutton [ref=f9e683]: "0"
+                  - cell [ref=f9e684]:
+                    - textbox "Campaign note" [ref=f9e685]
+                  - cell [ref=f9e686]:
+                    - button "Save" [ref=f9e687] [cursor=pointer]
+                - row [ref=f9e688]:
+                  - cell "Campaign ID 24202657386 ID 24202657386" [ref=f9e689]:
+                    - text: Campaign ID 24202657386
+                    - generic [ref=f9e690]: ID 24202657386
+                  - cell "Not tagged" [ref=f9e691]
+                  - cell "YouTube paid_video" [ref=f9e692]:
+                    - generic [ref=f9e693]: YouTube
+                    - generic [ref=f9e694]: paid_video
+                  - cell [ref=f9e695]:
+                    - link "https://www.iucedu.com/ " [ref=f9e696] [cursor=pointer]:
+                      - /url: https://www.iucedu.com/
+                      - text: https://www.iucedu.com/
+                      - generic [ref=f9e697]: 
+                  - cell "2026-09-03 03:13:00 2026-09-08 16:59:53" [ref=f9e698]:
+                    - text: 2026-09-03 03:13:00
+                    - generic [ref=f9e699]: 2026-09-08 16:59:53
+                  - cell "16" [ref=f9e700]
+                  - cell "15" [ref=f9e701]
+                  - cell "1" [ref=f9e702]
+                  - cell [ref=f9e703]:
+                    - spinbutton [ref=f9e704]: "0"
+                  - cell [ref=f9e705]:
+                    - textbox "Campaign note" [ref=f9e706]
+                  - cell [ref=f9e707]:
+                    - button "Save" [ref=f9e708] [cursor=pointer]
+                - row [ref=f9e709]:
+                  - cell "Campaign ID 24202657386 ID 24202657386" [ref=f9e710]:
+                    - text: Campaign ID 24202657386
+                    - generic [ref=f9e711]: ID 24202657386
+                  - cell "Not tagged" [ref=f9e712]
+                  - cell "Direct none" [ref=f9e713]:
+                    - generic [ref=f9e714]: Direct
+                    - generic [ref=f9e715]: none
+                  - cell [ref=f9e716]:
+                    - link "https://www.iucedu.com/ " [ref=f9e717] [cursor=pointer]:
+                      - /url: https://www.iucedu.com/
+                      - text: https://www.iucedu.com/
+                      - generic [ref=f9e718]: 
+                  - cell "2026-09-02 16:19:20 2026-09-08 10:28:10" [ref=f9e719]:
+                    - text: 2026-09-02 16:19:20
+                    - generic [ref=f9e720]: 2026-09-08 10:28:10
+                  - cell "9" [ref=f9e721]
+                  - cell "11" [ref=f9e722]
+                  - cell "0" [ref=f9e723]
+                  - cell [ref=f9e724]:
+                    - spinbutton [ref=f9e725]: "0"
+                  - cell [ref=f9e726]:
+                    - textbox "Campaign note" [ref=f9e727]
+                  - cell [ref=f9e728]:
+                    - button "Save" [ref=f9e729] [cursor=pointer]
+                - row [ref=f9e730]:
+                  - cell "Campaign ID 24202657386 ID 24202657386" [ref=f9e731]:
+                    - text: Campaign ID 24202657386
+                    - generic [ref=f9e732]: ID 24202657386
+                  - cell "Not tagged" [ref=f9e733]
+                  - cell "YouTube paid_video" [ref=f9e734]:
+                    - generic [ref=f9e735]: YouTube
+                    - generic [ref=f9e736]: paid_video
+                  - cell [ref=f9e737]:
+                    - link "https://www.iucedu.com/ " [ref=f9e738] [cursor=pointer]:
+                      - /url: https://www.iucedu.com/
+                      - text: https://www.iucedu.com/
+                      - generic [ref=f9e739]: 
+                  - cell "2026-09-08 20:31:21 2026-09-09 18:23:33" [ref=f9e740]:
+                    - text: 2026-09-08 20:31:21
+                    - generic [ref=f9e741]: 2026-09-09 18:23:33
+                  - cell "5" [ref=f9e742]
+                  - cell "5" [ref=f9e743]
+                  - cell "1" [ref=f9e744]
+                  - cell [ref=f9e745]:
+                    - spinbutton [ref=f9e746]: "0"
+                  - cell [ref=f9e747]:
+                    - textbox "Campaign note" [ref=f9e748]
+                  - cell [ref=f9e749]:
+                    - button "Save" [ref=f9e750] [cursor=pointer]
+                - row [ref=f9e751]:
+                  - cell "Campaign ID 24228045803 ID 24228045803" [ref=f9e752]:
+                    - text: Campaign ID 24228045803
+                    - generic [ref=f9e753]: ID 24228045803
+                  - cell "Not tagged" [ref=f9e754]
+                  - cell "YouTube paid_video" [ref=f9e755]:
+                    - generic [ref=f9e756]: YouTube
+                    - generic [ref=f9e757]: paid_video
+                  - cell [ref=f9e758]:
+                    - link "https://www.iucedu.com/ " [ref=f9e759] [cursor=pointer]:
+                      - /url: https://www.iucedu.com/
+                      - text: https://www.iucedu.com/
+                      - generic [ref=f9e760]: 
+                  - cell "2026-09-12 18:21:59 2026-09-13 09:29:59" [ref=f9e761]:
+                    - text: 2026-09-12 18:21:59
+                    - generic [ref=f9e762]: 2026-09-13 09:29:59
+                  - cell "5" [ref=f9e763]
+                  - cell "5" [ref=f9e764]
+                  - cell "0" [ref=f9e765]
+                  - cell [ref=f9e766]:
+                    - spinbutton [ref=f9e767]: "0"
+                  - cell [ref=f9e768]:
+                    - textbox "Campaign note" [ref=f9e769]
+                  - cell [ref=f9e770]:
+                    - button "Save" [ref=f9e771] [cursor=pointer]
+                - row [ref=f9e772]:
+                  - cell "Campaign ID 24148510965 ID 24148510965" [ref=f9e773]:
+                    - text: Campaign ID 24148510965
+                    - generic [ref=f9e774]: ID 24148510965
+                  - cell "Not tagged" [ref=f9e775]
+                  - cell "YouTube paid_video" [ref=f9e776]:
+                    - generic [ref=f9e777]: YouTube
+                    - generic [ref=f9e778]: paid_video
+                  - cell [ref=f9e779]:
+                    - link "https://www.iucedu.com/ " [ref=f9e780] [cursor=pointer]:
+                      - /url: https://www.iucedu.com/
+                      - text: https://www.iucedu.com/
+                      - generic [ref=f9e781]: 
+                  - cell "2026-08-25 07:35:17 2026-08-25 12:14:50" [ref=f9e782]:
+                    - text: 2026-08-25 07:35:17
+                    - generic [ref=f9e783]: 2026-08-25 12:14:50
+                  - cell "3" [ref=f9e784]
+                  - cell "3" [ref=f9e785]
+                  - cell "0" [ref=f9e786]
+                  - cell [ref=f9e787]:
+                    - spinbutton [ref=f9e788]: "0"
+                  - cell [ref=f9e789]:
+                    - textbox "Campaign note" [ref=f9e790]
+                  - cell [ref=f9e791]:
+                    - button "Save" [ref=f9e792] [cursor=pointer]
+                - row [ref=f9e793]:
+                  - cell "Campaign ID 24250180730 ID 24250180730" [ref=f9e794]:
+                    - text: Campaign ID 24250180730
+                    - generic [ref=f9e795]: ID 24250180730
+                  - cell "Not tagged" [ref=f9e796]
+                  - cell "YouTube paid_video" [ref=f9e797]:
+                    - generic [ref=f9e798]: YouTube
+                    - generic [ref=f9e799]: paid_video
+                  - cell [ref=f9e800]:
+                    - link "https://www.iucedu.com/ " [ref=f9e801] [cursor=pointer]:
+                      - /url: https://www.iucedu.com/
+                      - text: https://www.iucedu.com/
+                      - generic [ref=f9e802]: 
+                  - cell "2026-09-18 10:30:05 2026-09-18 22:47:49" [ref=f9e803]:
+                    - text: 2026-09-18 10:30:05
+                    - generic [ref=f9e804]: 2026-09-18 22:47:49
+                  - cell "2" [ref=f9e805]
+                  - cell "3" [ref=f9e806]
+                  - cell "0" [ref=f9e807]
+                  - cell [ref=f9e808]:
+                    - spinbutton [ref=f9e809]: "0"
+                  - cell [ref=f9e810]:
+                    - textbox "Campaign note" [ref=f9e811]
+                  - cell [ref=f9e812]:
+                    - button "Save" [ref=f9e813] [cursor=pointer]
+                - row [ref=f9e814]:
+                  - cell "Campaign ID 54823799896 ID 54823799896" [ref=f9e815]:
+                    - text: Campaign ID 54823799896
+                    - generic [ref=f9e816]: ID 54823799896
+                  - cell "Not tagged" [ref=f9e817]
+                  - cell "Google cpc" [ref=f9e818]:
+                    - generic [ref=f9e819]: Google
+                    - generic [ref=f9e820]: cpc
+                  - cell [ref=f9e821]:
+                    - link "https://www.iucedu.com/ " [ref=f9e822] [cursor=pointer]:
+                      - /url: https://www.iucedu.com/
+                      - text: https://www.iucedu.com/
+                      - generic [ref=f9e823]: 
+                  - cell "2026-09-02 14:05:26 2026-09-02 14:05:26" [ref=f9e824]:
+                    - text: 2026-09-02 14:05:26
+                    - generic [ref=f9e825]: 2026-09-02 14:05:26
+                  - cell "1" [ref=f9e826]
+                  - cell "1" [ref=f9e827]
+                  - cell "0" [ref=f9e828]
+                  - cell [ref=f9e829]:
+                    - spinbutton [ref=f9e830]: "0"
+                  - cell [ref=f9e831]:
+                    - textbox "Campaign note" [ref=f9e832]
+                  - cell [ref=f9e833]:
+                    - button "Save" [ref=f9e834] [cursor=pointer]
+                - row [ref=f9e835]:
+                  - cell "iuc_java_campaign" [ref=f9e836]
+                  - cell "Not tagged" [ref=f9e837]
+                  - cell "Google search" [ref=f9e838]:
+                    - generic [ref=f9e839]: Google
+                    - generic [ref=f9e840]: search
+                  - cell [ref=f9e841]:
+                    - link "https://www.iucedu.com/course/java " [ref=f9e842] [cursor=pointer]:
+                      - /url: https://www.iucedu.com/course/java
+                      - text: https://www.iucedu.com/course/java
+                      - generic [ref=f9e843]: 
+                  - cell "2026-09-24 16:12:25 2026-09-24 16:12:46" [ref=f9e844]:
+                    - text: 2026-09-24 16:12:25
+                    - generic [ref=f9e845]: 2026-09-24 16:12:46
+                  - cell "1" [ref=f9e846]
+                  - cell "1" [ref=f9e847]
+                  - cell "0" [ref=f9e848]
+                  - cell [ref=f9e849]:
+                    - spinbutton [ref=f9e850]: "0"
+                  - cell [ref=f9e851]:
+                    - textbox "Campaign note" [ref=f9e852]
+                  - cell [ref=f9e853]:
+                    - button "Save" [ref=f9e854] [cursor=pointer]
+                - row [ref=f9e855]:
+                  - cell "codex_live_fix" [ref=f9e856]
+                  - cell "playwright_check" [ref=f9e857]
+                  - cell "YouTube paid_video" [ref=f9e858]:
+                    - generic [ref=f9e859]: YouTube
+                    - generic [ref=f9e860]: paid_video
+                  - cell [ref=f9e861]:
+                    - link "https://www.iucedu.com/ " [ref=f9e862] [cursor=pointer]:
+                      - /url: https://www.iucedu.com/
+                      - text: https://www.iucedu.com/
+                      - generic [ref=f9e863]: 
+                  - cell "2026-09-24 16:12:44 2026-09-24 16:15:46" [ref=f9e864]:
+                    - text: 2026-09-24 16:12:44
+                    - generic [ref=f9e865]: 2026-09-24 16:15:46
+                  - cell "1" [ref=f9e866]
+                  - cell "2" [ref=f9e867]
+                  - cell "0" [ref=f9e868]
+                  - cell [ref=f9e869]:
+                    - spinbutton [ref=f9e870]: "0"
+                  - cell [ref=f9e871]:
+                    - textbox "Campaign note" [ref=f9e872]
+                  - cell [ref=f9e873]:
+                    - button "Save" [ref=f9e874] [cursor=pointer]
+                - row [ref=f9e875]:
+                  - cell "embedded_course_sep2026" [ref=f9e876]
+                  - cell "Not tagged" [ref=f9e877]
+                  - cell "YouTube paid_video" [ref=f9e878]:
+                    - generic [ref=f9e879]: YouTube
+                    - generic [ref=f9e880]: paid_video
+                  - cell [ref=f9e881]:
+                    - link "https://www.iucedu.com/ " [ref=f9e882] [cursor=pointer]:
+                      - /url: https://www.iucedu.com/
+                      - text: https://www.iucedu.com/
+                      - generic [ref=f9e883]: 
+                  - cell "2026-09-08 08:12:42 2026-09-08 08:33:04" [ref=f9e884]:
+                    - text: 2026-09-08 08:12:42
+                    - generic [ref=f9e885]: 2026-09-08 08:33:04
+                  - cell "1" [ref=f9e886]
+                  - cell "1" [ref=f9e887]
+                  - cell "0" [ref=f9e888]
+                  - cell [ref=f9e889]:
+                    - spinbutton [ref=f9e890]: "0"
+                  - cell [ref=f9e891]:
+                    - textbox "Campaign note" [ref=f9e892]
+                  - cell [ref=f9e893]:
+                    - button "Save" [ref=f9e894] [cursor=pointer]
+                - row [ref=f9e895]:
+                  - cell "Campaign ID 24202657386 ID 24202657386" [ref=f9e896]:
+                    - text: Campaign ID 24202657386
+                    - generic [ref=f9e897]: ID 24202657386
+                  - cell "Not tagged" [ref=f9e898]
+                  - cell "Google cpc" [ref=f9e899]:
+                    - generic [ref=f9e900]: Google
+                    - generic [ref=f9e901]: cpc
+                  - cell [ref=f9e902]:
+                    - link "https://www.iucedu.com/ " [ref=f9e903] [cursor=pointer]:
+                      - /url: https://www.iucedu.com/
+                      - text: https://www.iucedu.com/
+                      - generic [ref=f9e904]: 
+                  - cell "2026-09-08 21:53:38 2026-09-08 22:03:17" [ref=f9e905]:
+                    - text: 2026-09-08 21:53:38
+                    - generic [ref=f9e906]: 2026-09-08 22:03:17
+                  - cell "1" [ref=f9e907]
+                  - cell "1" [ref=f9e908]
+                  - cell "0" [ref=f9e909]
+                  - cell [ref=f9e910]:
+                    - spinbutton [ref=f9e911]: "0"
+                  - cell [ref=f9e912]:
+                    - textbox "Campaign note" [ref=f9e913]
+                  - cell [ref=f9e914]:
+                    - button "Save" [ref=f9e915] [cursor=pointer]
+                - row [ref=f9e916]:
+                  - cell "Campaign ID 24202657386 ID 24202657386" [ref=f9e917]:
+                    - text: Campaign ID 24202657386
+                    - generic [ref=f9e918]: ID 24202657386
+                  - cell "Not tagged" [ref=f9e919]
+                  - cell "Google cpc" [ref=f9e920]:
+                    - generic [ref=f9e921]: Google
+                    - generic [ref=f9e922]: cpc
+                  - cell [ref=f9e923]:
+                    - link "https://www.iucedu.com/ " [ref=f9e924] [cursor=pointer]:
+                      - /url: https://www.iucedu.com/
+                      - text: https://www.iucedu.com/
+                      - generic [ref=f9e925]: 
+                  - cell "2026-09-09 19:51:30 2026-09-09 20:50:50" [ref=f9e926]:
+                    - text: 2026-09-09 19:51:30
+                    - generic [ref=f9e927]: 2026-09-09 20:50:50
+                  - cell "1" [ref=f9e928]
+                  - cell "1" [ref=f9e929]
+                  - cell "0" [ref=f9e930]
+                  - cell [ref=f9e931]:
+                    - spinbutton [ref=f9e932]: "0"
+                  - cell [ref=f9e933]:
+                    - textbox "Campaign note" [ref=f9e934]
+                  - cell [ref=f9e935]:
+                    - button "Save" [ref=f9e936] [cursor=pointer]
+                - row [ref=f9e937]:
+                  - cell "Campaign ID 24230519751 ID 24230519751" [ref=f9e938]:
+                    - text: Campaign ID 24230519751
+                    - generic [ref=f9e939]: ID 24230519751
+                  - cell "Not tagged" [ref=f9e940]
+                  - cell "YouTube paid_video" [ref=f9e941]:
+                    - generic [ref=f9e942]: YouTube
+                    - generic [ref=f9e943]: paid_video
+                  - cell [ref=f9e944]:
+                    - link "https://www.iucedu.com/ " [ref=f9e945] [cursor=pointer]:
+                      - /url: https://www.iucedu.com/
+                      - text: https://www.iucedu.com/
+                      - generic [ref=f9e946]: 
+                  - cell "2026-09-15 04:01:42 2026-09-15 04:01:49" [ref=f9e947]:
+                    - text: 2026-09-15 04:01:42
+                    - generic [ref=f9e948]: 2026-09-15 04:01:49
+                  - cell "1" [ref=f9e949]
+                  - cell "1" [ref=f9e950]
+                  - cell "0" [ref=f9e951]
+                  - cell [ref=f9e952]:
+                    - spinbutton [ref=f9e953]: "0"
+                  - cell [ref=f9e954]:
+                    - textbox "Campaign note" [ref=f9e955]
+                  - cell [ref=f9e956]:
+                    - button "Save" [ref=f9e957] [cursor=pointer]
+                - row [ref=f9e958]:
+                  - cell "Campaign ID 24230519751 ID 24230519751" [ref=f9e959]:
+                    - text: Campaign ID 24230519751
+                    - generic [ref=f9e960]: ID 24230519751
+                  - cell "Not tagged" [ref=f9e961]
+                  - cell "Google cpc" [ref=f9e962]:
+                    - generic [ref=f9e963]: Google
+                    - generic [ref=f9e964]: cpc
+                  - cell [ref=f9e965]:
+                    - link "https://www.iucedu.com/ " [ref=f9e966] [cursor=pointer]:
+                      - /url: https://www.iucedu.com/
+                      - text: https://www.iucedu.com/
+                      - generic [ref=f9e967]: 
+                  - cell "2026-09-15 04:27:31 2026-09-15 04:27:31" [ref=f9e968]:
+                    - text: 2026-09-15 04:27:31
+                    - generic [ref=f9e969]: 2026-09-15 04:27:31
+                  - cell "1" [ref=f9e970]
+                  - cell "1" [ref=f9e971]
+                  - cell "0" [ref=f9e972]
+                  - cell [ref=f9e973]:
+                    - spinbutton [ref=f9e974]: "0"
+                  - cell [ref=f9e975]:
+                    - textbox "Campaign note" [ref=f9e976]
+                  - cell [ref=f9e977]:
+                    - button "Save" [ref=f9e978] [cursor=pointer]
+        - generic [ref=f9e979]:
+          - generic [ref=f9e980]:
+            - generic [ref=f9e981]: 
+            - text: Social Media Analytics
+            - generic [ref=f9e982]: Facebook · Instagram · YouTube · LinkedIn · WhatsApp · Email · QR Code
+          - generic [ref=f9e983]:
+            - generic [ref=f9e984]:
+              - generic [ref=f9e985]: 
+              - generic [ref=f9e987]:
+                - generic [ref=f9e988]: Facebook
+                - generic [ref=f9e989]:
+                  - generic [ref=f9e990]: 11 sessions
+                  - generic [ref=f9e991]: 11 views
+                  - generic [ref=f9e992]: 0 conv.
+            - generic [ref=f9e993]:
+              - generic [ref=f9e994]: 
+              - generic [ref=f9e996]:
+                - generic [ref=f9e997]: YouTube Ads
+                - generic [ref=f9e998]:
+                  - generic [ref=f9e999]: 5,319 sessions
+                  - generic [ref=f9e1000]: 6,031 views
+                  - generic [ref=f9e1001]: 116 conv.
+            - generic [ref=f9e1002]:
+              - generic [ref=f9e1003]: 
+              - generic [ref=f9e1005]:
+                - generic [ref=f9e1006]: YouTube
+                - generic [ref=f9e1007]:
+                  - generic [ref=f9e1008]: 4 sessions
+                  - generic [ref=f9e1009]: 4 views
+                  - generic [ref=f9e1010]: 0 conv.
+      - text:                        

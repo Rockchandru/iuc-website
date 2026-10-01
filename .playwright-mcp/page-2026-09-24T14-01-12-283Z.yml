@@ -1,0 +1,439 @@
+- generic [active] [ref=f3e1]:
+  - banner [ref=f3e2]:
+    - generic [ref=f3e3]:
+      - link "IUC Edu - Home" [ref=f3e4] [cursor=pointer]:
+        - /url: /iuc-website/
+      - navigation "Main navigation" [ref=f3e6]:
+        - link "Home" [ref=f3e7] [cursor=pointer]:
+          - /url: /iuc-website/#home
+        - link "About" [ref=f3e8] [cursor=pointer]:
+          - /url: /iuc-website/#about
+        - button "Courses" [ref=f3e10] [cursor=pointer]:
+          - text: Courses
+          - generic [aria-hidden] [ref=f3e11]: 
+        - link "Placements" [ref=f3e12] [cursor=pointer]:
+          - /url: /iuc-website/#placements
+        - link "Testimonials" [ref=f3e13] [cursor=pointer]:
+          - /url: /iuc-website/#testimonials
+        - link "Blog" [ref=f3e14] [cursor=pointer]:
+          - /url: /iuc-website/#blog
+        - link "Contact" [ref=f3e15] [cursor=pointer]:
+          - /url: /iuc-website/#contact
+      - generic [ref=f3e16]:
+        - link " Admin" [ref=f3e17] [cursor=pointer]:
+          - /url: /iuc-website/admin/
+          - generic [ref=f3e18]: 
+          - generic [ref=f3e19]: Admin
+        - link " +91 7418048039" [ref=f3e20] [cursor=pointer]:
+          - /url: tel:+917418048039
+          - generic [ref=f3e21]: 
+          - text: +91 7418048039
+        - link "Enquire Now " [ref=f3e22] [cursor=pointer]:
+          - /url: /iuc-website/#contact
+          - text: Enquire Now
+          - generic [ref=f3e23]: 
+  - main [ref=f3e24]:
+    - generic [ref=f3e26]:
+      - navigation "Breadcrumb" [ref=f3e27]:
+        - link "Home" [ref=f3e28] [cursor=pointer]:
+          - /url: /iuc-website/
+        - generic [ref=f3e29]: /
+        - link "Courses" [ref=f3e30] [cursor=pointer]:
+          - /url: /iuc-website/#courses
+        - generic [ref=f3e31]: /
+        - generic [ref=f3e32]: Cloud Computing (AWS & Azure)
+      - generic [ref=f3e33]:
+        - generic [ref=f3e34]:
+          - generic [ref=f3e35]: cloud
+          - heading "Cloud Computing Course in Chennai" [level=1] [ref=f3e36]
+          - paragraph [ref=f3e37]: Architect, deploy, and manage enterprise cloud infrastructure on AWS and Azure. Prepare for global certifications.
+          - generic "Related training guides" [ref=f3e38]:
+            - link "Computer training courses in Chennai" [ref=f3e39] [cursor=pointer]:
+              - /url: /iuc-website/computer-training-in-chennai
+            - link "Online IT course options" [ref=f3e40] [cursor=pointer]:
+              - /url: /iuc-website/online-it-courses
+          - generic [ref=f3e41]:
+            - generic [ref=f3e42]:
+              - generic [ref=f3e43]:
+                - generic [ref=f3e44]: 
+                - text: 3 Months
+              - generic [ref=f3e45]: Duration
+            - generic [ref=f3e46]:
+              - generic [ref=f3e47]:
+                - generic [ref=f3e48]: 
+                - text: Online / Offline
+              - generic [ref=f3e49]: Training Mode
+            - generic [ref=f3e50]:
+              - generic [ref=f3e51]:
+                - generic [ref=f3e52]: 
+                - text: Intermediate
+              - generic [ref=f3e53]: Level
+            - generic [ref=f3e54]:
+              - generic [ref=f3e55]:
+                - generic [ref=f3e56]: 
+                - text: "4.8"
+              - generic [ref=f3e57]: Rating
+          - generic [ref=f3e58]:
+            - link "Apply Now " [ref=f3e59] [cursor=pointer]:
+              - /url: /iuc-website/#contact
+              - text: Apply Now
+              - generic [ref=f3e60]: 
+            - link " Download Syllabus (PDF)" [ref=f3e61] [cursor=pointer]:
+              - /url: /iuc-website/download-syllabus.php?course=cloud-computing
+              - generic [ref=f3e62]: 
+              - text: Download Syllabus (PDF)
+        - img "Cloud Computing Course in Chennai at IUC Edu" [ref=f3e64]
+    - region [ref=f3e65]:
+      - generic [ref=f3e67]:
+        - generic [ref=f3e68]:
+          - heading "Course Overview" [level=2] [ref=f3e69]
+          - paragraph [ref=f3e70]: Architect, deploy, and manage enterprise cloud infrastructure on AWS and Azure. Prepare for global certifications.
+          - heading "Eligibility" [level=3] [ref=f3e71]
+          - paragraph [ref=f3e72]: Basic IT/infrastructure knowledge recommended.
+          - heading "Course Highlights" [level=3] [ref=f3e73]
+          - generic [ref=f3e74]:
+            - generic [ref=f3e75]:
+              - generic [ref=f3e76]: 
+              - text: Dual cloud
+            - generic [ref=f3e77]:
+              - generic [ref=f3e78]: 
+              - text: Certification prep
+            - generic [ref=f3e79]:
+              - generic [ref=f3e80]: 
+              - text: Hands-on labs
+            - generic [ref=f3e81]:
+              - generic [ref=f3e82]: 
+              - text: Real projects
+        - generic [ref=f3e84]:
+          - generic [ref=f3e85]:
+            - generic [ref=f3e86]: ₹46,500
+            - generic [ref=f3e87]: or ₹2,500/mo EMI
+          - paragraph [ref=f3e88]: Zero-cost EMI available · Scholarship up to 50%
+          - generic [ref=f3e89]:
+            - generic [ref=f3e90]:
+              - generic [ref=f3e91]: 
+              - text: Industry-recognized certification
+            - generic [ref=f3e92]:
+              - generic [ref=f3e93]: 
+              - text: 5+ real-world projects
+            - generic [ref=f3e94]:
+              - generic [ref=f3e95]: 
+              - text: Lifetime access to materials
+            - generic [ref=f3e96]:
+              - generic [ref=f3e97]: 
+              - text: 1-on-1 mentorship
+            - generic [ref=f3e98]:
+              - generic [ref=f3e99]: 
+              - text: 100% placement assistance
+            - generic [ref=f3e100]:
+              - generic [ref=f3e101]: 
+              - text: Flexible batch timings
+          - link "Enquire Now " [ref=f3e102] [cursor=pointer]:
+            - /url: /iuc-website/#contact
+            - text: Enquire Now
+            - generic [ref=f3e103]: 
+          - link " Chat on WhatsApp" [ref=f3e104] [cursor=pointer]:
+            - /url: https://wa.me/917418048039?text=Hi!%20I'm%20interested%20in%20Cloud+Computing+%28AWS+%26+Azure%29%20at%20IUC%20Edu.
+            - generic [ref=f3e105]: 
+            - text: Chat on WhatsApp
+          - generic [ref=f3e106]:
+            - generic [ref=f3e107]: 
+            - text: 760+ students enrolled
+    - region [ref=f3e108]:
+      - generic [ref=f3e109]:
+        - generic [ref=f3e110]:
+          - heading "Technologies & Tools" [level=2] [ref=f3e111]
+          - paragraph [ref=f3e112]: Master these industry-standard technologies and tools in this program.
+        - generic [ref=f3e113]:
+          - generic [ref=f3e114]: AWS EC2
+          - generic [ref=f3e115]: AWS S3
+          - generic [ref=f3e116]: Lambda
+          - generic [ref=f3e117]: VPC
+          - generic [ref=f3e118]: Azure VMs
+          - generic [ref=f3e119]: Azure Functions
+          - generic [ref=f3e120]: Terraform
+          - generic [ref=f3e121]: AWS Console
+          - generic [ref=f3e122]: Azure Portal
+          - generic [ref=f3e123]: CLI
+          - generic [ref=f3e124]: CloudFormation
+          - generic [ref=f3e125]: Docker
+    - region [ref=f3e126]:
+      - generic [ref=f3e127]:
+        - generic [ref=f3e128]:
+          - generic [ref=f3e129]: Curriculum
+          - heading "Module-Wise Curriculum" [level=2] [ref=f3e130]
+          - paragraph [ref=f3e131]: A structured, industry-reviewed curriculum designed to take you from beginner to job-ready professional.
+        - generic [ref=f3e132]:
+          - generic [ref=f3e133]:
+            - generic [ref=f3e134] [cursor=pointer]:
+              - generic [ref=f3e135]:
+                - generic [ref=f3e136]: "01"
+                - generic [ref=f3e137]: Cloud Fundamentals
+              - generic [ref=f3e138]: 
+            - generic [ref=f3e140]:
+              - paragraph [ref=f3e141]: Cloud models, shared responsibility, pricing, global infrastructure
+              - generic [ref=f3e142]:
+                - generic [ref=f3e143]: Cloud models
+                - generic [ref=f3e144]: shared responsibility
+                - generic [ref=f3e145]: pricing
+                - generic [ref=f3e146]: global infrastructure
+          - generic [ref=f3e148] [cursor=pointer]:
+            - generic [ref=f3e149]:
+              - generic [ref=f3e150]: "02"
+              - generic [ref=f3e151]: AWS Compute
+            - generic [ref=f3e152]: 
+          - generic [ref=f3e155] [cursor=pointer]:
+            - generic [ref=f3e156]:
+              - generic [ref=f3e157]: "03"
+              - generic [ref=f3e158]: AWS Storage & Database
+            - generic [ref=f3e159]: 
+          - generic [ref=f3e162] [cursor=pointer]:
+            - generic [ref=f3e163]:
+              - generic [ref=f3e164]: "04"
+              - generic [ref=f3e165]: AWS Networking
+            - generic [ref=f3e166]: 
+          - generic [ref=f3e169] [cursor=pointer]:
+            - generic [ref=f3e170]:
+              - generic [ref=f3e171]: "05"
+              - generic [ref=f3e172]: AWS Security & IAM
+            - generic [ref=f3e173]: 
+          - generic [ref=f3e176] [cursor=pointer]:
+            - generic [ref=f3e177]:
+              - generic [ref=f3e178]: "06"
+              - generic [ref=f3e179]: Azure Fundamentals
+            - generic [ref=f3e180]: 
+          - generic [ref=f3e183] [cursor=pointer]:
+            - generic [ref=f3e184]:
+              - generic [ref=f3e185]: "07"
+              - generic [ref=f3e186]: Azure Networking & Security
+            - generic [ref=f3e187]: 
+          - generic [ref=f3e190] [cursor=pointer]:
+            - generic [ref=f3e191]:
+              - generic [ref=f3e192]: "08"
+              - generic [ref=f3e193]: Infrastructure as Code
+            - generic [ref=f3e194]: 
+    - region [ref=f3e196]:
+      - generic [ref=f3e197]:
+        - generic [ref=f3e198]:
+          - generic [ref=f3e199]: Projects
+          - heading "Hands-On Projects" [level=2] [ref=f3e200]
+          - paragraph [ref=f3e201]: Build a professional portfolio with real-world projects that demonstrate your skills.
+        - generic [ref=f3e202]:
+          - generic [ref=f3e203]:
+            - generic [ref=f3e204]: "1"
+            - generic [ref=f3e205]: AWS 3-Tier Architecture
+          - generic [ref=f3e206]:
+            - generic [ref=f3e207]: "2"
+            - generic [ref=f3e208]: Serverless Application on AWS
+          - generic [ref=f3e209]:
+            - generic [ref=f3e210]: "3"
+            - generic [ref=f3e211]: Azure Migration Project
+          - generic [ref=f3e212]:
+            - generic [ref=f3e213]: "4"
+            - generic [ref=f3e214]: Cloud Cost Optimization
+          - generic [ref=f3e215]:
+            - generic [ref=f3e216]: "5"
+            - generic [ref=f3e217]: Disaster Recovery Setup
+    - region [ref=f3e218]:
+      - generic [ref=f3e219]:
+        - generic [ref=f3e220]: 
+        - heading "Get Certified" [level=2] [ref=f3e222]
+        - paragraph [ref=f3e223]: AWS Certified Solutions Architect + Azure AZ-900 Preparation
+        - paragraph [ref=f3e224]: Our certifications are recognized by leading companies and designed to boost your career prospects.
+    - region [ref=f3e225]:
+      - generic [ref=f3e226]:
+        - generic [ref=f3e227]:
+          - generic [ref=f3e228]: Career Opportunities
+          - heading "Your Career Path" [level=2] [ref=f3e229]
+          - paragraph [ref=f3e230]: Roles you can target after completing this program.
+        - generic [ref=f3e231]:
+          - generic [ref=f3e232]:
+            - generic [ref=f3e233]: Cloud Architect
+            - generic [ref=f3e234]: ₹10L to ₹30L PA
+          - generic [ref=f3e235]:
+            - generic [ref=f3e236]: Cloud Engineer
+            - generic [ref=f3e237]: ₹6L to ₹20L PA
+          - generic [ref=f3e238]:
+            - generic [ref=f3e239]: DevOps Engineer
+            - generic [ref=f3e240]: ₹7L to ₹22L PA
+    - region "Enroll CTA" [ref=f3e241]:
+      - generic [ref=f3e242]:
+        - heading "Ready to Start Your Journey?" [level=2] [ref=f3e243]
+        - paragraph [ref=f3e244]: Join 760+ students who have already enrolled in this program.
+        - generic [ref=f3e245]:
+          - link "Apply Now " [ref=f3e246] [cursor=pointer]:
+            - /url: /iuc-website/#contact
+            - text: Apply Now
+            - generic [ref=f3e247]: 
+          - link " Call Us" [ref=f3e248] [cursor=pointer]:
+            - /url: tel:+917418048039
+            - generic [ref=f3e249]: 
+            - text: Call Us
+    - region [ref=f3e250]:
+      - generic [ref=f3e251]:
+        - heading "Related Courses" [level=2] [ref=f3e253]
+        - generic [ref=f3e254]:
+          - article [ref=f3e255]:
+            - img "DevOps & Cloud Engineering" [ref=f3e257]
+            - generic [ref=f3e258]:
+              - heading "DevOps" [level=3] [ref=f3e259]
+              - paragraph [ref=f3e260]: Master CI/CD, Docker, Kubernetes, AWS & infrastructure automation.
+              - generic [ref=f3e261]:
+                - generic [ref=f3e262]:
+                  - generic [ref=f3e263]: ₹40,500
+                  - generic [ref=f3e264]: No-Cost EMI · ₹2,500/mo
+                - link "View DevOps course" [ref=f3e266] [cursor=pointer]:
+                  - /url: /iuc-website/course/devops
+          - article [ref=f3e267]:
+            - img "Cyber Security & Ethical Hacking" [ref=f3e269]
+            - generic [ref=f3e270]:
+              - heading "Cyber Security" [level=3] [ref=f3e271]
+              - paragraph [ref=f3e272]: Master ethical hacking, network security & penetration testing.
+              - generic [ref=f3e273]:
+                - generic [ref=f3e274]:
+                  - generic [ref=f3e275]: ₹45,500
+                  - generic [ref=f3e276]: No-Cost EMI · ₹2,500/mo
+                - link "View Cyber Security course" [ref=f3e278] [cursor=pointer]:
+                  - /url: /iuc-website/course/cyber-security
+          - article [ref=f3e279]:
+            - img "Artificial Intelligence & Machine Learning" [ref=f3e281]
+            - generic [ref=f3e282]:
+              - heading "AI & ML" [level=3] [ref=f3e283]
+              - paragraph [ref=f3e284]: Master AI, ML, Deep Learning & Generative AI with hands-on projects.
+              - generic [ref=f3e285]:
+                - generic [ref=f3e286]:
+                  - generic [ref=f3e287]: ₹55,000
+                  - generic [ref=f3e288]: No-Cost EMI · ₹5,500/mo
+                - link "View AI & ML course" [ref=f3e290] [cursor=pointer]:
+                  - /url: /iuc-website/course/ai-ml
+    - region [ref=f3e291]:
+      - generic [ref=f3e292]:
+        - generic [ref=f3e293]:
+          - generic [ref=f3e294]: FAQ
+          - heading "Frequently Asked Questions" [level=2] [ref=f3e295]
+        - generic [ref=f3e296]:
+          - group [ref=f3e298]:
+            - generic "What will I learn in the Cloud Computing course? " [ref=f3e299] [cursor=pointer]:
+              - text: What will I learn in the Cloud Computing course?
+              - generic [ref=f3e300]: 
+          - group [ref=f3e303]:
+            - generic "Who can join this Cloud Computing training? " [ref=f3e304] [cursor=pointer]:
+              - text: Who can join this Cloud Computing training?
+              - generic [ref=f3e305]: 
+          - group [ref=f3e308]:
+            - generic "Is Cloud Computing training available online and in Chennai? " [ref=f3e309] [cursor=pointer]:
+              - text: Is Cloud Computing training available online and in Chennai?
+              - generic [ref=f3e310]: 
+          - group [ref=f3e313]:
+            - generic "Will I receive a certificate after completing the course? " [ref=f3e314] [cursor=pointer]:
+              - text: Will I receive a certificate after completing the course?
+              - generic [ref=f3e315]: 
+          - group [ref=f3e318]:
+            - generic "How can I check the next batch and course fee? " [ref=f3e319] [cursor=pointer]:
+              - text: How can I check the next batch and course fee?
+              - generic [ref=f3e320]: 
+  - contentinfo [ref=f3e322]:
+    - generic [ref=f3e323]:
+      - generic [ref=f3e324]:
+        - generic [ref=f3e325]:
+          - img "IUC Edu computer education institute" [ref=f3e326]
+          - paragraph [ref=f3e327]: Premier IT training institute in Chennai delivering world-class technology education with 98% placement support. 25,000+ careers launched and counting.
+          - generic [ref=f3e328]:
+            - link "Facebook" [ref=f3e329] [cursor=pointer]:
+              - /url: https://www.facebook.com/IUCComputerEducation
+              - generic [ref=f3e330]: 
+            - link "Instagram" [ref=f3e331] [cursor=pointer]:
+              - /url: https://www.instagram.com/iuc_computers/
+              - generic [ref=f3e332]: 
+            - link "LinkedIn" [ref=f3e333] [cursor=pointer]:
+              - /url: https://www.linkedin.com/in/r-senthil-kumar-522213b9/
+              - generic [ref=f3e334]: 
+            - link "YouTube" [ref=f3e335] [cursor=pointer]:
+              - /url: https://www.youtube.com/@iuccomputers5136
+              - generic [ref=f3e336]: 
+        - generic [ref=f3e337]:
+          - heading "Quick Links" [level=4] [ref=f3e338]
+          - generic [ref=f3e339]:
+            - link "Home" [ref=f3e340] [cursor=pointer]:
+              - /url: /iuc-website/#home
+            - link "About" [ref=f3e341] [cursor=pointer]:
+              - /url: /iuc-website/#about
+            - link "Courses" [ref=f3e342] [cursor=pointer]:
+              - /url: /iuc-website/#courses
+            - link "Placements" [ref=f3e343] [cursor=pointer]:
+              - /url: /iuc-website/#placements
+            - link "Testimonials" [ref=f3e344] [cursor=pointer]:
+              - /url: /iuc-website/#testimonials
+            - link "Blog" [ref=f3e345] [cursor=pointer]:
+              - /url: /iuc-website/#blog
+            - link "Contact" [ref=f3e346] [cursor=pointer]:
+              - /url: /iuc-website/#contact
+            - link "Computer Training in Chennai" [ref=f3e347] [cursor=pointer]:
+              - /url: /iuc-website/computer-training-in-chennai
+            - link "Programming Courses" [ref=f3e348] [cursor=pointer]:
+              - /url: /iuc-website/programming-courses-in-chennai
+            - link "Beginner IT Courses" [ref=f3e349] [cursor=pointer]:
+              - /url: /iuc-website/it-courses-for-beginners
+            - link "Online IT Courses" [ref=f3e350] [cursor=pointer]:
+              - /url: /iuc-website/online-it-courses
+            - link "Learning Blog" [ref=f3e351] [cursor=pointer]:
+              - /url: /iuc-website/blog
+            - link "Sitemap" [ref=f3e352] [cursor=pointer]:
+              - /url: /iuc-website/sitemap.xml
+        - generic [ref=f3e353]:
+          - heading "Top Courses" [level=4] [ref=f3e354]
+          - generic [ref=f3e355]:
+            - link "AI & ML" [ref=f3e356] [cursor=pointer]:
+              - /url: /iuc-website/course/ai-ml
+            - link "Data Science" [ref=f3e357] [cursor=pointer]:
+              - /url: /iuc-website/course/data-science
+            - link "Python" [ref=f3e358] [cursor=pointer]:
+              - /url: /iuc-website/course/python
+            - link "Java" [ref=f3e359] [cursor=pointer]:
+              - /url: /iuc-website/course/java
+            - link "Full Stack Java" [ref=f3e360] [cursor=pointer]:
+              - /url: /iuc-website/course/full-stack-java
+            - link "Spring Boot" [ref=f3e361] [cursor=pointer]:
+              - /url: /iuc-website/course/spring-boot
+        - generic [ref=f3e362]:
+          - heading "Contact Us" [level=4] [ref=f3e363]
+          - generic [ref=f3e364]:
+            - link " +91 7418048039" [ref=f3e365] [cursor=pointer]:
+              - /url: tel:+917418048039
+              - generic [ref=f3e366]: 
+              - text: +91 7418048039
+            - link " 04443539196" [ref=f3e367] [cursor=pointer]:
+              - /url: tel:04443539196
+              - generic [ref=f3e368]: 
+              - text: "04443539196"
+            - link " 04447940112" [ref=f3e369] [cursor=pointer]:
+              - /url: tel:04447940112
+              - generic [ref=f3e370]: 
+              - text: "04447940112"
+            - link " info@iucedu.com" [ref=f3e371] [cursor=pointer]:
+              - /url: mailto:info@iucedu.com
+              - generic [ref=f3e372]: 
+              - text: info@iucedu.com
+            - generic [ref=f3e373]:
+              - generic [ref=f3e374]: 
+              - text: "#1&2 Gold Nest Apts, 2nd Main Road, C.I.T Nagar, Chennai – 600 035"
+            - generic [ref=f3e375]:
+              - generic [ref=f3e376]: 
+              - text: 19/11 Balakrishna Colony 1st St, Kaladipet, Thiruvottiyur, Chennai – 600 019
+            - generic [ref=f3e377]:
+              - heading "Newsletter" [level=4] [ref=f3e378]
+              - generic [ref=f3e379]:
+                - textbox "Email for newsletter" [ref=f3e380]:
+                  - /placeholder: Your email
+                - button "" [ref=f3e381] [cursor=pointer]
+      - generic [ref=f3e383]:
+        - generic [ref=f3e384]: © 2026 IUC Edu. All rights reserved.
+        - generic [ref=f3e385]: Privacy Policy Terms of Service Refund Policy
+  - text: 
+  - link "Chat on WhatsApp" [ref=f3e386] [cursor=pointer]:
+    - /url: https://wa.me/917418048039?text=Hi!%20I'm%20interested%20in%20IUC%20Edu%20programs.%20Please%20guide%20me.
+    - generic: Chat with us on WhatsApp
+    - generic [ref=f3e387]: 
+  - link "Back to top":
+    - /url: "#"
+    - generic: 

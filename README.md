@@ -152,7 +152,7 @@ The root 404 handler and invalid course, blog or landing slugs now:
 | `robots.txt` | New | Defines public crawl access, blocks internal endpoints and declares the production sitemap. |
 | `sitemap.xml` | Modified | Replaces dynamic PHP output with a valid static XML list of 25 canonical production URLs and content-specific modification dates. |
 
-`assets/js/tracker.js` was not changed as part of this SEO update; only its script loading mode in `includes/header.php` changed to `defer`.
+`assets/js/tracker.js` recognises current Google and Microsoft paid-click identifiers and passes their visits through the existing paid-search attribution path.
 
 ## Admin keyword performance monitor
 
@@ -161,7 +161,13 @@ The **SEO Monitor** tab in `/admin/` now combines two different data sources:
 - **Google Search Console Search Analytics**: organic Google queries, clicks, impressions, CTR, average position, previous-period changes, top landing page, brand/non-brand split, device, country and search-appearance data.
 - **On-site analytics**: visitor sessions, referrer data and campaign `utm_term` values that can be connected to an enquiry or conversion.
 
+The monitor keeps Google's raw query value in the API but presents it in readable title case with common acronyms such as IUC, IT and SEO preserved. Every Search Console query shows both the exact page Google currently credits and the recommended single target page for that search intent. Opportunity rows exclude admin-login navigation and are prioritised using page-target match, impressions, position and a position-aware CTR benchmark.
+
+Landing-page reports remove advertising and analytics parameters before grouping URLs. As a result, `/`, `/?gad_source=...` and `/?utm_source=...` are reported as one page while their campaign data remains available in the attribution columns.
+
 Search Console data is aggregated. It cannot reveal which individual person searched a keyword, and Google can omit anonymized queries. Enquiry-level keyword attribution is possible only when the incoming campaign includes a value such as `utm_term=python+course+chennai`.
+
+For Google Ads, configure a Final URL suffix such as `utm_source=google&utm_medium=cpc&utm_campaign=python_chennai&utm_term={keyword}`. Google replaces `{keyword}` for supported Search campaigns; it can be blank for keywordless campaign types. Organic visitor keywords cannot be reconstructed from an individual browser session and must be analysed in the aggregate Search Console tables.
 
 ### Connect Google Search Console
 

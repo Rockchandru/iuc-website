@@ -90,6 +90,8 @@
     </div>
 </footer>
 
+<?php require __DIR__ . '/application-modal.php'; ?>
+
 <!-- WhatsApp Float -->
 <a href="https://wa.me/<?= WHATSAPP_NUMBER ?>?text=Hi!%20I'm%20interested%20in%20IUC%20Edu%20programs.%20Please%20guide%20me." class="whatsapp-float" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
     <span class="whatsapp-tooltip">Chat with us on WhatsApp</span>
@@ -104,14 +106,21 @@
 <!-- Scripts -->
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-    AOS.init({
-        duration: 600,
-        easing: 'ease-out-quad',
-        once: true,
-        offset: 60,
-    });
+    if (window.AOS) {
+        AOS.init({
+            duration: 600,
+            easing: 'ease-out-quad',
+            once: true,
+            offset: 60,
+        });
+    } else {
+        document.querySelectorAll('[data-aos]').forEach(function (element) {
+            element.style.opacity = '1';
+            element.style.transform = 'none';
+        });
+    }
 </script>
-<script src="<?= BASE_URL ?>/assets/js/main.js"></script>
+<script src="<?= BASE_URL ?>/assets/js/main.js?v=<?= @filemtime(__DIR__ . '/../assets/js/main.js') ?>"></script>
 
 </body>
 </html>

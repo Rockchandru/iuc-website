@@ -1,0 +1,45 @@
+- generic [ref=f6e1]:
+  - generic [ref=f6e3]:
+    - generic [ref=f6e4]:
+      - img "IUC Edu" [ref=f6e6]
+      - heading "IUC Analytics" [level=1] [ref=f6e7]
+      - paragraph [ref=f6e8]: Digital Marketing Dashboard
+    - generic [ref=f6e9]:
+      - heading " Admin Login" [level=2] [ref=f6e10]:
+        - generic [ref=f6e11]: 
+        - text: Admin Login
+      - paragraph [ref=f6e12]: Sign in to access the analytics dashboard.
+      - alert [ref=f6e13]:
+        - generic [ref=f6e14]: 
+        - generic [ref=f6e15]: Too many login attempts. Please wait 15 minutes and try again.
+      - generic [ref=f6e16]:
+        - generic [ref=f6e17]:
+          - generic [ref=f6e18]: Username
+          - generic [ref=f6e19]:
+            - generic: 
+            - textbox "Username" [active] [ref=f6e20]:
+              - /placeholder: Enter username
+              - text: IUCEducation
+        - generic [ref=f6e21]:
+          - generic [ref=f6e22]: Password
+          - generic [ref=f6e23]:
+            - generic: 
+            - textbox "Password" [ref=f6e24]:
+              - /placeholder: Enter password
+            - button "Show password" [ref=f6e25] [cursor=pointer]:
+              - generic: 
+        - button " Login to Dashboard" [ref=f6e26] [cursor=pointer]:
+          - generic [ref=f6e27]: 
+          - generic [ref=f6e28]: Login to Dashboard
+      - generic [ref=f6e29]:
+        - generic [ref=f6e30]: 
+        - generic [ref=f6e31]: Access is restricted to authorised IUC Edu administrators.
+    - generic [ref=f6e32]:
+      - link " Back to Website" [ref=f6e33] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f6e34]: 
+        - text: Back to Website
+      - generic [ref=f6e35]:
+        - generic [ref=f6e36]: 
+        - text: Secure access
+  - generic: © 2026 IUC Edu · Admin Analytics Dashboard

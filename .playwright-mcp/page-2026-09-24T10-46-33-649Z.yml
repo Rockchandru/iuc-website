@@ -1,0 +1,152 @@
+- generic [ref=f9e2]:
+  - complementary "Analytics navigation" [ref=f9e3]:
+    - generic [ref=f9e4]:
+      - img "IUC" [ref=f9e5]
+      - generic [ref=f9e6]:
+        - generic [ref=f9e7]: IUC Analytics
+        - generic [ref=f9e8]: Marketing Dashboard
+    - navigation [ref=f9e9]:
+      - button " Overview" [ref=f9e10] [cursor=pointer]:
+        - generic [ref=f9e11]: 
+        - text: Overview
+      - button " Visitors" [ref=f9e12] [cursor=pointer]:
+        - generic [ref=f9e13]: 
+        - text: Visitors
+      - button " Campaigns" [ref=f9e14] [cursor=pointer]:
+        - generic [ref=f9e15]: 
+        - text: Campaigns
+      - button " Pages" [ref=f9e16] [cursor=pointer]:
+        - generic [ref=f9e17]: 
+        - text: Pages
+      - button " SEO Monitor" [ref=f9e18] [cursor=pointer]:
+        - generic [ref=f9e19]: 
+        - text: SEO Monitor
+      - button " Enquiries" [ref=f9e20] [cursor=pointer]:
+        - generic [ref=f9e21]: 
+        - text: Enquiries
+      - button " Conversions" [ref=f9e22] [cursor=pointer]:
+        - generic [ref=f9e23]: 
+        - text: Conversions
+      - button " Live Visitors" [active] [ref=f9e24] [cursor=pointer]:
+        - generic [ref=f9e25]: 
+        - text: Live Visitors
+      - button " Reports" [ref=f9e27] [cursor=pointer]:
+        - generic [ref=f9e28]: 
+        - text: Reports
+    - generic [ref=f9e29]:
+      - link " View Website" [ref=f9e30] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f9e31]: 
+        - text: View Website
+      - link " Logout" [ref=f9e32] [cursor=pointer]:
+        - /url: logout.php
+        - generic [ref=f9e33]: 
+        - text: Logout
+  - main [ref=f9e34]:
+    - generic [ref=f9e35]:
+      - generic [ref=f9e36]:
+        - text: 
+        - generic [ref=f9e37]:
+          - heading "Live Visitors" [level=1] [ref=f9e185]
+          - paragraph [ref=f9e39]: "Report period: 2026-08-25 → 2026-09-24"
+      - generic [ref=f9e40]:
+        - generic [ref=f9e41]:
+          - textbox [ref=f9e42]: 2026-08-25
+          - generic [ref=f9e43]: to
+          - textbox [ref=f9e44]: 2026-09-24
+          - button " Apply" [ref=f9e45] [cursor=pointer]:
+            - generic [ref=f9e46]: 
+            - text: Apply
+        - generic [ref=f9e47]:
+          - link " Excel" [ref=f9e48] [cursor=pointer]:
+            - /url: export.php?format=excel&from=2026-08-25&to=2026-09-24
+            - generic [ref=f9e49]: 
+            - text: Excel
+          - link " PDF" [ref=f9e50] [cursor=pointer]:
+            - /url: export.php?format=pdf&from=2026-08-25&to=2026-09-24
+            - generic [ref=f9e51]: 
+            - text: PDF
+          - link " CSV" [ref=f9e52] [cursor=pointer]:
+            - /url: export.php?format=csv&from=2026-08-25&to=2026-09-24
+            - generic [ref=f9e53]: 
+            - text: CSV
+    - generic [ref=f9e54]:
+      - text:                                                                                                                                                                                     
+      - generic [ref=f9e186]:
+        - generic [ref=f9e187]:
+          - generic [ref=f9e188]:
+            - generic [ref=f9e189]: 
+            - generic [ref=f9e191]: "2"
+            - generic [ref=f9e192]: Active Users
+            - generic [ref=f9e193]: Last 30 minutes
+          - generic [ref=f9e194]:
+            - generic [ref=f9e195]: 
+            - generic [ref=f9e197]: "2"
+            - generic [ref=f9e198]: Recently Active
+            - generic [ref=f9e199]: Last 5 minutes
+          - generic [ref=f9e200]:
+            - generic [ref=f9e201]: 
+            - generic [ref=f9e203]: 7,424
+            - generic [ref=f9e204]: Total Visitors
+            - generic [ref=f9e205]: All time
+          - generic [ref=f9e206]:
+            - generic [ref=f9e207]: 
+            - generic [ref=f9e209]: "167"
+            - generic [ref=f9e210]: Conversions
+            - generic [ref=f9e211]: Period
+        - generic [ref=f9e213]:
+          - generic [ref=f9e214]: 
+          - text: Distinct Active Users — Last 30 min
+          - generic [ref=f9e215]: 2 users / 30 min
+        - generic [ref=f9e218]:
+          - generic [ref=f9e219]:
+            - generic [ref=f9e220]: 
+            - text: Recently Active Users
+            - generic [ref=f9e221]: (2 distinct users in last 5 min; 2 sessions)
+          - table [ref=f9e223]:
+            - rowgroup [ref=f9e224]:
+              - row [ref=f9e225]:
+                - columnheader "Platform" [ref=f9e226]
+                - columnheader "Campaign / Traffic Type" [ref=f9e227]
+                - columnheader "Exact Page URL" [ref=f9e228]
+                - columnheader "Mobile Number" [ref=f9e229]
+                - columnheader "Device" [ref=f9e230]
+                - columnheader "City" [ref=f9e231]
+                - columnheader "Views" [ref=f9e232]
+                - columnheader "Last Activity" [ref=f9e233]
+            - rowgroup [ref=f9e234]:
+              - row [ref=f9e235]:
+                - cell "YouTube YouTube Ads" [ref=f9e236]:
+                  - generic [ref=f9e237]: YouTube
+                  - generic [ref=f9e238]: YouTube Ads
+                - cell "codex_live_fix paid_video" [ref=f9e239]:
+                  - text: codex_live_fix
+                  - generic [ref=f9e240]: paid_video
+                - cell [ref=f9e241]:
+                  - link "https://www.iucedu.com/ " [ref=f9e242] [cursor=pointer]:
+                    - /url: https://www.iucedu.com/
+                    - text: https://www.iucedu.com/
+                    - generic [ref=f9e243]: 
+                - cell "Not provided" [ref=f9e244]
+                - cell "desktop" [ref=f9e245]
+                - cell "Chennai" [ref=f9e246]
+                - cell "2" [ref=f9e247]
+                - cell "16:16:13" [ref=f9e248]
+              - row [ref=f9e249]:
+                - cell "Google Google Search" [ref=f9e250]:
+                  - generic [ref=f9e251]: Google
+                  - generic [ref=f9e252]: Google Search
+                - cell "iuc_java_campaign search" [ref=f9e253]:
+                  - text: iuc_java_campaign
+                  - generic [ref=f9e254]: search
+                - cell [ref=f9e255]:
+                  - link "https://www.iucedu.com/course/java " [ref=f9e256] [cursor=pointer]:
+                    - /url: https://www.iucedu.com/course/java
+                    - text: https://www.iucedu.com/course/java
+                    - generic [ref=f9e257]: 
+                - cell "Not provided" [ref=f9e258]
+                - cell "desktop" [ref=f9e259]
+                - cell "The Bronx" [ref=f9e260]
+                - cell "1" [ref=f9e261]
+                - cell "16:12:46" [ref=f9e262]
+      - text:     

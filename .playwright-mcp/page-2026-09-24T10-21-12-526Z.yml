@@ -1,0 +1,65 @@
+- generic [active] [ref=f2e1]:
+  - link "Skip to main content" [ref=f2e2] [cursor=pointer]:
+    - /url: "#content"
+  - generic [ref=f2e3]:
+    - link "Skip to main content" [ref=f2e4] [cursor=pointer]:
+      - /url: "#content"
+    - complementary [ref=f2e5]:
+      - navigation [ref=f2e10]:
+        - generic [ref=f2e15]:
+          - link [ref=f2e20] [cursor=pointer]:
+            - /url: ../index.html
+            - img "cPanel logo" [ref=f2e21]
+          - list [ref=f2e22]:
+            - listitem [ref=f2e23]:
+              - link "Tools" [ref=f2e24] [cursor=pointer]:
+                - /url: ../index.html
+            - listitem [ref=f2e29]:
+              - link "Site Quality Monitoring" [ref=f2e30] [cursor=pointer]:
+                - /url: ../koality/signup/index.html
+            - listitem [ref=f2e36]:
+              - link "WordPress Manager by Softaculous" [ref=f2e37] [cursor=pointer]:
+                - /url: ../softaculous/index.live.php?act=wordpress
+    - generic [ref=f2e44]:
+      - banner [ref=f2e45]:
+        - generic [ref=f2e50]:
+          - text: 
+          - generic [ref=f2e51]:
+            - text: 
+            - generic [ref=f2e55]:
+              - text: 
+              - combobox [ref=f2e59]:
+                - searchbox "Search Tools (/)" [ref=f2e60]
+                - text:  
+            - generic [ref=f2e62]:
+              - link "Notifications" [ref=f2e69] [cursor=pointer]:
+                - /url: ../notifications/index.html.tt
+                - generic [ref=f2e70]: 
+              - button "User Menu" [ref=f2e81] [cursor=pointer]:
+                - generic [ref=f2e82]: 
+      - generic [ref=f2e88]:
+        - heading "Terminal" [level=1] [ref=f2e89]
+        - paragraph [ref=f2e92]: This interface provides command line access to your account on the server.
+      - contentinfo [ref=f2e93]:
+        - generic [ref=f2e98]:
+          - generic [ref=f2e99]:
+            - link [ref=f2e103] [cursor=pointer]:
+              - /url: https://www.cpanel.net
+              - img "cPanel logo" [ref=f2e104]
+            - generic [ref=f2e105]: 110.0.145
+          - list [ref=f2e107]:
+            - listitem [ref=f2e108]:
+              - link "Home" [ref=f2e109] [cursor=pointer]:
+                - /url: ../index.html
+            - listitem [ref=f2e110]:
+              - link "Trademarks" [ref=f2e111] [cursor=pointer]:
+                - /url: ../trademarks.html
+            - listitem [ref=f2e112]:
+              - link "Privacy Policy" [ref=f2e113] [cursor=pointer]:
+                - /url: https://go.cpanel.net/privacy
+            - listitem [ref=f2e114]:
+              - link "Documentation" [ref=f2e115] [cursor=pointer]:
+                - /url: https://go.cpanel.net/cpaneldocsHome
+            - listitem [ref=f2e116]:
+              - link "Give Feedback" [ref=f2e117] [cursor=pointer]:
+                - /url: https://surveys.webpros.com/to/efKeF6N7?utm_source=cpanel-feedback&cpanel_productversion=11.110.0.145&companyid=2045&cpanel_appkey=terminal

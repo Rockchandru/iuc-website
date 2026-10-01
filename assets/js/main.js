@@ -5,6 +5,121 @@
 document.addEventListener('DOMContentLoaded', function () {
   'use strict';
 
+  const applicationModal = document.getElementById('application-modal');
+  if (applicationModal) {
+    const applicationCourse = applicationModal.querySelector('[name="course"]');
+    const closeButton = applicationModal.querySelector('.application-modal-close');
+    const applicationForm = applicationModal.querySelector('form');
+    const applicationFeedback = applicationModal.querySelector('.application-modal-feedback');
+    let applicationTrigger = null;
+    const closeApplication = () => {
+      if (!applicationModal.classList.contains('open')) return;
+      applicationModal.classList.remove('open');
+      applicationModal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('application-modal-open');
+      if (applicationTrigger) applicationTrigger.focus();
+    };
+    document.querySelectorAll('.apply-now-trigger').forEach(link => {
+      link.addEventListener('click', event => {
+        event.preventDefault();
+        applicationTrigger = link;
+        applicationForm.reset();
+        applicationForm.hidden = false;
+        applicationFeedback.hidden = true;
+        applicationFeedback.textContent = '';
+        applicationCourse.value = link.dataset.course || '';
+        applicationModal.classList.add('open');
+        applicationModal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('application-modal-open');
+        applicationModal.querySelector('[name="name"]').focus();
+      });
+    });
+    applicationModal.querySelectorAll('[data-close-application]').forEach(button => button.addEventListener('click', closeApplication));
+    applicationForm.addEventListener('submit', async event => {
+      event.preventDefault();
+      if (!applicationForm.reportValidity()) return;
+      const submitButton = applicationForm.querySelector('[name="contact_submit"]');
+      submitButton.disabled = true;
+      applicationFeedback.hidden = true;
+      try {
+        const formData = new FormData(applicationForm);
+        formData.append('contact_submit', '1');
+        const response = await fetch(applicationForm.action, {
+          method: 'POST',
+          body: formData,
+          headers: { Accept: 'application/json' }
+        });
+        const result = await response.json();
+        if (result.csrf_token) applicationForm.querySelector('[name="csrf_token"]').value = result.csrf_token;
+        if (result.captcha) applicationModal.querySelector('.application-captcha strong').textContent = result.captcha;
+        if (result.enquiry_request_key) {
+          const requestKey = applicationForm.querySelector('[name="enquiry_request_key"]');
+          if (requestKey) {
+            requestKey.value = result.enquiry_request_key;
+            requestKey.defaultValue = result.enquiry_request_key;
+          }
+        }
+        applicationFeedback.textContent = result.message || 'We could not submit your enquiry. Please try again.';
+        applicationFeedback.classList.toggle('success', !!result.success);
+        applicationFeedback.hidden = false;
+        if (result.success) {
+          applicationForm.hidden = true;
+          applicationFeedback.focus();
+        }
+      } catch (error) {
+        applicationFeedback.textContent = 'We could not submit your enquiry. Please try again.';
+        applicationFeedback.classList.remove('success');
+        applicationFeedback.hidden = false;
+      } finally {
+        submitButton.disabled = false;
+      }
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') closeApplication();
+      if (event.key !== 'Tab' || !applicationModal.classList.contains('open')) return;
+      const focusable = [...applicationModal.querySelectorAll('button, input, select, textarea, a[href]')].filter(el => !el.disabled && el.offsetParent !== null);
+      if (!focusable.length) return;
+      if (event.shiftKey && document.activeElement === focusable[0]) {
+        event.preventDefault();
+        focusable[focusable.length - 1].focus();
+      } else if (!event.shiftKey && document.activeElement === focusable[focusable.length - 1]) {
+        event.preventDefault();
+        focusable[0].focus();
+      }
+    });
+  }
+
+  const courseMenu = document.querySelector('.nav-course-menu');
+  if (courseMenu) {
+    const toggle = courseMenu.querySelector('.nav-course-toggle');
+    const closeCourseMenu = () => {
+      courseMenu.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    };
+    toggle.addEventListener('click', () => {
+      const isOpen = courseMenu.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(isOpen));
+    });
+    document.addEventListener('click', event => {
+      if (!courseMenu.contains(event.target)) closeCourseMenu();
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') closeCourseMenu();
+    });
+  }
+
+  document.querySelectorAll('.course-card[data-course-url]').forEach(card => {
+    card.addEventListener('click', event => {
+      if (event.target.closest('a, button, input, select, textarea')) return;
+      window.location.href = card.dataset.courseUrl;
+    });
+    card.addEventListener('keydown', event => {
+      if (event.target !== card || (event.key !== 'Enter' && event.key !== ' ')) return;
+      event.preventDefault();
+      window.location.href = card.dataset.courseUrl;
+    });
+  });
+
   /* ── 1. Navbar scroll ──────────────────────────────────── */
   const navbar = document.querySelector('.navbar');
   let lastScroll = 0;
@@ -27,21 +142,44 @@ document.addEventListener('DOMContentLoaded', function () {
   const mobileMenu = document.querySelector('.mobile-menu');
 
   if (mobileToggle && mobileMenu) {
+    const mobileClose = mobileMenu.querySelector('.mobile-menu-close');
+    const closeMobileMenu = (returnFocus = false) => {
+      mobileMenu.classList.remove('open');
+      mobileMenu.setAttribute('aria-hidden', 'true');
+      mobileToggle.classList.remove('open');
+      mobileToggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+      if (returnFocus) mobileToggle.focus();
+    };
+
     mobileToggle.addEventListener('click', () => {
       const isOpen = mobileMenu.classList.toggle('open');
       mobileToggle.classList.toggle('open', isOpen);
       document.body.style.overflow = isOpen ? 'hidden' : '';
-      mobileToggle.setAttribute('aria-expanded', isOpen);
+      mobileToggle.setAttribute('aria-expanded', String(isOpen));
+      mobileMenu.setAttribute('aria-hidden', String(!isOpen));
+      if (isOpen && mobileClose) mobileClose.focus();
     });
 
+    if (mobileClose) {
+      mobileClose.addEventListener('click', () => closeMobileMenu(true));
+    }
+
     mobileMenu.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        mobileMenu.classList.remove('open');
-        mobileToggle.classList.remove('open');
-        document.body.style.overflow = '';
-        mobileToggle.setAttribute('aria-expanded', 'false');
-      });
+      link.addEventListener('click', () => closeMobileMenu(false));
     });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && mobileMenu.classList.contains('open')) {
+        closeMobileMenu(true);
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 1024 && mobileMenu.classList.contains('open')) {
+        closeMobileMenu(false);
+      }
+    }, { passive: true });
   }
 
   /* ── 3. Scroll animations (Intersection Observer) ──────── */
@@ -169,6 +307,7 @@ document.addEventListener('DOMContentLoaded', function () {
   /* ── 9. Smooth anchor scroll ───────────────────────────── */
   document.querySelectorAll('a[href^="#"], a[href^="/#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
+      if (e.defaultPrevented) return;
       const href = this.getAttribute('href');
       const targetId = href.startsWith('/#') ? href.substring(1) : href;
       if (targetId === '#' || targetId === '' || targetId === '/#') return;
@@ -247,7 +386,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     navLinks.forEach(link => {
       link.classList.remove('active');
-      if (link.getAttribute('href') === '#' + current) {
+      if (new URL(link.href, window.location.href).hash === '#' + current) {
         link.classList.add('active');
       }
     });

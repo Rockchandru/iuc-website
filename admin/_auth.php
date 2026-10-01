@@ -1,8 +1,8 @@
 <?php
 /* ═══════════════════════════════════════════════════════════════
-   IUC Edu — Admin Authentication (fixed credentials)
-   Username : IUCEducation
-   Password : Iuc@12345   (stored as SHA-256, never plaintext)
+   IUC Edu — Admin Authentication
+   Production can override both values with IUC_ADMIN_USER and
+   IUC_ADMIN_PASS_HASH environment variables.
    ═══════════════════════════════════════════════════════════════ */
 
 if (session_status() === PHP_SESSION_NONE) {
@@ -12,9 +12,14 @@ if (session_status() === PHP_SESSION_NONE) {
 header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
 header('Cache-Control: post-check=0, pre-check=0', false);
 header('Pragma: no-cache');
+header('X-Robots-Tag: noindex, nofollow', true);
 
-define('ADMIN_USER', 'IUCEducation');
-define('ADMIN_PASS_HASH', '2844fb5980a2287d9a8f14011e70c759070d54a0010633e7cd1a9d24cadbe59f');
+$configuredAdminUser = getenv('IUC_ADMIN_USER');
+$configuredAdminHash = getenv('IUC_ADMIN_PASS_HASH');
+define('ADMIN_USER', $configuredAdminUser !== false && $configuredAdminUser !== '' ? $configuredAdminUser : 'IUCEducation');
+define('ADMIN_PASS_HASH', $configuredAdminHash !== false && $configuredAdminHash !== ''
+    ? $configuredAdminHash
+    : '$2y$10$ptppeDriTt9bniInEtPcqeUXbr0Yig7vtii4jD3yxZiW9eAvn.WuS');
 
 function admin_logged_in() {
     return !empty($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true;
@@ -31,5 +36,5 @@ function admin_require() {
 
 function admin_verify($u, $p) {
     return hash_equals(ADMIN_USER, (string)$u)
-        && hash_equals(ADMIN_PASS_HASH, hash('sha256', (string)$p));
+        && password_verify((string)$p, ADMIN_PASS_HASH);
 }

@@ -5,19 +5,21 @@ $pageKey = isset($_GET['page']) ? preg_replace('/[^a-z0-9-]/', '', $_GET['page']
 
 $landingPages = [
     'computer-training-in-chennai' => [
-        'label' => 'Computer Education in Chennai',
-        'title' => 'Computer Training Courses in Chennai | IUC Edu',
-        'description' => 'Build practical computer, programming and software skills at IUC Edu, a computer training institute with centres in C.I.T Nagar and Thiruvottiyur, Chennai.',
-        'h1' => 'Computer Training Institute in Chennai',
-        'intro' => 'IUC Edu provides practical, instructor-led computer training for students, freshers, working professionals and career changers. Learners can attend at our Chennai centres or join live online classes, depending on the course and batch.',
+        'label' => 'Computer Education & Career Skills',
+        'title' => 'Computer Courses in Chennai | IT Training Institute | IUC Edu',
+        'description' => 'Join practical computer courses and IT training in Chennai at IUC Edu. Compare programming, software, data and digital courses, batches, projects and support.',
+        'h1' => 'Computer Courses and IT Training in Chennai',
+        'intro' => 'IUC Edu provides instructor-led computer classes for students, freshers, working professionals and career changers in Chennai. Compare programming, software development, data, cloud, testing and digital career courses, then choose classroom or live online training based on the available batch.',
         'sections' => [
-            ['Computer Training for Practical Skills', 'Training covers programming, software development, data science, artificial intelligence, cloud computing, cyber security, software testing, UI/UX and digital marketing. Course pages explain the curriculum, eligibility, duration, fees and projects for each program.'],
-            ['Computer Science and Programming Training', 'Our programming and technology courses develop skills relevant to computer science and software careers, including problem solving, coding, databases, web development and modern development tools. IUC Edu provides professional skill training and does not present these courses as university degree programs.'],
-            ['Training Centres in Chennai', 'The IUC Edu head office is in C.I.T Nagar near Nandanam, with another centre in Kaladipet, Thiruvottiyur. Both locations are listed with consistent contact details and Google Maps directions in the contact section.'],
+            ['Computer Classes for Students and Working Professionals', 'Courses range from beginner programming in C, C++, Python and Java to career-focused training in full stack development, software testing, data science, artificial intelligence, cloud computing, cyber security, UI/UX and digital marketing. Every course page states its curriculum, expected knowledge, duration, learning mode, projects and current fee.'],
+            ['Practical IT Training with Projects', 'Classes combine instructor explanations, guided exercises and course-specific project work. Learners can use the individual program pages to compare tools and outcomes instead of relying on one generic course list. Placement assistance, interview practice and flexible batches support career preparation; employment outcomes still depend on the learner, role and employer.'],
+            ['Computer Training Centres in Chennai', 'IUC Edu has a head office in C.I.T Nagar near Nandanam and a centre in Kaladipet, Thiruvottiyur. The contact section provides consistent addresses, telephone numbers and map directions. Contact admissions before visiting to confirm which centre and batch currently offers your selected course.'],
+            ['How to Choose the Right Computer Course', 'Choose a course by the skill and job direction you want: programming fundamentals, application development, data, testing, infrastructure, design or marketing. Review the detailed syllabus and prerequisites on the recommended course pages. Beginners who are unsure can compare the beginner course hub or request course guidance.'],
         ],
         'courses' => ['c-cpp', 'python', 'java', 'full-stack-java', 'data-science', 'software-testing'],
         'faqs' => [
-            ['q' => 'Who can join computer training at IUC Edu?', 'a' => 'Students, freshers, working professionals and career changers can apply. Eligibility differs by course and is stated on every course page.'],
+            ['q' => 'How do I choose a computer course in Chennai?', 'a' => 'Start with your goal, current experience and preferred role. Compare the curriculum, prerequisites, projects, duration and learning mode on each IUC Edu course page, or request course guidance if you are unsure.'],
+            ['q' => 'Who can join computer classes at IUC Edu?', 'a' => 'Students, freshers, working professionals and career changers can apply. Eligibility differs by course and is stated on every course page.'],
             ['q' => 'Are these university computer science degree courses?', 'a' => 'No. These are skill-based computer, programming and technology training programs, not university degree programs.'],
             ['q' => 'Where are the IUC Edu training centres in Chennai?', 'a' => 'The head office is in C.I.T Nagar near Nandanam, and the second centre is in Kaladipet, Thiruvottiyur.'],
             ['q' => 'Does the training include practical projects?', 'a' => 'Yes. Courses include hands-on exercises and course-specific projects. The exact project list is available on each course page.'],

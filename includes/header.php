@@ -115,6 +115,15 @@ if (!empty($structuredData) && is_array($structuredData)) {
 <!DOCTYPE html>
 <html lang="en-IN">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H9L990V9Z2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-H9L990V9Z2');
+    </script>
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><?= $escape($seoTitle) ?></title>
@@ -195,7 +204,19 @@ if (!empty($structuredData) && is_array($structuredData)) {
 
         <nav class="navbar-links" aria-label="Main navigation">
             <?php foreach ($navLinks as $link): ?>
+            <?php if ($link[1] === 'courses'): ?>
+            <div class="nav-course-menu">
+                <button type="button" class="nav-link nav-course-toggle" aria-expanded="false" aria-controls="desktop-course-list">Courses <i class="bi bi-chevron-down" aria-hidden="true"></i></button>
+                <div class="nav-course-list" id="desktop-course-list">
+                    <a href="<?= BASE_URL ?>/#courses">All Courses</a>
+                    <?php foreach ($courses as $menuSlug => $menuCourse): ?>
+                    <a href="<?= BASE_URL ?>/course/<?= rawurlencode($menuSlug) ?>"><?= htmlspecialchars($menuCourse['short_title'], ENT_QUOTES, 'UTF-8') ?></a>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+            <?php else: ?>
             <a href="<?= BASE_URL ?>/#<?= $link[1] ?>" class="nav-link"><?= $link[0] ?></a>
+            <?php endif; ?>
             <?php endforeach; ?>
         </nav>
 
@@ -218,10 +239,22 @@ if (!empty($structuredData) && is_array($structuredData)) {
 </header>
 
 <!-- Mobile Menu -->
-<div class="mobile-menu" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+<div class="mobile-menu" role="dialog" aria-modal="true" aria-label="Mobile navigation" aria-hidden="true">
     <button class="mobile-menu-close" aria-label="Close menu">&times;</button>
     <?php foreach ($navLinks as $link): ?>
+    <?php if ($link[1] === 'courses'): ?>
+    <details class="mobile-course-menu">
+    <summary class="mobile-menu-link">Courses <i class="bi bi-chevron-down" aria-hidden="true"></i></summary>
+    <div class="mobile-course-list">
+        <a href="<?= BASE_URL ?>/#courses" class="mobile-menu-link">All Courses</a>
+        <?php foreach ($courses as $menuSlug => $menuCourse): ?>
+        <a href="<?= BASE_URL ?>/course/<?= rawurlencode($menuSlug) ?>" class="mobile-menu-link"><?= htmlspecialchars($menuCourse['short_title'], ENT_QUOTES, 'UTF-8') ?></a>
+        <?php endforeach; ?>
+    </div>
+    </details>
+    <?php else: ?>
     <a href="<?= BASE_URL ?>/#<?= $link[1] ?>" class="mobile-menu-link"><?= $link[0] ?></a>
+    <?php endif; ?>
     <?php endforeach; ?>
     <a href="tel:+91<?= SITE_PHONE ?>" class="btn btn-ghost btn-lg" style="margin-top:1rem">
         <i class="bi bi-telephone"></i> +91 <?= SITE_PHONE ?>

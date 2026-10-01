@@ -1,0 +1,689 @@
+- generic [ref=e1]:
+  - iframe [ref=e2]
+  - generic [ref=e3]:
+    - navigation [ref=e4]:
+      - generic [ref=e5]:
+        - link [ref=e6] [cursor=pointer]:
+          - /url: ../index.html
+          - img "cPanel" [ref=e7]
+        - text: File Manager
+      - generic [ref=e8]:
+        - generic [ref=e9]:
+          - generic [ref=e10]:
+            - generic [ref=e11]: Search
+            - combobox "Search" [ref=e12]:
+              - option "All Your Files" [selected]
+              - option "Only public_html"
+              - option "Current Directory"
+          - generic [ref=e13]:
+            - generic [ref=e14]: for
+            - textbox "for" [ref=e15]
+          - button "Go" [ref=e17] [cursor=pointer]
+        - link " Settings" [ref=e19] [cursor=pointer]:
+          - /url: javascript:void(0)
+          - generic [ref=e20]: 
+          - text: Settings
+    - list [ref=e22]:
+      - listitem [ref=e23]:
+        - link "+ File" [ref=e24] [cursor=pointer]:
+          - /url: javascript:void(0)
+          - generic [ref=e25]: +
+          - text: File
+      - listitem [ref=e26]:
+        - link "+ Folder" [ref=e27] [cursor=pointer]:
+          - /url: javascript:void(0)
+          - generic [ref=e28]: +
+          - text: Folder
+      - listitem [ref=e29]:
+        - link " Copy" [ref=e30]:
+          - /url: copymove.html.tt
+          - generic [ref=e31]: 
+          - text: Copy
+      - listitem [ref=e32]:
+        - link " Move" [ref=e33]:
+          - /url: copymove.html.tt
+          - generic [ref=e34]: 
+          - text: Move
+      - listitem [ref=e35]:
+        - link " Upload" [ref=e36] [cursor=pointer]:
+          - /url: javascript:void(0)
+          - generic [ref=e37]: 
+          - text: Upload
+      - listitem [ref=e38]:
+        - link " Download" [ref=e39]:
+          - /url: javascript:void(0)
+          - generic [ref=e40]: 
+          - text: Download
+      - listitem [ref=e41]:
+        - link " Delete" [ref=e42]:
+          - /url: javascript:void(0)
+          - generic [ref=e43]: 
+          - text: Delete
+      - listitem [ref=e44]:
+        - link " Restore" [ref=e45]:
+          - /url: javascript:void(0)
+          - generic [ref=e46]: 
+          - text: Restore
+      - listitem [ref=e47]:
+        - link " Rename" [ref=e48]:
+          - /url: javascript:void(0)
+          - generic [ref=e49]: 
+          - text: Rename
+      - listitem [ref=e50]:
+        - link " Edit" [ref=e51]:
+          - /url: javascript:void(0)
+          - generic [ref=e52]: 
+          - text: Edit
+      - listitem [ref=e53]:
+        - link " Permissions" [ref=e54]:
+          - /url: javascript:void(0)
+          - generic [ref=e55]: 
+          - text: Permissions
+      - listitem [ref=e56]:
+        - link " View" [ref=e57]:
+          - /url: javascript:void(0)
+          - generic [ref=e58]: 
+          - text: View
+      - listitem [ref=e59]:
+        - link " Extract" [ref=e60]:
+          - /url: javascript:void(0)
+          - generic [ref=e61]: 
+          - text: Extract
+      - listitem [ref=e62]:
+        - link " Compress" [ref=e63]:
+          - /url: javascript:void(0)
+          - generic [ref=e64]: 
+          - text: Compress
+  - generic [ref=e65]:
+    - generic [ref=e67]:
+      - generic [ref=e68]: 
+      - textbox [ref=e70]: public_html/iucedu.com
+      - button "Go" [ref=e72] [cursor=pointer]
+    - generic [ref=e73]:
+      - generic [ref=e76]:
+        - button "Collapse All" [ref=e78] [cursor=pointer]
+        - generic [ref=e83]:
+          - table [ref=e84]:
+            - rowgroup [ref=e85]:
+              - row [ref=e86]:
+                - cell [ref=e87] [cursor=pointer]:
+                  - text: 
+                  - link [ref=e88]:
+                    - /url: "#"
+                  - text: 
+                - cell " (/home4/iucteoxs)" [ref=e89]:
+                  - generic [ref=e90] [cursor=pointer]:
+                    - generic [ref=e91]: 
+                    - text: (/home4/iucteoxs)
+          - generic [ref=e92]:
+            - table [ref=e94]:
+              - rowgroup [ref=e95]:
+                - row [ref=e96]:
+                  - cell [ref=e97]
+                  - cell [ref=e99] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e100]:
+                      - /url: "#"
+                    - text: 
+                  - cell ".cpanel" [ref=e101]
+            - table [ref=e103]:
+              - rowgroup [ref=e104]:
+                - row [ref=e105]:
+                  - cell [ref=e106]
+                  - cell [ref=e108] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e109]:
+                      - /url: "#"
+                    - text: 
+                  - cell ".cphorde" [ref=e110]
+            - table [ref=e112]:
+              - rowgroup [ref=e113]:
+                - row [ref=e114]:
+                  - cell [ref=e115]
+                  - cell [ref=e117] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e118]:
+                      - /url: "#"
+                  - cell ".htpasswds" [ref=e119]
+            - table [ref=e121]:
+              - rowgroup [ref=e122]:
+                - row [ref=e123]:
+                  - cell [ref=e124]
+                  - cell [ref=e126] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e127]:
+                      - /url: "#"
+                  - cell ".koality" [ref=e128]
+            - table [ref=e130]:
+              - rowgroup [ref=e131]:
+                - row [ref=e132]:
+                  - cell [ref=e133]
+                  - cell [ref=e135] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e136]:
+                      - /url: "#"
+                    - text: 
+                  - cell ".pki" [ref=e137]
+            - table [ref=e139]:
+              - rowgroup [ref=e140]:
+                - row [ref=e141]:
+                  - cell [ref=e142]
+                  - cell [ref=e144] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e145]:
+                      - /url: "#"
+                  - cell ".quarantine" [ref=e146]
+            - table [ref=e148]:
+              - rowgroup [ref=e149]:
+                - row [ref=e150]:
+                  - cell [ref=e151]
+                  - cell [ref=e153] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e154]:
+                      - /url: "#"
+                    - text: 
+                  - cell ".softaculous" [ref=e155]
+            - table [ref=e157]:
+              - rowgroup [ref=e158]:
+                - row [ref=e159]:
+                  - cell [ref=e160]
+                  - cell [ref=e162] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e163]:
+                      - /url: "#"
+                  - cell ".spamassassin" [ref=e164]
+            - table [ref=e166]:
+              - rowgroup [ref=e167]:
+                - row [ref=e168]:
+                  - cell [ref=e169]
+                  - cell [ref=e171] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e172]:
+                      - /url: "#"
+                  - cell ".ssh" [ref=e173]
+            - table [ref=e175]:
+              - rowgroup [ref=e176]:
+                - row [ref=e177]:
+                  - cell [ref=e178]
+                  - cell [ref=e180] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e181]:
+                      - /url: "#"
+                  - cell ".subaccounts" [ref=e182]
+            - table [ref=e184]:
+              - rowgroup [ref=e185]:
+                - row [ref=e186]:
+                  - cell [ref=e187]
+                  - cell [ref=e189] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e190]:
+                      - /url: "#"
+                    - text: 
+                  - cell ".trash" [ref=e191]
+            - table [ref=e193]:
+              - rowgroup [ref=e194]:
+                - row [ref=e195]:
+                  - cell [ref=e196]
+                  - cell [ref=e198] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e199]:
+                      - /url: "#"
+                    - text: 
+                  - cell ".wp-cli" [ref=e200]
+            - table [ref=e202]:
+              - rowgroup [ref=e203]:
+                - row [ref=e204]:
+                  - cell [ref=e205]
+                  - cell [ref=e207] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e208]:
+                      - /url: "#"
+                    - text: 
+                  - cell "carnivalenterprises.com" [ref=e209]
+            - table [ref=e211]:
+              - rowgroup [ref=e212]:
+                - row [ref=e213]:
+                  - cell [ref=e214]
+                  - cell [ref=e216] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e217]:
+                      - /url: "#"
+                    - text: 
+                  - cell "etc" [ref=e218]
+            - table [ref=e220]:
+              - rowgroup [ref=e221]:
+                - row [ref=e222]:
+                  - cell [ref=e223]
+                  - cell [ref=e225] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e226]:
+                      - /url: "#"
+                    - text: 
+                  - cell "home4" [ref=e227]
+            - table [ref=e229]:
+              - rowgroup [ref=e230]:
+                - row [ref=e231]:
+                  - cell [ref=e232]
+                  - cell [ref=e234] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e235]:
+                      - /url: "#"
+                    - text: 
+                  - cell "iuctech.com" [ref=e236]
+            - table [ref=e238]:
+              - rowgroup [ref=e239]:
+                - row [ref=e240]:
+                  - cell [ref=e241]
+                  - cell [ref=e243] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e244]:
+                      - /url: "#"
+                    - text: 
+                  - cell "logs" [ref=e245]
+            - table [ref=e247]:
+              - rowgroup [ref=e248]:
+                - row [ref=e249]:
+                  - cell [ref=e250]
+                  - cell [ref=e252] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e253]:
+                      - /url: "#"
+                    - text: 
+                  - cell "mail" [ref=e254]
+            - table [ref=e256]:
+              - rowgroup [ref=e257]:
+                - row [ref=e258]:
+                  - cell [ref=e259]
+                  - cell [ref=e261] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e262]:
+                      - /url: "#"
+                  - cell "perl5" [ref=e263]
+            - table [ref=e265]:
+              - rowgroup [ref=e266]:
+                - row [ref=e267]:
+                  - cell [ref=e268]
+                  - cell [ref=e270] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e271]:
+                      - /url: "#"
+                    - text: 
+                  - cell "public_ftp" [ref=e272]
+            - table [ref=e274]:
+              - rowgroup [ref=e275]:
+                - row [ref=e276]:
+                  - cell [ref=e277]
+                  - cell [ref=e279] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e280]:
+                      - /url: "#"
+                    - text: 
+                  - cell "public_html" [ref=e281]
+            - table [ref=e283]:
+              - rowgroup [ref=e284]:
+                - row [ref=e285]:
+                  - cell [ref=e286]
+                  - cell [ref=e288] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e289]:
+                      - /url: "#"
+                    - text: 
+                  - cell "ssl" [ref=e290]
+            - table [ref=e292]:
+              - rowgroup [ref=e293]:
+                - row [ref=e294]:
+                  - cell [ref=e295]
+                  - cell [ref=e297] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e298]:
+                      - /url: "#"
+                    - text: 
+                  - cell "tamizhahomemadefoods.com" [ref=e299]
+            - table [ref=e301]:
+              - rowgroup [ref=e302]:
+                - row [ref=e303]:
+                  - cell [ref=e304]
+                  - cell [ref=e306] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e307]:
+                      - /url: "#"
+                    - text: 
+                  - cell "tamsen.in" [ref=e308]
+            - table [ref=e310]:
+              - rowgroup [ref=e311]:
+                - row [ref=e312]:
+                  - cell [ref=e313]
+                  - cell [ref=e315] [cursor=pointer]:
+                    - text: 
+                    - link [ref=e316]:
+                      - /url: "#"
+                    - text: 
+                  - cell "tmp" [ref=e317]
+      - paragraph [ref=e320]
+  - generic [ref=e321]:
+    - list [ref=e323]:
+      - listitem [ref=e324]:
+        - link " Home" [ref=e325] [cursor=pointer]:
+          - /url: javascript:void(0)
+          - generic [ref=e326]: 
+          - text: Home
+      - listitem [ref=e327]:
+        - link " Up One Level" [ref=e328] [cursor=pointer]:
+          - /url: javascript:void(0)
+          - generic [ref=e329]: 
+          - text: Up One Level
+      - listitem [ref=e330]:
+        - link " Back" [ref=e331] [cursor=pointer]:
+          - /url: javascript:void(0)
+          - generic [ref=e332]: 
+          - text: Back
+      - listitem [ref=e333]:
+        - link " Forward" [ref=e334]:
+          - /url: javascript:void(0)
+          - generic [ref=e335]: 
+          - text: Forward
+      - listitem [ref=e336]:
+        - link " Reload" [ref=e337] [cursor=pointer]:
+          - /url: javascript:void(0)
+          - generic [ref=e338]: 
+          - text: Reload
+      - listitem [ref=e339]:
+        - link " Select All" [ref=e340] [cursor=pointer]:
+          - /url: javascript:void(0)
+          - generic [ref=e341]: 
+          - text: Select All
+      - listitem [ref=e342]:
+        - link " Unselect All" [ref=e343]:
+          - /url: javascript:void(0)
+          - generic [ref=e344]: 
+          - text: Unselect All
+      - listitem [ref=e345]:
+        - link " View Trash" [ref=e346] [cursor=pointer]:
+          - /url: javascript:void(0)
+          - generic [ref=e347]: 
+          - text: View Trash
+      - listitem [ref=e348]:
+        - link " Empty Trash" [ref=e349]:
+          - /url: javascript:void(0)
+          - generic [ref=e350]: 
+          - text: Empty Trash
+    - generic [ref=e351]:
+      - table [ref=e353]:
+        - rowgroup [ref=e361]:
+          - row "Name Size Last Modified Type Permissions" [ref=e362]:
+            - columnheader [ref=e363]
+            - columnheader [ref=e365] [cursor=pointer]:
+              - link "Name" [ref=e368]:
+                - /url: yui-dt8-href-file
+            - columnheader [ref=e369] [cursor=pointer]:
+              - link "Size" [ref=e372]:
+                - /url: yui-dt8-href-size
+            - columnheader [ref=e373] [cursor=pointer]:
+              - link "Last Modified" [ref=e376]:
+                - /url: yui-dt8-href-mtime
+            - columnheader [ref=e377] [cursor=pointer]:
+              - link "Type" [ref=e380]:
+                - /url: yui-dt8-href-mimetype
+            - columnheader [ref=e381] [cursor=pointer]:
+              - link "Permissions" [ref=e384]:
+                - /url: yui-dt8-href-nicemode
+      - table [ref=e386]:
+        - rowgroup:
+          - row "Name Size Last Modified Type Permissions":
+            - columnheader [ref=e387]
+            - columnheader "Name" [ref=e388]
+            - columnheader "Size" [ref=e389]
+            - columnheader "Last Modified" [ref=e390]
+            - columnheader "Type" [ref=e391]
+            - columnheader "Permissions" [ref=e392]
+        - rowgroup [active] [ref=e393]:
+          - row [ref=e2018]:
+            - cell [ref=e2019]:
+              - generic [aria-hidden] [ref=e2021]: 
+            - cell ".well-known" [ref=e2022]
+            - cell "4 KB" [ref=e2024]
+            - cell "Jul 12, 2026, 4:57 AM" [ref=e2026]
+            - cell "httpd/unix-directory" [ref=e2028]
+            - cell "0755" [ref=e2030] [cursor=pointer]
+          - row [ref=e2032]:
+            - cell [ref=e2033]:
+              - generic [aria-hidden] [ref=e2035]: 
+            - cell "admin" [ref=e2036]
+            - cell "4 KB" [ref=e2038]
+            - cell "Sep 8, 2026, 7:54 PM" [ref=e2040]
+            - cell "httpd/unix-directory" [ref=e2042]
+            - cell "0755" [ref=e2044] [cursor=pointer]
+          - row [ref=e2046]:
+            - cell [ref=e2047]:
+              - generic [aria-hidden] [ref=e2049]: 
+            - cell "assets" [ref=e2050]
+            - cell "4 KB" [ref=e2052]
+            - cell "Sep 7, 2026, 4:21 PM" [ref=e2054]
+            - cell "httpd/unix-directory" [ref=e2056]
+            - cell "0755" [ref=e2058] [cursor=pointer]
+          - row [ref=e2060]:
+            - cell [ref=e2061]:
+              - generic [aria-hidden] [ref=e2063]: 
+            - cell "cgi-bin" [ref=e2064]
+            - cell "4 KB" [ref=e2066]
+            - cell "Nov 4, 2025, 5:02 PM" [ref=e2068]
+            - cell "httpd/unix-directory" [ref=e2070]
+            - cell "0755" [ref=e2072] [cursor=pointer]
+          - row [ref=e2074]:
+            - cell [ref=e2075]:
+              - generic [aria-hidden] [ref=e2077]: 
+            - cell "dashboard" [ref=e2078]
+            - cell "4 KB" [ref=e2080]
+            - cell "Jul 28, 2026, 7:39 PM" [ref=e2082]
+            - cell "httpd/unix-directory" [ref=e2084]
+            - cell "0755" [ref=e2086] [cursor=pointer]
+          - row [ref=e2088]:
+            - cell [ref=e2089]:
+              - generic [aria-hidden] [ref=e2091]: 
+            - cell "forms" [ref=e2092]
+            - cell "4 KB" [ref=e2094]
+            - cell "Nov 4, 2025, 7:08 PM" [ref=e2096]
+            - cell "httpd/unix-directory" [ref=e2098]
+            - cell "0777" [ref=e2100] [cursor=pointer]
+          - row [ref=e2102]:
+            - cell [ref=e2103]:
+              - generic [aria-hidden] [ref=e2105]: 
+            - cell "full-stack-development-course" [ref=e2106]
+            - cell "4 KB" [ref=e2108]
+            - cell "Sep 18, 2026, 1:23 AM" [ref=e2110]
+            - cell "httpd/unix-directory" [ref=e2112]
+            - cell "0755" [ref=e2114] [cursor=pointer]
+          - row [ref=e2116]:
+            - cell [ref=e2117]:
+              - generic [aria-hidden] [ref=e2119]: 
+            - cell "gmailsso" [ref=e2120]
+            - cell "4 KB" [ref=e2122]
+            - cell "Nov 4, 2025, 7:08 PM" [ref=e2124]
+            - cell "httpd/unix-directory" [ref=e2126]
+            - cell "0777" [ref=e2128] [cursor=pointer]
+          - row [ref=e2130]:
+            - cell [ref=e2131]:
+              - generic [aria-hidden] [ref=e2133]: 
+            - cell "includes" [ref=e2134]
+            - cell "4 KB" [ref=e2136]
+            - cell "Sep 8, 2026, 8:02 PM" [ref=e2138]
+            - cell "httpd/unix-directory" [ref=e2140]
+            - cell "0777" [ref=e2142] [cursor=pointer]
+          - row [ref=e2144]:
+            - cell [ref=e2145]:
+              - generic [aria-hidden] [ref=e2147]: 
+            - cell "login" [ref=e2148]
+            - cell "4 KB" [ref=e2150]
+            - cell "Apr 25, 2026, 1:15 PM" [ref=e2152]
+            - cell "httpd/unix-directory" [ref=e2154]
+            - cell "0755" [ref=e2156] [cursor=pointer]
+          - row [ref=e2158]:
+            - cell [ref=e2159]:
+              - generic [aria-hidden] [ref=e2161]: 
+            - cell "mail" [ref=e2162]
+            - cell "4 KB" [ref=e2164]
+            - cell "Nov 4, 2025, 7:08 PM" [ref=e2166]
+            - cell "httpd/unix-directory" [ref=e2168]
+            - cell "0777" [ref=e2170] [cursor=pointer]
+          - row [ref=e2172]:
+            - cell [ref=e2173]:
+              - generic [aria-hidden] [ref=e2175]: 
+            - cell "tracking" [ref=e2176]
+            - cell "4 KB" [ref=e2178]
+            - cell "Apr 26, 2026, 7:32 PM" [ref=e2180]
+            - cell "httpd/unix-directory" [ref=e2182]
+            - cell "0755" [ref=e2184] [cursor=pointer]
+          - row [ref=e2186]:
+            - cell [ref=e2187]:
+              - generic [aria-hidden] [ref=e2189]: 
+            - cell "v2" [ref=e2190]
+            - cell "4 KB" [ref=e2192]
+            - cell "Jun 1, 2026, 8:33 PM" [ref=e2194]
+            - cell "httpd/unix-directory" [ref=e2196]
+            - cell "0755" [ref=e2198] [cursor=pointer]
+          - row [ref=e2200]:
+            - cell [ref=e2201]:
+              - generic [aria-hidden] [ref=e2203]: 
+            - cell "wp-backup" [ref=e2204]
+            - cell "4 KB" [ref=e2206]
+            - cell "May 29, 2026, 2:32 AM" [ref=e2208]
+            - cell "httpd/unix-directory" [ref=e2210]
+            - cell "0755" [ref=e2212] [cursor=pointer]
+          - row [ref=e2214]:
+            - cell [ref=e2215]:
+              - generic [aria-hidden] [ref=e2217]: 
+            - cell ".htaccess" [ref=e2218]
+            - cell "5.3 KB" [ref=e2220]
+            - cell "Sep 8, 2026, 8:02 PM" [ref=e2222]
+            - cell "text/x-generic" [ref=e2224]
+            - cell "0644" [ref=e2226] [cursor=pointer]
+          - row [ref=e2228]:
+            - cell [ref=e2229]:
+              - generic [aria-hidden] [ref=e2231]: 
+            - cell ".well-known.zip" [ref=e2232]
+            - cell "3.26 GB" [ref=e2234]
+            - cell "Sep 7, 2026, 2:24 PM" [ref=e2236]
+            - cell "package/x-generic" [ref=e2238]
+            - cell "0644" [ref=e2240] [cursor=pointer]
+          - row [ref=e2242]:
+            - cell [ref=e2243]:
+              - generic [aria-hidden] [ref=e2245]: 
+            - cell "404.php" [ref=e2246]
+            - cell "1.04 KB" [ref=e2248]
+            - cell "Sep 7, 2026, 4:26 PM" [ref=e2250]
+            - cell "text/x-generic" [ref=e2252]
+            - cell "0666" [ref=e2254] [cursor=pointer]
+          - row [ref=e2256]:
+            - cell [ref=e2257]:
+              - generic [aria-hidden] [ref=e2259]: 
+            - cell "_probe.php" [ref=e2260]
+            - cell "114 bytes" [ref=e2262]
+            - cell "Sep 7, 2026, 5:43 PM" [ref=e2264]
+            - cell "text/x-generic" [ref=e2266]
+            - cell "0644" [ref=e2268] [cursor=pointer]
+          - row [ref=e2270]:
+            - cell [ref=e2271]:
+              - generic [aria-hidden] [ref=e2273]: 
+            - cell "admin.zip" [ref=e2274]
+            - cell "3.04 MB" [ref=e2276]
+            - cell "Aug 20, 2026, 8:32 PM" [ref=e2278]
+            - cell "package/x-generic" [ref=e2280]
+            - cell "0644" [ref=e2282] [cursor=pointer]
+          - row [ref=e2284]:
+            - cell [ref=e2285]:
+              - generic [aria-hidden] [ref=e2287]: 
+            - cell "assets_Old_Website_Chandru_20082026.zip" [ref=e2288]
+            - cell "2.64 GB" [ref=e2290]
+            - cell "Aug 20, 2026, 8:13 PM" [ref=e2292]
+            - cell "package/x-generic" [ref=e2294]
+            - cell "0644" [ref=e2296] [cursor=pointer]
+          - row [ref=e2298]:
+            - cell [ref=e2299]:
+              - generic [aria-hidden] [ref=e2301]: 
+            - cell "blog.php" [ref=e2302]
+            - cell "10.01 KB" [ref=e2304]
+            - cell "Sep 7, 2026, 4:31 PM" [ref=e2306]
+            - cell "text/x-generic" [ref=e2308]
+            - cell "0666" [ref=e2310] [cursor=pointer]
+          - row [ref=e2312]:
+            - cell [ref=e2313]:
+              - generic [aria-hidden] [ref=e2315]: 
+            - cell "course.php" [ref=e2316]
+            - cell "27.85 KB" [ref=e2318]
+            - cell "Sep 7, 2026, 4:32 PM" [ref=e2320]
+            - cell "text/x-generic" [ref=e2322]
+            - cell "0666" [ref=e2324] [cursor=pointer]
+          - row [ref=e2326]:
+            - cell [ref=e2327]:
+              - generic [aria-hidden] [ref=e2329]: 
+            - cell "db.php" [ref=e2330]
+            - cell "6.56 KB" [ref=e2332]
+            - cell "Sep 7, 2026, 4:28 PM" [ref=e2334]
+            - cell "text/x-generic" [ref=e2336]
+            - cell "0666" [ref=e2338] [cursor=pointer]
+          - row [ref=e2340]:
+            - cell [ref=e2341]:
+              - generic [aria-hidden] [ref=e2343]: 
+            - cell "download-syllabus.php" [ref=e2344]
+            - cell "15.24 KB" [ref=e2346]
+            - cell "Aug 1, 2026, 2:54 PM" [ref=e2348]
+            - cell "text/x-generic" [ref=e2350]
+            - cell "0666" [ref=e2352] [cursor=pointer]
+          - row [ref=e2354]:
+            - cell [ref=e2355]:
+              - generic [aria-hidden] [ref=e2357]: 
+            - cell "error_log" [ref=e2358]
+            - cell "13.9 MB" [ref=e2360]
+            - cell "Today, 12:12 AM" [ref=e2362]
+            - cell "text/x-generic" [ref=e2364]
+            - cell "0644" [ref=e2366] [cursor=pointer]
+          - row [ref=e2368]:
+            - cell [ref=e2369]:
+              - generic [aria-hidden] [ref=e2371]: 
+            - cell "index.php" [ref=e2372]
+            - cell "8.29 KB" [ref=e2374]
+            - cell "Sep 8, 2026, 8:02 PM" [ref=e2376]
+            - cell "text/x-generic" [ref=e2378]
+            - cell "0644" [ref=e2380] [cursor=pointer]
+          - row [ref=e2382]:
+            - cell [ref=e2383]:
+              - generic [aria-hidden] [ref=e2385]: 
+            - cell "index_iuc29072026.php.bak" [ref=e2386]
+            - cell "163.09 KB" [ref=e2388]
+            - cell "Jul 30, 2026, 11:49 AM" [ref=e2390]
+            - cell "text/x-generic" [ref=e2392]
+            - cell "0666" [ref=e2394] [cursor=pointer]
+          - row [ref=e2396]:
+            - cell [ref=e2397]:
+              - generic [aria-hidden] [ref=e2399]: 
+            - cell "landing.php" [ref=e2400]
+            - cell "18.27 KB" [ref=e2402]
+            - cell "Sep 8, 2026, 8:02 PM" [ref=e2404]
+            - cell "text/x-generic" [ref=e2406]
+            - cell "0644" [ref=e2408] [cursor=pointer]
+          - row [ref=e2410]:
+            - cell [ref=e2411]:
+              - generic [aria-hidden] [ref=e2413]: 
+            - cell "robots.txt" [ref=e2414]
+            - cell "232 bytes" [ref=e2416]
+            - cell "Sep 7, 2026, 4:37 PM" [ref=e2418]
+            - cell "text/plain" [ref=e2420]
+            - cell "0644" [ref=e2422] [cursor=pointer]
+          - row [ref=e2424]:
+            - cell [ref=e2425]:
+              - generic [aria-hidden] [ref=e2427]: 
+            - cell "sitemap.xml" [ref=e2428]
+            - cell "2.76 KB" [ref=e2430]
+            - cell "Sep 8, 2026, 7:54 PM" [ref=e2432]
+            - cell "text/x-generic" [ref=e2434]
+            - cell "0644" [ref=e2436] [cursor=pointer]
+          - row [ref=e2438]:
+            - cell [ref=e2439]:
+              - generic [aria-hidden] [ref=e2441]: 
+            - cell "track.php" [ref=e2442]
+            - cell "12.8 KB" [ref=e2444]
+            - cell "Sep 8, 2026, 8:02 PM" [ref=e2446]
+            - cell "text/x-generic" [ref=e2448]
+            - cell "0644" [ref=e2450] [cursor=pointer]
+  - text:      
+  - iframe

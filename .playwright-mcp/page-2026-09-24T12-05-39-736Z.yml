@@ -1,0 +1,99 @@
+- generic [ref=f12e2]:
+  - complementary "Analytics navigation" [ref=f12e3]:
+    - generic [ref=f12e4]:
+      - img "IUC" [ref=f12e5]
+      - generic [ref=f12e6]:
+        - generic [ref=f12e7]: IUC Analytics
+        - generic [ref=f12e8]: Marketing Dashboard
+    - navigation [ref=f12e9]:
+      - button " Overview" [ref=f12e10] [cursor=pointer]:
+        - generic [ref=f12e11]: 
+        - text: Overview
+      - button " Visitors" [ref=f12e12] [cursor=pointer]:
+        - generic [ref=f12e13]: 
+        - text: Visitors
+      - button " Campaigns" [ref=f12e14] [cursor=pointer]:
+        - generic [ref=f12e15]: 
+        - text: Campaigns
+      - button " Pages" [ref=f12e16] [cursor=pointer]:
+        - generic [ref=f12e17]: 
+        - text: Pages
+      - button " SEO Monitor" [ref=f12e18] [cursor=pointer]:
+        - generic [ref=f12e19]: 
+        - text: SEO Monitor
+      - button " Enquiries" [ref=f12e20] [cursor=pointer]:
+        - generic [ref=f12e21]: 
+        - text: Enquiries
+      - button " Conversions" [ref=f12e22] [cursor=pointer]:
+        - generic [ref=f12e23]: 
+        - text: Conversions
+      - button " Live Visitors" [ref=f12e24] [cursor=pointer]:
+        - generic [ref=f12e25]: 
+        - text: Live Visitors
+      - button " Reports" [ref=f12e27] [cursor=pointer]:
+        - generic [ref=f12e28]: 
+        - text: Reports
+    - generic [ref=f12e29]:
+      - link " View Website" [ref=f12e30] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f12e31]: 
+        - text: View Website
+      - link " Logout" [ref=f12e32] [cursor=pointer]:
+        - /url: logout.php
+        - generic [ref=f12e33]: 
+        - text: Logout
+  - main [ref=f12e34]:
+    - generic [ref=f12e35]:
+      - generic [ref=f12e36]:
+        - text: 
+        - generic [ref=f12e37]:
+          - heading "Overview" [level=1] [ref=f12e38]
+          - paragraph
+      - generic [ref=f12e39]:
+        - generic [ref=f12e40]:
+          - textbox [ref=f12e41]: 2026-08-25
+          - generic [ref=f12e42]: to
+          - textbox [ref=f12e43]: 2026-09-24
+          - button " Apply" [ref=f12e44] [cursor=pointer]:
+            - generic [ref=f12e45]: 
+            - text: Apply
+        - generic [ref=f12e46]:
+          - link " Excel" [ref=f12e47] [cursor=pointer]:
+            - /url: export.php?format=excel&from=2026-08-25&to=2026-09-24
+            - generic [ref=f12e48]: 
+            - text: Excel
+          - link " PDF" [ref=f12e49] [cursor=pointer]:
+            - /url: export.php?format=pdf&from=2026-08-25&to=2026-09-24
+            - generic [ref=f12e50]: 
+            - text: PDF
+          - link " CSV" [ref=f12e51] [cursor=pointer]:
+            - /url: export.php?format=csv&from=2026-08-25&to=2026-09-24
+            - generic [ref=f12e52]: 
+            - text: CSV
+    - generic [ref=f12e53]:
+      - generic [ref=f12e54]:
+        - generic [ref=f12e56]:
+          - generic [ref=f12e57]: 
+          - text: Data Collection Health
+        - generic [ref=f12e59]:
+          - generic [ref=f12e61]:
+            - generic [ref=f12e62]: 
+            - text: Daily Visitors Trend
+          - generic [ref=f12e66]:
+            - generic [ref=f12e67]: 
+            - text: Device Distribution
+        - generic [ref=f12e70]:
+          - generic [ref=f12e72]:
+            - generic [ref=f12e73]: 
+            - text: Traffic by Source
+          - generic [ref=f12e77]:
+            - generic [ref=f12e78]: 
+            - text: Monthly Growth
+        - generic [ref=f12e81]:
+          - generic [ref=f12e83]:
+            - generic [ref=f12e84]: 
+            - text: Browser Share
+          - generic [ref=f12e88]:
+            - generic [ref=f12e89]: 
+            - text: Top Landing Pages
+      - text:                                               

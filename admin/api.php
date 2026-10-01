@@ -7,6 +7,8 @@ require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../db.php';
 require_once __DIR__ . '/../includes/analytics.php';
 require_once __DIR__ . '/../includes/search-console.php';
+require_once __DIR__ . '/../includes/google-analytics.php';
+require_once __DIR__ . '/../includes/whatsapp-enquiry.php';
 require_once __DIR__ . '/_auth.php';
 
 header('Content-Type: application/json; charset=utf-8');
@@ -122,7 +124,8 @@ if ($action === 'gsc_performance') {
 }
 
 if (!$conn) {
-    echo json_encode(['error' => 'DB unavailable']);
+    http_response_code(503);
+    echo json_encode(['ok' => 0, 'error' => 'Database unavailable']);
     exit;
 }
 $schemaReady = an_ensure_tables($conn);
@@ -175,19 +178,73 @@ function an_one($conn, $sql, $types = '', $args = []) {
     return $rows[0] ?? [];
 }
 
+function an_source_label($source, $channel = '') {
+    $value = strtolower(trim((string)$source));
+    $labels = [
+        'facebook' => 'Facebook', 'instagram' => 'Instagram', 'youtube' => 'YouTube',
+        'linkedin' => 'LinkedIn', 'whatsapp' => 'WhatsApp', 'twitter' => 'X / Twitter',
+        'tiktok' => 'TikTok', 'google' => 'Google', 'bing' => 'Microsoft Bing',
+        'yahoo' => 'Yahoo', 'duckduckgo' => 'DuckDuckGo', 'email' => 'Email',
+        'qr' => 'QR Code', 'direct' => 'Direct',
+    ];
+    if (isset($labels[$value])) return $labels[$value];
+    return $value !== '' ? ucwords(str_replace(['_', '-'], ' ', $value)) : ((string)$channel ?: 'Unattributed');
+}
+
 if ($action === 'live') {
-    $cut = date('Y-m-d H:i:s', time() - 300);
-    $active = an_q($conn, "SELECT s.session_id, s.visitor_id, s.channel, s.source, s.medium, s.campaign, s.exit_page,
-        s.device, s.browser, s.os, s.country, s.city, COALESCE(pv.c,0) AS page_views, s.started_at, s.last_activity
+    $cut5 = date('Y-m-d H:i:s', time() - 300);
+    $cut30 = date('Y-m-d H:i:s', time() - 1800);
+    $active = an_q($conn, "SELECT s.session_id, s.visitor_id, v.phone, s.channel, s.source, s.medium, s.campaign, s.campaign_id,
+        s.landing_page, s.exit_page, s.device, s.browser, s.os, s.country, s.city,
+        COALESCE(s.page_views,0) AS page_views, s.started_at, s.last_activity
         FROM analytics_sessions s
-        LEFT JOIN (SELECT session_id, COUNT(*) AS c FROM analytics_pageviews GROUP BY session_id) pv ON pv.session_id = s.session_id
-        WHERE s.last_activity >= ? ORDER BY s.last_activity DESC LIMIT 100", 's', [$cut]);
-    $count = an_one($conn, "SELECT COUNT(*) AS c FROM analytics_sessions WHERE last_activity >= ?", 's', [$cut]);
-    $total = an_one($conn, "SELECT COUNT(*) AS c FROM analytics_visitors");
+        LEFT JOIN analytics_visitors v ON v.visitor_id = s.visitor_id
+        WHERE s.last_activity >= ?
+          AND NOT EXISTS (
+              SELECT 1 FROM analytics_sessions newer
+              WHERE newer.visitor_id = s.visitor_id AND newer.last_activity >= ?
+                AND (newer.last_activity > s.last_activity OR (newer.last_activity = s.last_activity AND newer.id > s.id))
+          )
+        ORDER BY s.last_activity DESC LIMIT 100", 'ss', [$cut5, $cut5]);
+    foreach ($active as &$activeRow) $activeRow['source_label'] = an_source_label($activeRow['source'] ?? '', $activeRow['channel'] ?? '');
+    unset($activeRow);
+    $counts = an_one($conn, "SELECT
+            COUNT(DISTINCT CASE WHEN last_activity >= ? THEN visitor_id END) AS active_5m,
+            COUNT(DISTINCT visitor_id) AS active_30m,
+            SUM(CASE WHEN last_activity >= ? THEN 1 ELSE 0 END) AS sessions_5m,
+            (SELECT COUNT(*) FROM analytics_visitors) AS total_visitors
+        FROM analytics_sessions WHERE last_activity >= ?", 'sss', [$cut5, $cut5, $cut30]);
+    $trendRows = an_q($conn, "SELECT DATE_FORMAT(minute_at, '%Y-%m-%d %H:%i:00') AS minute_at,
+            COUNT(DISTINCT visitor_id) AS active_users
+        FROM analytics_live_activity WHERE minute_at >= ? GROUP BY minute_at ORDER BY minute_at", 's', [$cut30]);
+    $trendMap = [];
+    foreach ($trendRows as $trendRow) $trendMap[$trendRow['minute_at']] = (int)$trendRow['active_users'];
+    $trend = [];
+    $minute = new DateTime(date('Y-m-d H:i:00', time() - (29 * 60)));
+    $minuteEnd = new DateTime(date('Y-m-d H:i:00'));
+    while ($minute <= $minuteEnd) {
+        $key = $minute->format('Y-m-d H:i:00');
+        $trend[] = ['minute' => $key, 'active_users' => (int)($trendMap[$key] ?? 0)];
+        $minute->modify('+1 minute');
+    }
+    $iucActive30m = (int)($counts['active_30m'] ?? 0);
+    $ga4Realtime = ga4_realtime_active_users();
+    $usesGa4 = !empty($ga4Realtime['ok']) && $ga4Realtime['active_users_30m'] !== null;
+    $displayActive30m = $usesGa4 ? (int)$ga4Realtime['active_users_30m'] : $iucActive30m;
     echo json_encode([
-        'active_count' => (int)($count['c'] ?? 0),
-        'total_visitors' => (int)($total['c'] ?? 0),
+        'active_count' => $displayActive30m,
+        'active_users_5m' => (int)($counts['active_5m'] ?? 0),
+        'active_users_30m' => $displayActive30m,
+        'iuc_active_users_30m' => $iucActive30m,
+        'active_sessions_5m' => (int)($counts['sessions_5m'] ?? 0),
+        'total_visitors' => (int)($counts['total_visitors'] ?? 0),
         'active' => $active,
+        'trend' => $trend,
+        'live_source' => $usesGa4 ? 'ga4' : 'iuc',
+        'ga4' => $ga4Realtime,
+        'definition' => $usesGa4
+            ? 'Google Analytics 4 Realtime activeUsers for the last 30 minutes.'
+            : 'Distinct IUC visitor IDs with activity in the selected rolling window.',
         'now' => date('Y-m-d H:i:s'),
     ]);
     exit;
@@ -276,7 +333,7 @@ $sessions = an_one($conn, "SELECT COUNT(*) AS c, COALESCE(SUM(COALESCE(pv.c,0)),
     LEFT JOIN (SELECT session_id, COUNT(*) AS c FROM analytics_pageviews GROUP BY session_id) pv ON pv.session_id = s.session_id
     WHERE s.started_at BETWEEN ? AND ?", 'ss', [$fromDt, $toDt]);
 $convTotal = an_one($conn, "SELECT COUNT(*) AS c FROM analytics_events WHERE event_type IN ($convList) AND created_at BETWEEN ? AND ?", 'ss', [$fromDt, $toDt]);
-$activeNow = an_one($conn, "SELECT COUNT(*) AS c FROM analytics_sessions WHERE last_activity >= ?", 's', [date('Y-m-d H:i:s', time() - 300)]);
+$activeNow = an_one($conn, "SELECT COUNT(DISTINCT visitor_id) AS c FROM analytics_sessions WHERE last_activity >= ?", 's', [date('Y-m-d H:i:s', time() - 1800)]);
 
 $sessionCount = (int)($sessions['c'] ?? 0);
 $bounceRate = $sessionCount ? round(($sessions['bounce'] ?? 0) / $sessionCount * 100, 1) : 0;
@@ -317,6 +374,8 @@ $sources = an_q($conn, "SELECT COALESCE(NULLIF(TRIM(s.source),''), s.channel) AS
         COALESCE(SUM(COALESCE(pv.c,0)),0) AS views
     FROM analytics_sessions s LEFT JOIN (SELECT session_id, COUNT(*) AS c FROM analytics_pageviews GROUP BY session_id) pv ON pv.session_id = s.session_id
     WHERE s.started_at BETWEEN ? AND ? GROUP BY label ORDER BY sessions DESC LIMIT 12", 'ss', [$fromDt, $toDt]);
+foreach ($sources as &$sourceRow) $sourceRow['label'] = an_source_label($sourceRow['label'] ?? '');
+unset($sourceRow);
 $mediums = an_q($conn, "SELECT COALESCE(NULLIF(TRIM(s.medium),''), s.channel) AS label, COUNT(*) AS sessions,
         COALESCE(SUM(COALESCE(pv.c,0)),0) AS views
     FROM analytics_sessions s LEFT JOIN (SELECT session_id, COUNT(*) AS c FROM analytics_pageviews GROUP BY session_id) pv ON pv.session_id = s.session_id
@@ -324,15 +383,16 @@ $mediums = an_q($conn, "SELECT COALESCE(NULLIF(TRIM(s.medium),''), s.channel) AS
 $channels = an_q($conn, "SELECT COALESCE(channel,'Direct') AS label, COUNT(*) AS value
     FROM analytics_sessions WHERE started_at BETWEEN ? AND ? GROUP BY channel ORDER BY value DESC", 'ss', [$fromDt, $toDt]);
 
-$campaigns = an_q($conn, "SELECT s.campaign, s.source, s.medium, MIN(s.landing_page) AS landing_page,
+$campaigns = an_q($conn, "SELECT COALESCE(NULLIF(TRIM(s.campaign),''), CONCAT('Campaign ID ', s.campaign_id)) AS campaign,
+        s.campaign_id, s.content, s.source, s.medium, s.click_id_type, MIN(SUBSTRING_INDEX(s.landing_page,'?',1)) AS landing_page,
         MIN(s.started_at) AS first_seen, MAX(s.last_activity) AS last_seen, COUNT(*) AS sessions,
         COALESCE(SUM(COALESCE(pv.c,0)),0) AS views,
         COALESCE(SUM(conv.c),0) AS conversions
     FROM analytics_sessions s
     LEFT JOIN (SELECT session_id, COUNT(*) AS c FROM analytics_pageviews GROUP BY session_id) pv ON pv.session_id = s.session_id
     LEFT JOIN (SELECT session_id, COUNT(*) AS c FROM analytics_events WHERE event_type IN ($convList) AND created_at BETWEEN ? AND ? GROUP BY session_id) conv ON conv.session_id = s.session_id
-    WHERE s.started_at BETWEEN ? AND ? AND COALESCE(s.campaign,'') <> ''
-    GROUP BY s.campaign, s.source, s.medium ORDER BY sessions DESC LIMIT 15", 'ssss', [$fromDt, $toDt, $fromDt, $toDt]);
+    WHERE s.started_at BETWEEN ? AND ? AND (COALESCE(s.campaign,'') <> '' OR COALESCE(s.campaign_id,'') <> '')
+    GROUP BY campaign, s.campaign_id, s.content, s.source, s.medium, s.click_id_type ORDER BY sessions DESC LIMIT 50", 'ssss', [$fromDt, $toDt, $fromDt, $toDt]);
 
 $campaignCosts = an_q($conn, "SELECT campaign, cost, landing_page, note, updated_at FROM analytics_campaign_meta");
 $costMap = [];
@@ -345,6 +405,7 @@ foreach ($campaigns as &$cp) {
     $cp['meta_updated_at'] = $meta['updated_at'] ?? null;
     if (!empty($meta['landing_page'])) $cp['landing_page'] = $meta['landing_page'];
     $cp['roi'] = $cost > 0 ? round((float)$cp['conversions'] / $cost * 100, 1) : null;
+    $cp['source_label'] = an_source_label($cp['source'] ?? '');
 }
 unset($cp);
 
@@ -367,10 +428,10 @@ $states = an_q($conn, "SELECT COALESCE(state,'Unknown') AS label, COUNT(*) AS va
 $cities = an_q($conn, "SELECT COALESCE(city,'Unknown') AS label, COUNT(*) AS value FROM analytics_sessions WHERE started_at BETWEEN ? AND ? GROUP BY city ORDER BY value DESC LIMIT 15", 'ss', [$fromDt, $toDt]);
 
 /* ── Pages ──────────────────────────────────────────────────── */
-$landingPages = an_q($conn, "SELECT landing_page AS page, COUNT(*) AS sessions FROM analytics_sessions WHERE started_at BETWEEN ? AND ? GROUP BY landing_page ORDER BY sessions DESC LIMIT 10", 'ss', [$fromDt, $toDt]);
-$exitPages = an_q($conn, "SELECT exit_page AS page, COUNT(*) AS sessions FROM analytics_sessions WHERE started_at BETWEEN ? AND ? GROUP BY exit_page ORDER BY sessions DESC LIMIT 10", 'ss', [$fromDt, $toDt]);
-$topPages = an_q($conn, "SELECT page_url AS page, COUNT(*) AS views, COUNT(DISTINCT visitor_id) AS visitors
-    FROM analytics_pageviews WHERE created_at BETWEEN ? AND ? GROUP BY page_url ORDER BY views DESC LIMIT 10", 'ss', [$fromDt, $toDt]);
+$landingPages = an_q($conn, "SELECT COALESCE(NULLIF(SUBSTRING_INDEX(landing_page,'?',1),''),'/') AS page, COUNT(*) AS sessions FROM analytics_sessions WHERE started_at BETWEEN ? AND ? GROUP BY page ORDER BY sessions DESC LIMIT 10", 'ss', [$fromDt, $toDt]);
+$exitPages = an_q($conn, "SELECT COALESCE(NULLIF(SUBSTRING_INDEX(exit_page,'?',1),''),'/') AS page, COUNT(*) AS sessions FROM analytics_sessions WHERE started_at BETWEEN ? AND ? GROUP BY page ORDER BY sessions DESC LIMIT 10", 'ss', [$fromDt, $toDt]);
+$topPages = an_q($conn, "SELECT COALESCE(NULLIF(SUBSTRING_INDEX(page_url,'?',1),''),'/') AS page, COUNT(*) AS views, COUNT(DISTINCT visitor_id) AS visitors
+    FROM analytics_pageviews WHERE created_at BETWEEN ? AND ? GROUP BY page ORDER BY views DESC LIMIT 10", 'ss', [$fromDt, $toDt]);
 
 /* ── Conversions ────────────────────────────────────────────── */
 $convByType = an_q($conn, "SELECT event_type, COUNT(*) AS c FROM analytics_events WHERE event_type IN ($convList) AND created_at BETWEEN ? AND ? GROUP BY event_type ORDER BY c DESC", 'ss', [$fromDt, $toDt]);
@@ -386,12 +447,15 @@ while ($d2 <= $dEnd) {
 }
 
 /* ── Recent visits (table view) ─────────────────────────────── */
-$recent = an_q($conn, "SELECT s.visitor_id, s.channel, s.source, s.medium, s.campaign, s.landing_page, s.exit_page,
+$recent = an_q($conn, "SELECT s.visitor_id, v.phone, s.channel, s.source, s.medium, s.campaign, s.campaign_id, s.landing_page, s.exit_page,
         s.device, s.browser, s.os, s.country, s.state, s.city, COALESCE(pv.c,0) AS page_views,
         s.duration_sec, CASE WHEN COALESCE(pv.c,0) <= 1 THEN 1 ELSE 0 END AS is_bounce, s.started_at, s.last_activity
     FROM analytics_sessions s
+    LEFT JOIN analytics_visitors v ON v.visitor_id = s.visitor_id
     LEFT JOIN (SELECT session_id, COUNT(*) AS c FROM analytics_pageviews GROUP BY session_id) pv ON pv.session_id = s.session_id
     ORDER BY s.last_activity DESC LIMIT 60");
+foreach ($recent as &$recentRow) $recentRow['source_label'] = an_source_label($recentRow['source'] ?? '', $recentRow['channel'] ?? '');
+unset($recentRow);
 
 /* SEO acquisition: real search keywords when available, plus honest not-provided counts. */
 $searchChannels = "'Google Search','Bing Search','Yahoo Search','DuckDuckGo'";
@@ -403,30 +467,61 @@ $notProvidedSessions = an_one($conn, "SELECT COUNT(*) AS c FROM analytics_sessio
     WHERE channel IN ($searchChannels) AND COALESCE(NULLIF(TRIM(search_term),''), NULLIF(TRIM(term),'')) IS NULL
       AND started_at BETWEEN ? AND ?", 'ss', [$fromDt, $toDt]);
 $seoKeywords = an_q($conn, "SELECT COALESCE(NULLIF(TRIM(s.search_term),''), NULLIF(TRIM(s.term),'')) AS keyword,
-        COALESCE(NULLIF(s.search_engine,''), s.channel) AS engine, COUNT(DISTINCT s.session_id) AS sessions,
+        CASE
+            WHEN s.channel = 'Google Ads' THEN 'Google Ads'
+            WHEN s.search_engine = 'Google' OR s.channel = 'Google Search' THEN 'Google Organic'
+            WHEN s.search_engine IS NOT NULL AND s.search_engine <> '' THEN s.search_engine
+            ELSE s.channel
+        END AS engine, COUNT(DISTINCT s.session_id) AS sessions,
         COUNT(DISTINCT s.visitor_id) AS visitors, COALESCE(SUM(COALESCE(pv.c,0)),0) AS views,
-        COALESCE(SUM(COALESCE(conv.c,0)),0) AS conversions, MIN(s.landing_page) AS landing_page,
+        COALESCE(SUM(COALESCE(conv.c,0)),0) AS conversions,
+        COALESCE(NULLIF(SUBSTRING_INDEX(s.landing_page,'?',1),''),'/') AS landing_page,
         MAX(s.last_activity) AS last_seen
     FROM analytics_sessions s
     LEFT JOIN (SELECT session_id, COUNT(*) AS c FROM analytics_pageviews GROUP BY session_id) pv ON pv.session_id = s.session_id
     LEFT JOIN (SELECT session_id, COUNT(*) AS c FROM analytics_events WHERE event_type IN ($convList) GROUP BY session_id) conv ON conv.session_id = s.session_id
     WHERE COALESCE(NULLIF(TRIM(s.search_term),''), NULLIF(TRIM(s.term),'')) IS NOT NULL
       AND s.started_at BETWEEN ? AND ?
-    GROUP BY keyword, engine ORDER BY sessions DESC, conversions DESC LIMIT 50", 'ss', [$fromDt, $toDt]);
-$searchEngines = an_q($conn, "SELECT COALESCE(NULLIF(search_engine,''), channel) AS engine, COUNT(*) AS sessions,
+    GROUP BY keyword, engine, COALESCE(NULLIF(SUBSTRING_INDEX(s.landing_page,'?',1),''),'/')
+    ORDER BY sessions DESC, conversions DESC LIMIT 50", 'ss', [$fromDt, $toDt]);
+$searchEngines = an_q($conn, "SELECT CASE
+            WHEN channel = 'Google Ads' THEN 'Google Ads'
+            WHEN search_engine = 'Google' OR channel = 'Google Search' THEN 'Google Organic'
+            WHEN search_engine IS NOT NULL AND search_engine <> '' THEN search_engine
+            ELSE channel
+        END AS engine, COUNT(*) AS sessions,
         COUNT(DISTINCT visitor_id) AS visitors
     FROM analytics_sessions WHERE (channel IN ($searchChannels) OR channel = 'Google Ads' OR search_engine IS NOT NULL)
       AND started_at BETWEEN ? AND ? GROUP BY engine ORDER BY sessions DESC", 'ss', [$fromDt, $toDt]);
-$seoLandingPages = an_q($conn, "SELECT landing_page AS page, COUNT(*) AS sessions, COUNT(DISTINCT visitor_id) AS visitors,
+$seoLandingPages = an_q($conn, "SELECT COALESCE(NULLIF(SUBSTRING_INDEX(landing_page,'?',1),''),'/') AS page, COUNT(*) AS sessions, COUNT(DISTINCT visitor_id) AS visitors,
         SUM(CASE WHEN COALESCE(NULLIF(TRIM(search_term),''), NULLIF(TRIM(term),'')) IS NOT NULL THEN 1 ELSE 0 END) AS known_keywords
     FROM analytics_sessions WHERE (channel IN ($searchChannels) OR channel = 'Google Ads' OR search_engine IS NOT NULL)
-      AND started_at BETWEEN ? AND ? GROUP BY landing_page ORDER BY sessions DESC LIMIT 20", 'ss', [$fromDt, $toDt]);
+      AND started_at BETWEEN ? AND ? GROUP BY page ORDER BY sessions DESC LIMIT 20", 'ss', [$fromDt, $toDt]);
 
 /* Saved enquiries and their attribution details. */
-$enquiries = an_q($conn, "SELECT id, full_name, phone, email, course, message, page_url, landing_page, referrer,
-        visitor_id, session_id, utm_source, utm_medium, utm_campaign, utm_content, utm_term,
-        status, admin_note, created_at, updated_at
-    FROM enquiries WHERE created_at BETWEEN ? AND ? ORDER BY created_at DESC LIMIT 200", 'ss', [$fromDt, $toDt]);
+$whatsappSchemaError = null;
+$whatsappSchemaReady = wa_ensure_schema($conn, $whatsappSchemaError);
+$whatsappSelect = $whatsappSchemaReady
+    ? ", w.status AS whatsapp_status, w.delivery_status AS whatsapp_delivery_status,
+        w.attempt_count AS whatsapp_attempt_count, w.error_code AS whatsapp_error_code,
+        w.error_message AS whatsapp_error_message, w.sent_at AS whatsapp_sent_at"
+    : ", NULL AS whatsapp_status, NULL AS whatsapp_delivery_status, 0 AS whatsapp_attempt_count,
+        NULL AS whatsapp_error_code, NULL AS whatsapp_error_message, NULL AS whatsapp_sent_at";
+$whatsappJoin = $whatsappSchemaReady ? " LEFT JOIN whatsapp_enquiry_messages w ON w.enquiry_id = e.id" : '';
+$enquiries = an_q($conn, "SELECT e.id, e.full_name, e.phone, e.email, e.course, e.message, e.page_url, e.landing_page, e.referrer,
+        e.visitor_id, e.session_id, e.utm_source, e.utm_medium, e.utm_campaign, e.utm_content, e.utm_term,
+        e.status, e.admin_note, e.created_at, e.updated_at,
+        COALESCE(NULLIF(e.utm_source,''), NULLIF(s.source,'')) AS attributed_source,
+        COALESCE(NULLIF(e.utm_medium,''), NULLIF(s.medium,'')) AS attributed_medium,
+        COALESCE(NULLIF(e.utm_campaign,''), NULLIF(s.campaign,'')) AS attributed_campaign,
+        COALESCE(NULLIF(e.utm_content,''), NULLIF(s.content,'')) AS attributed_content,
+        s.campaign_id, s.channel AS attributed_channel $whatsappSelect
+    FROM enquiries e LEFT JOIN analytics_sessions s ON s.session_id = e.session_id $whatsappJoin
+    WHERE e.created_at BETWEEN ? AND ? ORDER BY e.created_at DESC LIMIT 200", 'ss', [$fromDt, $toDt]);
+foreach ($enquiries as &$enquiryRow) {
+    $enquiryRow['source_label'] = an_source_label($enquiryRow['attributed_source'] ?? '', $enquiryRow['attributed_channel'] ?? '');
+}
+unset($enquiryRow);
 $enquiryStatus = an_q($conn, "SELECT status, COUNT(*) AS c FROM enquiries WHERE created_at BETWEEN ? AND ? GROUP BY status ORDER BY c DESC", 'ss', [$fromDt, $toDt]);
 $enquiryTotal = an_one($conn, "SELECT COUNT(*) AS c, MAX(created_at) AS latest FROM enquiries");
 
@@ -436,9 +531,11 @@ $healthTables = [
     'analytics_sessions' => ['last_activity'],
     'analytics_pageviews' => ['created_at'],
     'analytics_events' => ['created_at'],
+    'analytics_live_activity' => ['last_seen'],
     'analytics_campaign_meta' => ['updated_at'],
     'enquiries' => ['created_at'],
 ];
+if ($whatsappSchemaReady) $healthTables['whatsapp_enquiry_messages'] = ['created_at'];
 $healthRows = [];
 foreach ($healthTables as $table => $columns) {
     $timeColumn = $columns[0];
@@ -506,6 +603,7 @@ echo json_encode([
         'keywords' => $seoKeywords,
         'engines' => $searchEngines,
         'landing_pages' => $seoLandingPages,
+        'measurement_note' => 'Individual organic Google queries are normally hidden by the browser. Search Console supplies aggregate query performance; utm_term supplies session-level campaign attribution.',
     ],
     'enquiries' => [
         'rows' => $enquiries,

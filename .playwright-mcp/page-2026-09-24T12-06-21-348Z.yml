@@ -1,0 +1,522 @@
+- generic [ref=f12e2]:
+  - complementary "Analytics navigation" [ref=f12e3]:
+    - generic [ref=f12e4]:
+      - img "IUC" [ref=f12e5]
+      - generic [ref=f12e6]:
+        - generic [ref=f12e7]: IUC Analytics
+        - generic [ref=f12e8]: Marketing Dashboard
+    - navigation [ref=f12e9]:
+      - button " Overview" [ref=f12e10] [cursor=pointer]:
+        - generic [ref=f12e11]: 
+        - text: Overview
+      - button " Visitors" [ref=f12e12] [cursor=pointer]:
+        - generic [ref=f12e13]: 
+        - text: Visitors
+      - button " Campaigns" [ref=f12e14] [cursor=pointer]:
+        - generic [ref=f12e15]: 
+        - text: Campaigns
+      - button " Pages" [ref=f12e16] [cursor=pointer]:
+        - generic [ref=f12e17]: 
+        - text: Pages
+      - button " SEO Monitor" [ref=f12e18] [cursor=pointer]:
+        - generic [ref=f12e19]: 
+        - text: SEO Monitor
+      - button " Enquiries" [active] [ref=f12e20] [cursor=pointer]:
+        - generic [ref=f12e21]: 
+        - text: Enquiries
+      - button " Conversions" [ref=f12e22] [cursor=pointer]:
+        - generic [ref=f12e23]: 
+        - text: Conversions
+      - button " Live Visitors" [ref=f12e24] [cursor=pointer]:
+        - generic [ref=f12e25]: 
+        - text: Live Visitors
+      - button " Reports" [ref=f12e27] [cursor=pointer]:
+        - generic [ref=f12e28]: 
+        - text: Reports
+    - generic [ref=f12e29]:
+      - link " View Website" [ref=f12e30] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f12e31]: 
+        - text: View Website
+      - link " Logout" [ref=f12e32] [cursor=pointer]:
+        - /url: logout.php
+        - generic [ref=f12e33]: 
+        - text: Logout
+  - main [ref=f12e34]:
+    - generic [ref=f12e35]:
+      - generic [ref=f12e36]:
+        - text: 
+        - generic [ref=f12e37]:
+          - heading "Enquiries" [level=1] [ref=f12e190]
+          - paragraph [ref=f12e92]: "Report period: 2026-08-25 → 2026-09-24"
+      - generic [ref=f12e39]:
+        - generic [ref=f12e40]:
+          - textbox [ref=f12e41]: 2026-08-25
+          - generic [ref=f12e42]: to
+          - textbox [ref=f12e43]: 2026-09-24
+          - button " Apply" [ref=f12e44] [cursor=pointer]:
+            - generic [ref=f12e45]: 
+            - text: Apply
+        - generic [ref=f12e46]:
+          - link " Excel" [ref=f12e47] [cursor=pointer]:
+            - /url: export.php?format=excel&from=2026-08-25&to=2026-09-24
+            - generic [ref=f12e48]: 
+            - text: Excel
+          - link " PDF" [ref=f12e49] [cursor=pointer]:
+            - /url: export.php?format=pdf&from=2026-08-25&to=2026-09-24
+            - generic [ref=f12e50]: 
+            - text: PDF
+          - link " CSV" [ref=f12e51] [cursor=pointer]:
+            - /url: export.php?format=csv&from=2026-08-25&to=2026-09-24
+            - generic [ref=f12e52]: 
+            - text: CSV
+    - generic [ref=f12e53]:
+      - text:                                               
+      - generic [ref=f12e191]:
+        - generic [ref=f12e192]:
+          - generic [ref=f12e193]:
+            - generic [ref=f12e194]: 
+            - generic [ref=f12e196]: "23"
+            - generic [ref=f12e197]: All Enquiries
+            - generic [ref=f12e198]: Database total
+          - generic [ref=f12e199]:
+            - generic [ref=f12e200]: 
+            - generic [ref=f12e202]: "11"
+            - generic [ref=f12e203]: New
+            - generic [ref=f12e204]: Selected period
+          - generic [ref=f12e205]:
+            - generic [ref=f12e206]: 
+            - generic [ref=f12e208]: "0"
+            - generic [ref=f12e209]: Contacted
+            - generic [ref=f12e210]: Selected period
+          - generic [ref=f12e211]:
+            - generic [ref=f12e212]: 
+            - generic [ref=f12e214]: "0"
+            - generic [ref=f12e215]: Enrolled
+            - generic [ref=f12e216]: "Latest: 2026-09-24 14:48:36"
+        - generic [ref=f12e217]:
+          - generic [ref=f12e218]:
+            - generic [ref=f12e219]: 
+            - text: Saved Contact Enquiries
+            - generic [ref=f12e220]: Page, time and campaign attribution
+          - table [ref=f12e222]:
+            - rowgroup [ref=f12e223]:
+              - row [ref=f12e224]:
+                - columnheader "ID / Time" [ref=f12e225]
+                - columnheader "Contact" [ref=f12e226]
+                - columnheader "Course / Message" [ref=f12e227]
+                - columnheader "Submitted Page" [ref=f12e228]
+                - columnheader "Landing / Referrer" [ref=f12e229]
+                - columnheader "UTM Attribution" [ref=f12e230]
+                - columnheader "WhatsApp" [ref=f12e231]
+                - columnheader "Status / Admin Note" [ref=f12e232]
+                - columnheader "Save" [ref=f12e233]
+            - rowgroup [ref=f12e234]:
+              - row [ref=f12e235]:
+                - cell "#23 2026-09-24 14:48:36" [ref=f12e236]:
+                  - strong [ref=f12e237]: "#23"
+                  - generic [ref=f12e238]: 2026-09-24 14:48:36
+                - cell "Vinoth 9884450561 vinothk667@gmail.com" [ref=f12e239]:
+                  - strong [ref=f12e240]: Vinoth
+                  - generic [ref=f12e241]: "9884450561"
+                  - generic [ref=f12e242]: vinothk667@gmail.com
+                - cell "Java & J2EE Programming Testing" [ref=f12e243]:
+                  - strong [ref=f12e244]: Java & J2EE Programming
+                  - generic "Testing" [ref=f12e245]
+                - cell [ref=f12e246]:
+                  - link "https://www.iucedu.com/course/java " [ref=f12e247] [cursor=pointer]:
+                    - /url: https://www.iucedu.com/course/java
+                    - text: https://www.iucedu.com/course/java
+                    - generic [ref=f12e248]: 
+                - 'cell "https://www.iucedu.com/course/java  Ref: /admin/-" [ref=f12e249]':
+                  - link "https://www.iucedu.com/course/java " [ref=f12e251] [cursor=pointer]:
+                    - /url: https://www.iucedu.com/course/java
+                    - text: https://www.iucedu.com/course/java
+                    - generic [ref=f12e252]: 
+                  - generic [ref=f12e253]: "Ref: /admin/-"
+                - 'cell "Unattributed Session: 5497d0fa" [ref=f12e254]':
+                  - text: Unattributed
+                  - generic [ref=f12e255]: "Session: 5497d0fa"
+                - cell "NOT REQUESTED" [ref=f12e256]
+                - cell "New" [ref=f12e258]:
+                  - combobox [ref=f12e259]:
+                    - option "New" [selected]
+                    - option "Contacted"
+                    - option "Enrolled"
+                    - option "Closed"
+                    - option "Spam"
+                  - textbox "Follow-up note" [ref=f12e260]
+                - cell "Save 2026-09-24 14:48:36" [ref=f12e261]:
+                  - button "Save" [ref=f12e262] [cursor=pointer]
+                  - generic [ref=f12e263]: 2026-09-24 14:48:36
+              - row [ref=f12e264]:
+                - cell "#22 2026-09-24 07:59:59" [ref=f12e265]:
+                  - strong [ref=f12e266]: "#22"
+                  - generic [ref=f12e267]: 2026-09-24 07:59:59
+                - cell "BALAJI R 9176396498 balajiashwin21@gmail.com" [ref=f12e268]:
+                  - strong [ref=f12e269]: BALAJI R
+                  - generic [ref=f12e270]: "9176396498"
+                  - generic [ref=f12e271]: balajiashwin21@gmail.com
+                - cell "Spring Boot & Microservices -" [ref=f12e272]:
+                  - strong [ref=f12e273]: Spring Boot & Microservices
+                  - generic [ref=f12e274]: "-"
+                - cell [ref=f12e275]:
+                  - link "https://www.iucedu.com/course/spring-boot " [ref=f12e276] [cursor=pointer]:
+                    - /url: https://www.iucedu.com/course/spring-boot
+                    - text: https://www.iucedu.com/course/spring-boot
+                    - generic [ref=f12e277]: 
+                - 'cell "https://www.iucedu.com/  Ref: /" [ref=f12e278]':
+                  - link "https://www.iucedu.com/ " [ref=f12e280] [cursor=pointer]:
+                    - /url: https://www.iucedu.com/
+                    - text: https://www.iucedu.com/
+                    - generic [ref=f12e281]: 
+                  - generic "https://www.google.com/" [ref=f12e282]: "Ref: /"
+                - 'cell "Unattributed Session: 580843c9" [ref=f12e283]':
+                  - text: Unattributed
+                  - generic [ref=f12e284]: "Session: 580843c9"
+                - cell "NOT REQUESTED" [ref=f12e285]
+                - cell "New" [ref=f12e287]:
+                  - combobox [ref=f12e288]:
+                    - option "New" [selected]
+                    - option "Contacted"
+                    - option "Enrolled"
+                    - option "Closed"
+                    - option "Spam"
+                  - textbox "Follow-up note" [ref=f12e289]
+                - cell "Save 2026-09-24 07:59:59" [ref=f12e290]:
+                  - button "Save" [ref=f12e291] [cursor=pointer]
+                  - generic [ref=f12e292]: 2026-09-24 07:59:59
+              - row [ref=f12e293]:
+                - cell "#21 2026-09-24 07:09:16" [ref=f12e294]:
+                  - strong [ref=f12e295]: "#21"
+                  - generic [ref=f12e296]: 2026-09-24 07:09:16
+                - cell "Dharshan 7305449686 kdharshan095@gmail.com" [ref=f12e297]:
+                  - strong [ref=f12e298]: Dharshan
+                  - generic [ref=f12e299]: "7305449686"
+                  - generic [ref=f12e300]: kdharshan095@gmail.com
+                - cell "C & C++ Programming -" [ref=f12e301]:
+                  - strong [ref=f12e302]: C & C++ Programming
+                  - generic [ref=f12e303]: "-"
+                - cell [ref=f12e304]:
+                  - link "https://www.iucedu.com/course/c-cpp?utm_source=google&utm_medium=search&utm_campaign=iuc_cc%2B%2B_campaign&gad_source=1&gad_campaignid=24287361484&gclid=EAIaIQobChMIjuOXsYqGlwMVl5lmAh0CXTgAEAAYAiAAEgJCZPD_BwE " [ref=f12e305] [cursor=pointer]:
+                    - /url: https://www.iucedu.com/course/c-cpp?utm_source=google&utm_medium=search&utm_campaign=iuc_cc%2B%2B_campaign&gad_source=1&gad_campaignid=24287361484&gclid=EAIaIQobChMIjuOXsYqGlwMVl5lmAh0CXTgAEAAYAiAAEgJCZPD_BwE
+                    - text: https://www.iucedu.com/course/c-cpp?utm_source=google&utm_medium=search&utm_campaign=iuc_cc%2B%2B_campaign&gad_source=1&gad_campaignid=24287361484&gclid=EAIaIQobChMIjuOXsYqGlwMVl5lmAh0CXTgAEAAYAiAAEgJCZPD_BwE
+                    - generic [ref=f12e306]: 
+                - 'cell "https://www.iucedu.com/course/c-cpp?utm_source=google&utm_medium=search&utm_campaign=iuc_cc%2B%2B_campaign&gad_source=1&gad_campaignid=24287361484&gclid=EAIaIQobChMIjuOXsYqGlwMVl5lmAh0CXTgAEAAYAiAAEgJCZPD_BwE  Ref: /" [ref=f12e307]':
+                  - link "https://www.iucedu.com/course/c-cpp?utm_source=google&utm_medium=search&utm_campaign=iuc_cc%2B%2B_campaign&gad_source=1&gad_campaignid=24287361484&gclid=EAIaIQobChMIjuOXsYqGlwMVl5lmAh0CXTgAEAAYAiAAEgJCZPD_BwE " [ref=f12e309] [cursor=pointer]:
+                    - /url: https://www.iucedu.com/course/c-cpp?utm_source=google&utm_medium=search&utm_campaign=iuc_cc%2B%2B_campaign&gad_source=1&gad_campaignid=24287361484&gclid=EAIaIQobChMIjuOXsYqGlwMVl5lmAh0CXTgAEAAYAiAAEgJCZPD_BwE
+                    - text: https://www.iucedu.com/course/c-cpp?utm_source=google&utm_medium=search&utm_campaign=iuc_cc%2B%2B_campaign&gad_source=1&gad_campaignid=24287361484&gclid=EAIaIQobChMIjuOXsYqGlwMVl5lmAh0CXTgAEAAYAiAAEgJCZPD_BwE
+                    - generic [ref=f12e310]: 
+                  - generic "https://www.google.com/" [ref=f12e311]: "Ref: /"
+                - 'cell "Google / search / iuc_cc++_campaign Session: a4d5141e" [ref=f12e312]':
+                  - text: Google / search / iuc_cc++_campaign
+                  - generic [ref=f12e313]: "Session: a4d5141e"
+                - cell "NOT REQUESTED" [ref=f12e314]
+                - cell "New" [ref=f12e316]:
+                  - combobox [ref=f12e317]:
+                    - option "New" [selected]
+                    - option "Contacted"
+                    - option "Enrolled"
+                    - option "Closed"
+                    - option "Spam"
+                  - textbox "Follow-up note" [ref=f12e318]
+                - cell "Save 2026-09-24 07:09:16" [ref=f12e319]:
+                  - button "Save" [ref=f12e320] [cursor=pointer]
+                  - generic [ref=f12e321]: 2026-09-24 07:09:16
+              - row [ref=f12e322]:
+                - cell "#20 2026-09-23 23:12:44" [ref=f12e323]:
+                  - strong [ref=f12e324]: "#20"
+                  - generic [ref=f12e325]: 2026-09-23 23:12:44
+                - cell "test 81515151 test@test.com" [ref=f12e326]:
+                  - strong [ref=f12e327]: test
+                  - generic [ref=f12e328]: "81515151"
+                  - generic [ref=f12e329]: test@test.com
+                - cell "C & C++ Programming test" [ref=f12e330]:
+                  - strong [ref=f12e331]: C & C++ Programming
+                  - generic "test" [ref=f12e332]
+                - cell [ref=f12e333]:
+                  - link "https://www.iucedu.com/course/c-cpp?utm_source=google&utm_medium=search&utm_campaign=iuc_cc%2B%2B_campaign " [ref=f12e334] [cursor=pointer]:
+                    - /url: https://www.iucedu.com/course/c-cpp?utm_source=google&utm_medium=search&utm_campaign=iuc_cc%2B%2B_campaign
+                    - text: https://www.iucedu.com/course/c-cpp?utm_source=google&utm_medium=search&utm_campaign=iuc_cc%2B%2B_campaign
+                    - generic [ref=f12e335]: 
+                - 'cell "https://www.iucedu.com/course/c-cpp?utm_source=google&utm_medium=search&utm_campaign=iuc_cc%2B%2B_campaign  Ref: /admin/-" [ref=f12e336]':
+                  - link "https://www.iucedu.com/course/c-cpp?utm_source=google&utm_medium=search&utm_campaign=iuc_cc%2B%2B_campaign " [ref=f12e338] [cursor=pointer]:
+                    - /url: https://www.iucedu.com/course/c-cpp?utm_source=google&utm_medium=search&utm_campaign=iuc_cc%2B%2B_campaign
+                    - text: https://www.iucedu.com/course/c-cpp?utm_source=google&utm_medium=search&utm_campaign=iuc_cc%2B%2B_campaign
+                    - generic [ref=f12e339]: 
+                  - generic [ref=f12e340]: "Ref: /admin/-"
+                - 'cell "Google / search / iuc_cc++_campaign Session: e68c753e" [ref=f12e341]':
+                  - text: Google / search / iuc_cc++_campaign
+                  - generic [ref=f12e342]: "Session: e68c753e"
+                - cell "NOT REQUESTED" [ref=f12e343]
+                - cell "New" [ref=f12e345]:
+                  - combobox [ref=f12e346]:
+                    - option "New" [selected]
+                    - option "Contacted"
+                    - option "Enrolled"
+                    - option "Closed"
+                    - option "Spam"
+                  - textbox "Follow-up note" [ref=f12e347]
+                - cell "Save 2026-09-23 23:12:44" [ref=f12e348]:
+                  - button "Save" [ref=f12e349] [cursor=pointer]
+                  - generic [ref=f12e350]: 2026-09-23 23:12:44
+              - row [ref=f12e351]:
+                - cell "#19 2026-09-22 18:31:55" [ref=f12e352]:
+                  - strong [ref=f12e353]: "#19"
+                  - generic [ref=f12e354]: 2026-09-22 18:31:55
+                - cell "Sathru +91 96453 74563 test@gmail.com" [ref=f12e355]:
+                  - strong [ref=f12e356]: Sathru
+                  - generic [ref=f12e357]: +91 96453 74563
+                  - generic [ref=f12e358]: test@gmail.com
+                - cell "Digital Marketing & SEO test" [ref=f12e359]:
+                  - strong [ref=f12e360]: Digital Marketing & SEO
+                  - generic "test" [ref=f12e361]
+                - cell [ref=f12e362]:
+                  - link "https://www.iucedu.com/course/c-cpp " [ref=f12e363] [cursor=pointer]:
+                    - /url: https://www.iucedu.com/course/c-cpp
+                    - text: https://www.iucedu.com/course/c-cpp
+                    - generic [ref=f12e364]: 
+                - 'cell "https://www.iucedu.com/course/java  Ref: /admin/-" [ref=f12e365]':
+                  - link "https://www.iucedu.com/course/java " [ref=f12e367] [cursor=pointer]:
+                    - /url: https://www.iucedu.com/course/java
+                    - text: https://www.iucedu.com/course/java
+                    - generic [ref=f12e368]: 
+                  - generic [ref=f12e369]: "Ref: /admin/-"
+                - 'cell "Unattributed Session: d041136c" [ref=f12e370]':
+                  - text: Unattributed
+                  - generic [ref=f12e371]: "Session: d041136c"
+                - cell "NOT REQUESTED" [ref=f12e372]
+                - cell "New" [ref=f12e374]:
+                  - combobox [ref=f12e375]:
+                    - option "New" [selected]
+                    - option "Contacted"
+                    - option "Enrolled"
+                    - option "Closed"
+                    - option "Spam"
+                  - textbox "Follow-up note" [ref=f12e376]
+                - cell "Save 2026-09-22 18:31:55" [ref=f12e377]:
+                  - button "Save" [ref=f12e378] [cursor=pointer]
+                  - generic [ref=f12e379]: 2026-09-22 18:31:55
+              - row [ref=f12e380]:
+                - cell "#18 2026-09-22 18:30:56" [ref=f12e381]:
+                  - strong [ref=f12e382]: "#18"
+                  - generic [ref=f12e383]: 2026-09-22 18:30:56
+                - cell "Sathru 987634526 test@gmail.com" [ref=f12e384]:
+                  - strong [ref=f12e385]: Sathru
+                  - generic [ref=f12e386]: "987634526"
+                  - generic [ref=f12e387]: test@gmail.com
+                - cell "Artificial Intelligence & Machine Learning test" [ref=f12e388]:
+                  - strong [ref=f12e389]: Artificial Intelligence & Machine Learning
+                  - generic "test" [ref=f12e390]
+                - cell [ref=f12e391]:
+                  - link "https://www.iucedu.com/course/java " [ref=f12e392] [cursor=pointer]:
+                    - /url: https://www.iucedu.com/course/java
+                    - text: https://www.iucedu.com/course/java
+                    - generic [ref=f12e393]: 
+                - 'cell "https://www.iucedu.com/course/java  Ref: /admin/-" [ref=f12e394]':
+                  - link "https://www.iucedu.com/course/java " [ref=f12e396] [cursor=pointer]:
+                    - /url: https://www.iucedu.com/course/java
+                    - text: https://www.iucedu.com/course/java
+                    - generic [ref=f12e397]: 
+                  - generic [ref=f12e398]: "Ref: /admin/-"
+                - 'cell "Unattributed Session: d041136c" [ref=f12e399]':
+                  - text: Unattributed
+                  - generic [ref=f12e400]: "Session: d041136c"
+                - cell "NOT REQUESTED" [ref=f12e401]
+                - cell "New" [ref=f12e403]:
+                  - combobox [ref=f12e404]:
+                    - option "New" [selected]
+                    - option "Contacted"
+                    - option "Enrolled"
+                    - option "Closed"
+                    - option "Spam"
+                  - textbox "Follow-up note" [ref=f12e405]
+                - cell "Save 2026-09-22 18:30:56" [ref=f12e406]:
+                  - button "Save" [ref=f12e407] [cursor=pointer]
+                  - generic [ref=f12e408]: 2026-09-22 18:30:56
+              - row [ref=f12e409]:
+                - cell "#17 2026-09-09 10:26:58" [ref=f12e410]:
+                  - strong [ref=f12e411]: "#17"
+                  - generic [ref=f12e412]: 2026-09-09 10:26:58
+                - cell "Suresh Kumar S 9043412485 ksuresh07725@gmail.com" [ref=f12e413]:
+                  - strong [ref=f12e414]: Suresh Kumar S
+                  - generic [ref=f12e415]: "9043412485"
+                  - generic [ref=f12e416]: ksuresh07725@gmail.com
+                - cell "Python Programming i want to join a course" [ref=f12e417]:
+                  - strong [ref=f12e418]: Python Programming
+                  - generic "i want to join a course" [ref=f12e419]
+                - cell [ref=f12e420]:
+                  - link "https://www.iucedu.com/#contact " [ref=f12e421] [cursor=pointer]:
+                    - /url: https://www.iucedu.com/#contact
+                    - text: https://www.iucedu.com/#contact
+                    - generic [ref=f12e422]: 
+                - 'cell "https://www.iucedu.com/  Ref: /admin/-" [ref=f12e423]':
+                  - link "https://www.iucedu.com/ " [ref=f12e425] [cursor=pointer]:
+                    - /url: https://www.iucedu.com/
+                    - text: https://www.iucedu.com/
+                    - generic [ref=f12e426]: 
+                  - generic [ref=f12e427]: "Ref: /admin/-"
+                - 'cell "Direct / none Session: 4bffbc12" [ref=f12e428]':
+                  - text: Direct / none
+                  - generic [ref=f12e429]: "Session: 4bffbc12"
+                - cell "NOT REQUESTED" [ref=f12e430]
+                - cell "New" [ref=f12e432]:
+                  - combobox [ref=f12e433]:
+                    - option "New" [selected]
+                    - option "Contacted"
+                    - option "Enrolled"
+                    - option "Closed"
+                    - option "Spam"
+                  - textbox "Follow-up note" [ref=f12e434]
+                - cell "Save 2026-09-09 10:26:58" [ref=f12e435]:
+                  - button "Save" [ref=f12e436] [cursor=pointer]
+                  - generic [ref=f12e437]: 2026-09-09 10:26:58
+              - row [ref=f12e438]:
+                - cell "#16 2026-09-07 18:08:45" [ref=f12e439]:
+                  - strong [ref=f12e440]: "#16"
+                  - generic [ref=f12e441]: 2026-09-07 18:08:45
+                - cell "Claudia Walker +1 (917) 417-2427 suxy@gmail.com" [ref=f12e442]:
+                  - strong [ref=f12e443]: Claudia Walker
+                  - generic [ref=f12e444]: +1 (917) 417-2427
+                  - generic [ref=f12e445]: suxy@gmail.com
+                - cell "Other Officia dolor volupt" [ref=f12e446]:
+                  - strong [ref=f12e447]: Other
+                  - generic "Officia dolor volupt" [ref=f12e448]
+                - cell [ref=f12e449]:
+                  - link "https://www.iucedu.com/#contact " [ref=f12e450] [cursor=pointer]:
+                    - /url: https://www.iucedu.com/#contact
+                    - text: https://www.iucedu.com/#contact
+                    - generic [ref=f12e451]: 
+                - 'cell "https://www.iucedu.com/deepthi  Ref: /" [ref=f12e452]':
+                  - link "https://www.iucedu.com/deepthi " [ref=f12e454] [cursor=pointer]:
+                    - /url: https://www.iucedu.com/deepthi
+                    - text: https://www.iucedu.com/deepthi
+                    - generic [ref=f12e455]: 
+                  - generic "https://www.iucedu.com/" [ref=f12e456]: "Ref: /"
+                - 'cell "Direct / none Session: 59eeda99" [ref=f12e457]':
+                  - text: Direct / none
+                  - generic [ref=f12e458]: "Session: 59eeda99"
+                - cell "NOT REQUESTED" [ref=f12e459]
+                - cell "New" [ref=f12e461]:
+                  - combobox [ref=f12e462]:
+                    - option "New" [selected]
+                    - option "Contacted"
+                    - option "Enrolled"
+                    - option "Closed"
+                    - option "Spam"
+                  - textbox "Follow-up note" [ref=f12e463]
+                - cell "Save 2026-09-07 18:08:45" [ref=f12e464]:
+                  - button "Save" [ref=f12e465] [cursor=pointer]
+                  - generic [ref=f12e466]: 2026-09-07 18:08:45
+              - row [ref=f12e467]:
+                - cell "#15 2026-09-07 18:08:03" [ref=f12e468]:
+                  - strong [ref=f12e469]: "#15"
+                  - generic [ref=f12e470]: 2026-09-07 18:08:03
+                - cell "Ram Varma 9632145870 ramvaramr@gmail.com" [ref=f12e471]:
+                  - strong [ref=f12e472]: Ram Varma
+                  - generic [ref=f12e473]: "9632145870"
+                  - generic [ref=f12e474]: ramvaramr@gmail.com
+                - cell "C & C++ Programming -" [ref=f12e475]:
+                  - strong [ref=f12e476]: C & C++ Programming
+                  - generic [ref=f12e477]: "-"
+                - cell [ref=f12e478]:
+                  - link "https://www.iucedu.com/ " [ref=f12e479] [cursor=pointer]:
+                    - /url: https://www.iucedu.com/
+                    - text: https://www.iucedu.com/
+                    - generic [ref=f12e480]: 
+                - 'cell "https://www.iucedu.com/deepthi  Ref: /admin/" [ref=f12e481]':
+                  - link "https://www.iucedu.com/deepthi " [ref=f12e483] [cursor=pointer]:
+                    - /url: https://www.iucedu.com/deepthi
+                    - text: https://www.iucedu.com/deepthi
+                    - generic [ref=f12e484]: 
+                  - generic "https://www.iucedu.com/admin/" [ref=f12e485]: "Ref: /admin/"
+                - 'cell "Direct / none Session: 59eeda99" [ref=f12e486]':
+                  - text: Direct / none
+                  - generic [ref=f12e487]: "Session: 59eeda99"
+                - cell "NOT REQUESTED" [ref=f12e488]
+                - cell "New" [ref=f12e490]:
+                  - combobox [ref=f12e491]:
+                    - option "New" [selected]
+                    - option "Contacted"
+                    - option "Enrolled"
+                    - option "Closed"
+                    - option "Spam"
+                  - textbox "Follow-up note" [ref=f12e492]
+                - cell "Save 2026-09-07 18:08:03" [ref=f12e493]:
+                  - button "Save" [ref=f12e494] [cursor=pointer]
+                  - generic [ref=f12e495]: 2026-09-07 18:08:03
+              - row [ref=f12e496]:
+                - cell "#14 2026-09-07 17:34:46" [ref=f12e497]:
+                  - strong [ref=f12e498]: "#14"
+                  - generic [ref=f12e499]: 2026-09-07 17:34:46
+                - cell "Rohith kumar 9874563210 rohih@yahoo.com" [ref=f12e500]:
+                  - strong [ref=f12e501]: Rohith kumar
+                  - generic [ref=f12e502]: "9874563210"
+                  - generic [ref=f12e503]: rohih@yahoo.com
+                - cell "Data Science & Analytics t" [ref=f12e504]:
+                  - strong [ref=f12e505]: Data Science & Analytics
+                  - generic "t" [ref=f12e506]
+                - cell [ref=f12e507]:
+                  - link "https://www.iucedu.com/ " [ref=f12e508] [cursor=pointer]:
+                    - /url: https://www.iucedu.com/
+                    - text: https://www.iucedu.com/
+                    - generic [ref=f12e509]: 
+                - 'cell "https://www.iucedu.com/  Ref: /admin/-" [ref=f12e510]':
+                  - link "https://www.iucedu.com/ " [ref=f12e512] [cursor=pointer]:
+                    - /url: https://www.iucedu.com/
+                    - text: https://www.iucedu.com/
+                    - generic [ref=f12e513]: 
+                  - generic [ref=f12e514]: "Ref: /admin/-"
+                - 'cell "Unattributed Session: -" [ref=f12e515]':
+                  - text: Unattributed
+                  - generic [ref=f12e516]: "Session: -"
+                - cell "NOT REQUESTED" [ref=f12e517]
+                - cell "New" [ref=f12e519]:
+                  - combobox [ref=f12e520]:
+                    - option "New" [selected]
+                    - option "Contacted"
+                    - option "Enrolled"
+                    - option "Closed"
+                    - option "Spam"
+                  - textbox "Follow-up note" [ref=f12e521]
+                - cell "Save 2026-09-07 17:34:46" [ref=f12e522]:
+                  - button "Save" [ref=f12e523] [cursor=pointer]
+                  - generic [ref=f12e524]: 2026-09-07 17:34:46
+              - row [ref=f12e525]:
+                - cell "#13 2026-09-07 17:34:14" [ref=f12e526]:
+                  - strong [ref=f12e527]: "#13"
+                  - generic [ref=f12e528]: 2026-09-07 17:34:14
+                - cell "Rohith kumar 9874563210 rohih@yahoo.com" [ref=f12e529]:
+                  - strong [ref=f12e530]: Rohith kumar
+                  - generic [ref=f12e531]: "9874563210"
+                  - generic [ref=f12e532]: rohih@yahoo.com
+                - cell "Data Science & Analytics t" [ref=f12e533]:
+                  - strong [ref=f12e534]: Data Science & Analytics
+                  - generic "t" [ref=f12e535]
+                - cell [ref=f12e536]:
+                  - link "https://www.iucedu.com/ " [ref=f12e537] [cursor=pointer]:
+                    - /url: https://www.iucedu.com/
+                    - text: https://www.iucedu.com/
+                    - generic [ref=f12e538]: 
+                - 'cell "https://www.iucedu.com/  Ref: /admin/-" [ref=f12e539]':
+                  - link "https://www.iucedu.com/ " [ref=f12e541] [cursor=pointer]:
+                    - /url: https://www.iucedu.com/
+                    - text: https://www.iucedu.com/
+                    - generic [ref=f12e542]: 
+                  - generic [ref=f12e543]: "Ref: /admin/-"
+                - 'cell "Unattributed Session: -" [ref=f12e544]':
+                  - text: Unattributed
+                  - generic [ref=f12e545]: "Session: -"
+                - cell "NOT REQUESTED" [ref=f12e546]
+                - cell "New" [ref=f12e548]:
+                  - combobox [ref=f12e549]:
+                    - option "New" [selected]
+                    - option "Contacted"
+                    - option "Enrolled"
+                    - option "Closed"
+                    - option "Spam"
+                  - textbox "Follow-up note" [ref=f12e550]
+                - cell "Save 2026-09-07 17:34:14" [ref=f12e551]:
+                  - button "Save" [ref=f12e552] [cursor=pointer]
+                  - generic [ref=f12e553]: 2026-09-07 17:34:14
+      - text:                                                                                                                            

@@ -3,11 +3,11 @@
         <div class="section-header section-header-center" data-aos="fade-up">
             <div class="section-label">Practical Technology Education</div>
             <h2 id="computer-training-heading" class="text-display-lg section-title">
-                Computer Training and <span class="gradient-text">Programming Classes in Chennai</span>
+                Computer Courses and <span class="gradient-text">IT Classes in Chennai</span>
             </h2>
             <p class="section-subtitle">
-                IUC Edu offers practical computer training for students, freshers, working professionals and beginners.
-                Learn through instructor-led classes, hands-on exercises and career-focused projects at our Chennai centres or online.
+                Compare practical programming, software, data, cloud, testing and digital courses for students,
+                freshers, working professionals and beginners at our Chennai centres or through live online classes.
             </p>
         </div>
 
@@ -28,9 +28,9 @@
 
             <article class="card seo-training-card" data-aos="fade-up" data-aos-delay="160">
                 <div class="feature-icon icon-purple"><i class="bi bi-cpu"></i></div>
-                <h3>Computer Science Skill-Based Training</h3>
-                <p>Develop practical programming, data, cloud and software skills relevant to computer science careers. These are professional skill courses, not university degree programs.</p>
-                <a href="<?= BASE_URL ?>/computer-training-in-chennai" class="btn btn-sm btn-ghost">Explore computer training <i class="bi bi-arrow-right"></i></a>
+                <h3>Computer &amp; IT Training in Chennai</h3>
+                <p>Compare course curricula, practical projects, prerequisites, schedules and learning modes before choosing a career-focused computer class.</p>
+                <a href="<?= BASE_URL ?>/computer-training-in-chennai" class="btn btn-sm btn-ghost">Compare Chennai computer courses <i class="bi bi-arrow-right"></i></a>
             </article>
 
             <article class="card seo-training-card" data-aos="fade-up" data-aos-delay="240">

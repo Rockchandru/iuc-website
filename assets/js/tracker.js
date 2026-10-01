@@ -61,8 +61,22 @@
   function touch() { write(SA, String(Date.now())); }
   touch();
 
+  /* The live host's ModSecurity rules reject a full URL in a field named
+     landing_page. A same-site path carries the same reporting information and
+     keeps tracker and enquiry requests from being rejected with HTTP 406. */
+  function sameSitePath(value) {
+    var raw = String(value || '');
+    if (!raw) return '/';
+    try {
+      var url = new URL(raw, w.location.href);
+      if (url.origin === w.location.origin) return (url.pathname || '/') + (url.search || '');
+    } catch (e) {}
+    return raw;
+  }
+
   /* ── UTM / campaign params (supports both utm_ and utm-) ── */
   var utm = {};
+  var clickRank = { gad_source: 1, gad_campaignid: 1, fbclid: 2, ttclid: 2, twclid: 2, li_fat_id: 2, msclkid: 3, gbraid: 4, wbraid: 4, dclid: 5, gclid: 6 };
   try {
     var q = w.location.search || '';
     if (q.charAt(0) === '?') q = q.slice(1);
@@ -75,7 +89,14 @@
       if (!v) return;
       var kk = k.replace('utm-', 'utm_');
       if (kk.indexOf('utm_') === 0 && kk.length > 4) utm[kk] = v;
-      if (k === 'gclid') utm.gclid = v;
+      if (kk === 'utm_id') utm.campaign_id = v;
+      /* Preserve the real click-ID type. A gad_source value is evidence of a
+         Google advertising click, but it is not a platform or campaign name. */
+      if (clickRank[k] && (!utm.click_id_type || clickRank[k] > clickRank[utm.click_id_type])) {
+        utm.click_id_type = k;
+        utm.click_id = v;
+      }
+      if (k === 'gad_campaignid') utm.campaign_id = v;
       if (k === 'ref') utm.ref = v;
     });
   } catch (e) {}
@@ -85,13 +106,27 @@
   try {
     if (!isNewSession) attribution = JSON.parse(read(AK) || '{}') || {};
   } catch (e) { attribution = {}; }
+  /* Upgrade attribution saved by the previous tracker version, which stored
+     every advertising marker in a field named gclid. */
+  if (attribution.gclid && !attribution.click_id_type) {
+    var legacyClick = String(attribution.gclid);
+    var legacyParts = legacyClick.split(':');
+    if (legacyParts.length > 1 && clickRank[legacyParts[0]]) {
+      attribution.click_id_type = legacyParts.shift();
+      attribution.click_id = legacyParts.join(':');
+    } else {
+      attribution.click_id_type = 'gclid';
+      attribution.click_id = legacyClick;
+    }
+    delete attribution.gclid;
+  }
   if (isNewSession || !attribution.landing_page) {
     attribution = {
-      landing_page: String(w.location.href || '').slice(0, 500),
+      landing_page: sameSitePath(w.location.href).slice(0, 500),
       referrer: String(d.referrer || '').slice(0, 500)
     };
   }
-  ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'gclid'].forEach(function (key) {
+  ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'campaign_id', 'click_id_type', 'click_id'].forEach(function (key) {
     if (utm[key] && !attribution[key]) attribution[key] = utm[key];
   });
   try { write(AK, JSON.stringify(attribution)); } catch (e) {}
@@ -123,7 +158,9 @@
     catch (e) { return ''; }
   }
 
-  var pageStart = Date.now();
+  var engagedMs = 0;
+  var visibleSince = d.visibilityState === 'hidden' ? 0 : Date.now();
+  var lastHeartbeatAt = 0;
   var pvId = 0;
   var info = detect();
 
@@ -134,15 +171,15 @@
       event_type: 'pageview',
       page_url: String(w.location.href).slice(0, 500),
       page_title: String(w.document.title || '').slice(0, 255),
-      referrer: String(w.document.referrer || '').slice(0, 500),
-      landing_page: String(attribution.landing_page || w.location.href).slice(0, 500),
+      referrer: String(Object.prototype.hasOwnProperty.call(attribution, 'referrer') ? attribution.referrer : (w.document.referrer || '')).slice(0, 500),
+      landing_page: sameSitePath(attribution.landing_page || w.location.href).slice(0, 500),
       device: info.device,
       browser: info.browser,
       os: info.os,
       screen: screenSize(),
       language: String(w.navigator.language || '').slice(0, 16)
     };
-    var keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'gclid'];
+    var keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'campaign_id', 'click_id_type', 'click_id'];
     for (var i = 0; i < keys.length; i++) if (attribution[keys[i]]) d[keys[i]] = attribution[keys[i]];
     if (extra) for (var k in extra) if (extra[k] !== undefined) d[k] = extra[k];
     return d;
@@ -175,16 +212,60 @@
   send(baseData({ event_type: 'pageview' }), true);
 
   /* ── Heartbeat (time on page + live detection) ──────────── */
-  function heartbeat() {
-    touch();
-    send(baseData({ event_type: 'heartbeat', pv_id: pvId, duration: Math.round((Date.now() - pageStart) / 1000) }), false);
+  function engagedSeconds(commit) {
+    var now = Date.now();
+    var total = engagedMs;
+    if (visibleSince) {
+      total += now - visibleSince;
+      if (commit) { engagedMs = total; visibleSince = 0; }
+    }
+    return Math.max(0, Math.round(total / 1000));
   }
-  setInterval(heartbeat, 30000);
-  function finalBeat() { heartbeat(); }
+
+  function heartbeat(force) {
+    if (!force && d.visibilityState === 'hidden') return;
+    var now = Date.now();
+    if (force && now - lastHeartbeatAt < 1000) return;
+    lastHeartbeatAt = now;
+    touch();
+    send(baseData({ event_type: 'heartbeat', pv_id: pvId, duration: engagedSeconds(false) }), false);
+  }
+
+  function renewExpiredSession() {
+    var storedActivity = parseInt(read(SA) || '0', 10) || 0;
+    if (!storedActivity || Date.now() - storedActivity <= TIMEOUT) return false;
+    sessionId = uuid();
+    write(SK, sessionId);
+    attribution = {
+      landing_page: sameSitePath(w.location.href).slice(0, 500),
+      referrer: ''
+    };
+    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'campaign_id', 'click_id_type', 'click_id'].forEach(function (key) {
+      if (utm[key]) attribution[key] = utm[key];
+    });
+    write(AK, JSON.stringify(attribution));
+    engagedMs = 0;
+    visibleSince = Date.now();
+    pvId = 0;
+    touch();
+    send(baseData({ event_type: 'pageview' }), true);
+    return true;
+  }
+  setInterval(function () { heartbeat(false); }, 30000);
+  function finalBeat() { heartbeat(true); }
   if (w.addEventListener) {
-    w.addEventListener('pagehide', finalBeat);
+    w.addEventListener('pagehide', function () {
+      engagedSeconds(true);
+      finalBeat();
+    });
     w.addEventListener('visibilitychange', function () {
-      if (d.visibilityState === 'hidden') finalBeat();
+      if (d.visibilityState === 'hidden') {
+        engagedSeconds(true);
+        finalBeat();
+      } else {
+        visibleSince = Date.now();
+        if (!renewExpiredSession()) heartbeat(false);
+      }
     });
   }
 
@@ -198,7 +279,7 @@
     if (!form) return;
     var values = {
       page_url: String(w.location.href || '').slice(0, 500),
-      landing_page: String(attribution.landing_page || w.location.href || '').slice(0, 500),
+      landing_page: sameSitePath(attribution.landing_page || w.location.href).slice(0, 500),
       referrer: String(attribution.referrer || d.referrer || '').slice(0, 500),
       visitor_id: visitorId,
       session_id: sessionId,
@@ -239,6 +320,7 @@
       else if (href.indexOf('wa.me') !== -1 || href.indexOf('api.whatsapp.com') !== -1) trackEvent('whatsapp_click', href);
       else if (href.indexOf('download-syllabus') !== -1 || /\.pdf(\?|#|$)/i.test(href)) trackEvent('brochure_download', href);
       else if (a.target === '_blank' && href.indexOf(location.host) === -1) trackEvent('outbound_click', href);
+
     }, true);
 
     d.addEventListener('submit', function (e) {

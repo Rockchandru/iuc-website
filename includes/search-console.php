@@ -249,6 +249,55 @@ if (!function_exists('gsc_config')) {
         return false;
     }
 
+    /* Map each query cluster to one preferred page. This does not rewrite
+       Search Console data; it makes keyword cannibalisation and missing page
+       targeting visible in the admin report. */
+    function gsc_query_target($query, $isBrand = false) {
+        $q = mb_strtolower(trim((string)$query));
+        $targets = [
+            ['#\b(login|log in|admin)\b#u', '/admin/', 'Admin navigation'],
+            ['#\b(ai|artificial intelligence|machine learning|deep learning|generative ai)\b#u', '/course/ai-ml', 'AI & Machine Learning'],
+            ['#\b(?:data science|data analytics|data scientist)\b#u', '/course/data-science', 'Data Science'],
+            ['#\bpython\b#u', '/course/python', 'Python'],
+            ['#\b(?:full[ -]?stack(?: java)?|java full[ -]?stack)\b#u', '/course/full-stack-java', 'Full Stack Java'],
+            ['#\b(?:spring boot|microservices?)\b#u', '/course/spring-boot', 'Spring Boot'],
+            ['#\bjava\b#u', '/course/java', 'Java'],
+            ['#\breact(?:\.?js)?\b#u', '/course/react', 'React'],
+            ['#\bangular(?:\.?js)?\b#u', '/course/angular', 'Angular'],
+            ['#\bnode(?:\.?js)?\b#u', '/course/node-js', 'Node.js'],
+            ['#\b(ui|ux|ui\/ux|user experience|user interface)\b#u', '/course/ui-ux', 'UI/UX Design'],
+            ['#\b(software testing|selenium|manual testing|automation testing|qa course)\b#u', '/course/software-testing', 'Software Testing'],
+            ['#\b(?:devops|docker|kubernetes|jenkins)\b#u', '/course/devops', 'DevOps'],
+            ['#\b(?:cloud computing|aws course|azure course)\b#u', '/course/cloud-computing', 'Cloud Computing'],
+            ['#\b(cyber ?security|ethical hacking)\b#u', '/course/cyber-security', 'Cyber Security'],
+            ['#\b(digital marketing|seo course|google ads course)\b#u', '/course/digital-marketing', 'Digital Marketing'],
+            ['#\b(c\+\+|c and c\+\+|c programming)\b#u', '/course/c-cpp', 'C & C++'],
+            ['#\bonline\b#u', '/online-it-courses', 'Online IT Courses'],
+            ['#\b(?:beginner|beginners|after 12th|fresher)\b#u', '/it-courses-for-beginners', 'Beginner IT Courses'],
+            ['#\b(programming|coding|software development|developer course)\b#u', '/programming-courses-in-chennai', 'Programming Courses'],
+            ['#\b(computer|it course|it training|it institute|software institute|training institute|academy|coaching centre|coaching center)\b#u', '/computer-training-in-chennai', 'Computer & IT Training'],
+        ];
+        foreach ($targets as $target) {
+            if (preg_match($target[0], $q)) {
+                return ['path' => $target[1], 'url' => rtrim(SITE_URL, '/') . $target[1], 'intent' => $target[2]];
+            }
+        }
+        return ['path' => '/', 'url' => rtrim(SITE_URL, '/') . '/', 'intent' => $isBrand ? 'Brand / Homepage' : 'General / Review'];
+    }
+
+    function gsc_page_path($url) {
+        $path = parse_url((string)$url, PHP_URL_PATH);
+        if (!$path) return '/';
+        return $path === '/' ? '/' : rtrim($path, '/');
+    }
+
+    function gsc_expected_ctr($position) {
+        $position = (float)$position;
+        if ($position <= 5) return 0.08;
+        if ($position <= 10) return 0.05;
+        return 0.02;
+    }
+
     function gsc_performance($from, $to, $forceRefresh = false) {
         $setup = gsc_setup_status();
         if (!$setup['configured']) {
@@ -261,7 +310,7 @@ if (!function_exists('gsc_config')) {
             return ['ok' => 0, 'configured' => true, 'error' => 'Invalid Search Console date range.'];
         }
         $config = gsc_config();
-        $cacheKey = hash('sha256', $config['property'] . '|' . $from . '|' . $to . '|' . $config['row_limit']);
+        $cacheKey = hash('sha256', 'seo-monitor-v2|' . $config['property'] . '|' . $from . '|' . $to . '|' . $config['row_limit']);
         if (!$forceRefresh && !empty($_SESSION['gsc_performance_cache'][$cacheKey])) {
             $cached = $_SESSION['gsc_performance_cache'][$cacheKey];
             if ((int)($cached['expires_at'] ?? 0) > time() && !empty($cached['data'])) {
@@ -335,6 +384,24 @@ if (!function_exists('gsc_config')) {
             $previous = $previousQueries[$row['query']] ?? ['clicks' => 0, 'impressions' => 0, 'ctr' => 0, 'position' => 0];
             $row['page'] = $topPages[$row['query']]['page'] ?? '';
             $row['is_brand'] = gsc_is_brand_query($row['query'], $config['brand_terms']);
+            $target = gsc_query_target($row['query'], $row['is_brand']);
+            $row['recommended_page'] = $target['url'];
+            $row['intent'] = $target['intent'];
+            $row['target_match'] = gsc_page_path($row['page']) === gsc_page_path($target['url']);
+            $row['is_actionable'] = $target['intent'] !== 'Admin navigation';
+            $row['expected_ctr'] = gsc_expected_ctr($row['position']);
+            $row['estimated_click_gap'] = max(0, (int)round($row['impressions'] * ($row['expected_ctr'] - $row['ctr'])));
+            $row['opportunity_score'] = ($row['estimated_click_gap'] * max(0.25, (21 - min(20, (float)$row['position'])) / 17)) + (!$row['target_match'] ? 2 : 0);
+            $row['priority'] = $row['opportunity_score'] >= 5 ? 'High' : ($row['opportunity_score'] >= 2 ? 'Medium' : 'Low');
+            if (!$row['is_actionable']) {
+                $row['recommendation'] = 'Monitor only. Keep the admin page noindex; this is a navigational query, not a public SEO target.';
+            } elseif (!$row['target_match']) {
+                $row['recommendation'] = 'Consolidate this search intent on the recommended page and strengthen contextual internal links to it.';
+            } elseif ((float)$row['position'] <= 10) {
+                $row['recommendation'] = 'Improve the page title and search snippet for this query while keeping the copy natural.';
+            } else {
+                $row['recommendation'] = 'Expand useful supporting content and internal links on the recommended page.';
+            }
             $row['changes'] = [
                 'clicks' => gsc_change($row['clicks'], $previous['clicks']),
                 'impressions' => gsc_change($row['impressions'], $previous['impressions']),
@@ -352,12 +419,10 @@ if (!function_exists('gsc_config')) {
         }
 
         $opportunities = array_values(array_filter($queries, static function ($row) {
-            return $row['impressions'] >= 10 && $row['position'] >= 4 && $row['position'] <= 20 && $row['ctr'] < 0.08;
+            return !empty($row['is_actionable']) && $row['impressions'] >= 10 && $row['position'] >= 4 && $row['position'] <= 20 && $row['ctr'] < $row['expected_ctr'];
         }));
         usort($opportunities, static function ($a, $b) {
-            $aScore = $a['impressions'] * (1 - min(1, $a['ctr'])) / max(1, $a['position']);
-            $bScore = $b['impressions'] * (1 - min(1, $b['ctr'])) / max(1, $b['position']);
-            return $bScore <=> $aScore;
+            return $b['opportunity_score'] <=> $a['opportunity_score'];
         });
 
         $payload = [

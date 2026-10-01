@@ -1,0 +1,36 @@
+- generic [ref=f3e1]:
+  - iframe [ref=f3e28]
+  - generic [ref=f3e3]:
+    - link [ref=f3e4] [cursor=pointer]:
+      - /url: ../index.html
+      - img "cPanel" [ref=f3e5]
+    - text: File Upload
+  - generic [ref=f3e8]:
+    - heading "Select the file you want to upload to “/home4/iucteoxs/public_html/iucedu.com/admin”." [level=3] [ref=f3e9]
+    - generic [ref=f3e10]: "Maximum file size allowed for upload: 500 MB"
+    - generic [ref=f3e12]:
+      - generic [ref=f3e15] [cursor=pointer]:
+        - checkbox "Overwrite existing files" [checked] [ref=f3e16]
+        - text: Overwrite existing files
+      - generic [ref=f3e17]:
+        - generic [ref=f3e18]:
+          - paragraph [ref=f3e19]: Drop files here to start uploading
+          - paragraph [ref=f3e20]: or
+        - button "Select File" [active] [ref=f3e22] [cursor=pointer]
+    - generic [ref=f3e23]:
+      - generic [ref=f3e47]:
+        - generic [ref=f3e48]: api.php
+        - progressbar [ref=f3e50]: 100%
+        - generic [ref=f3e51]: 34.11 KB complete
+      - generic [ref=f3e54]:
+        - generic [ref=f3e55]: admin.js
+        - progressbar [ref=f3e57]: 100%
+        - generic [ref=f3e58]: 60.32 KB complete
+      - generic [ref=f3e61]:
+        - generic [ref=f3e62]: dashboard.php
+        - progressbar [ref=f3e64]: 100%
+        - generic [ref=f3e65]: 25.40 KB complete
+    - link " Go Back to “/home4/iucteoxs/public_html/iucedu.com/admin”" [ref=f3e25] [cursor=pointer]:
+      - /url: ./index.html?dir=%2fhome4%2fiucteoxs%2fpublic_html%2fiucedu.com%2fadmin
+      - generic [ref=f3e26]: 
+      - text: Go Back to “/home4/iucteoxs/public_html/iucedu.com/admin”

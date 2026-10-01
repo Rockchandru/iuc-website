@@ -1,0 +1,436 @@
+- generic [active] [ref=f1e1]:
+  - banner [ref=f1e2]:
+    - generic [ref=f1e3]:
+      - link "IUC Edu - Home" [ref=f1e4] [cursor=pointer]:
+        - /url: /iuc-website/
+      - text:    
+      - button "Toggle menu" [ref=f1e6] [cursor=pointer]
+  - main [ref=f1e10]:
+    - generic [ref=f1e12]:
+      - navigation "Breadcrumb" [ref=f1e13]:
+        - link "Home" [ref=f1e14] [cursor=pointer]:
+          - /url: /iuc-website/
+        - generic [ref=f1e15]: /
+        - link "Courses" [ref=f1e16] [cursor=pointer]:
+          - /url: /iuc-website/#courses
+        - generic [ref=f1e17]: /
+        - generic [ref=f1e18]: Python Programming
+      - generic [ref=f1e20]:
+        - generic [ref=f1e21]: programming
+        - heading "Python Training in Chennai" [level=1] [ref=f1e22]
+        - paragraph [ref=f1e23]: Learn Python from scratch to advanced. Cover core programming, OOP, file handling, web scraping, APIs, and build real-world applications.
+        - generic "Related training guides" [ref=f1e24]:
+          - link "Programming courses in Chennai" [ref=f1e25] [cursor=pointer]:
+            - /url: /iuc-website/programming-courses-in-chennai
+          - link "IT courses for beginners" [ref=f1e26] [cursor=pointer]:
+            - /url: /iuc-website/it-courses-for-beginners
+          - link "Online IT course options" [ref=f1e27] [cursor=pointer]:
+            - /url: /iuc-website/online-it-courses
+        - generic [ref=f1e28]:
+          - generic [ref=f1e29]:
+            - generic [ref=f1e30]:
+              - generic [ref=f1e31]: 
+              - text: 3 Months
+            - generic [ref=f1e32]: Duration
+          - generic [ref=f1e33]:
+            - generic [ref=f1e34]:
+              - generic [ref=f1e35]: 
+              - text: Online / Offline
+            - generic [ref=f1e36]: Training Mode
+          - generic [ref=f1e37]:
+            - generic [ref=f1e38]:
+              - generic [ref=f1e39]: 
+              - text: Beginner
+            - generic [ref=f1e40]: Level
+          - generic [ref=f1e41]:
+            - generic [ref=f1e42]:
+              - generic [ref=f1e43]: 
+              - text: "4.8"
+            - generic [ref=f1e44]: Rating
+        - generic [ref=f1e45]:
+          - link "Apply Now " [ref=f1e46] [cursor=pointer]:
+            - /url: /iuc-website/#contact
+            - text: Apply Now
+            - generic [ref=f1e47]: 
+          - link " Download Syllabus (PDF)" [ref=f1e48] [cursor=pointer]:
+            - /url: /iuc-website/download-syllabus.php?course=python
+            - generic [ref=f1e49]: 
+            - text: Download Syllabus (PDF)
+    - region "Course Overview" [ref=f1e50]:
+      - generic [ref=f1e52]:
+        - generic:
+          - heading "Course Overview" [level=2]
+          - paragraph: Learn Python from scratch to advanced. Cover core programming, OOP, file handling, web scraping, APIs, and build real-world applications.
+          - heading "Eligibility" [level=3]
+          - paragraph: No prior programming experience required.
+          - heading "Course Highlights" [level=3]
+          - generic:
+            - generic:
+              - generic: 
+              - text: Beginner friendly
+            - generic:
+              - generic: 
+              - text: Certificate
+            - generic:
+              - generic: 
+              - text: 5 projects
+            - generic:
+              - generic: 
+              - text: Placement support
+            - generic:
+              - generic: 
+              - text: Lifetime access
+        - generic:
+          - generic:
+            - generic:
+              - generic: ₹35,000
+              - generic: or ₹2,500/mo EMI
+            - paragraph: Zero-cost EMI available · Scholarship up to 50%
+            - generic:
+              - generic:
+                - generic: 
+                - text: Industry-recognized certification
+              - generic:
+                - generic: 
+                - text: 5+ real-world projects
+              - generic:
+                - generic: 
+                - text: Lifetime access to materials
+              - generic:
+                - generic: 
+                - text: 1-on-1 mentorship
+              - generic:
+                - generic: 
+                - text: 100% placement assistance
+              - generic:
+                - generic: 
+                - text: Flexible batch timings
+            - link "Enquire Now ":
+              - /url: /iuc-website/#contact
+              - text: Enquire Now
+              - generic: 
+            - link " Chat on WhatsApp":
+              - /url: https://wa.me/917418048039?text=Hi!%20I'm%20interested%20in%20Python+Programming%20at%20IUC%20Edu.
+              - generic: 
+              - text: Chat on WhatsApp
+            - generic:
+              - generic: 
+              - text: 1,500+ students enrolled
+    - region "Technologies & Tools" [ref=f1e53]:
+      - generic [ref=f1e54]:
+        - generic:
+          - heading "Technologies & Tools" [level=2]
+          - paragraph: Master these industry-standard technologies and tools in this program.
+        - generic:
+          - generic: Python
+          - generic: Flask
+          - generic: Django
+          - generic: SQLite
+          - generic: PostgreSQL
+          - generic: BeautifulSoup
+          - generic: Selenium
+          - generic: VS Code
+          - generic: PyCharm
+          - generic: Git
+          - generic: GitHub
+          - generic: Postman
+    - region "Module-Wise Curriculum" [ref=f1e55]:
+      - generic [ref=f1e56]:
+        - generic:
+          - generic: Curriculum
+          - heading "Module-Wise Curriculum" [level=2]
+          - paragraph: A structured, industry-reviewed curriculum designed to take you from beginner to job-ready professional.
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - generic: "01"
+                - generic: Python Basics
+              - generic: 
+            - generic:
+              - paragraph: Installation, data types, variables, operators, string handling
+              - generic:
+                - generic: Installation
+                - generic: data types
+                - generic: variables
+                - generic: operators
+                - generic: string handling
+          - generic:
+            - generic:
+              - generic:
+                - generic: "02"
+                - generic: Control Flow & Functions
+              - generic: 
+          - generic:
+            - generic:
+              - generic:
+                - generic: "03"
+                - generic: Data Structures
+              - generic: 
+          - generic:
+            - generic:
+              - generic:
+                - generic: "04"
+                - generic: OOP in Python
+              - generic: 
+          - generic:
+            - generic:
+              - generic:
+                - generic: "05"
+                - generic: File Handling & Modules
+              - generic: 
+          - generic:
+            - generic:
+              - generic:
+                - generic: "06"
+                - generic: Web Scraping & APIs
+              - generic: 
+          - generic:
+            - generic:
+              - generic:
+                - generic: "07"
+                - generic: Flask Web Framework
+              - generic: 
+          - generic:
+            - generic:
+              - generic:
+                - generic: "08"
+                - generic: Capstone Project
+              - generic: 
+    - region "Hands-On Projects" [ref=f1e57]:
+      - generic [ref=f1e58]:
+        - generic:
+          - generic: Projects
+          - heading "Hands-On Projects" [level=2]
+          - paragraph: Build a professional portfolio with real-world projects that demonstrate your skills.
+        - generic:
+          - generic:
+            - generic: "1"
+            - generic: Library Management System
+          - generic:
+            - generic: "2"
+            - generic: Weather App using API
+          - generic:
+            - generic: "3"
+            - generic: Web Scraper for Job Listings
+          - generic:
+            - generic: "4"
+            - generic: Blog Web Application with Flask
+          - generic:
+            - generic: "5"
+            - generic: Automated Email Sender
+    - region "Get Certified" [ref=f1e59]:
+      - generic:
+        - generic: 
+        - heading "Get Certified" [level=2]
+        - paragraph: IUC Edu Python Certification
+        - paragraph: Our certifications are recognized by leading companies and designed to boost your career prospects.
+    - region "Your Career Path" [ref=f1e60]:
+      - generic [ref=f1e61]:
+        - generic:
+          - generic: Career Opportunities
+          - heading "Your Career Path" [level=2]
+          - paragraph: Roles you can target after completing this program.
+        - generic:
+          - generic:
+            - generic: Python Developer
+            - generic: ₹4L to ₹12L PA
+          - generic:
+            - generic: Data Analyst
+            - generic: ₹4L to ₹10L PA
+          - generic:
+            - generic: Automation Engineer
+            - generic: ₹5L to ₹14L PA
+    - region "Enroll CTA" [ref=f1e62]:
+      - generic:
+        - heading "Ready to Start Your Journey?" [level=2]
+        - paragraph: Join 1,500+ students who have already enrolled in this program.
+        - generic:
+          - link "Apply Now ":
+            - /url: /iuc-website/#contact
+            - text: Apply Now
+            - generic: 
+          - link " Call Us":
+            - /url: tel:+917418048039
+            - generic: 
+            - text: Call Us
+    - region "Related Courses" [ref=f1e63]:
+      - generic [ref=f1e64]:
+        - generic:
+          - heading "Related Courses" [level=2]
+        - generic:
+          - article:
+            - generic:
+              - img "C & C++ Programming"
+            - generic:
+              - heading "C & C++" [level=3]
+              - paragraph: Master C & C++ programming, pointers, OOP, memory management & data structures.
+              - generic:
+                - generic:
+                  - generic: ₹40,500
+                  - generic: No-Cost EMI · ₹2,500/mo
+                - generic:
+                  - link "View C & C++ course":
+                    - /url: /iuc-website/course/c-cpp
+          - article:
+            - generic:
+              - img "Data Science & Analytics"
+            - generic:
+              - heading "Data Science" [level=3]
+              - paragraph: Transform data into insights with Python, SQL, ML & BI tools.
+              - generic:
+                - generic:
+                  - generic: ₹55,000
+                  - generic: No-Cost EMI · ₹5,500/mo
+                - generic:
+                  - link "View Data Science course":
+                    - /url: /iuc-website/course/data-science
+          - article:
+            - generic:
+              - img "Artificial Intelligence & Machine Learning"
+            - generic:
+              - heading "AI & ML" [level=3]
+              - paragraph: Master AI, ML, Deep Learning & Generative AI with hands-on projects.
+              - generic:
+                - generic:
+                  - generic: ₹55,000
+                  - generic: No-Cost EMI · ₹5,500/mo
+                - generic:
+                  - link "View AI & ML course":
+                    - /url: /iuc-website/course/ai-ml
+    - region "Frequently Asked Questions" [ref=f1e65]:
+      - generic [ref=f1e66]:
+        - generic:
+          - generic: FAQ
+          - heading "Frequently Asked Questions" [level=2]
+        - generic:
+          - generic:
+            - group:
+              - generic "What will I learn in the Python course? ":
+                - text: What will I learn in the Python course?
+                - generic: 
+          - generic:
+            - group:
+              - generic "Who can join this Python training? ":
+                - text: Who can join this Python training?
+                - generic: 
+          - generic:
+            - group:
+              - generic "Is Python training available online and in Chennai? ":
+                - text: Is Python training available online and in Chennai?
+                - generic: 
+          - generic:
+            - group:
+              - generic "Will I receive a certificate after completing the course? ":
+                - text: Will I receive a certificate after completing the course?
+                - generic: 
+          - generic:
+            - group:
+              - generic "How can I check the next batch and course fee? ":
+                - text: How can I check the next batch and course fee?
+                - generic: 
+  - contentinfo [ref=f1e67]:
+    - generic [ref=f1e68]:
+      - generic [ref=f1e69]:
+        - generic [ref=f1e70]:
+          - img "IUC Edu computer education institute" [ref=f1e71]
+          - paragraph [ref=f1e72]: Premier IT training institute in Chennai delivering world-class technology education with 98% placement support. 25,000+ careers launched and counting.
+          - generic [ref=f1e73]:
+            - link "Facebook" [ref=f1e74] [cursor=pointer]:
+              - /url: https://www.facebook.com/IUCComputerEducation
+              - generic [ref=f1e75]: 
+            - link "Instagram" [ref=f1e76] [cursor=pointer]:
+              - /url: https://www.instagram.com/iuc_computers/
+              - generic [ref=f1e77]: 
+            - link "LinkedIn" [ref=f1e78] [cursor=pointer]:
+              - /url: https://www.linkedin.com/in/r-senthil-kumar-522213b9/
+              - generic [ref=f1e79]: 
+            - link "YouTube" [ref=f1e80] [cursor=pointer]:
+              - /url: https://www.youtube.com/@iuccomputers5136
+              - generic [ref=f1e81]: 
+        - generic [ref=f1e82]:
+          - heading "Quick Links" [level=4] [ref=f1e83]
+          - generic [ref=f1e84]:
+            - link "Home" [ref=f1e85] [cursor=pointer]:
+              - /url: /iuc-website/#home
+            - link "About" [ref=f1e86] [cursor=pointer]:
+              - /url: /iuc-website/#about
+            - link "Courses" [ref=f1e87] [cursor=pointer]:
+              - /url: /iuc-website/#courses
+            - link "Placements" [ref=f1e88] [cursor=pointer]:
+              - /url: /iuc-website/#placements
+            - link "Testimonials" [ref=f1e89] [cursor=pointer]:
+              - /url: /iuc-website/#testimonials
+            - link "Blog" [ref=f1e90] [cursor=pointer]:
+              - /url: /iuc-website/#blog
+            - link "Contact" [ref=f1e91] [cursor=pointer]:
+              - /url: /iuc-website/#contact
+            - link "Computer Training in Chennai" [ref=f1e92] [cursor=pointer]:
+              - /url: /iuc-website/computer-training-in-chennai
+            - link "Programming Courses" [ref=f1e93] [cursor=pointer]:
+              - /url: /iuc-website/programming-courses-in-chennai
+            - link "Beginner IT Courses" [ref=f1e94] [cursor=pointer]:
+              - /url: /iuc-website/it-courses-for-beginners
+            - link "Online IT Courses" [ref=f1e95] [cursor=pointer]:
+              - /url: /iuc-website/online-it-courses
+            - link "Learning Blog" [ref=f1e96] [cursor=pointer]:
+              - /url: /iuc-website/blog
+            - link "Sitemap" [ref=f1e97] [cursor=pointer]:
+              - /url: /iuc-website/sitemap.xml
+        - generic [ref=f1e98]:
+          - heading "Top Courses" [level=4] [ref=f1e99]
+          - generic [ref=f1e100]:
+            - link "AI & ML" [ref=f1e101] [cursor=pointer]:
+              - /url: /iuc-website/course/ai-ml
+            - link "Data Science" [ref=f1e102] [cursor=pointer]:
+              - /url: /iuc-website/course/data-science
+            - link "Python" [ref=f1e103] [cursor=pointer]:
+              - /url: /iuc-website/course/python
+            - link "Java" [ref=f1e104] [cursor=pointer]:
+              - /url: /iuc-website/course/java
+            - link "Full Stack Java" [ref=f1e105] [cursor=pointer]:
+              - /url: /iuc-website/course/full-stack-java
+            - link "Spring Boot" [ref=f1e106] [cursor=pointer]:
+              - /url: /iuc-website/course/spring-boot
+        - generic [ref=f1e107]:
+          - heading "Contact Us" [level=4] [ref=f1e108]
+          - generic [ref=f1e109]:
+            - link " +91 7418048039" [ref=f1e110] [cursor=pointer]:
+              - /url: tel:+917418048039
+              - generic [ref=f1e111]: 
+              - text: +91 7418048039
+            - link " 04443539196" [ref=f1e112] [cursor=pointer]:
+              - /url: tel:04443539196
+              - generic [ref=f1e113]: 
+              - text: "04443539196"
+            - link " 04447940112" [ref=f1e114] [cursor=pointer]:
+              - /url: tel:04447940112
+              - generic [ref=f1e115]: 
+              - text: "04447940112"
+            - link " info@iucedu.com" [ref=f1e116] [cursor=pointer]:
+              - /url: mailto:info@iucedu.com
+              - generic [ref=f1e117]: 
+              - text: info@iucedu.com
+            - generic [ref=f1e118]:
+              - generic [ref=f1e119]: 
+              - text: "#1&2 Gold Nest Apts, 2nd Main Road, C.I.T Nagar, Chennai – 600 035"
+            - generic [ref=f1e120]:
+              - generic [ref=f1e121]: 
+              - text: 19/11 Balakrishna Colony 1st St, Kaladipet, Thiruvottiyur, Chennai – 600 019
+            - generic [ref=f1e122]:
+              - heading "Newsletter" [level=4] [ref=f1e123]
+              - generic [ref=f1e124]:
+                - textbox "Email for newsletter" [ref=f1e125]:
+                  - /placeholder: Your email
+                - button "" [ref=f1e126] [cursor=pointer]
+      - generic [ref=f1e128]:
+        - generic [ref=f1e129]: © 2026 IUC Edu. All rights reserved.
+        - generic [ref=f1e130]: Privacy Policy Terms of Service Refund Policy
+  - text: 
+  - link "Chat on WhatsApp" [ref=f1e131] [cursor=pointer]:
+    - /url: https://wa.me/917418048039?text=Hi!%20I'm%20interested%20in%20IUC%20Edu%20programs.%20Please%20guide%20me.
+    - generic: Chat with us on WhatsApp
+    - generic [ref=f1e132]: 
+  - link "Back to top":
+    - /url: "#"
+    - generic: 

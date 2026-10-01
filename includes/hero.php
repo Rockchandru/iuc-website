@@ -11,8 +11,8 @@
                 </div>
 
                 <h1 class="text-display-xl hero-title fade-in">
-                    Computer &amp; IT Training<br/>
-                    <span class="gradient-text">Institute in Chennai</span>
+                    Career-Focused Computer Courses<br/>
+                    <span class="gradient-text">and IT Training in Chennai</span>
                 </h1>
 
                 <p class="hero-description fade-in">
@@ -28,8 +28,8 @@
                     <a href="<?= BASE_URL ?>/#courses" class="btn btn-outline btn-lg">
                         <i class="bi bi-play-circle"></i> Explore Courses
                     </a>
-                    <a href="<?= BASE_URL ?>/#contact" class="btn btn-ghost btn-lg">
-                        <i class="bi bi-file-earmark-text"></i> Request Brochure
+                    <a href="<?= BASE_URL ?>/computer-training-in-chennai" class="btn btn-ghost btn-lg">
+                        <i class="bi bi-building-check"></i> View Chennai Training
                     </a>
                 </div>
 

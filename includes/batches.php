@@ -1,3 +1,14 @@
+<?php
+// Keep every displayed batch date in the future, based on the website timezone.
+$upcomingBatchDates = [
+    'full_stack_java' => (new DateTimeImmutable('next monday'))->format('M j, Y'),
+    'data_science' => (new DateTimeImmutable('next monday +1 week'))->format('M j, Y'),
+    'ai_ml' => (new DateTimeImmutable('next wednesday +1 week'))->format('M j, Y'),
+    'cyber_security' => (new DateTimeImmutable('next monday +2 weeks'))->format('M j, Y'),
+    'digital_marketing' => (new DateTimeImmutable('next tuesday +3 weeks'))->format('M j, Y'),
+    'python_weekend' => (new DateTimeImmutable('next saturday'))->format('M j, Y'),
+];
+?>
 <section id="batches" class="py-section bg-white" aria-labelledby="batches-heading">
     <div class="container">
         <div class="section-header section-header-center" data-aos="fade-up">
@@ -10,10 +21,10 @@
 
         <div style="display:grid;gap:1rem" class="batches-grid" data-aos="fade-up">
             <div class="batch-card" data-aos="fade-up">
-                <div class="batch-status status-active">Active Now</div>
+                <div class="batch-status status-upcoming">Upcoming</div>
                 <div class="batch-course">Full Stack Java Development</div>
                 <div class="batch-details">
-                    <span><i class="bi bi-calendar-event"></i> Started: Jan 20, 2026</span>
+                    <span><i class="bi bi-calendar-event"></i> Starts: <?= $upcomingBatchDates['full_stack_java'] ?></span>
                     <span><i class="bi bi-clock"></i> 7:00 AM - 9:00 AM (Mon-Fri)</span>
                     <span><i class="bi bi-laptop"></i> Online / Offline</span>
                     <span><i class="bi bi-people"></i> 24 / 30 Seats Filled</span>
@@ -26,7 +37,7 @@
                 <div class="batch-status status-upcoming">Upcoming</div>
                 <div class="batch-course">Data Science & Analytics</div>
                 <div class="batch-details">
-                    <span><i class="bi bi-calendar-event"></i> Starts: Feb 10, 2026</span>
+                    <span><i class="bi bi-calendar-event"></i> Starts: <?= $upcomingBatchDates['data_science'] ?></span>
                     <span><i class="bi bi-clock"></i> 10:00 AM - 12:00 PM (Mon-Fri)</span>
                     <span><i class="bi bi-laptop"></i> Online / Offline</span>
                     <span><i class="bi bi-people"></i> 18 / 30 Seats Filled</span>
@@ -39,7 +50,7 @@
                 <div class="batch-status status-upcoming">Upcoming</div>
                 <div class="batch-course">AI & Machine Learning</div>
                 <div class="batch-details">
-                    <span><i class="bi bi-calendar-event"></i> Starts: Feb 15, 2026</span>
+                    <span><i class="bi bi-calendar-event"></i> Starts: <?= $upcomingBatchDates['ai_ml'] ?></span>
                     <span><i class="bi bi-clock"></i> 6:00 PM - 8:00 PM (Mon, Wed, Fri)</span>
                     <span><i class="bi bi-laptop"></i> Online / Offline</span>
                     <span><i class="bi bi-people"></i> 15 / 30 Seats Filled</span>
@@ -52,7 +63,7 @@
                 <div class="batch-status status-upcoming">Upcoming</div>
                 <div class="batch-course">Cyber Security & Ethical Hacking</div>
                 <div class="batch-details">
-                    <span><i class="bi bi-calendar-event"></i> Starts: Mar 1, 2026</span>
+                    <span><i class="bi bi-calendar-event"></i> Starts: <?= $upcomingBatchDates['cyber_security'] ?></span>
                     <span><i class="bi bi-clock"></i> 7:00 AM - 9:00 AM (Mon-Fri)</span>
                     <span><i class="bi bi-laptop"></i> Online / Offline</span>
                     <span><i class="bi bi-people"></i> 10 / 25 Seats Filled</span>
@@ -65,7 +76,7 @@
                 <div class="batch-status status-upcoming">Upcoming</div>
                 <div class="batch-course">Digital Marketing & SEO</div>
                 <div class="batch-details">
-                    <span><i class="bi bi-calendar-event"></i> Starts: Mar 5, 2026</span>
+                    <span><i class="bi bi-calendar-event"></i> Starts: <?= $upcomingBatchDates['digital_marketing'] ?></span>
                     <span><i class="bi bi-clock"></i> 8:00 AM - 10:00 AM (Tue, Thu, Sat)</span>
                     <span><i class="bi bi-laptop"></i> Online Only</span>
                     <span><i class="bi bi-people"></i> 12 / 25 Seats Filled</span>
@@ -78,7 +89,7 @@
                 <div class="batch-status status-weekend">Weekend</div>
                 <div class="batch-course">Python Programming (Weekend Batch)</div>
                 <div class="batch-details">
-                    <span><i class="bi bi-calendar-event"></i> Starts: Feb 8, 2026</span>
+                    <span><i class="bi bi-calendar-event"></i> Starts: <?= $upcomingBatchDates['python_weekend'] ?></span>
                     <span><i class="bi bi-clock"></i> 10:00 AM - 2:00 PM (Sat & Sun)</span>
                     <span><i class="bi bi-laptop"></i> Online / Offline</span>
                     <span><i class="bi bi-people"></i> 20 / 30 Seats Filled</span>

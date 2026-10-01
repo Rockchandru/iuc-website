@@ -1,0 +1,47 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]: The security token is missing from your request.
+    - generic [ref=e7]:
+      - generic [ref=e9]:
+        - img "logo" [ref=e11]
+        - generic [ref=e13]:
+          - generic [ref=e14]: Username
+          - textbox "Username" [active] [ref=e16]:
+            - /placeholder: Enter your username.
+            - text: iucteoxs
+          - generic [ref=e17]: Password
+          - textbox "Password" [ref=e19]:
+            - /placeholder: Enter your account password.
+          - button "Log in" [ref=e21] [cursor=pointer]
+      - list [ref=e24]:
+        - listitem [ref=e25]:
+          - link "العربية" [ref=e26] [cursor=pointer]:
+            - /url: /?locale=ar
+        - listitem [ref=e27]:
+          - link "български" [ref=e28] [cursor=pointer]:
+            - /url: /?locale=bg
+        - listitem [ref=e29]:
+          - link "čeština" [ref=e30] [cursor=pointer]:
+            - /url: /?locale=cs
+        - listitem [ref=e31]:
+          - link "dansk" [ref=e32] [cursor=pointer]:
+            - /url: /?locale=da
+        - listitem [ref=e33]:
+          - link "Deutsch" [ref=e34] [cursor=pointer]:
+            - /url: /?locale=de
+        - listitem [ref=e35]:
+          - link "Ελληνικά" [ref=e36] [cursor=pointer]:
+            - /url: /?locale=el
+        - listitem [ref=e37]:
+          - link "English" [ref=e38] [cursor=pointer]:
+            - /url: /?locale=en
+        - listitem [ref=e39]:
+          - link "español" [ref=e40] [cursor=pointer]:
+            - /url: /?locale=es
+        - listitem [ref=e41]:
+          - link "…" [ref=e42] [cursor=pointer]:
+            - /url: javascript:void(0)
+  - generic [ref=e43]:
+    - text: Copyright© 2026 cPanel, L.L.C.
+    - link "Privacy Policy" [ref=e44] [cursor=pointer]:
+      - /url: https://go.cpanel.net/privacy

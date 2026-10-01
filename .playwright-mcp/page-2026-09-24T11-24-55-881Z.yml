@@ -1,0 +1,170 @@
+- generic [ref=f11e2]:
+  - complementary "Analytics navigation" [ref=f11e3]:
+    - generic [ref=f11e4]:
+      - img "IUC" [ref=f11e5]
+      - generic [ref=f11e6]:
+        - generic [ref=f11e7]: IUC Analytics
+        - generic [ref=f11e8]: Marketing Dashboard
+    - navigation [ref=f11e9]:
+      - button " Overview" [active] [ref=f11e10] [cursor=pointer]:
+        - generic [ref=f11e11]: 
+        - text: Overview
+      - button " Visitors" [ref=f11e12] [cursor=pointer]:
+        - generic [ref=f11e13]: 
+        - text: Visitors
+      - button " Campaigns" [ref=f11e14] [cursor=pointer]:
+        - generic [ref=f11e15]: 
+        - text: Campaigns
+      - button " Pages" [ref=f11e16] [cursor=pointer]:
+        - generic [ref=f11e17]: 
+        - text: Pages
+      - button " SEO Monitor" [ref=f11e18] [cursor=pointer]:
+        - generic [ref=f11e19]: 
+        - text: SEO Monitor
+      - button " Enquiries" [ref=f11e20] [cursor=pointer]:
+        - generic [ref=f11e21]: 
+        - text: Enquiries
+      - button " Conversions" [ref=f11e22] [cursor=pointer]:
+        - generic [ref=f11e23]: 
+        - text: Conversions
+      - button " Live Visitors" [ref=f11e24] [cursor=pointer]:
+        - generic [ref=f11e25]: 
+        - text: Live Visitors
+      - button " Reports" [ref=f11e27] [cursor=pointer]:
+        - generic [ref=f11e28]: 
+        - text: Reports
+    - generic [ref=f11e29]:
+      - link " View Website" [ref=f11e30] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f11e31]: 
+        - text: View Website
+      - link " Logout" [ref=f11e32] [cursor=pointer]:
+        - /url: logout.php
+        - generic [ref=f11e33]: 
+        - text: Logout
+  - main [ref=f11e34]:
+    - generic [ref=f11e35]:
+      - generic [ref=f11e36]:
+        - text: 
+        - generic [ref=f11e37]:
+          - heading "Overview" [level=1] [ref=f11e401]
+          - paragraph [ref=f11e93]: "Report period: 2026-08-25 → 2026-09-24"
+      - generic [ref=f11e39]:
+        - generic [ref=f11e40]:
+          - textbox [ref=f11e41]: 2026-08-25
+          - generic [ref=f11e42]: to
+          - textbox [ref=f11e43]: 2026-09-24
+          - button " Apply" [ref=f11e44] [cursor=pointer]:
+            - generic [ref=f11e45]: 
+            - text: Apply
+        - generic [ref=f11e46]:
+          - link " Excel" [ref=f11e47] [cursor=pointer]:
+            - /url: export.php?format=excel&from=2026-08-25&to=2026-09-24
+            - generic [ref=f11e48]: 
+            - text: Excel
+          - link " PDF" [ref=f11e49] [cursor=pointer]:
+            - /url: export.php?format=pdf&from=2026-08-25&to=2026-09-24
+            - generic [ref=f11e50]: 
+            - text: PDF
+          - link " CSV" [ref=f11e51] [cursor=pointer]:
+            - /url: export.php?format=csv&from=2026-08-25&to=2026-09-24
+            - generic [ref=f11e52]: 
+            - text: CSV
+    - generic [ref=f11e53]:
+      - generic [ref=f11e54]:
+        - generic [ref=f11e402]:
+          - generic [ref=f11e403]:
+            - generic [ref=f11e404]: 
+            - generic [ref=f11e406]: 7,425
+            - generic [ref=f11e407]: Total Visitors
+            - generic [ref=f11e408]: All time
+          - generic [ref=f11e409]:
+            - generic [ref=f11e410]: 
+            - generic [ref=f11e412]: "3"
+            - generic [ref=f11e413]: Today's Visitors
+            - generic [ref=f11e414]: 24 Sept 2026
+          - generic [ref=f11e415]:
+            - generic [ref=f11e416]: 
+            - generic [ref=f11e418]: "2"
+            - generic [ref=f11e419]: Active Users
+            - generic [ref=f11e420]: Last 30 minutes
+          - generic [ref=f11e421]:
+            - generic [ref=f11e422]: 
+            - generic [ref=f11e424]: 5,491
+            - generic [ref=f11e425]: Unique Visitors
+            - generic [ref=f11e426]: Period
+          - generic [ref=f11e427]:
+            - generic [ref=f11e428]: 
+            - generic [ref=f11e430]: 2,322
+            - generic [ref=f11e431]: Returning Visitors
+            - generic [ref=f11e432]: Period
+          - generic [ref=f11e433]:
+            - generic [ref=f11e434]: 
+            - generic [ref=f11e436]: 7,556
+            - generic [ref=f11e437]: Total Page Views
+            - generic [ref=f11e438]: Period
+          - generic [ref=f11e439]:
+            - generic [ref=f11e440]: 
+            - generic [ref=f11e442]: 89.5%
+            - generic [ref=f11e443]: Bounce Rate
+            - generic [ref=f11e444]: Single-page sessions
+          - generic [ref=f11e445]:
+            - generic [ref=f11e446]: 
+            - generic [ref=f11e448]: 6m 43s
+            - generic [ref=f11e449]: Avg Session Duration
+            - generic [ref=f11e450]: Per session
+          - generic [ref=f11e451]:
+            - generic [ref=f11e452]: 
+            - generic [ref=f11e454]: 2.51%
+            - generic [ref=f11e455]: Conversion Rate
+            - generic [ref=f11e456]: 167 conversions
+        - generic [ref=f11e55]:
+          - generic [ref=f11e56]:
+            - generic [ref=f11e57]: 
+            - text: Data Collection Health
+            - generic [ref=f11e457]: Checked 2026-09-24 16:50:11
+          - generic [ref=f11e458]:
+            - generic [ref=f11e461]:
+              - strong [ref=f11e462]: analytics_visitors
+              - generic [ref=f11e463]: "7,425 rows · latest: 2026-09-24 16:50:00"
+            - generic [ref=f11e466]:
+              - strong [ref=f11e467]: analytics_sessions
+              - generic [ref=f11e468]: "9,414 rows · latest: 2026-09-24 16:50:00"
+            - generic [ref=f11e471]:
+              - strong [ref=f11e472]: analytics_pageviews
+              - generic [ref=f11e473]: "10,768 rows · latest: 2026-09-24 16:21:36"
+            - generic [ref=f11e476]:
+              - strong [ref=f11e477]: analytics_events
+              - generic [ref=f11e478]: "240 rows · latest: 2026-09-24 14:48:37"
+            - generic [ref=f11e481]:
+              - strong [ref=f11e482]: analytics_live_activity
+              - generic [ref=f11e483]: "7,135 rows · latest: 2026-09-24 16:50:00"
+            - generic [ref=f11e486]:
+              - strong [ref=f11e487]: analytics_campaign_meta
+              - generic [ref=f11e488]: "0 rows · latest: no data yet"
+            - generic [ref=f11e491]:
+              - strong [ref=f11e492]: enquiries
+              - generic [ref=f11e493]: "23 rows · latest: 2026-09-24 14:48:36"
+          - generic [ref=f11e58]: Database connection and required analytics/enquiry columns are ready. “No data yet” means the table works but has not received a matching event.
+        - generic [ref=f11e59]:
+          - generic [ref=f11e61]:
+            - generic [ref=f11e62]: 
+            - text: Daily Visitors Trend
+          - generic [ref=f11e66]:
+            - generic [ref=f11e67]: 
+            - text: Device Distribution
+        - generic [ref=f11e70]:
+          - generic [ref=f11e72]:
+            - generic [ref=f11e73]: 
+            - text: Traffic by Source
+          - generic [ref=f11e77]:
+            - generic [ref=f11e78]: 
+            - text: Monthly Growth
+        - generic [ref=f11e81]:
+          - generic [ref=f11e83]:
+            - generic [ref=f11e84]: 
+            - text: Browser Share
+          - generic [ref=f11e88]:
+            - generic [ref=f11e89]: 
+            - text: Top Landing Pages
+      - text:                                                                                                                                                                                    

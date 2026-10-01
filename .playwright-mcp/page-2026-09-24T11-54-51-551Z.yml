@@ -1,0 +1,515 @@
+- generic [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "IUC Edu - Home" [ref=e4] [cursor=pointer]:
+        - /url: /iuc-website/
+      - navigation "Main navigation" [ref=e6]:
+        - link "Home" [ref=e7] [cursor=pointer]:
+          - /url: /iuc-website/#home
+        - link "About" [ref=e8] [cursor=pointer]:
+          - /url: /iuc-website/#about
+        - button "Courses" [ref=e10] [cursor=pointer]:
+          - text: Courses
+          - generic [aria-hidden] [ref=e11]: 
+        - link "Placements" [ref=e12] [cursor=pointer]:
+          - /url: /iuc-website/#placements
+        - link "Testimonials" [ref=e13] [cursor=pointer]:
+          - /url: /iuc-website/#testimonials
+        - link "Blog" [ref=e14] [cursor=pointer]:
+          - /url: /iuc-website/#blog
+        - link "Contact" [ref=e15] [cursor=pointer]:
+          - /url: /iuc-website/#contact
+      - generic [ref=e16]:
+        - link " Admin" [ref=e17] [cursor=pointer]:
+          - /url: /iuc-website/admin/
+          - generic [ref=e18]: 
+          - generic [ref=e19]: Admin
+        - link " +91 7418048039" [ref=e20] [cursor=pointer]:
+          - /url: tel:+917418048039
+          - generic [ref=e21]: 
+          - text: +91 7418048039
+        - link "Enquire Now " [ref=e22] [cursor=pointer]:
+          - /url: /iuc-website/#contact
+          - text: Enquire Now
+          - generic [ref=e23]: 
+  - main [ref=e24]:
+    - generic [ref=e26]:
+      - navigation "Breadcrumb" [ref=e27]:
+        - link "Home" [ref=e28] [cursor=pointer]:
+          - /url: /iuc-website/
+        - generic [ref=e29]: /
+        - link "Courses" [ref=e30] [cursor=pointer]:
+          - /url: /iuc-website/#courses
+        - generic [ref=e31]: /
+        - generic [ref=e32]: Java & J2EE Programming
+      - generic [ref=e33]:
+        - generic [ref=e34]:
+          - generic [ref=e35]: programming
+          - heading "Java Training in Chennai" [level=1] [ref=e36]
+          - paragraph [ref=e37]: Master Core Java, J2EE, Spring Boot, Hibernate, and build enterprise-grade applications with industry best practices.
+          - generic "Related training guides" [ref=e38]:
+            - link "Programming courses in Chennai" [ref=e39] [cursor=pointer]:
+              - /url: /iuc-website/programming-courses-in-chennai
+            - link "IT courses for beginners" [ref=e40] [cursor=pointer]:
+              - /url: /iuc-website/it-courses-for-beginners
+            - link "Online IT course options" [ref=e41] [cursor=pointer]:
+              - /url: /iuc-website/online-it-courses
+          - generic [ref=e42]:
+            - generic [ref=e43]:
+              - generic [ref=e44]:
+                - generic [ref=e45]: 
+                - text: 4 Months
+              - generic [ref=e46]: Duration
+            - generic [ref=e47]:
+              - generic [ref=e48]:
+                - generic [ref=e49]: 
+                - text: Online / Offline
+              - generic [ref=e50]: Training Mode
+            - generic [ref=e51]:
+              - generic [ref=e52]:
+                - generic [ref=e53]: 
+                - text: Beginner to Advanced
+              - generic [ref=e54]: Level
+            - generic [ref=e55]:
+              - generic [ref=e56]:
+                - generic [ref=e57]: 
+                - text: "4.7"
+              - generic [ref=e58]: Rating
+          - generic [ref=e59]:
+            - link "Apply Now " [ref=e60] [cursor=pointer]:
+              - /url: /iuc-website/#contact
+              - text: Apply Now
+              - generic [ref=e61]: 
+            - link " Download Syllabus (PDF)" [ref=e62] [cursor=pointer]:
+              - /url: /iuc-website/download-syllabus.php?course=java
+              - generic [ref=e63]: 
+              - text: Download Syllabus (PDF)
+        - img "Java Training in Chennai at IUC Edu" [ref=e65]
+    - region "Course Overview" [ref=e66]:
+      - generic [ref=e68]:
+        - generic:
+          - heading "Course Overview" [level=2]
+          - paragraph: Master Core Java, J2EE, Spring Boot, Hibernate, and build enterprise-grade applications with industry best practices.
+          - heading "Eligibility" [level=3]
+          - paragraph: Basic computer knowledge. No prior Java experience needed.
+          - heading "Course Highlights" [level=3]
+          - generic:
+            - generic:
+              - generic: 
+              - text: Industry certification
+            - generic:
+              - generic: 
+              - text: Live projects
+            - generic:
+              - generic: 
+              - text: Placement support
+            - generic:
+              - generic: 
+              - text: Expert mentorship
+        - generic:
+          - generic:
+            - generic:
+              - generic: ₹46,000
+              - generic: or ₹2,500/mo EMI
+            - paragraph: Zero-cost EMI available · Scholarship up to 50%
+            - generic:
+              - generic:
+                - generic: 
+                - text: Industry-recognized certification
+              - generic:
+                - generic: 
+                - text: 5+ real-world projects
+              - generic:
+                - generic: 
+                - text: Lifetime access to materials
+              - generic:
+                - generic: 
+                - text: 1-on-1 mentorship
+              - generic:
+                - generic: 
+                - text: 100% placement assistance
+              - generic:
+                - generic: 
+                - text: Flexible batch timings
+            - link "Enquire Now ":
+              - /url: /iuc-website/#contact
+              - text: Enquire Now
+              - generic: 
+            - link " Chat on WhatsApp":
+              - /url: https://wa.me/917418048039?text=Hi!%20I'm%20interested%20in%20Java+%26+J2EE+Programming%20at%20IUC%20Edu.
+              - generic: 
+              - text: Chat on WhatsApp
+            - generic:
+              - generic: 
+              - text: 850+ students enrolled
+    - region "Technologies & Tools" [ref=e69]:
+      - generic [ref=e70]:
+        - generic:
+          - heading "Technologies & Tools" [level=2]
+          - paragraph: Master these industry-standard technologies and tools in this program.
+        - generic:
+          - generic: Java
+          - generic: Spring Boot
+          - generic: Hibernate
+          - generic: JSP
+          - generic: Servlets
+          - generic: MySQL
+          - generic: Maven
+          - generic: JUnit
+          - generic: Eclipse
+          - generic: IntelliJ
+          - generic: Git
+          - generic: GitHub
+          - generic: Postman
+          - generic: Jenkins
+    - region "Module-Wise Curriculum" [ref=e71]:
+      - generic [ref=e72]:
+        - generic:
+          - generic: Curriculum
+          - heading "Module-Wise Curriculum" [level=2]
+          - paragraph: A structured, industry-reviewed curriculum designed to take you from beginner to job-ready professional.
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - generic: "01"
+                - generic: Core Java
+              - generic: 
+            - generic:
+              - paragraph: Java basics, OOP, collections, multithreading, exception handling
+              - generic:
+                - generic: Java basics
+                - generic: OOP
+                - generic: collections
+                - generic: multithreading
+                - generic: exception handling
+          - generic:
+            - generic:
+              - generic:
+                - generic: "02"
+                - generic: Advanced Java
+              - generic: 
+          - generic:
+            - generic:
+              - generic:
+                - generic: "03"
+                - generic: Spring Framework
+              - generic: 
+          - generic:
+            - generic:
+              - generic:
+                - generic: "04"
+                - generic: Spring Boot
+              - generic: 
+          - generic:
+            - generic:
+              - generic:
+                - generic: "05"
+                - generic: Hibernate
+              - generic: 
+          - generic:
+            - generic:
+              - generic:
+                - generic: "06"
+                - generic: Database & SQL
+              - generic: 
+          - generic:
+            - generic:
+              - generic:
+                - generic: "07"
+                - generic: Build & Deploy
+              - generic: 
+          - generic:
+            - generic:
+              - generic:
+                - generic: "08"
+                - generic: Capstone Project
+              - generic: 
+    - region "Hands-On Projects" [ref=e73]:
+      - generic [ref=e74]:
+        - generic:
+          - generic: Projects
+          - heading "Hands-On Projects" [level=2]
+          - paragraph: Build a professional portfolio with real-world projects that demonstrate your skills.
+        - generic:
+          - generic:
+            - generic: "1"
+            - generic: Banking Application
+          - generic:
+            - generic: "2"
+            - generic: Hospital Management System
+          - generic:
+            - generic: "3"
+            - generic: E-Commerce Backend API
+          - generic:
+            - generic: "4"
+            - generic: Employee Payroll System
+          - generic:
+            - generic: "5"
+            - generic: Library Management with Spring Boot
+    - region "Get Certified" [ref=e75]:
+      - generic:
+        - generic: 
+        - heading "Get Certified" [level=2]
+        - paragraph: IUC Edu Java Certification + Oracle Java SE 8 Associate Preparation
+        - paragraph: Our certifications are recognized by leading companies and designed to boost your career prospects.
+    - region "Your Career Path" [ref=e76]:
+      - generic [ref=e77]:
+        - generic:
+          - generic: Career Opportunities
+          - heading "Your Career Path" [level=2]
+          - paragraph: Roles you can target after completing this program.
+        - generic:
+          - generic:
+            - generic: Java Developer
+            - generic: ₹4L to ₹15L PA
+          - generic:
+            - generic: Spring Boot Developer
+            - generic: ₹6L to ₹18L PA
+          - generic:
+            - generic: Full Stack Developer
+            - generic: ₹6L to ₹20L PA
+    - region "Enroll CTA" [ref=e78]:
+      - generic:
+        - heading "Ready to Start Your Journey?" [level=2]
+        - paragraph: Join 850+ students who have already enrolled in this program.
+        - generic:
+          - link "Apply Now ":
+            - /url: /iuc-website/#contact
+            - text: Apply Now
+            - generic: 
+          - link " Call Us":
+            - /url: tel:+917418048039
+            - generic: 
+            - text: Call Us
+    - region "Related Courses" [ref=e79]:
+      - generic [ref=e80]:
+        - generic:
+          - heading "Related Courses" [level=2]
+        - generic:
+          - article:
+            - generic:
+              - img "C & C++ Programming"
+            - generic:
+              - heading "C & C++" [level=3]
+              - paragraph: Master C & C++ programming, pointers, OOP, memory management & data structures.
+              - generic:
+                - generic:
+                  - generic: ₹40,500
+                  - generic: No-Cost EMI · ₹2,500/mo
+                - generic:
+                  - link "View C & C++ course":
+                    - /url: /iuc-website/course/c-cpp
+          - article:
+            - generic:
+              - img "Full Stack Java Development"
+            - generic:
+              - heading "Full Stack Java" [level=3]
+              - paragraph: Build complete web apps with Java, Spring Boot & Angular/React.
+              - generic:
+                - generic:
+                  - generic: ₹66,000
+                  - generic: No-Cost EMI · ₹5,500/mo
+                - generic:
+                  - link "View Full Stack Java course":
+                    - /url: /iuc-website/course/full-stack-java
+          - article:
+            - generic:
+              - img "Spring Boot & Microservices"
+            - generic:
+              - heading "Spring Boot" [level=3]
+              - paragraph: Master Spring Boot, Microservices & Cloud-native development.
+              - generic:
+                - generic:
+                  - generic: ₹55,000
+                  - generic: No-Cost EMI · ₹5,500/mo
+                - generic:
+                  - link "View Spring Boot course":
+                    - /url: /iuc-website/course/spring-boot
+    - region "Frequently Asked Questions" [ref=e81]:
+      - generic [ref=e82]:
+        - generic:
+          - generic: FAQ
+          - heading "Frequently Asked Questions" [level=2]
+        - generic:
+          - generic:
+            - group:
+              - generic "What will I learn in the Java course? ":
+                - text: What will I learn in the Java course?
+                - generic: 
+          - generic:
+            - group:
+              - generic "Who can join this Java training? ":
+                - text: Who can join this Java training?
+                - generic: 
+          - generic:
+            - group:
+              - generic "Is Java training available online and in Chennai? ":
+                - text: Is Java training available online and in Chennai?
+                - generic: 
+          - generic:
+            - group:
+              - generic "Will I receive a certificate after completing the course? ":
+                - text: Will I receive a certificate after completing the course?
+                - generic: 
+          - generic:
+            - group:
+              - generic "How can I check the next batch and course fee? ":
+                - text: How can I check the next batch and course fee?
+                - generic: 
+  - contentinfo [ref=e83]:
+    - generic [ref=e84]:
+      - generic [ref=e85]:
+        - generic [ref=e86]:
+          - img "IUC Edu computer education institute" [ref=e87]
+          - paragraph [ref=e88]: Premier IT training institute in Chennai delivering world-class technology education with 98% placement support. 25,000+ careers launched and counting.
+          - generic [ref=e89]:
+            - link "Facebook" [ref=e90] [cursor=pointer]:
+              - /url: https://www.facebook.com/IUCComputerEducation
+              - generic [ref=e91]: 
+            - link "Instagram" [ref=e92] [cursor=pointer]:
+              - /url: https://www.instagram.com/iuc_computers/
+              - generic [ref=e93]: 
+            - link "LinkedIn" [ref=e94] [cursor=pointer]:
+              - /url: https://www.linkedin.com/in/r-senthil-kumar-522213b9/
+              - generic [ref=e95]: 
+            - link "YouTube" [ref=e96] [cursor=pointer]:
+              - /url: https://www.youtube.com/@iuccomputers5136
+              - generic [ref=e97]: 
+        - generic [ref=e98]:
+          - heading "Quick Links" [level=4] [ref=e99]
+          - generic [ref=e100]:
+            - link "Home" [ref=e101] [cursor=pointer]:
+              - /url: /iuc-website/#home
+            - link "About" [ref=e102] [cursor=pointer]:
+              - /url: /iuc-website/#about
+            - link "Courses" [ref=e103] [cursor=pointer]:
+              - /url: /iuc-website/#courses
+            - link "Placements" [ref=e104] [cursor=pointer]:
+              - /url: /iuc-website/#placements
+            - link "Testimonials" [ref=e105] [cursor=pointer]:
+              - /url: /iuc-website/#testimonials
+            - link "Blog" [ref=e106] [cursor=pointer]:
+              - /url: /iuc-website/#blog
+            - link "Contact" [ref=e107] [cursor=pointer]:
+              - /url: /iuc-website/#contact
+            - link "Computer Training in Chennai" [ref=e108] [cursor=pointer]:
+              - /url: /iuc-website/computer-training-in-chennai
+            - link "Programming Courses" [ref=e109] [cursor=pointer]:
+              - /url: /iuc-website/programming-courses-in-chennai
+            - link "Beginner IT Courses" [ref=e110] [cursor=pointer]:
+              - /url: /iuc-website/it-courses-for-beginners
+            - link "Online IT Courses" [ref=e111] [cursor=pointer]:
+              - /url: /iuc-website/online-it-courses
+            - link "Learning Blog" [ref=e112] [cursor=pointer]:
+              - /url: /iuc-website/blog
+            - link "Sitemap" [ref=e113] [cursor=pointer]:
+              - /url: /iuc-website/sitemap.xml
+        - generic [ref=e114]:
+          - heading "Top Courses" [level=4] [ref=e115]
+          - generic [ref=e116]:
+            - link "AI & ML" [ref=e117] [cursor=pointer]:
+              - /url: /iuc-website/course/ai-ml
+            - link "Data Science" [ref=e118] [cursor=pointer]:
+              - /url: /iuc-website/course/data-science
+            - link "Python" [ref=e119] [cursor=pointer]:
+              - /url: /iuc-website/course/python
+            - link "Java" [ref=e120] [cursor=pointer]:
+              - /url: /iuc-website/course/java
+            - link "Full Stack Java" [ref=e121] [cursor=pointer]:
+              - /url: /iuc-website/course/full-stack-java
+            - link "Spring Boot" [ref=e122] [cursor=pointer]:
+              - /url: /iuc-website/course/spring-boot
+        - generic [ref=e123]:
+          - heading "Contact Us" [level=4] [ref=e124]
+          - generic [ref=e125]:
+            - link " +91 7418048039" [ref=e126] [cursor=pointer]:
+              - /url: tel:+917418048039
+              - generic [ref=e127]: 
+              - text: +91 7418048039
+            - link " 04443539196" [ref=e128] [cursor=pointer]:
+              - /url: tel:04443539196
+              - generic [ref=e129]: 
+              - text: "04443539196"
+            - link " 04447940112" [ref=e130] [cursor=pointer]:
+              - /url: tel:04447940112
+              - generic [ref=e131]: 
+              - text: "04447940112"
+            - link " info@iucedu.com" [ref=e132] [cursor=pointer]:
+              - /url: mailto:info@iucedu.com
+              - generic [ref=e133]: 
+              - text: info@iucedu.com
+            - generic [ref=e134]:
+              - generic [ref=e135]: 
+              - text: "#1&2 Gold Nest Apts, 2nd Main Road, C.I.T Nagar, Chennai – 600 035"
+            - generic [ref=e136]:
+              - generic [ref=e137]: 
+              - text: 19/11 Balakrishna Colony 1st St, Kaladipet, Thiruvottiyur, Chennai – 600 019
+            - generic [ref=e138]:
+              - heading "Newsletter" [level=4] [ref=e139]
+              - generic [ref=e140]:
+                - textbox "Email for newsletter" [ref=e141]:
+                  - /placeholder: Your email
+                - button "" [ref=e142] [cursor=pointer]
+      - generic [ref=e144]:
+        - generic [ref=e145]: © 2026 IUC Edu. All rights reserved.
+        - generic [ref=e146]: Privacy Policy Terms of Service Refund Policy
+  - dialog [ref=e149]:
+    - generic [ref=e151]:
+      - button "Close enquiry form" [ref=e152] [cursor=pointer]: ×
+      - heading "Apply for a Course" [level=2] [ref=e153]
+      - paragraph [ref=e154]: Share your details and our team will contact you.
+      - generic [ref=e155]:
+        - generic [ref=e156]:
+          - generic [ref=e157]: Full Name *
+          - textbox "Full Name *" [active] [ref=e158]
+        - generic [ref=e159]:
+          - generic [ref=e160]:
+            - generic [ref=e161]: Phone Number *
+            - textbox "Phone Number *" [ref=e162]
+          - generic [ref=e163]:
+            - generic [ref=e164]: Email Address *
+            - textbox "Email Address *" [ref=e165]
+        - generic [ref=e166]:
+          - generic [ref=e167]: Course Interest *
+          - combobox "Course Interest *" [ref=e168]:
+            - option "Select a program..." [disabled]
+            - option "Artificial Intelligence & Machine Learning"
+            - option "Data Science & Analytics"
+            - option "Python Programming"
+            - option "Java & J2EE Programming" [selected]
+            - option "Full Stack Java Development"
+            - option "Spring Boot & Microservices"
+            - option "React.js Frontend Development"
+            - option "Angular Frontend Development"
+            - option "Node.js Backend Development"
+            - option "UI/UX Design & Prototyping"
+            - option "Software Testing & QA"
+            - option "DevOps & Cloud Engineering"
+            - option "Cloud Computing (AWS & Azure)"
+            - option "Cyber Security & Ethical Hacking"
+            - option "Digital Marketing & SEO"
+            - option "C & C++ Programming"
+            - option "Other / Not Sure Yet"
+        - generic [ref=e169]:
+          - generic [ref=e170]: Message (Optional)
+          - textbox "Message (Optional)" [ref=e171]
+        - generic [ref=e173] [cursor=pointer]:
+          - checkbox "Send my requested course information and enquiry follow-up to this phone number on WhatsApp." [ref=e174]
+          - generic [ref=e175]: Send my requested course information and enquiry follow-up to this phone number on WhatsApp.
+        - generic [ref=e176]:
+          - generic [ref=e177]: Security Verification *
+          - generic [ref=e178]:
+            - strong [ref=e179]: "5587"
+            - generic [ref=e180]: Enter the 4-digit code
+          - textbox "Security Verification *" [ref=e181]
+        - button "Submit Enquiry " [ref=e182] [cursor=pointer]:
+          - text: Submit Enquiry
+          - generic [ref=e183]: 
+  - link "Chat on WhatsApp" [ref=e147] [cursor=pointer]:
+    - /url: https://wa.me/917418048039?text=Hi!%20I'm%20interested%20in%20IUC%20Edu%20programs.%20Please%20guide%20me.
+    - generic: Chat with us on WhatsApp
+    - generic [ref=e148]: 
+  - link "Back to top":
+    - /url: "#"
+    - generic: 

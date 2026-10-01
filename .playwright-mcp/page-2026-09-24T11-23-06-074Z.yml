@@ -1,0 +1,140 @@
+- generic [ref=f11e2]:
+  - complementary "Analytics navigation" [ref=f11e3]:
+    - generic [ref=f11e4]:
+      - img "IUC" [ref=f11e5]
+      - generic [ref=f11e6]:
+        - generic [ref=f11e7]: IUC Analytics
+        - generic [ref=f11e8]: Marketing Dashboard
+    - navigation [ref=f11e9]:
+      - button " Overview" [ref=f11e10] [cursor=pointer]:
+        - generic [ref=f11e11]: 
+        - text: Overview
+      - button " Visitors" [ref=f11e12] [cursor=pointer]:
+        - generic [ref=f11e13]: 
+        - text: Visitors
+      - button " Campaigns" [ref=f11e14] [cursor=pointer]:
+        - generic [ref=f11e15]: 
+        - text: Campaigns
+      - button " Pages" [ref=f11e16] [cursor=pointer]:
+        - generic [ref=f11e17]: 
+        - text: Pages
+      - button " SEO Monitor" [ref=f11e18] [cursor=pointer]:
+        - generic [ref=f11e19]: 
+        - text: SEO Monitor
+      - button " Enquiries" [ref=f11e20] [cursor=pointer]:
+        - generic [ref=f11e21]: 
+        - text: Enquiries
+      - button " Conversions" [ref=f11e22] [cursor=pointer]:
+        - generic [ref=f11e23]: 
+        - text: Conversions
+      - button " Live Visitors" [active] [ref=f11e24] [cursor=pointer]:
+        - generic [ref=f11e25]: 
+        - text: Live Visitors
+      - button " Reports" [ref=f11e27] [cursor=pointer]:
+        - generic [ref=f11e28]: 
+        - text: Reports
+    - generic [ref=f11e29]:
+      - link " View Website" [ref=f11e30] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f11e31]: 
+        - text: View Website
+      - link " Logout" [ref=f11e32] [cursor=pointer]:
+        - /url: logout.php
+        - generic [ref=f11e33]: 
+        - text: Logout
+  - main [ref=f11e34]:
+    - generic [ref=f11e35]:
+      - generic [ref=f11e36]:
+        - text: 
+        - generic [ref=f11e37]:
+          - heading "Live Visitors" [level=1] [ref=f11e92]
+          - paragraph [ref=f11e93]: "Report period: 2026-08-25 → 2026-09-24"
+      - generic [ref=f11e39]:
+        - generic [ref=f11e40]:
+          - textbox [ref=f11e41]: 2026-08-25
+          - generic [ref=f11e42]: to
+          - textbox [ref=f11e43]: 2026-09-24
+          - button " Apply" [ref=f11e44] [cursor=pointer]:
+            - generic [ref=f11e45]: 
+            - text: Apply
+        - generic [ref=f11e46]:
+          - link " Excel" [ref=f11e47] [cursor=pointer]:
+            - /url: export.php?format=excel&from=2026-08-25&to=2026-09-24
+            - generic [ref=f11e48]: 
+            - text: Excel
+          - link " PDF" [ref=f11e49] [cursor=pointer]:
+            - /url: export.php?format=pdf&from=2026-08-25&to=2026-09-24
+            - generic [ref=f11e50]: 
+            - text: PDF
+          - link " CSV" [ref=f11e51] [cursor=pointer]:
+            - /url: export.php?format=csv&from=2026-08-25&to=2026-09-24
+            - generic [ref=f11e52]: 
+            - text: CSV
+    - generic [ref=f11e53]:
+      - text:                                                                                                                                                                                       
+      - generic [ref=f11e94]:
+        - generic [ref=f11e95]:
+          - generic [ref=f11e242]:
+            - generic [ref=f11e243]: 
+            - generic [ref=f11e245]: "1"
+            - generic [ref=f11e246]: Active Users
+            - generic [ref=f11e247]: Last 30 minutes
+          - generic [ref=f11e248]:
+            - generic [ref=f11e249]: 
+            - generic [ref=f11e251]: "1"
+            - generic [ref=f11e252]: Recently Active
+            - generic [ref=f11e253]: Last 5 minutes
+          - generic [ref=f11e254]:
+            - generic [ref=f11e255]: 
+            - generic [ref=f11e257]: 7,425
+            - generic [ref=f11e258]: Total Visitors
+            - generic [ref=f11e259]: All time
+          - generic [ref=f11e260]:
+            - generic [ref=f11e261]: 
+            - generic [ref=f11e263]: "167"
+            - generic [ref=f11e264]: Conversions
+            - generic [ref=f11e265]: Period
+        - status [ref=f11e119]:
+          - generic [ref=f11e266]: 
+          - generic [ref=f11e267]:
+            - strong [ref=f11e268]: Google Analytics Realtime connection pending
+            - generic [ref=f11e269]: Showing the IUC 30-minute count temporarily. Google Analytics Data API is disabled in the existing Google Cloud project.
+        - generic [ref=f11e125]:
+          - generic [ref=f11e126]: 
+          - text: IUC Activity Trend — Last 30 min
+          - generic [ref=f11e127]: "IUC: 1 users / 30 min"
+        - generic [ref=f11e130]:
+          - generic [ref=f11e131]:
+            - generic [ref=f11e132]: 
+            - text: Recently Active IUC Visitors
+            - generic [ref=f11e161]: (1 distinct users in last 5 min; 1 sessions)
+          - table [ref=f11e163]:
+            - rowgroup [ref=f11e270]:
+              - row [ref=f11e271]:
+                - columnheader "Platform" [ref=f11e272]
+                - columnheader "Campaign / Traffic Type" [ref=f11e273]
+                - columnheader "Exact Page URL" [ref=f11e274]
+                - columnheader "Mobile Number" [ref=f11e275]
+                - columnheader "Device" [ref=f11e276]
+                - columnheader "City" [ref=f11e277]
+                - columnheader "Views" [ref=f11e278]
+                - columnheader "Last Activity" [ref=f11e279]
+            - rowgroup [ref=f11e280]:
+              - row [ref=f11e281]:
+                - cell "YouTube YouTube Ads" [ref=f11e282]:
+                  - generic [ref=f11e283]: YouTube
+                  - generic [ref=f11e284]: YouTube Ads
+                - cell "codex_live_fix paid_video" [ref=f11e285]:
+                  - text: codex_live_fix
+                  - generic [ref=f11e286]: paid_video
+                - cell [ref=f11e287]:
+                  - link "https://www.iucedu.com/ " [ref=f11e288] [cursor=pointer]:
+                    - /url: https://www.iucedu.com/
+                    - text: https://www.iucedu.com/
+                    - generic [ref=f11e289]: 
+                - cell "Not provided" [ref=f11e290]
+                - cell "desktop" [ref=f11e291]
+                - cell "Chennai" [ref=f11e292]
+                - cell "2" [ref=f11e293]
+                - cell "16:52:45" [ref=f11e294]
+      - text:     

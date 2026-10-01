@@ -21,7 +21,7 @@ if (!an_ensure_tables($conn)) {
     exit;
 }
 
-$in = $_POST;
+$in = array_merge($_GET, $_POST);
 if (empty($in) || (isset($_SERVER['CONTENT_TYPE']) && stripos($_SERVER['CONTENT_TYPE'], 'json') !== false)) {
     $raw = file_get_contents('php://input');
     if ($raw) {
@@ -45,8 +45,8 @@ if (!$sessionId || !an_valid_uuid($sessionId)) {
 
 $ip       = an_client_ip();
 $now      = date('Y-m-d H:i:s');
-$pageUrl  = an_clean(isset($in['page_url']) ? $in['page_url'] : '');
-$landingPage = an_clean(isset($in['landing_page']) ? $in['landing_page'] : '') ?: $pageUrl;
+$pageUrl  = an_normalize_page_url(isset($in['page_url']) ? $in['page_url'] : '');
+$landingPage = an_normalize_page_url(isset($in['landing_page']) ? $in['landing_page'] : '') ?: $pageUrl;
 $pageTitle= an_clean(isset($in['page_title']) ? $in['page_title'] : '', 255);
 $referrer = an_clean(isset($in['referrer']) ? $in['referrer'] : '');
 $ua       = an_clean(isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '', 512);
@@ -59,10 +59,21 @@ $lang     = an_clean(isset($in['language']) ? $in['language'] : '', 16);
 $utmSource  = an_clean_utm(isset($in['utm_source']) ? $in['utm_source'] : '');
 $utmMedium  = an_clean_utm(isset($in['utm_medium']) ? $in['utm_medium'] : '');
 $utmCampaign= an_clean_utm(isset($in['utm_campaign']) ? $in['utm_campaign'] : '');
+$campaignId = an_clean_utm(isset($in['campaign_id']) ? $in['campaign_id'] : '');
 $utmContent = an_clean_utm(isset($in['utm_content']) ? $in['utm_content'] : '');
 $utmTerm    = an_clean_utm(isset($in['utm_term']) ? $in['utm_term'] : '');
-$hasGclid   = !empty($in['gclid']);
-$duration   = isset($in['duration']) ? (int)$in['duration'] : 0;
+$clickType  = strtolower((string)an_clean_utm(isset($in['click_id_type']) ? $in['click_id_type'] : ''));
+$clickId    = an_clean_utm(isset($in['click_id']) ? $in['click_id'] : '', 255);
+if ($clickType === '' && !empty($in['gclid'])) {
+    $clickType = 'gclid';
+    $clickId = an_clean_utm($in['gclid'], 255);
+}
+$allowedClickTypes = ['gclid', 'dclid', 'gbraid', 'wbraid', 'msclkid', 'fbclid', 'ttclid', 'twclid', 'li_fat_id', 'gad_source', 'gad_campaignid'];
+if (!in_array($clickType, $allowedClickTypes, true)) {
+    $clickType = '';
+    $clickId = null;
+}
+$duration   = isset($in['duration']) ? max(0, min(86400, (int)$in['duration'])) : 0;
 $label      = an_clean(isset($in['event_label']) ? $in['event_label'] : '', 255);
 $pvId       = isset($in['pv_id']) ? (int)$in['pv_id'] : 0;
 
@@ -118,9 +129,9 @@ if ($visitor) {
 }
 
 /* ── Channel attribution ─────────────────────────────────────── */
-list($channel, $srcClean, $medClean) = an_channel($utmSource, $utmMedium, $referrer, $hasGclid);
+list($channel, $srcClean, $medClean) = an_channel($utmSource, $utmMedium, $referrer, $clickType);
 if ($channel === 'Direct' && $utmSource) {
-    list($channel, $srcClean, $medClean) = an_channel($utmSource, $utmMedium, $referrer, $hasGclid);
+    list($channel, $srcClean, $medClean) = an_channel($utmSource, $utmMedium, $referrer, $clickType);
 }
 $search = an_search_details($referrer, $utmTerm, $channel);
 $searchEngine = $search['engine'];
@@ -150,12 +161,12 @@ if ($sess) {
     $initialBounce = $initialPageViews === 1 ? 1 : 0;
     $stmt = $conn->prepare("INSERT INTO analytics_sessions
         (session_id, visitor_id, ip, started_at, last_activity, ended_at, page_views, is_bounce,
-         channel, source, medium, campaign, content, term, search_engine, search_term, referrer, landing_page, exit_page,
+         channel, source, medium, campaign, campaign_id, content, term, search_engine, search_term, click_id_type, click_id, referrer, landing_page, exit_page,
          device, browser, os, country, state, city)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param('ssssssiisssssssssssssssss',
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param('ssssssiissssssssssssssssssss',
         $sessionId, $visitorId, $ip, $now, $now, $now, $initialPageViews, $initialBounce,
-        $channel, $srcClean, $medClean, $utmCampaign, $utmContent, $utmTerm, $searchEngine, $searchTerm, $referrer, $landingPage, $pageUrl,
+        $channel, $srcClean, $medClean, $utmCampaign, $campaignId, $utmContent, $utmTerm, $searchEngine, $searchTerm, $clickType, $clickId, $referrer, $landingPage, $pageUrl,
         $device, $browser, $os, $geo['country'], $geo['state'], $geo['city']);
     $stmt->execute();
     $stmt->close();
@@ -168,6 +179,17 @@ if ($sess) {
     $stmt->close();
     $returningNow = $ret === 1;
     $sessPv = $initialPageViews;
+}
+
+/* One presence row per visitor session/minute powers a real 30-minute trend.
+   Hidden tabs stop sending heartbeats, so they no longer stay active forever. */
+$minuteAt = date('Y-m-d H:i:00');
+$stmt = $conn->prepare("INSERT INTO analytics_live_activity (minute_at, visitor_id, session_id, page_url, last_seen)
+    VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE page_url = VALUES(page_url), last_seen = VALUES(last_seen)");
+if ($stmt) {
+    $stmt->bind_param('sssss', $minuteAt, $visitorId, $sessionId, $pageUrl, $now);
+    $stmt->execute();
+    $stmt->close();
 }
 
 /* ── Pageview / heartbeat handling ───────────────────────────── */
@@ -199,11 +221,14 @@ if ($eventType === 'pageview') {
 }
 
 /* ── Campaign row (UTM present) ──────────────────────────────── */
-if ($isNewSession && ($utmSource || $utmCampaign || $hasGclid)) {
+if ($isNewSession && ($utmSource || $utmCampaign || $campaignId || $clickType)) {
     $stmt = $conn->prepare("INSERT INTO analytics_campaigns
-        (visitor_id, session_id, source, medium, campaign, content, term, search_engine, search_term, landing_page, created_at)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param('sssssssssss', $visitorId, $sessionId, $srcClean, $medClean, $utmCampaign, $utmContent, $utmTerm, $searchEngine, $searchTerm, $landingPage, $now);
+        (visitor_id, session_id, source, medium, campaign, campaign_id, content, term, search_engine, search_term, click_id_type, click_id, landing_page, created_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ON DUPLICATE KEY UPDATE source = VALUES(source), medium = VALUES(medium), campaign = VALUES(campaign),
+            campaign_id = VALUES(campaign_id), content = VALUES(content), term = VALUES(term), search_engine = VALUES(search_engine),
+            search_term = VALUES(search_term), click_id_type = VALUES(click_id_type), click_id = VALUES(click_id), landing_page = VALUES(landing_page)");
+    $stmt->bind_param('ssssssssssssss', $visitorId, $sessionId, $srcClean, $medClean, $utmCampaign, $campaignId, $utmContent, $utmTerm, $searchEngine, $searchTerm, $clickType, $clickId, $landingPage, $now);
     $stmt->execute();
     $stmt->close();
 }

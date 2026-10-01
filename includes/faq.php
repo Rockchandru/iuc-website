@@ -47,7 +47,7 @@
             <p style="font-size:0.9375rem;color:var(--clr-text-secondary);margin-bottom:1rem">Still have questions? We're here to help.</p>
             <div style="display:flex;flex-wrap:wrap;gap:0.75rem;justify-content:center">
                 <a href="tel:+91<?= SITE_PHONE ?>" class="btn btn-outline"><i class="bi bi-telephone"></i> Call Us</a>
-                <a href="https://wa.me/<?= WHATSAPP_NUMBER ?>" target="_blank" rel="noopener" class="btn btn-accent"><i class="bi bi-whatsapp"></i> WhatsApp Us</a>
+                <a href="https://wa.me/<?= WHATSAPP_NUMBER ?>" target="_blank" rel="noopener" class="btn btn-accent whatsapp-action"><i class="bi bi-whatsapp"></i> WhatsApp Us</a>
                 <a href="<?= BASE_URL ?>/#contact" class="btn btn-primary">Contact Us <i class="bi bi-arrow-right"></i></a>
             </div>
         </div>

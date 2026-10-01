@@ -1,0 +1,2088 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "IUC Edu - Home" [ref=e4] [cursor=pointer]:
+        - /url: /iuc-website/
+      - navigation "Main navigation" [ref=e6]:
+        - link "Home" [ref=e7] [cursor=pointer]:
+          - /url: /iuc-website/#home
+        - link "About" [ref=e8] [cursor=pointer]:
+          - /url: /iuc-website/#about
+        - button "Courses" [ref=e10] [cursor=pointer]:
+          - text: Courses
+          - generic [aria-hidden] [ref=e11]: 
+        - link "Placements" [ref=e12] [cursor=pointer]:
+          - /url: /iuc-website/#placements
+        - link "Testimonials" [ref=e13] [cursor=pointer]:
+          - /url: /iuc-website/#testimonials
+        - link "Blog" [ref=e14] [cursor=pointer]:
+          - /url: /iuc-website/#blog
+        - link "Contact" [ref=e15] [cursor=pointer]:
+          - /url: /iuc-website/#contact
+      - generic [ref=e16]:
+        - link " Admin" [ref=e17] [cursor=pointer]:
+          - /url: /iuc-website/admin/
+          - generic [ref=e18]: 
+          - generic [ref=e19]: Admin
+        - link " +91 7418048039" [ref=e20] [cursor=pointer]:
+          - /url: tel:+917418048039
+          - generic [ref=e21]: 
+          - text: +91 7418048039
+        - link "Enquire Now " [ref=e22] [cursor=pointer]:
+          - /url: /iuc-website/#contact
+          - text: Enquire Now
+          - generic [ref=e23]: 
+  - main [ref=e24]:
+    - region "Hero" [ref=e25]:
+      - generic [ref=e27]:
+        - generic [ref=e28]:
+          - generic [ref=e29]: New Batches Starting Soon — Limited Seats
+          - heading "Career-Focused Computer Courses and IT Training in Chennai" [level=1] [ref=e31]
+          - paragraph [ref=e32]: Build practical computer and IT skills through industry-focused training in programming, software development, data science, artificial intelligence, cloud computing, cyber security and digital marketing, with hands-on projects and placement assistance.
+          - generic [ref=e33]:
+            - link "Get Free Counselling " [ref=e34] [cursor=pointer]:
+              - /url: /iuc-website/#contact
+              - text: Get Free Counselling
+              - generic [ref=e35]: 
+            - link " Explore Courses" [ref=e36] [cursor=pointer]:
+              - /url: /iuc-website/#courses
+              - generic [ref=e37]: 
+              - text: Explore Courses
+            - link " View Chennai Training" [ref=e38] [cursor=pointer]:
+              - /url: /iuc-website/computer-training-in-chennai
+              - generic [ref=e39]: 
+              - text: View Chennai Training
+          - generic [ref=e40]:
+            - generic [ref=e41]: +
+            - generic [ref=e48]:
+              - generic [ref=e49]:
+                - generic [ref=e50]: 
+                - generic [ref=e51]: 
+                - generic [ref=e52]: 
+                - generic [ref=e53]: 
+                - generic [ref=e54]: 
+              - generic [ref=e55]:
+                - strong [ref=e56]: 4.9/5
+                - text: from 10,000+ reviews
+            - generic [ref=e57]:
+              - generic [ref=e58]: 
+              - text: ISO Certified
+        - generic [ref=e59]:
+          - img "Students receiving practical IT training at IUC Edu in Chennai" [ref=e61]
+          - generic [ref=e62]:
+            - generic [ref=e63]: 
+            - generic [ref=e65]:
+              - generic [ref=e66]: 98%
+              - generic [ref=e67]: Placement Rate
+          - generic [ref=e68]:
+            - generic [ref=e69]: 
+            - generic [ref=e71]:
+              - generic [ref=e72]: 25k+
+              - generic [ref=e73]: Graduates
+          - generic [ref=e74]:
+            - generic [ref=e75]: 
+            - generic [ref=e77]:
+              - generic [ref=e78]: "4.9"
+              - generic [ref=e79]: Student Rating
+    - region "Hiring partners" [ref=e80]:
+      - generic [ref=e81]:
+        - paragraph [ref=e82]: Our Graduates Are Hired By
+        - generic [ref=e84]:
+          - generic [ref=e85]: TCS
+          - generic [ref=e87]: Infosys
+          - generic [ref=e89]: Wipro
+          - generic [ref=e91]: HCL
+          - generic [ref=e93]: Cognizant
+          - generic [ref=e95]: Accenture
+          - generic [ref=e97]: Zoho
+          - generic [ref=e99]: Freshworks
+          - generic [ref=e101]: Capgemini
+          - generic [ref=e103]: Tech Mahindra
+          - generic [ref=e105]: IBM
+          - generic [ref=e107]: Oracle
+          - generic [ref=e109]: Amazon
+          - generic [ref=e111]: Microsoft
+          - generic [ref=e113]: Google
+          - generic [ref=e115]: Deloitte
+          - generic [ref=e117]: Flipkart
+          - generic [ref=e119]: PayPal
+          - generic [ref=e121]: TCS
+          - generic [ref=e123]: Infosys
+          - generic [ref=e125]: Wipro
+          - generic [ref=e127]: HCL
+          - generic [ref=e129]: Cognizant
+          - generic [ref=e131]: Accenture
+          - generic [ref=e133]: Zoho
+          - generic [ref=e135]: Freshworks
+          - generic [ref=e137]: Capgemini
+          - generic [ref=e139]: Tech Mahindra
+          - generic [ref=e141]: IBM
+          - generic [ref=e143]: Oracle
+          - generic [ref=e145]: Amazon
+          - generic [ref=e147]: Microsoft
+          - generic [ref=e149]: Google
+          - generic [ref=e151]: Deloitte
+          - generic [ref=e153]: Flipkart
+          - generic [ref=e155]: PayPal
+    - region "Key statistics" [ref=e157]:
+      - generic [ref=e159]:
+        - generic [ref=e160]:
+          - generic [ref=e161]: 
+          - generic [ref=e163]: 25000+
+          - generic [ref=e164]: Graduates Placed
+        - generic [ref=e165]:
+          - generic [ref=e166]: 
+          - generic [ref=e168]: 50+
+          - generic [ref=e169]: Courses Offered
+        - generic [ref=e170]:
+          - generic [ref=e171]: 
+          - generic [ref=e173]: 98%
+          - generic [ref=e174]: Placement Rate
+        - generic [ref=e175]:
+          - generic [ref=e176]: 
+          - generic [ref=e178]: 300+
+          - generic [ref=e179]: Hiring Partners
+        - generic [ref=e180]:
+          - generic [ref=e181]: 
+          - generic [ref=e183]: 18+
+          - generic [ref=e184]: Years of Legacy
+        - generic [ref=e185]:
+          - generic [ref=e186]: 
+          - generic [ref=e188]: "4.9"
+          - generic [ref=e189]: Student Rating
+    - region [ref=e190]:
+      - generic [ref=e191]:
+        - generic [ref=e192]:
+          - generic [ref=e193]: About IUC Edu
+          - heading "More Than an Institute — Your Career Partner" [level=2] [ref=e194]
+          - paragraph [ref=e195]: Since 1997, we've been transforming careers through industry-aligned education. Our commitment to excellence has made Chennai's most trusted IT training institute.
+        - generic [ref=e196]:
+          - generic [ref=e198]:
+            - img "IUC Edu computer education centre established in Chennai in 1997" [ref=e199]
+            - generic [ref=e200]:
+              - generic [ref=e201]: 
+              - generic [ref=e203]:
+                - generic [ref=e204]: Established 1997 · Chennai
+                - generic [ref=e205]: "Head Office: C.I.T Nagar, Nandanam"
+          - generic [ref=e206]:
+            - paragraph [ref=e207]: Founded in 1997 in the heart of Chennai's C.I.T Nagar, IUC Edu began as a focused computer education centre with a single classroom and a clear belief — that practical, job-ready skills matter more than rote learning. Nearly three decades later, that small classroom has grown into a trusted IT training institute with multiple centres across the city, 50+ programs, and a legacy of 25,000+ careers launched.
+            - paragraph [ref=e208]: Every course we teach is co-designed with hiring partners like TCS, Infosys, Wipro and Amazon, so our graduates step straight from the classroom into the workplace with real projects, live labs and globally recognised certifications. Our curriculum evolves with the industry — because your career deserves more than a syllabus.
+            - generic [ref=e209]:
+              - generic [ref=e210]:
+                - generic [ref=e211]: 
+                - generic [ref=e213]:
+                  - heading "Our Mission" [level=3] [ref=e214]
+                  - paragraph [ref=e215]: Make world-class IT education accessible, practical, and transformative for every learner regardless of background.
+              - generic [ref=e216]:
+                - generic [ref=e217]: 
+                - generic [ref=e219]:
+                  - heading "Our Vision" [level=3] [ref=e220]
+                  - paragraph [ref=e221]: To be the region's most trusted launchpad for tech careers, seamlessly bridging academia and industry.
+            - link "Explore Our Courses " [ref=e222] [cursor=pointer]:
+              - /url: /iuc-website/#courses
+              - text: Explore Our Courses
+              - generic [ref=e223]: 
+      - generic [ref=e225]:
+        - generic [ref=e226]:
+          - generic [ref=e227]: 
+          - generic [ref=e229]: 25000+
+          - generic [ref=e230]: Graduates Placed
+        - generic [ref=e231]:
+          - generic [ref=e232]: 
+          - generic [ref=e234]: 50+
+          - generic [ref=e235]: IT Programs
+        - generic [ref=e236]:
+          - generic [ref=e237]: 
+          - generic [ref=e239]: 98%
+          - generic [ref=e240]: Placement Rate
+        - generic [ref=e241]:
+          - generic [ref=e242]: 
+          - generic [ref=e244]: 300+
+          - generic [ref=e245]: Hiring Partners
+        - generic [ref=e246]:
+          - generic [ref=e247]: 
+          - generic [ref=e249]: 28+
+          - generic [ref=e250]: Years of Service
+        - generic [ref=e251]:
+          - generic [ref=e252]: 
+          - generic [ref=e254]: 140%
+          - generic [ref=e255]: Avg. Salary Hike
+      - generic [ref=e256]:
+        - generic [ref=e257]:
+          - generic [ref=e258]: Our Journey
+          - heading "From One Classroom to Three Decades of Impact" [level=2] [ref=e259]
+          - paragraph [ref=e260]: What began as a single classroom in C.I.T Nagar is today one of Chennai's most trusted names in IT education.
+        - generic [ref=e261]:
+          - generic [ref=e262]:
+            - generic [ref=e263]: 
+            - heading "Where We Started" [level=3] [ref=e265]
+            - paragraph [ref=e266]: "Our story began in 1997 at #1&2 Gold Nest Apts, 2nd Main Road, C.I.T Nagar, Chennai — with one classroom, a handful of students, and a mission to make every learner employable through hands-on, practical training."
+          - generic [ref=e267]:
+            - generic [ref=e268]: 
+            - heading "Growing Across Chennai" [level=3] [ref=e270]
+            - paragraph [ref=e271]: Driven by demand and trust, we expanded to a second centre in Thiruvottiyur — making quality IT training accessible to learners across the city while keeping the same mentor-led, project-first approach.
+          - generic [ref=e272]:
+            - generic [ref=e273]: 
+            - heading "Industry Recognition" [level=3] [ref=e275]
+            - paragraph [ref=e276]: Today we're an ISO certified institute and a Microsoft & Google partner, trusted by 300+ hiring companies including TCS, Infosys, Wipro and Amazon for fresh, job-ready talent.
+          - generic [ref=e277]:
+            - generic [ref=e278]: 
+            - heading "A Legacy of Careers" [level=3] [ref=e280]
+            - paragraph [ref=e281]: 25,000+ graduates, a 98% placement rate and a 140% average salary hike later, our promise remains unchanged — every student who walks through our doors walks out career-ready.
+      - generic [ref=e282]:
+        - generic [ref=e283]:
+          - generic [ref=e284]: Meet the Founder
+          - heading "The Vision Behind IUC Edu" [level=2] [ref=e285]
+          - paragraph [ref=e286]: A mentor first, an entrepreneur second — our founder still leads classrooms personally.
+        - generic [ref=e287]:
+          - img "Tamil Selvi S — Founder and lead instructor at IUC Edu" [ref=e289]
+          - generic [ref=e290]:
+            - generic [ref=e291]:
+              - generic [ref=e292]: 
+              - text: Founder & Lead Instructor
+            - heading "Tamil Selvi S" [level=3] [ref=e293]
+            - paragraph [ref=e294]: IUC Edu · 20+ Years in Technology Education
+            - paragraph [ref=e295]: Tamil Selvi founded IUC Edu in 1997 with a simple conviction — that theoretical degrees alone don't build careers, skills do. With over two decades of experience across full-stack development and cloud technologies, she has personally mentored thousands of students, designed 12+ flagship programs, and built a faculty culture where every mentor invests personally in every student's growth.
+            - paragraph [ref=e296]: She still teaches, reviews curriculum with industry experts, and leads the institute's mission to make world-class IT education accessible to every learner in Chennai.
+            - generic [ref=e297]:
+              - generic [ref=e298]:
+                - generic [ref=e299]: 
+                - text: Full Stack & Cloud
+              - generic [ref=e300]:
+                - generic [ref=e301]: 
+                - text: 20+ Years Experience
+              - generic [ref=e302]:
+                - generic [ref=e303]: 
+                - text: 12+ Programs Designed
+      - generic [ref=e304]:
+        - generic [ref=e305]:
+          - generic [ref=e306]: World-Class Faculty
+          - heading "Learn From Industry Experts" [level=2] [ref=e307]
+          - paragraph [ref=e308]: Our mentors bring decades of real-world experience from the world's top technology companies.
+        - generic [ref=e309]:
+          - article [ref=e310]:
+            - img "Tamil Selvi S — IUC Edu mentor" [ref=e312]
+            - heading "Tamil Selvi S" [level=3] [ref=e313]
+            - paragraph [ref=e314]: Founder & Lead Instructor
+            - generic [ref=e315]:
+              - generic [ref=e316]: 
+              - text: Full Stack & Cloud
+            - generic [ref=e317]:
+              - generic [ref=e318]:
+                - generic [ref=e319]: 20+ Years
+                - generic [ref=e320]: Experience
+              - generic [ref=e322]:
+                - generic [ref=e323]: 12+ Courses
+                - generic [ref=e324]: Programs Taught
+          - article [ref=e325]:
+            - img "Kannan — IUC Edu mentor" [ref=e327]
+            - heading "Kannan" [level=3] [ref=e328]
+            - paragraph [ref=e329]: Senior Data Science Mentor
+            - generic [ref=e330]:
+              - generic [ref=e331]: 
+              - text: AI/ML & Python
+            - generic [ref=e332]:
+              - generic [ref=e333]:
+                - generic [ref=e334]: 12 Years
+                - generic [ref=e335]: Experience
+              - generic [ref=e337]:
+                - generic [ref=e338]: 8+ Courses
+                - generic [ref=e339]: Programs Taught
+          - article [ref=e340]:
+            - img "Suresh — IUC Edu mentor" [ref=e342]
+            - heading "Suresh" [level=3] [ref=e343]
+            - paragraph [ref=e344]: Digital Marketing Expert
+            - generic [ref=e345]:
+              - generic [ref=e346]: 
+              - text: Digital Marketing
+            - generic [ref=e347]:
+              - generic [ref=e348]:
+                - generic [ref=e349]: 15 Years
+                - generic [ref=e350]: Experience
+              - generic [ref=e352]:
+                - generic [ref=e353]: 6+ Courses
+                - generic [ref=e354]: Programs Taught
+          - article [ref=e355]:
+            - img "Kanniappan — IUC Edu mentor" [ref=e357]
+            - heading "Kanniappan" [level=3] [ref=e358]
+            - paragraph [ref=e359]: UI/UX Design Lead
+            - generic [ref=e360]:
+              - generic [ref=e361]: 
+              - text: Design Systems & Figma
+            - generic [ref=e362]:
+              - generic [ref=e363]:
+                - generic [ref=e364]: 10 Years
+                - generic [ref=e365]: Experience
+              - generic [ref=e367]:
+                - generic [ref=e368]: 5+ Courses
+                - generic [ref=e369]: Programs Taught
+      - generic [ref=e371]:
+        - generic [ref=e372]:
+          - heading "Ready to Start Your Journey?" [level=2] [ref=e373]
+          - paragraph [ref=e374]: Join 25,000+ graduates who chose IUC Edu and transformed their careers.
+        - link "Get Free Counselling " [ref=e375] [cursor=pointer]:
+          - /url: /iuc-website/#contact
+          - text: Get Free Counselling
+          - generic [ref=e376]: 
+    - region [ref=e377]:
+      - generic [ref=e378]:
+        - generic [ref=e379]:
+          - generic [ref=e380]: Our Programs
+          - heading "Popular Courses" [level=2] [ref=e381]
+          - paragraph [ref=e382]: Industry-aligned courses designed with top employers to give you the exact skills that land high-paying jobs.
+        - generic [ref=e383]:
+          - button "All Programs" [ref=e384] [cursor=pointer]
+          - button "Artificial Intelligence" [ref=e385] [cursor=pointer]
+          - button "Data Science" [ref=e386] [cursor=pointer]
+          - button "Programming" [ref=e387] [cursor=pointer]
+          - button "Full Stack" [ref=e388] [cursor=pointer]
+          - button "Frontend" [ref=e389] [cursor=pointer]
+          - button "Backend" [ref=e390] [cursor=pointer]
+          - button "Design" [ref=e391] [cursor=pointer]
+          - button "Testing" [ref=e392] [cursor=pointer]
+          - button "DevOps" [ref=e393] [cursor=pointer]
+          - button "Cloud" [ref=e394] [cursor=pointer]
+          - button "Security" [ref=e395] [cursor=pointer]
+          - button "Marketing" [ref=e396] [cursor=pointer]
+        - generic [ref=e397]:
+          - link "View AI & ML course" [ref=e398] [cursor=pointer]:
+            - generic [ref=e399]:
+              - img "Artificial Intelligence & Machine Learning" [ref=e400]
+              - generic [ref=e401]: AI Powered
+            - generic [ref=e402]:
+              - heading "AI & ML" [level=3] [ref=e403]
+              - paragraph [ref=e404]: Master AI, ML, Deep Learning & Generative AI with hands-on projects.
+              - generic [ref=e405]:
+                - generic [ref=e406]:
+                  - generic [ref=e407]: 
+                  - text: 6 Months
+                - generic [ref=e408]:
+                  - generic [ref=e409]: 
+                  - text: Online
+                - generic [ref=e410]:
+                  - generic [ref=e411]: 
+                  - text: Beginner to Advanced
+              - generic [ref=e412]:
+                - generic [ref=e413]: Python
+                - generic [ref=e414]: TensorFlow
+                - generic [ref=e415]: PyTorch
+                - generic [ref=e416]: OpenAI
+                - generic [ref=e417]: "+4"
+              - generic [ref=e418]:
+                - generic [ref=e419]:
+                  - generic [ref=e420]: ₹55,000
+                  - generic [ref=e421]:
+                    - generic [ref=e422]: 
+                    - text: No-Cost EMI · ₹5,500/mo
+                - generic [ref=e423]:
+                  - link "Learn More" [ref=e424]:
+                    - /url: /iuc-website/course/ai-ml
+                  - link "Apply Now" [ref=e425]:
+                    - /url: /iuc-website/#contact
+          - link "View Data Science course" [ref=e426] [cursor=pointer]:
+            - generic [ref=e427]:
+              - img "Data Science & Analytics" [ref=e428]
+              - generic [ref=e429]: High Demand
+            - generic [ref=e430]:
+              - heading "Data Science" [level=3] [ref=e431]
+              - paragraph [ref=e432]: Transform data into insights with Python, SQL, ML & BI tools.
+              - generic [ref=e433]:
+                - generic [ref=e434]:
+                  - generic [ref=e435]: 
+                  - text: 6 Months
+                - generic [ref=e436]:
+                  - generic [ref=e437]: 
+                  - text: Online
+                - generic [ref=e438]:
+                  - generic [ref=e439]: 
+                  - text: Beginner to Advanced
+              - generic [ref=e440]:
+                - generic [ref=e441]: Python
+                - generic [ref=e442]: SQL
+                - generic [ref=e443]: Power BI
+                - generic [ref=e444]: Tableau
+                - generic [ref=e445]: "+4"
+              - generic [ref=e446]:
+                - generic [ref=e447]:
+                  - generic [ref=e448]: ₹55,000
+                  - generic [ref=e449]:
+                    - generic [ref=e450]: 
+                    - text: No-Cost EMI · ₹5,500/mo
+                - generic [ref=e451]:
+                  - link "Learn More" [ref=e452]:
+                    - /url: /iuc-website/course/data-science
+                  - link "Apply Now" [ref=e453]:
+                    - /url: /iuc-website/#contact
+          - link "View Python course" [ref=e454] [cursor=pointer]:
+            - generic [ref=e455]:
+              - img "Python Programming" [ref=e456]
+              - generic [ref=e457]: Best Seller
+            - generic [ref=e458]:
+              - heading "Python" [level=3] [ref=e459]
+              - paragraph [ref=e460]: Learn Python from basics to advanced with real-world projects.
+              - generic [ref=e461]:
+                - generic [ref=e462]:
+                  - generic [ref=e463]: 
+                  - text: 3 Months
+                - generic [ref=e464]:
+                  - generic [ref=e465]: 
+                  - text: Online
+                - generic [ref=e466]:
+                  - generic [ref=e467]: 
+                  - text: Beginner
+              - generic [ref=e468]:
+                - generic [ref=e469]: Python
+                - generic [ref=e470]: Flask
+                - generic [ref=e471]: Django
+                - generic [ref=e472]: SQLite
+                - generic [ref=e473]: "+3"
+              - generic [ref=e474]:
+                - generic [ref=e475]:
+                  - generic [ref=e476]: ₹35,000
+                  - generic [ref=e477]:
+                    - generic [ref=e478]: 
+                    - text: No-Cost EMI · ₹2,500/mo
+                - generic [ref=e479]:
+                  - link "Learn More" [ref=e480]:
+                    - /url: /iuc-website/course/python
+                  - link "Apply Now" [ref=e481]:
+                    - /url: /iuc-website/#contact
+          - link "View Java course" [ref=e482] [cursor=pointer]:
+            - generic [ref=e483]:
+              - img "Java & J2EE Programming" [ref=e484]
+              - generic [ref=e485]: Popular
+            - generic [ref=e486]:
+              - heading "Java" [level=3] [ref=e487]
+              - paragraph [ref=e488]: Master Java, Spring Boot & J2EE for enterprise application development.
+              - generic [ref=e489]:
+                - generic [ref=e490]:
+                  - generic [ref=e491]: 
+                  - text: 4 Months
+                - generic [ref=e492]:
+                  - generic [ref=e493]: 
+                  - text: Online
+                - generic [ref=e494]:
+                  - generic [ref=e495]: 
+                  - text: Beginner to Advanced
+              - generic [ref=e496]:
+                - generic [ref=e497]: Java
+                - generic [ref=e498]: Spring Boot
+                - generic [ref=e499]: Hibernate
+                - generic [ref=e500]: JSP
+                - generic [ref=e501]: "+4"
+              - generic [ref=e502]:
+                - generic [ref=e503]:
+                  - generic [ref=e504]: ₹46,000
+                  - generic [ref=e505]:
+                    - generic [ref=e506]: 
+                    - text: No-Cost EMI · ₹2,500/mo
+                - generic [ref=e507]:
+                  - link "Learn More" [ref=e508]:
+                    - /url: /iuc-website/course/java
+                  - link "Apply Now" [ref=e509]:
+                    - /url: /iuc-website/#contact
+          - link "View Full Stack Java course" [ref=e510] [cursor=pointer]:
+            - generic [ref=e511]:
+              - img "Full Stack Java Development" [ref=e512]
+              - generic [ref=e513]: Most Popular
+            - generic [ref=e514]:
+              - heading "Full Stack Java" [level=3] [ref=e515]
+              - paragraph [ref=e516]: Build complete web apps with Java, Spring Boot & Angular/React.
+              - generic [ref=e517]:
+                - generic [ref=e518]:
+                  - generic [ref=e519]: 
+                  - text: 7 Months
+                - generic [ref=e520]:
+                  - generic [ref=e521]: 
+                  - text: Online
+                - generic [ref=e522]:
+                  - generic [ref=e523]: 
+                  - text: Beginner to Pro
+              - generic [ref=e524]:
+                - generic [ref=e525]: Java
+                - generic [ref=e526]: Spring Boot
+                - generic [ref=e527]: Angular
+                - generic [ref=e528]: React
+                - generic [ref=e529]: "+4"
+              - generic [ref=e530]:
+                - generic [ref=e531]:
+                  - generic [ref=e532]: ₹66,000
+                  - generic [ref=e533]:
+                    - generic [ref=e534]: 
+                    - text: No-Cost EMI · ₹5,500/mo
+                - generic [ref=e535]:
+                  - link "Learn More" [ref=e536]:
+                    - /url: /iuc-website/course/full-stack-java
+                  - link "Apply Now" [ref=e537]:
+                    - /url: /iuc-website/#contact
+          - link "View Spring Boot course" [ref=e538] [cursor=pointer]:
+            - generic [ref=e539]:
+              - img "Spring Boot & Microservices" [ref=e540]
+              - generic [ref=e541]: Advanced
+            - generic [ref=e542]:
+              - heading "Spring Boot" [level=3] [ref=e543]
+              - paragraph [ref=e544]: Master Spring Boot, Microservices & Cloud-native development.
+              - generic [ref=e545]:
+                - generic [ref=e546]:
+                  - generic [ref=e547]: 
+                  - text: 3 Months
+                - generic [ref=e548]:
+                  - generic [ref=e549]: 
+                  - text: Online
+                - generic [ref=e550]:
+                  - generic [ref=e551]: 
+                  - text: Intermediate
+              - generic [ref=e552]:
+                - generic [ref=e553]: Spring Boot
+                - generic [ref=e554]: Spring Cloud
+                - generic [ref=e555]: Spring Security
+                - generic [ref=e556]: Docker
+                - generic [ref=e557]: "+4"
+              - generic [ref=e558]:
+                - generic [ref=e559]:
+                  - generic [ref=e560]: ₹55,000
+                  - generic [ref=e561]:
+                    - generic [ref=e562]: 
+                    - text: No-Cost EMI · ₹5,500/mo
+                - generic [ref=e563]:
+                  - link "Learn More" [ref=e564]:
+                    - /url: /iuc-website/course/spring-boot
+                  - link "Apply Now" [ref=e565]:
+                    - /url: /iuc-website/#contact
+          - link "View React course" [ref=e566] [cursor=pointer]:
+            - generic [ref=e567]:
+              - img "React.js Frontend Development" [ref=e568]
+              - generic [ref=e569]: Trending
+            - generic [ref=e570]:
+              - heading "React" [level=3] [ref=e571]
+              - paragraph [ref=e572]: Build modern web apps with React, Redux, Next.js & TypeScript.
+              - generic [ref=e573]:
+                - generic [ref=e574]:
+                  - generic [ref=e575]: 
+                  - text: 3 Months
+                - generic [ref=e576]:
+                  - generic [ref=e577]: 
+                  - text: Online
+                - generic [ref=e578]:
+                  - generic [ref=e579]: 
+                  - text: Beginner to Advanced
+              - generic [ref=e580]:
+                - generic [ref=e581]: React
+                - generic [ref=e582]: Redux
+                - generic [ref=e583]: TypeScript
+                - generic [ref=e584]: Next.js
+                - generic [ref=e585]: "+3"
+              - generic [ref=e586]:
+                - generic [ref=e587]:
+                  - generic [ref=e588]: ₹35,000
+                  - generic [ref=e589]:
+                    - generic [ref=e590]: 
+                    - text: No-Cost EMI · ₹2,500/mo
+                - generic [ref=e591]:
+                  - link "Learn More" [ref=e592]:
+                    - /url: /iuc-website/course/react
+                  - link "Apply Now" [ref=e593]:
+                    - /url: /iuc-website/#contact
+          - link "View Angular course" [ref=e594] [cursor=pointer]:
+            - generic [ref=e595]:
+              - img "Angular Frontend Development" [ref=e596]
+              - generic [ref=e597]: Popular
+            - generic [ref=e598]:
+              - heading "Angular" [level=3] [ref=e599]
+              - paragraph [ref=e600]: Build enterprise apps with Angular, TypeScript & RxJS.
+              - generic [ref=e601]:
+                - generic [ref=e602]:
+                  - generic [ref=e603]: 
+                  - text: 3 Months
+                - generic [ref=e604]:
+                  - generic [ref=e605]: 
+                  - text: Online
+                - generic [ref=e606]:
+                  - generic [ref=e607]: 
+                  - text: Beginner to Advanced
+              - generic [ref=e608]:
+                - generic [ref=e609]: Angular
+                - generic [ref=e610]: TypeScript
+                - generic [ref=e611]: RxJS
+                - generic [ref=e612]: NgRx
+                - generic [ref=e613]: "+2"
+              - generic [ref=e614]:
+                - generic [ref=e615]:
+                  - generic [ref=e616]: ₹35,500
+                  - generic [ref=e617]:
+                    - generic [ref=e618]: 
+                    - text: No-Cost EMI · ₹2,500/mo
+                - generic [ref=e619]:
+                  - link "Learn More" [ref=e620]:
+                    - /url: /iuc-website/course/angular
+                  - link "Apply Now" [ref=e621]:
+                    - /url: /iuc-website/#contact
+          - link "View Node.js course" [ref=e622] [cursor=pointer]:
+            - generic [ref=e623]:
+              - img "Node.js Backend Development" [ref=e624]
+              - generic [ref=e625]: Trending
+            - generic [ref=e626]:
+              - heading "Node.js" [level=3] [ref=e627]
+              - paragraph [ref=e628]: Build scalable backends with Node.js, Express & MongoDB.
+              - generic [ref=e629]:
+                - generic [ref=e630]:
+                  - generic [ref=e631]: 
+                  - text: 3 Months
+                - generic [ref=e632]:
+                  - generic [ref=e633]: 
+                  - text: Online
+                - generic [ref=e634]:
+                  - generic [ref=e635]: 
+                  - text: Intermediate
+              - generic [ref=e636]:
+                - generic [ref=e637]: Node.js
+                - generic [ref=e638]: Express.js
+                - generic [ref=e639]: MongoDB
+                - generic [ref=e640]: PostgreSQL
+                - generic [ref=e641]: "+3"
+              - generic [ref=e642]:
+                - generic [ref=e643]:
+                  - generic [ref=e644]: ₹37,500
+                  - generic [ref=e645]:
+                    - generic [ref=e646]: 
+                    - text: No-Cost EMI · ₹2,500/mo
+                - generic [ref=e647]:
+                  - link "Learn More" [ref=e648]:
+                    - /url: /iuc-website/course/node-js
+                  - link "Apply Now" [ref=e649]:
+                    - /url: /iuc-website/#contact
+          - link "View UI/UX Design course" [ref=e650] [cursor=pointer]:
+            - generic [ref=e651]:
+              - img "UI/UX Design & Prototyping" [ref=e652]
+              - generic [ref=e653]: Creative
+            - generic [ref=e654]:
+              - heading "UI/UX Design" [level=3] [ref=e655]
+              - paragraph [ref=e656]: Become a pro designer with Figma, prototyping & design systems.
+              - generic [ref=e657]:
+                - generic [ref=e658]:
+                  - generic [ref=e659]: 
+                  - text: 3 Months
+                - generic [ref=e660]:
+                  - generic [ref=e661]: 
+                  - text: Online
+                - generic [ref=e662]:
+                  - generic [ref=e663]: 
+                  - text: Beginner
+              - generic [ref=e664]:
+                - generic [ref=e665]: Figma
+                - generic [ref=e666]: Adobe XD
+                - generic [ref=e667]: Photoshop
+                - generic [ref=e668]: Illustrator
+                - generic [ref=e669]: "+1"
+              - generic [ref=e670]:
+                - generic [ref=e671]:
+                  - generic [ref=e672]: ₹45,000
+                  - generic [ref=e673]:
+                    - generic [ref=e674]: 
+                    - text: No-Cost EMI · ₹2,500/mo
+                - generic [ref=e675]:
+                  - link "Learn More" [ref=e676]:
+                    - /url: /iuc-website/course/ui-ux
+                  - link "Apply Now" [ref=e677]:
+                    - /url: /iuc-website/#contact
+          - link "View Software Testing course" [ref=e678] [cursor=pointer]:
+            - generic [ref=e679]:
+              - img "Software Testing & QA" [ref=e680]
+              - generic [ref=e681]: In Demand
+            - generic [ref=e682]:
+              - heading "Software Testing" [level=3] [ref=e683]
+              - paragraph [ref=e684]: Master manual & automation testing with Selenium & Cypress.
+              - generic [ref=e685]:
+                - generic [ref=e686]:
+                  - generic [ref=e687]: 
+                  - text: 3 Months
+                - generic [ref=e688]:
+                  - generic [ref=e689]: 
+                  - text: Online
+                - generic [ref=e690]:
+                  - generic [ref=e691]: 
+                  - text: Beginner
+              - generic [ref=e692]:
+                - generic [ref=e693]: Selenium
+                - generic [ref=e694]: Cypress
+                - generic [ref=e695]: JUnit
+                - generic [ref=e696]: TestNG
+                - generic [ref=e697]: "+3"
+              - generic [ref=e698]:
+                - generic [ref=e699]:
+                  - generic [ref=e700]: ₹42,500
+                  - generic [ref=e701]:
+                    - generic [ref=e702]: 
+                    - text: No-Cost EMI · ₹2,500/mo
+                - generic [ref=e703]:
+                  - link "Learn More" [ref=e704]:
+                    - /url: /iuc-website/course/software-testing
+                  - link "Apply Now" [ref=e705]:
+                    - /url: /iuc-website/#contact
+          - link "View DevOps course" [ref=e706] [cursor=pointer]:
+            - generic [ref=e707]:
+              - img "DevOps & Cloud Engineering" [ref=e708]
+              - generic [ref=e709]: High Growth
+            - generic [ref=e710]:
+              - heading "DevOps" [level=3] [ref=e711]
+              - paragraph [ref=e712]: Master CI/CD, Docker, Kubernetes, AWS & infrastructure automation.
+              - generic [ref=e713]:
+                - generic [ref=e714]:
+                  - generic [ref=e715]: 
+                  - text: 4 Months
+                - generic [ref=e716]:
+                  - generic [ref=e717]: 
+                  - text: Online
+                - generic [ref=e718]:
+                  - generic [ref=e719]: 
+                  - text: Intermediate
+              - generic [ref=e720]:
+                - generic [ref=e721]: Docker
+                - generic [ref=e722]: Kubernetes
+                - generic [ref=e723]: Jenkins
+                - generic [ref=e724]: Terraform
+                - generic [ref=e725]: "+4"
+              - generic [ref=e726]:
+                - generic [ref=e727]:
+                  - generic [ref=e728]: ₹40,500
+                  - generic [ref=e729]:
+                    - generic [ref=e730]: 
+                    - text: No-Cost EMI · ₹2,500/mo
+                - generic [ref=e731]:
+                  - link "Learn More" [ref=e732]:
+                    - /url: /iuc-website/course/devops
+                  - link "Apply Now" [ref=e733]:
+                    - /url: /iuc-website/#contact
+          - link "View Cloud Computing course" [ref=e734] [cursor=pointer]:
+            - generic [ref=e735]:
+              - img "Cloud Computing (AWS & Azure)" [ref=e736]
+              - generic [ref=e737]: Certified
+            - generic [ref=e738]:
+              - heading "Cloud Computing" [level=3] [ref=e739]
+              - paragraph [ref=e740]: Architect cloud solutions with AWS & Azure. Dual certification track.
+              - generic [ref=e741]:
+                - generic [ref=e742]:
+                  - generic [ref=e743]: 
+                  - text: 3 Months
+                - generic [ref=e744]:
+                  - generic [ref=e745]: 
+                  - text: Online
+                - generic [ref=e746]:
+                  - generic [ref=e747]: 
+                  - text: Intermediate
+              - generic [ref=e748]:
+                - generic [ref=e749]: AWS EC2
+                - generic [ref=e750]: AWS S3
+                - generic [ref=e751]: Lambda
+                - generic [ref=e752]: VPC
+                - generic [ref=e753]: "+3"
+              - generic [ref=e754]:
+                - generic [ref=e755]:
+                  - generic [ref=e756]: ₹46,500
+                  - generic [ref=e757]:
+                    - generic [ref=e758]: 
+                    - text: No-Cost EMI · ₹2,500/mo
+                - generic [ref=e759]:
+                  - link "Learn More" [ref=e760]:
+                    - /url: /iuc-website/course/cloud-computing
+                  - link "Apply Now" [ref=e761]:
+                    - /url: /iuc-website/#contact
+          - link "View Cyber Security course" [ref=e762] [cursor=pointer]:
+            - generic [ref=e763]:
+              - img "Cyber Security & Ethical Hacking" [ref=e764]
+              - generic [ref=e765]: High Demand
+            - generic [ref=e766]:
+              - heading "Cyber Security" [level=3] [ref=e767]
+              - paragraph [ref=e768]: Master ethical hacking, network security & penetration testing.
+              - generic [ref=e769]:
+                - generic [ref=e770]:
+                  - generic [ref=e771]: 
+                  - text: 4 Months
+                - generic [ref=e772]:
+                  - generic [ref=e773]: 
+                  - text: Online
+                - generic [ref=e774]:
+                  - generic [ref=e775]: 
+                  - text: Intermediate
+              - generic [ref=e776]:
+                - generic [ref=e777]: Kali Linux
+                - generic [ref=e778]: Metasploit
+                - generic [ref=e779]: Wireshark
+                - generic [ref=e780]: Burp Suite
+                - generic [ref=e781]: "+2"
+              - generic [ref=e782]:
+                - generic [ref=e783]:
+                  - generic [ref=e784]: ₹45,500
+                  - generic [ref=e785]:
+                    - generic [ref=e786]: 
+                    - text: No-Cost EMI · ₹2,500/mo
+                - generic [ref=e787]:
+                  - link "Learn More" [ref=e788]:
+                    - /url: /iuc-website/course/cyber-security
+                  - link "Apply Now" [ref=e789]:
+                    - /url: /iuc-website/#contact
+          - link "View Digital Marketing course" [ref=e790] [cursor=pointer]:
+            - generic [ref=e791]:
+              - img "Digital Marketing & SEO" [ref=e792]
+              - generic [ref=e793]: Fast Track
+            - generic [ref=e794]:
+              - heading "Digital Marketing" [level=3] [ref=e795]
+              - paragraph [ref=e796]: Master SEO, Google Ads, Social Media & Growth Marketing.
+              - generic [ref=e797]:
+                - generic [ref=e798]:
+                  - generic [ref=e799]: 
+                  - text: 2 Months
+                - generic [ref=e800]:
+                  - generic [ref=e801]: 
+                  - text: Online
+                - generic [ref=e802]:
+                  - generic [ref=e803]: 
+                  - text: Beginner
+              - generic [ref=e804]:
+                - generic [ref=e805]: Google Ads
+                - generic [ref=e806]: Meta Ads
+                - generic [ref=e807]: Google Analytics
+                - generic [ref=e808]: SEO tools
+                - generic [ref=e809]: "+2"
+              - generic [ref=e810]:
+                - generic [ref=e811]:
+                  - generic [ref=e812]: ₹35,500
+                  - generic [ref=e813]:
+                    - generic [ref=e814]: 
+                    - text: No-Cost EMI · ₹2,500/mo
+                - generic [ref=e815]:
+                  - link "Learn More" [ref=e816]:
+                    - /url: /iuc-website/course/digital-marketing
+                  - link "Apply Now" [ref=e817]:
+                    - /url: /iuc-website/#contact
+          - link "View C & C++ course" [ref=e818] [cursor=pointer]:
+            - generic [ref=e819]:
+              - img "C & C++ Programming" [ref=e820]
+              - generic [ref=e821]: Foundation
+            - generic [ref=e822]:
+              - heading "C & C++" [level=3] [ref=e823]
+              - paragraph [ref=e824]: Master C & C++ programming, pointers, OOP, memory management & data structures.
+              - generic [ref=e825]:
+                - generic [ref=e826]:
+                  - generic [ref=e827]: 
+                  - text: 4 Months
+                - generic [ref=e828]:
+                  - generic [ref=e829]: 
+                  - text: Online
+                - generic [ref=e830]:
+                  - generic [ref=e831]: 
+                  - text: Beginner to Advanced
+              - generic [ref=e832]:
+                - generic [ref=e833]: C
+                - generic [ref=e834]: C++
+                - generic [ref=e835]: GCC
+                - generic [ref=e836]: GDB
+                - generic [ref=e837]: "+4"
+              - generic [ref=e838]:
+                - generic [ref=e839]:
+                  - generic [ref=e840]: ₹40,500
+                  - generic [ref=e841]:
+                    - generic [ref=e842]: 
+                    - text: No-Cost EMI · ₹2,500/mo
+                - generic [ref=e843]:
+                  - link "Learn More" [ref=e844]:
+                    - /url: /iuc-website/course/c-cpp
+                  - link "Apply Now" [ref=e845]:
+                    - /url: /iuc-website/#contact
+    - region [ref=e846]:
+      - generic [ref=e847]:
+        - generic [ref=e848]:
+          - generic [ref=e849]: Practical Technology Education
+          - heading "Computer Courses and IT Classes in Chennai" [level=2] [ref=e850]
+          - paragraph [ref=e851]: Compare practical programming, software, data, cloud, testing and digital courses for students, freshers, working professionals and beginners at our Chennai centres or through live online classes.
+        - generic [ref=e852]:
+          - article [ref=e853]:
+            - generic [ref=e854]: 
+            - heading "IT Courses for Beginners" [level=3] [ref=e856]
+            - paragraph [ref=e857]: Selected beginner courses require no prior programming experience. Start with C and C++, Python, Java, software testing, UI/UX design or digital marketing.
+            - link "Explore beginner IT courses " [ref=e858] [cursor=pointer]:
+              - /url: /iuc-website/it-courses-for-beginners
+              - text: Explore beginner IT courses
+              - generic [ref=e859]: 
+          - article [ref=e860]:
+            - generic [ref=e861]: 
+            - heading "Programming and Coding Courses" [level=3] [ref=e863]
+            - paragraph [ref=e864]: Build software development skills through structured training in C, C++, Python, Java, frontend, backend and full stack technologies.
+            - link "View programming courses " [ref=e865] [cursor=pointer]:
+              - /url: /iuc-website/programming-courses-in-chennai
+              - text: View programming courses
+              - generic [ref=e866]: 
+          - article [ref=e867]:
+            - generic [ref=e868]: 
+            - heading "Computer & IT Training in Chennai" [level=3] [ref=e870]
+            - paragraph [ref=e871]: Compare course curricula, practical projects, prerequisites, schedules and learning modes before choosing a career-focused computer class.
+            - link "Compare Chennai computer courses " [ref=e872] [cursor=pointer]:
+              - /url: /iuc-website/computer-training-in-chennai
+              - text: Compare Chennai computer courses
+              - generic [ref=e873]: 
+          - article [ref=e874]:
+            - generic [ref=e875]: 
+            - heading "Online Computer and IT Courses" [level=3] [ref=e877]
+            - paragraph [ref=e878]: Join live virtual classes with instructor guidance, practical assignments, recorded-session access and a course-completion certificate.
+            - link "Learn about online classes " [ref=e879] [cursor=pointer]:
+              - /url: /iuc-website/online-it-courses
+              - text: Learn about online classes
+              - generic [ref=e880]: 
+        - generic "Popular programming course links" [ref=e881]:
+          - generic [ref=e882]: "Popular courses:"
+          - link "C & C++ programming course" [ref=e883] [cursor=pointer]:
+            - /url: /iuc-website/course/c-cpp
+          - link "Python training in Chennai" [ref=e884] [cursor=pointer]:
+            - /url: /iuc-website/course/python
+          - link "Java training in Chennai" [ref=e885] [cursor=pointer]:
+            - /url: /iuc-website/course/java
+          - link "Full Stack Java course" [ref=e886] [cursor=pointer]:
+            - /url: /iuc-website/course/full-stack-java
+          - link "Digital Marketing course" [ref=e887] [cursor=pointer]:
+            - /url: /iuc-website/course/digital-marketing
+    - region [ref=e888]:
+      - generic [ref=e890]:
+        - generic [ref=e891]:
+          - generic [ref=e892]: Featured Program
+          - heading "Artificial Intelligence & Machine Learning" [level=2] [ref=e893]
+          - paragraph [ref=e894]: Master the most in-demand skills of the decade. From Python fundamentals to advanced Deep Learning, Generative AI, and prompt engineering — this program covers everything you need to become an AI professional.
+          - generic [ref=e895]:
+            - generic [ref=e896]:
+              - generic [ref=e897]: 
+              - generic [ref=e898]: Generative AI & Prompt Engineering
+            - generic [ref=e899]:
+              - generic [ref=e900]: 
+              - generic [ref=e901]: Neural Networks & Deep Learning
+            - generic [ref=e902]:
+              - generic [ref=e903]: 
+              - generic [ref=e904]: MLOps & Cloud Deployment
+            - generic [ref=e905]:
+              - generic [ref=e906]: 
+              - generic [ref=e907]: Placement Assistance
+            - generic [ref=e908]:
+              - generic [ref=e909]: 
+              - generic [ref=e910]: Industry Certification
+          - generic [ref=e911]:
+            - link "View Full Curriculum " [ref=e912] [cursor=pointer]:
+              - /url: /iuc-website/course/ai-ml
+              - text: View Full Curriculum
+              - generic [ref=e913]: 
+            - link " Download Syllabus" [ref=e914] [cursor=pointer]:
+              - /url: /iuc-website/download-syllabus.php?course=ai-ml
+              - generic [ref=e915]: 
+              - text: Download Syllabus
+        - generic [ref=e916]:
+          - img "Artificial intelligence and machine learning course at IUC Edu Chennai" [ref=e918]
+          - generic [ref=e920]:
+            - generic [ref=e921]: Python
+            - generic [ref=e922]: TensorFlow
+            - generic [ref=e923]: PyTorch
+    - region [ref=e924]:
+      - generic [ref=e925]:
+        - generic [ref=e926]:
+          - generic [ref=e927]: Why IUC Edu
+          - heading "Why Thousands Choose IUC Edu" [level=2] [ref=e928]: Why Thousands ChooseIUC Edu
+          - paragraph [ref=e929]: We don't just teach — we build careers, transform lives, and deliver results that speak for themselves.
+        - generic [ref=e930]:
+          - generic [ref=e931]:
+            - generic [ref=e932]: 
+            - heading "Industry Expert Trainers" [level=3] [ref=e934]
+            - paragraph [ref=e935]: Learn from professionals with 10-20 years of experience from top tech companies.
+          - generic [ref=e936]:
+            - generic [ref=e937]: 
+            - heading "Live Projects" [level=3] [ref=e939]
+            - paragraph [ref=e940]: Build real-world applications with industry requirements, agile methodology, and code reviews.
+          - generic [ref=e941]:
+            - generic [ref=e942]: 
+            - heading "Internship Program" [level=3] [ref=e944]
+            - paragraph [ref=e945]: Get hands-on industry experience with our 3-month internship program.
+          - generic [ref=e946]:
+            - generic [ref=e947]: 
+            - heading "Placement Assistance" [level=3] [ref=e949]
+            - paragraph [ref=e950]: Dedicated placement team with resume building, mock interviews, and job referrals.
+          - generic [ref=e951]:
+            - generic [ref=e952]: 
+            - heading "Mock Interviews" [level=3] [ref=e954]
+            - paragraph [ref=e955]: Technical, HR, and managerial mock interviews to build confidence and crack interviews.
+          - generic [ref=e956]:
+            - generic [ref=e957]: 
+            - heading "Resume Building" [level=3] [ref=e959]
+            - paragraph [ref=e960]: Professional resume and LinkedIn profile optimization by industry experts.
+          - generic [ref=e961]:
+            - generic [ref=e962]: 
+            - heading "AI-Powered Tools" [level=3] [ref=e964]
+            - paragraph [ref=e965]: Access to cutting-edge AI tools for learning, coding, and project development.
+          - generic [ref=e966]:
+            - generic [ref=e967]: 
+            - heading "Flexible Batches" [level=3] [ref=e969]
+            - paragraph [ref=e970]: Morning, evening, weekend, and online batches to fit your schedule.
+          - generic [ref=e971]:
+            - generic [ref=e972]: 
+            - heading "Recorded Sessions" [level=3] [ref=e974]
+            - paragraph [ref=e975]: Every session recorded in HD and available on our learning portal 24/7.
+          - generic [ref=e976]:
+            - generic [ref=e977]: 
+            - heading "Industry Certification" [level=3] [ref=e979]
+            - paragraph [ref=e980]: Earn globally recognized certifications from Microsoft, Google, AWS, and more.
+    - region [ref=e981]:
+      - generic [ref=e982]:
+        - generic [ref=e983]:
+          - generic [ref=e984]: Admissions
+          - heading "How to Enroll" [level=2] [ref=e985]
+          - paragraph [ref=e986]: Simple 3-step admission process to start your tech career journey at IUC Edu.
+        - generic [ref=e987]:
+          - generic [ref=e988]:
+            - generic [ref=e989]: "01"
+            - generic [ref=e990]: 
+            - heading "Free Career Counselling" [level=3] [ref=e992]
+            - paragraph [ref=e993]: Talk to our expert career counsellors who will understand your background, goals, and recommend the right program for you.
+          - generic [ref=e994]:
+            - generic [ref=e995]: "02"
+            - generic [ref=e996]: 
+            - heading "Enroll & Pay Fees" [level=3] [ref=e998]
+            - paragraph [ref=e999]: Complete your enrollment with our simple online registration. Choose from zero-cost EMI options, scholarships, or upfront payment.
+          - generic [ref=e1000]:
+            - generic [ref=e1001]: "03"
+            - generic [ref=e1002]: 
+            - heading "Start Learning" [level=3] [ref=e1004]
+            - paragraph [ref=e1005]: Get immediate access to our learning portal, class recordings, and join your batch. Begin your transformation from Day 1.
+        - link "Apply Now " [ref=e1007] [cursor=pointer]:
+          - /url: /iuc-website/#contact
+          - text: Apply Now
+          - generic [ref=e1008]: 
+    - region [ref=e1009]:
+      - generic [ref=e1010]:
+        - generic [ref=e1011]:
+          - generic [ref=e1012]: Certification
+          - heading "Get Industry-Recognized Certificates" [level=2] [ref=e1013]
+          - paragraph [ref=e1014]: Earn globally recognized certifications that validate your skills and boost your career prospects.
+        - generic [ref=e1015]:
+          - generic [ref=e1018]:
+            - generic [ref=e1019]: 
+            - generic [ref=e1021]: IUC Edu
+            - generic [ref=e1022]: Certificate of Completion
+            - generic [ref=e1024]: John Doe
+            - generic [ref=e1025]: Artificial Intelligence & Machine Learning
+            - generic [ref=e1026]: "Completed: January 2026"
+            - generic [ref=e1027]: Verified & Recognized by Industry Partners
+          - generic [ref=e1028]:
+            - heading "Certifications We Prepare You For" [level=3] [ref=e1029]
+            - generic [ref=e1030]:
+              - generic [ref=e1031]:
+                - generic [ref=e1032]: 
+                - generic [ref=e1034]:
+                  - generic [ref=e1035]: Microsoft Certified
+                  - generic [ref=e1036]: Azure, Power Platform, AI-900, DP-900
+              - generic [ref=e1037]:
+                - generic [ref=e1038]: 
+                - generic [ref=e1040]:
+                  - generic [ref=e1041]: Google Certified
+                  - generic [ref=e1042]: Google Cloud, Digital Marketing, Analytics
+              - generic [ref=e1043]:
+                - generic [ref=e1044]: 
+                - generic [ref=e1046]:
+                  - generic [ref=e1047]: AWS Certified
+                  - generic [ref=e1048]: Solutions Architect, Cloud Practitioner, DevOps
+              - generic [ref=e1049]:
+                - generic [ref=e1050]: 
+                - generic [ref=e1052]:
+                  - generic [ref=e1053]: EC-Council CEH
+                  - generic [ref=e1054]: Certified Ethical Hacker, CompTIA Security+
+              - generic [ref=e1055]:
+                - generic [ref=e1056]: 
+                - generic [ref=e1058]:
+                  - generic [ref=e1059]: Oracle Java Certified
+                  - generic [ref=e1060]: Java SE 8/11/17, Spring Professional
+            - paragraph [ref=e1061]:
+              - generic [ref=e1062]: 
+              - text: All our programs include certification exam preparation. Our students have a 94% first-attempt pass rate.
+    - region [ref=e1063]:
+      - generic [ref=e1064]:
+        - generic [ref=e1065]:
+          - generic [ref=e1066]: Batch Schedule
+          - heading "Join Our Upcoming Batches" [level=2] [ref=e1067]
+          - paragraph [ref=e1068]: Choose a batch that fits your schedule. Limited seats available — enroll early to secure your spot.
+        - generic [ref=e1069]:
+          - generic [ref=e1070]:
+            - generic [ref=e1071]: Upcoming
+            - generic [ref=e1072]: Full Stack Java Development
+            - generic [ref=e1073]:
+              - generic [ref=e1074]:
+                - generic [ref=e1075]: 
+                - text: "Starts: Sep 28, 2026"
+              - generic [ref=e1076]:
+                - generic [ref=e1077]: 
+                - text: 7:00 AM - 9:00 AM (Mon-Fri)
+              - generic [ref=e1078]:
+                - generic [ref=e1079]: 
+                - text: Online / Offline
+              - generic [ref=e1080]:
+                - generic [ref=e1081]: 
+                - text: 24 / 30 Seats Filled
+            - link "Join Now " [ref=e1084] [cursor=pointer]:
+              - /url: /iuc-website/#contact
+              - text: Join Now
+              - generic [ref=e1085]: 
+          - generic [ref=e1086]:
+            - generic [ref=e1087]: Upcoming
+            - generic [ref=e1088]: Data Science & Analytics
+            - generic [ref=e1089]:
+              - generic [ref=e1090]:
+                - generic [ref=e1091]: 
+                - text: "Starts: Oct 5, 2026"
+              - generic [ref=e1092]:
+                - generic [ref=e1093]: 
+                - text: 10:00 AM - 12:00 PM (Mon-Fri)
+              - generic [ref=e1094]:
+                - generic [ref=e1095]: 
+                - text: Online / Offline
+              - generic [ref=e1096]:
+                - generic [ref=e1097]: 
+                - text: 18 / 30 Seats Filled
+            - link "Reserve Seat " [ref=e1100] [cursor=pointer]:
+              - /url: /iuc-website/#contact
+              - text: Reserve Seat
+              - generic [ref=e1101]: 
+          - generic [ref=e1102]:
+            - generic [ref=e1103]: Upcoming
+            - generic [ref=e1104]: AI & Machine Learning
+            - generic [ref=e1105]:
+              - generic [ref=e1106]:
+                - generic [ref=e1107]: 
+                - text: "Starts: Oct 7, 2026"
+              - generic [ref=e1108]:
+                - generic [ref=e1109]: 
+                - text: 6:00 PM - 8:00 PM (Mon, Wed, Fri)
+              - generic [ref=e1110]:
+                - generic [ref=e1111]: 
+                - text: Online / Offline
+              - generic [ref=e1112]:
+                - generic [ref=e1113]: 
+                - text: 15 / 30 Seats Filled
+            - link "Reserve Seat " [ref=e1116] [cursor=pointer]:
+              - /url: /iuc-website/#contact
+              - text: Reserve Seat
+              - generic [ref=e1117]: 
+          - generic [ref=e1118]:
+            - generic [ref=e1119]: Upcoming
+            - generic [ref=e1120]: Cyber Security & Ethical Hacking
+            - generic [ref=e1121]:
+              - generic [ref=e1122]:
+                - generic [ref=e1123]: 
+                - text: "Starts: Oct 12, 2026"
+              - generic [ref=e1124]:
+                - generic [ref=e1125]: 
+                - text: 7:00 AM - 9:00 AM (Mon-Fri)
+              - generic [ref=e1126]:
+                - generic [ref=e1127]: 
+                - text: Online / Offline
+              - generic [ref=e1128]:
+                - generic [ref=e1129]: 
+                - text: 10 / 25 Seats Filled
+            - link "Reserve Seat " [ref=e1132] [cursor=pointer]:
+              - /url: /iuc-website/#contact
+              - text: Reserve Seat
+              - generic [ref=e1133]: 
+          - generic [ref=e1134]:
+            - generic [ref=e1135]: Upcoming
+            - generic [ref=e1136]: Digital Marketing & SEO
+            - generic [ref=e1137]:
+              - generic [ref=e1138]:
+                - generic [ref=e1139]: 
+                - text: "Starts: Oct 20, 2026"
+              - generic [ref=e1140]:
+                - generic [ref=e1141]: 
+                - text: 8:00 AM - 10:00 AM (Tue, Thu, Sat)
+              - generic [ref=e1142]:
+                - generic [ref=e1143]: 
+                - text: Online Only
+              - generic [ref=e1144]:
+                - generic [ref=e1145]: 
+                - text: 12 / 25 Seats Filled
+            - link "Reserve Seat " [ref=e1148] [cursor=pointer]:
+              - /url: /iuc-website/#contact
+              - text: Reserve Seat
+              - generic [ref=e1149]: 
+          - generic [ref=e1150]:
+            - generic [ref=e1151]: Weekend
+            - generic [ref=e1152]: Python Programming (Weekend Batch)
+            - generic [ref=e1153]:
+              - generic [ref=e1154]:
+                - generic [ref=e1155]: 
+                - text: "Starts: Sep 26, 2026"
+              - generic [ref=e1156]:
+                - generic [ref=e1157]: 
+                - text: 10:00 AM - 2:00 PM (Sat & Sun)
+              - generic [ref=e1158]:
+                - generic [ref=e1159]: 
+                - text: Online / Offline
+              - generic [ref=e1160]:
+                - generic [ref=e1161]: 
+                - text: 20 / 30 Seats Filled
+            - link "Reserve Seat " [ref=e1164] [cursor=pointer]:
+              - /url: /iuc-website/#contact
+              - text: Reserve Seat
+              - generic [ref=e1165]: 
+        - generic [ref=e1166]:
+          - paragraph [ref=e1167]: Not sure which batch suits you? Talk to our career counsellor.
+          - link " Call +91 7418048039" [ref=e1168] [cursor=pointer]:
+            - /url: tel:+917418048039
+            - generic [ref=e1169]: 
+            - text: Call +91 7418048039
+    - region [ref=e1170]:
+      - generic [ref=e1171]:
+        - generic [ref=e1172]:
+          - generic [ref=e1173]: Technologies Covered
+          - heading "Tools & Technologies" [level=2] [ref=e1174]
+          - paragraph [ref=e1175]: Learn the latest tools and technologies used by top companies worldwide.
+        - generic [ref=e1176]:
+          - generic [ref=e1177]:
+            - generic [ref=e1178]: 
+            - text: Java
+          - generic [ref=e1179]:
+            - generic [ref=e1180]: 
+            - text: Python
+          - generic [ref=e1181]: Spring Boot
+          - generic [ref=e1182]: React
+          - generic [ref=e1183]: Angular
+          - generic [ref=e1184]: Node.js
+          - generic [ref=e1185]:
+            - generic [ref=e1186]: 
+            - text: MySQL
+          - generic [ref=e1187]:
+            - generic [ref=e1188]: 
+            - text: MongoDB
+          - generic [ref=e1189]:
+            - generic [ref=e1190]: 
+            - text: AWS
+          - generic [ref=e1191]:
+            - generic [ref=e1192]: 
+            - text: Azure
+          - generic [ref=e1193]:
+            - generic [ref=e1194]: 
+            - text: Docker
+          - generic [ref=e1195]:
+            - generic [ref=e1196]: 
+            - text: Kubernetes
+          - generic [ref=e1197]:
+            - generic [ref=e1198]: 
+            - text: Git
+          - generic [ref=e1199]:
+            - generic [ref=e1200]: 
+            - text: GitHub
+          - generic [ref=e1201]:
+            - generic [ref=e1202]: 
+            - text: Postman
+          - generic [ref=e1203]:
+            - generic [ref=e1204]: 
+            - text: OpenAI
+          - generic [ref=e1205]:
+            - generic [ref=e1206]: 
+            - text: LangChain
+          - generic [ref=e1207]:
+            - generic [ref=e1208]: 
+            - text: TensorFlow
+          - generic [ref=e1209]:
+            - generic [ref=e1210]: 
+            - text: Power BI
+          - generic [ref=e1211]:
+            - generic [ref=e1212]: 
+            - text: Tableau
+    - region [ref=e1213]:
+      - generic [ref=e1214]:
+        - generic [ref=e1215]:
+          - generic [ref=e1216]: Live Projects
+          - heading "Real-World Projects" [level=2] [ref=e1217]
+          - paragraph [ref=e1218]: Build production-grade applications that showcase your skills to employers. Click any project to explore the full build — tools, features and professional outcomes.
+        - generic [ref=e1219]:
+          - article [ref=e1220]:
+            - generic [ref=e1221]:
+              - img "E-Commerce Platform project overview" [ref=e1222]
+              - generic [ref=e1224]:
+                - generic [ref=e1225]: 
+                - text: Full Stack Web Development
+            - generic [ref=e1226]:
+              - heading "E-Commerce Platform" [level=3] [ref=e1227]
+              - paragraph [ref=e1228]: Full-stack online store with product catalog, cart, secure checkout and admin dashboard.
+              - generic [ref=e1229]:
+                - generic [ref=e1230]: React
+                - generic [ref=e1231]: Spring Boot
+                - generic [ref=e1232]: MySQL
+                - generic [ref=e1233]: Stripe
+              - generic [ref=e1234]:
+                - link "View Course" [ref=e1235] [cursor=pointer]:
+                  - /url: /iuc-website/course/full-stack-java
+                - button "Explore Details " [ref=e1236] [cursor=pointer]:
+                  - text: Explore Details
+                  - generic [ref=e1237]: 
+          - article [ref=e1238]:
+            - generic [ref=e1239]:
+              - img "Hospital Management System project overview" [ref=e1240]
+              - generic [ref=e1242]:
+                - generic [ref=e1243]: 
+                - text: Healthcare Software
+            - generic [ref=e1244]:
+              - heading "Hospital Management System" [level=3] [ref=e1245]
+              - paragraph [ref=e1246]: Complete HMS covering registration, appointments, EMR, billing and pharmacy modules.
+              - generic [ref=e1247]:
+                - generic [ref=e1248]: Angular
+                - generic [ref=e1249]: Node.js
+                - generic [ref=e1250]: Express
+                - generic [ref=e1251]: MongoDB
+              - generic [ref=e1252]:
+                - link "View Course" [ref=e1253] [cursor=pointer]:
+                  - /url: /iuc-website/course/node-js
+                - button "Explore Details " [ref=e1254] [cursor=pointer]:
+                  - text: Explore Details
+                  - generic [ref=e1255]: 
+          - article [ref=e1256]:
+            - generic [ref=e1257]:
+              - img "CRM Application project overview" [ref=e1258]
+              - generic [ref=e1260]:
+                - generic [ref=e1261]: 
+                - text: Sales & Business Software
+            - generic [ref=e1262]:
+              - heading "CRM Application" [level=3] [ref=e1263]
+              - paragraph [ref=e1264]: Sales CRM with lead tracking, pipeline management, analytics and email integration.
+              - generic [ref=e1265]:
+                - generic [ref=e1266]: Vue.js
+                - generic [ref=e1267]: Python
+                - generic [ref=e1268]: Django
+                - generic [ref=e1269]: PostgreSQL
+              - generic [ref=e1270]:
+                - link "View Course" [ref=e1271] [cursor=pointer]:
+                  - /url: /iuc-website/course/python
+                - button "Explore Details " [ref=e1272] [cursor=pointer]:
+                  - text: Explore Details
+                  - generic [ref=e1273]: 
+          - article [ref=e1274]:
+            - generic [ref=e1275]:
+              - img "AI Chatbot Assistant project overview" [ref=e1276]
+              - generic [ref=e1278]:
+                - generic [ref=e1279]: 
+                - text: Artificial Intelligence
+            - generic [ref=e1280]:
+              - heading "AI Chatbot Assistant" [level=3] [ref=e1281]
+              - paragraph [ref=e1282]: GPT-powered assistant with RAG, context-aware answers and multi-language support.
+              - generic [ref=e1283]:
+                - generic [ref=e1284]: Python
+                - generic [ref=e1285]: LangChain
+                - generic [ref=e1286]: OpenAI API
+                - generic [ref=e1287]: FAISS
+              - generic [ref=e1288]:
+                - link "View Course" [ref=e1289] [cursor=pointer]:
+                  - /url: /iuc-website/course/ai-ml
+                - button "Explore Details " [ref=e1290] [cursor=pointer]:
+                  - text: Explore Details
+                  - generic [ref=e1291]: 
+          - article [ref=e1292]:
+            - generic [ref=e1293]:
+              - img "Analytics Dashboard project overview" [ref=e1294]
+              - generic [ref=e1296]:
+                - generic [ref=e1297]: 
+                - text: Business Intelligence
+            - generic [ref=e1298]:
+              - heading "Analytics Dashboard" [level=3] [ref=e1299]
+              - paragraph [ref=e1300]: Real-time business intelligence dashboard with interactive charts and predictive analytics.
+              - generic [ref=e1301]:
+                - generic [ref=e1302]: React
+                - generic [ref=e1303]: D3.js
+                - generic [ref=e1304]: Python
+                - generic [ref=e1305]: WebSocket
+              - generic [ref=e1306]:
+                - link "View Course" [ref=e1307] [cursor=pointer]:
+                  - /url: /iuc-website/course/react
+                - button "Explore Details " [ref=e1308] [cursor=pointer]:
+                  - text: Explore Details
+                  - generic [ref=e1309]: 
+          - article [ref=e1310]:
+            - generic [ref=e1311]:
+              - img "Cyber Security Lab project overview" [ref=e1312]
+              - generic [ref=e1314]:
+                - generic [ref=e1315]: 
+                - text: Information Security
+            - generic [ref=e1316]:
+              - heading "Cyber Security Lab" [level=3] [ref=e1317]
+              - paragraph [ref=e1318]: Sandboxed security lab for vulnerability scanning, penetration testing and threat monitoring.
+              - generic [ref=e1319]:
+                - generic [ref=e1320]: Kali Linux
+                - generic [ref=e1321]: Metasploit
+                - generic [ref=e1322]: Wireshark
+                - generic [ref=e1323]: Nmap
+              - generic [ref=e1324]:
+                - link "View Course" [ref=e1325] [cursor=pointer]:
+                  - /url: /iuc-website/course/cyber-security
+                - button "Explore Details " [ref=e1326] [cursor=pointer]:
+                  - text: Explore Details
+                  - generic [ref=e1327]: 
+    - region [ref=e1328]:
+      - generic [ref=e1330]:
+        - generic [ref=e1331]:
+          - generic [ref=e1332]: Internship Program
+          - heading "Kickstart Your Career with Industry Internship" [level=2] [ref=e1333]
+          - paragraph [ref=e1334]: Our 3-month internship program bridges the gap between academic learning and industry expectations. Work on real client projects under expert mentorship and build a professional portfolio.
+          - generic [ref=e1335]:
+            - generic [ref=e1336]:
+              - generic [ref=e1337]: 
+              - generic [ref=e1339]:
+                - strong [ref=e1340]: 3 Months Duration
+                - paragraph [ref=e1341]: Full-time immersive experience
+            - generic [ref=e1342]:
+              - generic [ref=e1343]: 
+              - generic [ref=e1345]:
+                - strong [ref=e1346]: Internship Certificate
+                - paragraph [ref=e1347]: Recognized completion certificate
+            - generic [ref=e1348]:
+              - generic [ref=e1349]: 
+              - generic [ref=e1351]:
+                - strong [ref=e1352]: Real Projects
+                - paragraph [ref=e1353]: Work on live client projects
+            - generic [ref=e1354]:
+              - generic [ref=e1355]: 
+              - generic [ref=e1357]:
+                - strong [ref=e1358]: Expert Mentoring
+                - paragraph [ref=e1359]: 1-on-1 guidance from industry experts
+            - generic [ref=e1360]:
+              - generic [ref=e1361]: 
+              - generic [ref=e1363]:
+                - strong [ref=e1364]: Hiring Support
+                - paragraph [ref=e1365]: Direct referrals to partner companies
+            - generic [ref=e1366]:
+              - generic [ref=e1367]: 
+              - generic [ref=e1369]:
+                - strong [ref=e1370]: Stipend Opportunity
+                - paragraph [ref=e1371]: Performance-based stipend for top interns
+          - link "Apply for Internship " [ref=e1372] [cursor=pointer]:
+            - /url: /iuc-website/#contact
+            - text: Apply for Internship
+            - generic [ref=e1373]: 
+        - img "Students working on live projects in the IUC Edu internship program" [ref=e1376]
+    - region [ref=e1377]:
+      - generic [ref=e1378]:
+        - generic [ref=e1379]:
+          - generic [ref=e1380]: Placement Assistance
+          - heading "98% Placement Success Rate" [level=2] [ref=e1381]
+          - paragraph [ref=e1382]: Our dedicated placement team works with you from day one until you land your dream job.
+        - generic [ref=e1383]:
+          - generic [ref=e1384]:
+            - generic [ref=e1385]: 
+            - generic [ref=e1387]:
+              - heading "Resume Preparation" [level=3] [ref=e1388]
+              - paragraph [ref=e1389]: Professional resume crafted by industry experts highlighting your skills and projects.
+          - generic [ref=e1390]:
+            - generic [ref=e1391]: 
+            - generic [ref=e1393]:
+              - heading "LinkedIn Optimization" [level=3] [ref=e1394]
+              - paragraph [ref=e1395]: Profile optimization to attract recruiters and build your professional brand.
+          - generic [ref=e1396]:
+            - generic [ref=e1397]: 
+            - generic [ref=e1399]:
+              - heading "Mock Interviews" [level=3] [ref=e1400]
+              - paragraph [ref=e1401]: Technical, HR, and managerial rounds with detailed feedback and improvement plans.
+          - generic [ref=e1402]:
+            - generic [ref=e1403]: 
+            - generic [ref=e1405]:
+              - heading "Technical Interview" [level=3] [ref=e1406]
+              - paragraph [ref=e1407]: Live coding sessions, system design discussions, and problem-solving practice.
+          - generic [ref=e1408]:
+            - generic [ref=e1409]: 
+            - generic [ref=e1411]:
+              - heading "HR Interview" [level=3] [ref=e1412]
+              - paragraph [ref=e1413]: Communication skills, salary negotiation, and workplace readiness training.
+          - generic [ref=e1414]:
+            - generic [ref=e1415]: 
+            - generic [ref=e1417]:
+              - heading "Hiring Partners" [level=3] [ref=e1418]
+              - paragraph [ref=e1419]: Access to 300+ hiring partners including MNCs and product-based companies.
+        - generic [ref=e1420]:
+          - generic [ref=e1421]:
+            - generic [ref=e1422]: 98%
+            - generic [ref=e1423]: Placement Rate
+          - generic [ref=e1424]:
+            - generic [ref=e1425]: 300+
+            - generic [ref=e1426]: Hiring Partners
+          - generic [ref=e1427]:
+            - generic [ref=e1428]: 25k+
+            - generic [ref=e1429]: Graduates Placed
+          - generic [ref=e1430]:
+            - generic [ref=e1431]: 140%
+            - generic [ref=e1432]: Avg. Salary Hike
+    - region [ref=e1433]:
+      - generic [ref=e1434]:
+        - generic [ref=e1435]:
+          - generic [ref=e1436]: Google Reviews
+          - heading "What Our Students Say" [level=2] [ref=e1437]
+          - paragraph [ref=e1438]: Real reviews from real students on Google. See why thousands trust IUC Edu for their career transformation.
+        - generic [ref=e1439]:
+          - generic [ref=e1440]:
+            - generic [ref=e1441]: "4.9"
+            - generic [ref=e1442]:
+              - generic [ref=e1443]: 
+              - generic [ref=e1444]: 
+              - generic [ref=e1445]: 
+              - generic [ref=e1446]: 
+              - generic [ref=e1447]: 
+            - generic [ref=e1448]: Based on 2,847 reviews
+          - generic [ref=e1449]: Review
+        - generic [ref=e1456]:
+          - generic [ref=e1457]:
+            - generic [ref=e1459]:
+              - img "Ramesh Subramanian" [ref=e1460]
+              - generic [ref=e1461]:
+                - generic [ref=e1462]: Ramesh Subramanian
+                - generic [ref=e1463]: Full Stack Developer @ Infosys
+            - generic [ref=e1470]:
+              - generic [ref=e1471]: 
+              - generic [ref=e1472]: 
+              - generic [ref=e1473]: 
+              - generic [ref=e1474]: 
+              - generic [ref=e1475]: 
+              - text: Batch 2023
+            - paragraph [ref=e1476]: "\"IUC Computers completely changed my life. The hands-on projects and dedicated placement team secured my dream role at Infosys within 3 months. The mentors invest personally in every student's success.\""
+            - generic [ref=e1477]:
+              - generic [ref=e1478]: ₹8.5 LPA
+              - generic [ref=e1479]:
+                - generic [ref=e1480]: 
+                - text: Verified
+          - generic [ref=e1481]:
+            - generic [ref=e1483]:
+              - img "Udhayakumar" [ref=e1484]
+              - generic [ref=e1485]:
+                - generic [ref=e1486]: Udhayakumar
+                - generic [ref=e1487]: Cybersecurity Analyst @ TCS
+            - generic [ref=e1494]:
+              - generic [ref=e1495]: 
+              - generic [ref=e1496]: 
+              - generic [ref=e1497]: 
+              - generic [ref=e1498]: 
+              - generic [ref=e1499]: 
+              - text: Batch 2023
+            - paragraph [ref=e1500]: "\"The Cybersecurity program was incredibly detailed — real labs, real attack scenarios. I passed my CEH exam on the first attempt. The institute truly prepares you for what the industry demands.\""
+            - generic [ref=e1501]:
+              - generic [ref=e1502]: ₹9.2 LPA
+              - generic [ref=e1503]:
+                - generic [ref=e1504]: 
+                - text: Verified
+          - generic [ref=e1505]:
+            - generic [ref=e1507]:
+              - img "Sneha Meenakshi" [ref=e1508]
+              - generic [ref=e1509]:
+                - generic [ref=e1510]: Sneha Meenakshi
+                - generic [ref=e1511]: Data Scientist @ Amazon
+            - generic [ref=e1518]:
+              - generic [ref=e1519]: 
+              - generic [ref=e1520]: 
+              - generic [ref=e1521]: 
+              - generic [ref=e1522]: 
+              - generic [ref=e1523]: 
+              - text: Batch 2024
+            - paragraph [ref=e1524]: "\"From zero coding experience to landing a Data Science role at Amazon — IUC made it possible. The AI/ML curriculum is world-class and the career support team goes above and beyond.\""
+            - generic [ref=e1525]:
+              - generic [ref=e1526]: ₹14 LPA
+              - generic [ref=e1527]:
+                - generic [ref=e1528]: 
+                - text: Verified
+          - generic [ref=e1529]:
+            - generic [ref=e1531]:
+              - img "Vikram Nair" [ref=e1532]
+              - generic [ref=e1533]:
+                - generic [ref=e1534]: Vikram Nair
+                - generic [ref=e1535]: Cloud Architect @ Wipro
+            - generic [ref=e1542]:
+              - generic [ref=e1543]: 
+              - generic [ref=e1544]: 
+              - generic [ref=e1545]: 
+              - generic [ref=e1546]: 
+              - generic [ref=e1547]: 
+              - text: Batch 2024
+            - paragraph [ref=e1548]: "\"The Cloud Computing bootcamp was intense in the best way possible. Got AWS certified and secured a Cloud Architect role within weeks of graduation. Best investment I ever made in my career.\""
+            - generic [ref=e1549]:
+              - generic [ref=e1550]: ₹12 LPA
+              - generic [ref=e1551]:
+                - generic [ref=e1552]: 
+                - text: Verified
+          - generic [ref=e1553]:
+            - generic [ref=e1555]:
+              - img "Divya Sundararajan" [ref=e1556]
+              - generic [ref=e1557]:
+                - generic [ref=e1558]: Divya Sundararajan
+                - generic [ref=e1559]: UI/UX Lead @ Zoho
+            - generic [ref=e1566]:
+              - generic [ref=e1567]: 
+              - generic [ref=e1568]: 
+              - generic [ref=e1569]: 
+              - generic [ref=e1570]: 
+              - generic [ref=e1571]: 
+              - text: Batch 2023
+            - paragraph [ref=e1572]: "\"The UI/UX program taught me Figma, user research, and design systems from scratch. Now I lead a team of 6 designers at Zoho. IUC gave me the confidence and portfolio that got me hired.\""
+            - generic [ref=e1573]:
+              - generic [ref=e1574]: ₹10.5 LPA
+              - generic [ref=e1575]:
+                - generic [ref=e1576]: 
+                - text: Verified
+          - generic [ref=e1577]:
+            - generic [ref=e1579]:
+              - img "Rahul Kumar" [ref=e1580]
+              - generic [ref=e1581]:
+                - generic [ref=e1582]: Rahul Kumar
+                - generic [ref=e1583]: Digital Marketing Manager @ Swiggy
+            - generic [ref=e1590]:
+              - generic [ref=e1591]: 
+              - generic [ref=e1592]: 
+              - generic [ref=e1593]: 
+              - generic [ref=e1594]: 
+              - generic [ref=e1595]: 
+              - text: Batch 2024
+            - paragraph [ref=e1596]: "\"In 2 months I learned Google Ads, Meta campaigns, and advanced SEO strategies. Got a 133% salary hike at Swiggy. The ROI on this course is absolutely phenomenal.\""
+            - generic [ref=e1597]:
+              - generic [ref=e1598]: ₹9.8 LPA
+              - generic [ref=e1599]:
+                - generic [ref=e1600]: 
+                - text: Verified
+    - region [ref=e1601]:
+      - generic [ref=e1602]:
+        - generic [ref=e1603]:
+          - generic [ref=e1604]: Hiring Companies
+          - heading "Our Graduates Work at Top Companies" [level=2] [ref=e1605]
+        - generic [ref=e1606]:
+          - generic [ref=e1607]: TCS
+          - generic [ref=e1608]: Infosys
+          - generic [ref=e1609]: Wipro
+          - generic [ref=e1610]: HCL
+          - generic [ref=e1611]: Cognizant
+          - generic [ref=e1612]: Accenture
+          - generic [ref=e1613]: Zoho
+          - generic [ref=e1614]: Freshworks
+          - generic [ref=e1615]: Capgemini
+          - generic [ref=e1616]: Tech Mahindra
+          - generic [ref=e1617]: IBM
+          - generic [ref=e1618]: Oracle
+          - generic [ref=e1619]: Amazon
+          - generic [ref=e1620]: Microsoft
+          - generic [ref=e1621]: Google
+          - generic [ref=e1622]: Deloitte
+          - generic [ref=e1623]: Flipkart
+          - generic [ref=e1624]: PayPal
+    - region [ref=e1625]:
+      - generic [ref=e1626]:
+        - generic [ref=e1627]:
+          - generic [ref=e1628]: FAQ
+          - heading "Frequently Asked Questions" [level=2] [ref=e1629]
+          - paragraph [ref=e1630]: Everything you need to know about IUC Edu programs.
+        - generic [ref=e1631]:
+          - link "All" [ref=e1632] [cursor=pointer]:
+            - /url: /iuc-website/#faq
+          - link "Admissions" [ref=e1633] [cursor=pointer]:
+            - /url: /iuc-website/#admissions
+          - link "Fees" [ref=e1634] [cursor=pointer]:
+            - /url: /iuc-website/#courses
+          - link "Placements" [ref=e1635] [cursor=pointer]:
+            - /url: /iuc-website/#placements
+          - link "Internship" [ref=e1636] [cursor=pointer]:
+            - /url: /iuc-website/#internship
+          - link "Certificate" [ref=e1637] [cursor=pointer]:
+            - /url: /iuc-website/#certificates
+          - link "Eligibility" [ref=e1638] [cursor=pointer]:
+            - /url: /iuc-website/#courses
+          - link "Batches" [ref=e1639] [cursor=pointer]:
+            - /url: /iuc-website/#batches
+        - generic [ref=e1640]:
+          - group [ref=e1642]:
+            - generic "01 Which IT course is best for beginners? " [ref=e1643] [cursor=pointer]:
+              - generic [ref=e1644]:
+                - generic [ref=e1645]: "01"
+                - text: Which IT course is best for beginners?
+              - generic [ref=e1646]: 
+            - generic [ref=e1648]: The right starting point depends on your goal. C and C++ build programming fundamentals, Python offers a beginner-friendly path into coding and data, while software testing, UI/UX design and digital marketing are options for learners exploring other technology roles.
+          - group [ref=e1650]:
+            - generic "02 Do I need programming experience to join? " [ref=e1651] [cursor=pointer]:
+              - generic [ref=e1652]:
+                - generic [ref=e1653]: "02"
+                - text: Do I need programming experience to join?
+              - generic [ref=e1654]: 
+          - group [ref=e1657]:
+            - generic "03 Does IUC Edu provide programming and coding classes in Chennai? " [ref=e1658] [cursor=pointer]:
+              - generic [ref=e1659]:
+                - generic [ref=e1660]: "03"
+                - text: Does IUC Edu provide programming and coding classes in Chennai?
+              - generic [ref=e1661]: 
+          - group [ref=e1664]:
+            - generic "04 What are the fees for computer courses? " [ref=e1665] [cursor=pointer]:
+              - generic [ref=e1666]:
+                - generic [ref=e1667]: "04"
+                - text: What are the fees for computer courses?
+              - generic [ref=e1668]: 
+          - group [ref=e1671]:
+            - generic "05 Does IUC Edu provide placement assistance? " [ref=e1672] [cursor=pointer]:
+              - generic [ref=e1673]:
+                - generic [ref=e1674]: "05"
+                - text: Does IUC Edu provide placement assistance?
+              - generic [ref=e1675]: 
+          - group [ref=e1678]:
+            - generic "06 Are certificates provided after course completion? " [ref=e1679] [cursor=pointer]:
+              - generic [ref=e1680]:
+                - generic [ref=e1681]: "06"
+                - text: Are certificates provided after course completion?
+              - generic [ref=e1682]: 
+          - group [ref=e1685]:
+            - generic "07 Can working professionals join the courses? " [ref=e1686] [cursor=pointer]:
+              - generic [ref=e1687]:
+                - generic [ref=e1688]: "07"
+                - text: Can working professionals join the courses?
+              - generic [ref=e1689]: 
+          - group [ref=e1692]:
+            - generic "08 Are online computer and IT classes available? " [ref=e1693] [cursor=pointer]:
+              - generic [ref=e1694]:
+                - generic [ref=e1695]: "08"
+                - text: Are online computer and IT classes available?
+              - generic [ref=e1696]: 
+          - group [ref=e1699]:
+            - generic "09 Where is IUC Edu located in Chennai? " [ref=e1700] [cursor=pointer]:
+              - generic [ref=e1701]:
+                - generic [ref=e1702]: "09"
+                - text: Where is IUC Edu located in Chennai?
+              - generic [ref=e1703]: 
+          - group [ref=e1706]:
+            - generic "10 How can I choose the right computer course? " [ref=e1707] [cursor=pointer]:
+              - generic [ref=e1708]:
+                - generic [ref=e1709]: "10"
+                - text: How can I choose the right computer course?
+              - generic [ref=e1710]: 
+        - generic [ref=e1712]:
+          - paragraph [ref=e1713]: Still have questions? We're here to help.
+          - generic [ref=e1714]:
+            - link " Call Us" [ref=e1715] [cursor=pointer]:
+              - /url: tel:+917418048039
+              - generic [ref=e1716]: 
+              - text: Call Us
+            - link " WhatsApp Us" [ref=e1717] [cursor=pointer]:
+              - /url: https://wa.me/917418048039
+              - generic [ref=e1718]: 
+              - text: WhatsApp Us
+            - link "Contact Us " [ref=e1719] [cursor=pointer]:
+              - /url: /iuc-website/#contact
+              - text: Contact Us
+              - generic [ref=e1720]: 
+    - region [ref=e1721]:
+      - generic [ref=e1722]:
+        - generic [ref=e1723]:
+          - generic [ref=e1724]: Our Blog
+          - heading "Latest Articles" [level=2] [ref=e1725]
+          - paragraph [ref=e1726]: Stay updated with the latest in technology, career guidance, and industry trends.
+        - generic [ref=e1727]:
+          - article [ref=e1728]:
+            - img "Top 10 Programming Languages to Learn in 2026" [ref=e1730]
+            - generic [ref=e1731]:
+              - generic [ref=e1732]: Career Guidance
+              - heading "Top 10 Programming Languages to Learn in 2026" [level=3] [ref=e1733]
+              - paragraph [ref=e1734]: Discover the most in-demand programming languages that will boost your career in 2026 and beyond.
+              - generic [ref=e1735]:
+                - generic [ref=e1736]:
+                  - generic [ref=e1737]: 
+                  - text: Jan 15, 2026
+                - link "Read More " [ref=e1738] [cursor=pointer]:
+                  - /url: /iuc-website/blog/top-programming-languages-2026
+                  - text: Read More
+                  - generic [ref=e1739]: 
+          - article [ref=e1740]:
+            - img "How to Crack Data Science Interviews at Top Tech Companies" [ref=e1742]
+            - generic [ref=e1743]:
+              - generic [ref=e1744]: Interview Tips
+              - heading "How to Crack Data Science Interviews at Top Tech Companies" [level=3] [ref=e1745]
+              - paragraph [ref=e1746]: Expert tips and strategies to ace data science interviews at FAANG and top product-based companies.
+              - generic [ref=e1747]:
+                - generic [ref=e1748]:
+                  - generic [ref=e1749]: 
+                  - text: Jan 10, 2026
+                - link "Read More " [ref=e1750] [cursor=pointer]:
+                  - /url: /iuc-website/blog/crack-data-science-interviews
+                  - text: Read More
+                  - generic [ref=e1751]: 
+          - article [ref=e1752]:
+            - 'img "The Future of AI: Generative AI Trends in 2026" [ref=e1754]'
+            - generic [ref=e1755]:
+              - generic [ref=e1756]: AI Updates
+              - 'heading "The Future of AI: Generative AI Trends in 2026" [level=3] [ref=e1757]'
+              - paragraph [ref=e1758]: Explore how Generative AI, LLMs, and Prompt Engineering are reshaping the technology landscape.
+              - generic [ref=e1759]:
+                - generic [ref=e1760]:
+                  - generic [ref=e1761]: 
+                  - text: Jan 5, 2026
+                - link "Read More " [ref=e1762] [cursor=pointer]:
+                  - /url: /iuc-website/blog/future-of-ai-generative-ai-2026
+                  - text: Read More
+                  - generic [ref=e1763]: 
+        - link "View All Articles " [ref=e1765] [cursor=pointer]:
+          - /url: /iuc-website/blog
+          - text: View All Articles
+          - generic [ref=e1766]: 
+    - region [ref=e1767]:
+      - generic [ref=e1769]:
+        - generic [ref=e1770]:
+          - generic [ref=e1771]: Get in Touch
+          - heading "Start Your Journey Today" [level=2] [ref=e1772]
+          - paragraph [ref=e1773]: Fill in your details and our expert career counsellor will reach out within 24 hours to guide you toward the right program — completely free, zero pressure.
+          - generic [ref=e1774]:
+            - link " Mobile +91 7418048039" [ref=e1775] [cursor=pointer]:
+              - /url: tel:+917418048039
+              - generic [ref=e1776]: 
+              - generic [ref=e1778]:
+                - generic [ref=e1779]: Mobile
+                - generic [ref=e1780]: +91 7418048039
+            - link " Head Office Landline 04443539196" [ref=e1781] [cursor=pointer]:
+              - /url: tel:04443539196
+              - generic [ref=e1782]: 
+              - generic [ref=e1784]:
+                - generic [ref=e1785]: Head Office Landline
+                - generic [ref=e1786]: "04443539196"
+            - link " Branch Office Landline 04447940112" [ref=e1787] [cursor=pointer]:
+              - /url: tel:04447940112
+              - generic [ref=e1788]: 
+              - generic [ref=e1790]:
+                - generic [ref=e1791]: Branch Office Landline
+                - generic [ref=e1792]: "04447940112"
+            - link " Email info@iucedu.com" [ref=e1793] [cursor=pointer]:
+              - /url: mailto:info@iucedu.com
+              - generic [ref=e1794]: 
+              - generic [ref=e1796]:
+                - generic [ref=e1797]: Email
+                - generic [ref=e1798]: info@iucedu.com
+            - 'link " Head Office · CIT Nagar · Nandanam #1&2 Gold Nest Apts, 2nd Main Road, C.I.T Nagar, Chennai – 600 035 " [ref=e1799] [cursor=pointer]':
+              - /url: https://www.google.com/maps/search/?api=1&query=Gold%20Nest%20Apartments%2C%202nd%20Main%20Road%2C%20C.I.T%20Nagar%2C%20Nandanam%2C%20Chennai%2C%20Tamil%20Nadu%20600035
+              - generic [ref=e1800]: 
+              - generic [ref=e1802]:
+                - generic [ref=e1803]: Head Office · CIT Nagar · Nandanam
+                - generic [ref=e1804]: "#1&2 Gold Nest Apts, 2nd Main Road, C.I.T Nagar, Chennai – 600 035"
+              - generic [ref=e1805]: 
+            - link " Branch · Kaladipet · Near Rajakadai 19/11, Balakrishna Colony 1st Street, Near Rajakadai, Kaladipet, Thiruvottiyur, Chennai – 600 019 " [ref=e1806] [cursor=pointer]:
+              - /url: https://www.google.com/maps/search/?api=1&query=IUC%20Computers%2C%2019%2F11%2C%20Balakrishna%20Colony%201st%20Street%2C%20Near%20Rajakadai%2C%20Kaladipet%2C%20Thiruvottiyur%2C%20Chennai%2C%20Tamil%20Nadu%20600019
+              - generic [ref=e1807]: 
+              - generic [ref=e1809]:
+                - generic [ref=e1810]: Branch · Kaladipet · Near Rajakadai
+                - generic [ref=e1811]: 19/11, Balakrishna Colony 1st Street, Near Rajakadai, Kaladipet, Thiruvottiyur, Chennai – 600 019
+              - generic [ref=e1812]: 
+          - link " Chat on WhatsApp Instant responses · 9 AM to 9 PM " [ref=e1813] [cursor=pointer]:
+            - /url: https://wa.me/917418048039?text=Hi!%20I'm%20interested%20in%20IUC%20Edu%20programs.
+            - generic [ref=e1814]: 
+            - generic [ref=e1815]:
+              - generic [ref=e1816]: Chat on WhatsApp
+              - generic [ref=e1817]: Instant responses · 9 AM to 9 PM
+            - generic [ref=e1818]: 
+        - generic [ref=e1819]:
+          - heading "Get Free Career Counselling" [level=3] [ref=e1820]
+          - paragraph [ref=e1821]: Fill in the form below. We'll call you within 24 hours.
+          - generic [ref=e1822]:
+            - generic [ref=e1823]:
+              - generic [ref=e1824]: Full Name *
+              - textbox "Full Name *" [ref=e1825]:
+                - /placeholder: e.g. Rohith Kumar
+            - generic [ref=e1826]:
+              - generic [ref=e1827]:
+                - generic [ref=e1828]: Phone Number *
+                - textbox "Phone Number *" [ref=e1829]:
+                  - /placeholder: +91 XXXXX XXXXX
+              - generic [ref=e1830]:
+                - generic [ref=e1831]: Email Address *
+                - textbox "Email Address *" [ref=e1832]:
+                  - /placeholder: you@example.com
+            - generic [ref=e1833]:
+              - generic [ref=e1834]: Course Interest *
+              - combobox "Course Interest *" [ref=e1835]:
+                - option "Select a program…" [disabled] [selected]
+                - option "Artificial Intelligence & Machine Learning"
+                - option "Data Science & Analytics"
+                - option "Python Programming"
+                - option "Java & J2EE Programming"
+                - option "Full Stack Java Development"
+                - option "Spring Boot & Microservices"
+                - option "React.js Frontend Development"
+                - option "Angular Frontend Development"
+                - option "Node.js Backend Development"
+                - option "UI/UX Design & Prototyping"
+                - option "Software Testing & QA"
+                - option "DevOps & Cloud Engineering"
+                - option "Cloud Computing (AWS & Azure)"
+                - option "Cyber Security & Ethical Hacking"
+                - option "Digital Marketing & SEO"
+                - option "C & C++ Programming"
+                - option "Other / Not Sure Yet"
+            - generic [ref=e1836]:
+              - generic [ref=e1837]: Message (Optional)
+              - textbox "Message (Optional)" [ref=e1838]:
+                - /placeholder: Any specific questions or requirements…
+            - generic [ref=e1840] [cursor=pointer]:
+              - checkbox "Send my requested course information and enquiry follow-up to this phone number on WhatsApp." [ref=e1841]
+              - generic [ref=e1842]: Send my requested course information and enquiry follow-up to this phone number on WhatsApp.
+            - generic [ref=e1843]:
+              - generic [ref=e1844]: Security Verification *
+              - generic [ref=e1845]:
+                - generic [ref=e1846]: "5587"
+                - generic [ref=e1847]: Enter the 4-digit code
+              - textbox "Enter code" [ref=e1848]
+            - button "Get Free Counselling " [ref=e1849] [cursor=pointer]:
+              - text: Get Free Counselling
+              - generic [ref=e1850]: 
+            - generic [ref=e1851]:
+              - generic [ref=e1852]:
+                - generic [ref=e1853]: 
+                - text: 256-bit SSL secured
+              - generic [ref=e1854]:
+                - generic [ref=e1855]: 
+                - text: Data never shared
+              - generic [ref=e1856]:
+                - generic [ref=e1857]: 
+                - text: Reply within 24 hrs
+      - generic [ref=e1858]:
+        - generic [ref=e1859]:
+          - generic [ref=e1860]: Visit Us
+          - heading "Our Centers" [level=2] [ref=e1861]
+          - paragraph [ref=e1862]: Walk in at either of our Chennai centers — tap a map to open the exact location in Google Maps.
+        - generic [ref=e1863]:
+          - article [ref=e1864]:
+            - generic [ref=e1865]:
+              - generic [ref=e1866]: 
+              - generic [ref=e1868]:
+                - generic [ref=e1869]: Head Office · CIT Nagar · Nandanam
+                - heading "Head Office" [level=3] [ref=e1870]
+              - generic [ref=e1871]:
+                - generic [ref=e1872]: 
+                - text: Main
+            - link "Open Head Office location in Google Maps" [ref=e1873] [cursor=pointer]:
+              - /url: https://www.google.com/maps/search/?api=1&query=Gold%20Nest%20Apartments%2C%202nd%20Main%20Road%2C%20C.I.T%20Nagar%2C%20Nandanam%2C%20Chennai%2C%20Tamil%20Nadu%20600035
+              - iframe [aria-hidden] [ref=e1874]
+              - generic [ref=e1876]:
+                - generic [ref=e1877]: 
+                - text: Get Directions
+            - generic [ref=e1878]:
+              - paragraph [ref=e1879]:
+                - generic [ref=e1880]: 
+                - text: "#1&2 Gold Nest Apts, 2nd Main Road, C.I.T Nagar, Chennai – 600 035"
+              - link " Open in Google Maps" [ref=e1881] [cursor=pointer]:
+                - /url: https://www.google.com/maps/search/?api=1&query=Gold%20Nest%20Apartments%2C%202nd%20Main%20Road%2C%20C.I.T%20Nagar%2C%20Nandanam%2C%20Chennai%2C%20Tamil%20Nadu%20600035
+                - generic [ref=e1882]: 
+                - text: Open in Google Maps
+          - article [ref=e1883]:
+            - generic [ref=e1884]:
+              - generic [ref=e1885]: 
+              - generic [ref=e1887]:
+                - generic [ref=e1888]: Sub Branch · Kaladipet · Near Rajakadai
+                - heading "Thiruvottiyur Branch" [level=3] [ref=e1889]
+            - link "Open Thiruvottiyur Branch location in Google Maps" [ref=e1890] [cursor=pointer]:
+              - /url: https://www.google.com/maps/search/?api=1&query=IUC%20Computers%2C%2019%2F11%2C%20Balakrishna%20Colony%201st%20Street%2C%20Near%20Rajakadai%2C%20Kaladipet%2C%20Thiruvottiyur%2C%20Chennai%2C%20Tamil%20Nadu%20600019
+              - iframe [aria-hidden] [ref=e1891]
+              - generic [ref=e1893]:
+                - generic [ref=e1894]: 
+                - text: Get Directions
+            - generic [ref=e1895]:
+              - paragraph [ref=e1896]:
+                - generic [ref=e1897]: 
+                - text: 19/11, Balakrishna Colony 1st Street, Near Rajakadai, Kaladipet, Thiruvottiyur, Chennai – 600 019
+              - link " Open in Google Maps" [ref=e1898] [cursor=pointer]:
+                - /url: https://www.google.com/maps/search/?api=1&query=IUC%20Computers%2C%2019%2F11%2C%20Balakrishna%20Colony%201st%20Street%2C%20Near%20Rajakadai%2C%20Kaladipet%2C%20Thiruvottiyur%2C%20Chennai%2C%20Tamil%20Nadu%20600019
+                - generic [ref=e1899]: 
+                - text: Open in Google Maps
+  - contentinfo [ref=e1900]:
+    - generic [ref=e1901]:
+      - generic [ref=e1902]:
+        - generic [ref=e1903]:
+          - img "IUC Edu computer education institute" [ref=e1904]
+          - paragraph [ref=e1905]: Premier IT training institute in Chennai delivering world-class technology education with 98% placement support. 25,000+ careers launched and counting.
+          - generic [ref=e1906]:
+            - link "Facebook" [ref=e1907] [cursor=pointer]:
+              - /url: https://www.facebook.com/IUCComputerEducation
+              - generic [ref=e1908]: 
+            - link "Instagram" [ref=e1909] [cursor=pointer]:
+              - /url: https://www.instagram.com/iuc_computers/
+              - generic [ref=e1910]: 
+            - link "LinkedIn" [ref=e1911] [cursor=pointer]:
+              - /url: https://www.linkedin.com/in/r-senthil-kumar-522213b9/
+              - generic [ref=e1912]: 
+            - link "YouTube" [ref=e1913] [cursor=pointer]:
+              - /url: https://www.youtube.com/@iuccomputers5136
+              - generic [ref=e1914]: 
+        - generic [ref=e1915]:
+          - heading "Quick Links" [level=4] [ref=e1916]
+          - generic [ref=e1917]:
+            - link "Home" [ref=e1918] [cursor=pointer]:
+              - /url: /iuc-website/#home
+            - link "About" [ref=e1919] [cursor=pointer]:
+              - /url: /iuc-website/#about
+            - link "Courses" [ref=e1920] [cursor=pointer]:
+              - /url: /iuc-website/#courses
+            - link "Placements" [ref=e1921] [cursor=pointer]:
+              - /url: /iuc-website/#placements
+            - link "Testimonials" [ref=e1922] [cursor=pointer]:
+              - /url: /iuc-website/#testimonials
+            - link "Blog" [ref=e1923] [cursor=pointer]:
+              - /url: /iuc-website/#blog
+            - link "Contact" [ref=e1924] [cursor=pointer]:
+              - /url: /iuc-website/#contact
+            - link "Computer Training in Chennai" [ref=e1925] [cursor=pointer]:
+              - /url: /iuc-website/computer-training-in-chennai
+            - link "Programming Courses" [ref=e1926] [cursor=pointer]:
+              - /url: /iuc-website/programming-courses-in-chennai
+            - link "Beginner IT Courses" [ref=e1927] [cursor=pointer]:
+              - /url: /iuc-website/it-courses-for-beginners
+            - link "Online IT Courses" [ref=e1928] [cursor=pointer]:
+              - /url: /iuc-website/online-it-courses
+            - link "Learning Blog" [ref=e1929] [cursor=pointer]:
+              - /url: /iuc-website/blog
+            - link "Sitemap" [ref=e1930] [cursor=pointer]:
+              - /url: /iuc-website/sitemap.xml
+        - generic [ref=e1931]:
+          - heading "Top Courses" [level=4] [ref=e1932]
+          - generic [ref=e1933]:
+            - link "AI & ML" [ref=e1934] [cursor=pointer]:
+              - /url: /iuc-website/course/ai-ml
+            - link "Data Science" [ref=e1935] [cursor=pointer]:
+              - /url: /iuc-website/course/data-science
+            - link "Python" [ref=e1936] [cursor=pointer]:
+              - /url: /iuc-website/course/python
+            - link "Java" [ref=e1937] [cursor=pointer]:
+              - /url: /iuc-website/course/java
+            - link "Full Stack Java" [ref=e1938] [cursor=pointer]:
+              - /url: /iuc-website/course/full-stack-java
+            - link "Spring Boot" [ref=e1939] [cursor=pointer]:
+              - /url: /iuc-website/course/spring-boot
+        - generic [ref=e1940]:
+          - heading "Contact Us" [level=4] [ref=e1941]
+          - generic [ref=e1942]:
+            - link " +91 7418048039" [ref=e1943] [cursor=pointer]:
+              - /url: tel:+917418048039
+              - generic [ref=e1944]: 
+              - text: +91 7418048039
+            - link " 04443539196" [ref=e1945] [cursor=pointer]:
+              - /url: tel:04443539196
+              - generic [ref=e1946]: 
+              - text: "04443539196"
+            - link " 04447940112" [ref=e1947] [cursor=pointer]:
+              - /url: tel:04447940112
+              - generic [ref=e1948]: 
+              - text: "04447940112"
+            - link " info@iucedu.com" [ref=e1949] [cursor=pointer]:
+              - /url: mailto:info@iucedu.com
+              - generic [ref=e1950]: 
+              - text: info@iucedu.com
+            - generic [ref=e1951]:
+              - generic [ref=e1952]: 
+              - text: "#1&2 Gold Nest Apts, 2nd Main Road, C.I.T Nagar, Chennai – 600 035"
+            - generic [ref=e1953]:
+              - generic [ref=e1954]: 
+              - text: 19/11 Balakrishna Colony 1st St, Kaladipet, Thiruvottiyur, Chennai – 600 019
+            - generic [ref=e1955]:
+              - heading "Newsletter" [level=4] [ref=e1956]
+              - generic [ref=e1957]:
+                - textbox "Email for newsletter" [ref=e1958]:
+                  - /placeholder: Your email
+                - button "" [ref=e1959] [cursor=pointer]
+      - generic [ref=e1961]:
+        - generic [ref=e1962]: © 2026 IUC Edu. All rights reserved.
+        - generic [ref=e1963]: Privacy Policy Terms of Service Refund Policy
+  - text: 
+  - link "Chat on WhatsApp" [ref=e1964] [cursor=pointer]:
+    - /url: https://wa.me/917418048039?text=Hi!%20I'm%20interested%20in%20IUC%20Edu%20programs.%20Please%20guide%20me.
+    - generic: Chat with us on WhatsApp
+    - generic [ref=e1965]: 
+  - link "Back to top":
+    - /url: "#"
+    - generic: 

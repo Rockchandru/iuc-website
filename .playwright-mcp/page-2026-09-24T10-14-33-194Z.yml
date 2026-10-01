@@ -1,0 +1,41 @@
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - img "IUC Edu" [ref=e6]
+      - heading "IUC Analytics" [level=1] [ref=e7]
+      - paragraph [ref=e8]: Digital Marketing Dashboard
+    - generic [ref=e9]:
+      - heading " Admin Login" [level=2] [ref=e10]:
+        - generic [ref=e11]: 
+        - text: Admin Login
+      - paragraph [ref=e12]: Sign in to access the analytics dashboard.
+      - generic [ref=e13]:
+        - generic [ref=e14]:
+          - generic [ref=e15]: Username
+          - generic [ref=e16]:
+            - generic: 
+            - textbox "Username" [active] [ref=e17]:
+              - /placeholder: Enter username
+        - generic [ref=e18]:
+          - generic [ref=e19]: Password
+          - generic [ref=e20]:
+            - generic: 
+            - textbox "Password" [ref=e21]:
+              - /placeholder: Enter password
+            - button "Show password" [ref=e22] [cursor=pointer]:
+              - generic: 
+        - button " Login to Dashboard" [ref=e23] [cursor=pointer]:
+          - generic [ref=e24]: 
+          - generic [ref=e25]: Login to Dashboard
+      - generic [ref=e26]:
+        - generic [ref=e27]: 
+        - generic [ref=e28]: Access is restricted to authorised IUC Edu administrators.
+    - generic [ref=e29]:
+      - link " Back to Website" [ref=e30] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e31]: 
+        - text: Back to Website
+      - generic [ref=e32]:
+        - generic [ref=e33]: 
+        - text: Secure access
+  - generic: © 2026 IUC Edu · Admin Analytics Dashboard

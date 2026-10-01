@@ -90,7 +90,7 @@ unset($b);
             </div>
 
             <!-- Right: Form -->
-            <div style="padding:2rem;border-radius:var(--radius-2xl);background:var(--clr-white);border:1px solid var(--clr-border);box-shadow:var(--shadow-xl)" data-aos="fade-left">
+            <div class="contact-form-card" style="padding:2rem;border-radius:var(--radius-2xl);background:var(--clr-white);border:1px solid var(--clr-border);box-shadow:var(--shadow-xl)" data-aos="fade-left">
                 <h3 style="font-size:1.25rem;font-weight:700;margin-bottom:0.5rem">Get Free Career Counselling</h3>
                 <p style="font-size:0.875rem;color:var(--clr-text-secondary);margin-bottom:1.5rem">Fill in the form below. We'll call you within 24 hours.</p>
 
@@ -98,13 +98,6 @@ unset($b);
                 <div style="padding:1rem;border-radius:var(--radius-lg);background:#d1fae5;color:#065f46;margin-bottom:1.5rem;display:flex;align-items:center;gap:0.75rem;font-weight:500">
                     <i class="bi bi-check-circle-fill" style="font-size:1.25rem"></i> Thank you! We'll contact you within 24 hours.
                 </div>
-                <script>
-                    document.addEventListener('DOMContentLoaded', function () {
-                        if (typeof window.__iucTrackEvent === 'function') {
-                            window.__iucTrackEvent('contact_form', 'Contact Form Submitted');
-                        }
-                    });
-                </script>
                 <?php elseif ($formError): ?>
                 <div style="padding:1rem;border-radius:var(--radius-lg);background:#fef2f2;color:#991b1b;margin-bottom:1.5rem;display:flex;align-items:center;gap:0.75rem;font-weight:500">
                     <i class="bi bi-exclamation-circle-fill" style="font-size:1.25rem"></i> <?= htmlspecialchars($formError) ?>
@@ -113,6 +106,7 @@ unset($b);
 
                 <form method="POST" action="<?= BASE_URL ?>/#contact" data-validate>
                     <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>" />
+                    <input type="hidden" name="enquiry_request_key" value="<?= htmlspecialchars(bin2hex(random_bytes(16)), ENT_QUOTES, 'UTF-8') ?>" />
                     <input type="hidden" name="page_url" value="" />
                     <input type="hidden" name="landing_page" value="" />
                     <input type="hidden" name="referrer" value="" />
@@ -154,6 +148,13 @@ unset($b);
                     <div class="form-group">
                         <label for="message" class="form-label">Message (Optional)</label>
                         <textarea id="message" name="message" class="form-input" placeholder="Any specific questions or requirements…" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-group enquiry-whatsapp-consent">
+                        <label>
+                            <input type="checkbox" name="whatsapp_opt_in" value="1" required />
+                            <span>Send my requested course information and enquiry follow-up to this phone number on WhatsApp.</span>
+                        </label>
                     </div>
 
                     <div class="form-group">
