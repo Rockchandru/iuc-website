@@ -21,8 +21,7 @@ $SITE_BASE  = BASE_URL;
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8" />
+<head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Analytics Dashboard – IUC Edu</title>
 <meta name="robots" content="noindex, nofollow" />
@@ -48,6 +47,7 @@ $SITE_BASE  = BASE_URL;
         <nav class="sidebar-nav">
             <button class="nav-item active" data-tab="overview"><i class="bi bi-speedometer2"></i> Overview</button>
             <button class="nav-item" data-tab="visitors"><i class="bi bi-people"></i> Visitors</button>
+            <button class="nav-item" data-tab="journeys"><i class="bi bi-signpost-split"></i> User Journeys</button>
             <button class="nav-item" data-tab="campaigns"><i class="bi bi-megaphone"></i> Campaigns</button>
             <button class="nav-item" data-tab="pages"><i class="bi bi-file-earmark-text"></i> Pages</button>
             <button class="nav-item" data-tab="seo"><i class="bi bi-search"></i> SEO Monitor</button>
@@ -92,6 +92,17 @@ $SITE_BASE  = BASE_URL;
         </header>
 
         <div class="content">
+
+            <div class="analytics-filter-bar" aria-label="Analytics acquisition filters">
+                <div class="analytics-filter-heading"><strong>Acquisition Filters</strong><span>All period metrics below use the same selected website-session dataset.</span></div>
+                <label><span>Source</span><select id="sourceFilter"><option value="">All sources</option></select></label>
+                <label><span>Medium</span><select id="mediumFilter"><option value="">All mediums</option></select></label>
+                <label><span>Channel</span><select id="channelFilter"><option value="">All channels</option></select></label>
+                <label><span>Campaign</span><select id="campaignFilter"><option value="">All campaigns</option></select></label>
+                <label><span>Landing page</span><select id="landingFilter"><option value="">All landing pages</option></select></label>
+                <button type="button" class="btn btn-outline" id="clearFilters">Clear filters</button>
+                <div class="analytics-filter-status" id="filterStatus" role="status"></div>
+            </div>
 
             <!-- ══════════ OVERVIEW ══════════ -->
             <section class="tab-panel active" id="tab-overview">
@@ -262,6 +273,14 @@ $SITE_BASE  = BASE_URL;
             </section>
 
             <!-- ══════════ CAMPAIGNS ══════════ -->
+            <section class="tab-panel" id="tab-journeys">
+                <div class="card attribution-guide">
+                    <div class="card-title"><i class="bi bi-signpost-split"></i> Anonymous Visitor &amp; Session Journeys</div>
+                    <p>Ordered website pages and important actions for the selected date range and acquisition filters. Personal form-field values are not included.</p>
+                </div>
+                <div class="journey-list" id="journeyList"></div>
+            </section>
+
             <section class="tab-panel" id="tab-campaigns">
                 <div class="card attribution-guide">
                     <div class="card-title"><i class="bi bi-link-45deg"></i> Campaign Link Standard</div>
@@ -281,6 +300,7 @@ $SITE_BASE  = BASE_URL;
 
                 <div class="card">
                     <div class="card-title"><i class="bi bi-threads"></i> Social Media Analytics <span class="muted">Facebook · Instagram · YouTube · LinkedIn · WhatsApp · Email · QR Code</span></div>
+                    <p class="muted">These are website sessions and website pageviews, not platform impressions, reach, engagements, or video views.</p>
                     <div class="social-grid" id="socialGrid"></div>
                 </div>
             </section>

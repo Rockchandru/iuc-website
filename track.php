@@ -234,7 +234,13 @@ if ($isNewSession && ($utmSource || $utmCampaign || $campaignId || $clickType)) 
 }
 
 /* ── Conversion / event row ──────────────────────────────────── */
-if ($eventType !== 'pageview' && $eventType !== 'heartbeat' && in_array($eventType, ['call_click', 'whatsapp_click', 'brochure_download', 'contact_form_attempt', 'admission', 'registration', 'outbound_click', 'custom'], true)) {
+$allowedEventTypes = [
+    'call_click', 'whatsapp_click', 'brochure_download', 'contact_form_attempt',
+    'admission', 'registration', 'outbound_click', 'custom', 'scroll_depth',
+    'course_card_click', 'enquiry_modal_open', 'enquiry_form_start',
+    'form_validation_failure', 'thank_you_shown', 'cta_click', 'engaged_session'
+];
+if ($eventType !== 'pageview' && $eventType !== 'heartbeat' && in_array($eventType, $allowedEventTypes, true)) {
     $stmt = $conn->prepare("INSERT INTO analytics_events (visitor_id, session_id, event_type, event_label, event_value, page_url, created_at) VALUES (?, ?, ?, ?, 1, ?, ?)");
     $stmt->bind_param('ssssss', $visitorId, $sessionId, $eventType, $label, $pageUrl, $now);
     $stmt->execute();

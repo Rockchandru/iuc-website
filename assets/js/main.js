@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
         applicationForm.hidden = false;
         applicationFeedback.hidden = true;
         applicationFeedback.textContent = '';
+        applicationFeedback.classList.remove('enquiry-thank-you-message');
         applicationCourse.value = link.dataset.course || '';
         applicationModal.classList.add('open');
         applicationModal.setAttribute('aria-hidden', 'false');
@@ -61,6 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         applicationFeedback.textContent = result.message || 'We could not submit your enquiry. Please try again.';
         applicationFeedback.classList.toggle('success', !!result.success);
+        applicationFeedback.classList.toggle('enquiry-thank-you-message', !!result.success);
         applicationFeedback.hidden = false;
         if (result.success) {
           applicationForm.hidden = true;
@@ -69,6 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
       } catch (error) {
         applicationFeedback.textContent = 'We could not submit your enquiry. Please try again.';
         applicationFeedback.classList.remove('success');
+        applicationFeedback.classList.remove('enquiry-thank-you-message');
         applicationFeedback.hidden = false;
       } finally {
         submitButton.disabled = false;

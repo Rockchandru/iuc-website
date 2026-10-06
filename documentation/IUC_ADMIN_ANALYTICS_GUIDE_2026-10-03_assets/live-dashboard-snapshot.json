@@ -1,0 +1,68 @@
+{
+  "captured_at": "2026-10-03T07:00:56.840Z",
+  "url": "https://www.iucedu.com/admin/dashboard.php?from=2026-09-02&to=2026-10-02",
+  "title": "Analytics Dashboard – IUC Edu",
+  "from": "2026-09-02",
+  "to": "2026-10-02",
+  "period": "Report period: 2026-09-02 → 2026-10-02",
+  "filter_status": "No acquisition filters applied · 7,953 sessions in period",
+  "kpis": "9,108\nTotal Visitors\nAll time\n21\nToday's Visitors\n3 Oct 2026\n1\nActive Users\nLast 30 minutes\n6,570\nUnique Visitors\nPeriod\n333\nReturning Visitors\nPeriod\n9,029\nTotal Page Views\nPeriod\n89.3%\nBounce Rate\nSingle-page sessions\n4m 46s\nAvg Session Duration\nPer session\n1.67%\nConversion Rate\n133 converting sessions · 209 actions",
+  "health": "Database connection and required analytics/enquiry columns are ready. “No data yet” means the table works but has not received a matching event.",
+  "social": "Facebook Ads263 sessions258 website pageviews0 conv.Facebook16 sessions16 website pageviews0 conv.Instagram Ads107 sessions108 website pageviews0 conv.Instagram3 sessions3 website pageviews0 conv.YouTube Ads5,654 sessions6,430 website pageviews102 conv.YouTube6 sessions6 website pageviews0 conv.WhatsApp1 sessions2 website pageviews0 conv.Email2 sessions2 website pageviews0 conv.",
+  "conversion_kpis": "209Conversion ActionsPeriod133Converting SessionsDistinct sessions1.67%Conversion RateConverting sessions / sessions18Contact Forms52WhatsApp Clicks",
+  "enquiry_kpis": "39All EnquiriesDatabase total26NewSelected period0ContactedSelected period0EnrolledLatest: 2026-10-03 11:46:13",
+  "recent_count": "(60 sessions)",
+  "journey_count": 40,
+  "campaign_rows": 50,
+  "enquiry_rows": 26,
+  "gsc_status": "Connected: https://www.iucedu.com/2026-09-02 to 2026-10-02 · compared with 2026-08-02 to 2026-09-01 · fresh",
+  "gsc_kpis": "20Google Clicks 23.1%2,460Impressions 5.8%0.81%Average CTR -0.30 pp20.4Average Position 5.1 positions",
+  "gsc_connect_visible": false,
+  "recent_headers": [
+    "Platform / Channel",
+    "Exact Page URL",
+    "Mobile Number",
+    "Device / Browser / OS",
+    "Country / City",
+    "Views",
+    "Engaged Time",
+    "Bounce",
+    "Last Activity"
+  ],
+  "campaign_headers": [
+    "Campaign",
+    "Creative / Ad",
+    "Platform / Medium",
+    "Landing Page",
+    "First / Last Visit",
+    "Sessions",
+    "Website Pageviews",
+    "Conversions",
+    "Campaign Cost (₹)",
+    "Note",
+    "Save"
+  ],
+  "enquiry_headers": [
+    "ID / Time",
+    "Contact",
+    "Course / Message",
+    "Submitted Page",
+    "Landing / Referrer",
+    "UTM Attribution",
+    "WhatsApp",
+    "Status / Admin Note",
+    "Save"
+  ],
+  "page_headers": [
+    "Page",
+    "Views",
+    "Visitors",
+    "Landings",
+    "Exits"
+  ],
+  "conversion_headers": [
+    "Conversion Type",
+    "Count",
+    "Share"
+  ]
+}

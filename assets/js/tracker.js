@@ -12,6 +12,8 @@
   var SK = 'iuc_session_id';
   var SA = 'iuc_session_activity';
   var AK = 'iuc_session_attribution';
+  var EK = 'iuc_engaged_session';
+  var TK = 'iuc_thank_you_shown';
   var TIMEOUT = 30 * 60 * 1000; // 30 min session timeout
 
   /* Do not self-track the analytics dashboard / endpoints. */
@@ -101,6 +103,32 @@
     });
   } catch (e) {}
 
+  function referrerSource(value) {
+    var host = '';
+    try { host = new URL(String(value || ''), w.location.href).hostname.toLowerCase().replace(/^www\./, ''); }
+    catch (e) { return ''; }
+    if (!host || host === w.location.hostname.toLowerCase().replace(/^www\./, '')) return '';
+    var sources = [
+      ['facebook', ['facebook.', 'fb.com', 'fb.me']],
+      ['instagram', ['instagram.']],
+      ['youtube', ['youtube.', 'youtu.be']],
+      ['linkedin', ['linkedin.']],
+      ['whatsapp', ['whatsapp.', 'wa.me']],
+      ['twitter', ['twitter.', 'x.com', 't.co']],
+      ['tiktok', ['tiktok.']],
+      ['google', ['google.']],
+      ['bing', ['bing.']],
+      ['yahoo', ['search.yahoo.']],
+      ['duckduckgo', ['duckduckgo.']]
+    ];
+    for (var i = 0; i < sources.length; i++) {
+      for (var j = 0; j < sources[i][1].length; j++) {
+        if (host.indexOf(sources[i][1][j]) !== -1) return sources[i][0];
+      }
+    }
+    return host;
+  }
+
   /* Keep first-touch details for the whole session, including the enquiry form. */
   var attribution = {};
   try {
@@ -119,6 +147,32 @@
       attribution.click_id = legacyClick;
     }
     delete attribution.gclid;
+  }
+  /* A tagged or externally referred acquisition starts a new analytics
+     session only when it differs from the active session's attribution.
+     This keeps reloads and internal navigation in the current session while
+     allowing a new campaign click inside the 30-minute window to be stored. */
+  if (!isNewSession) {
+    var acquisitionKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'campaign_id', 'click_id_type', 'click_id'];
+    var hasTaggedAcquisition = false;
+    var acquisitionChanged = false;
+    for (var ai = 0; ai < acquisitionKeys.length; ai++) {
+      var acquisitionKey = acquisitionKeys[ai];
+      if (!utm[acquisitionKey]) continue;
+      hasTaggedAcquisition = true;
+      if (String(attribution[acquisitionKey] || '') !== String(utm[acquisitionKey])) acquisitionChanged = true;
+    }
+    if (!hasTaggedAcquisition) {
+      var incomingReferrerSource = referrerSource(d.referrer);
+      var storedReferrerSource = referrerSource(attribution.referrer);
+      acquisitionChanged = !!incomingReferrerSource && incomingReferrerSource !== storedReferrerSource;
+    }
+    if (acquisitionChanged) {
+      sessionId = uuid();
+      write(SK, sessionId);
+      isNewSession = true;
+      attribution = {};
+    }
   }
   if (isNewSession || !attribution.landing_page) {
     attribution = {
@@ -298,6 +352,76 @@
   var enquiryForm = d.querySelector('form [name="contact_submit"]');
   if (enquiryForm) syncEnquiryAttribution(enquiryForm.form);
 
+  /* Non-invasive funnel events. Labels describe UI placement/type only and
+     never contain form values or other personal data. */
+  var startedForms = [];
+  var invalidForms = [];
+  var shownThankYou = [];
+  var scrollMilestones = [25, 50, 75, 100];
+  var sentScroll = {};
+
+  function isEnquiryForm(form) {
+    return !!(form && form.querySelector && form.querySelector('[name="contact_submit"]'));
+  }
+  function rememberOnce(list, item) {
+    if (list.indexOf(item) !== -1) return false;
+    list.push(item);
+    return true;
+  }
+  function elementLabel(el, fallback) {
+    if (!el) return fallback || '';
+    return String(el.getAttribute('aria-label') || el.getAttribute('data-course') ||
+      el.getAttribute('data-track-label') || el.textContent || fallback || '').replace(/\s+/g, ' ').trim().slice(0, 180);
+  }
+  function recordThankYou(root) {
+    var nodes = [];
+    if (root && root.matches && root.matches('.enquiry-thank-you-message')) nodes.push(root);
+    if (root && root.querySelectorAll) {
+      var found = root.querySelectorAll('.enquiry-thank-you-message');
+      for (var i = 0; i < found.length; i++) nodes.push(found[i]);
+    }
+    for (var j = 0; j < nodes.length; j++) {
+      if (!nodes[j].hidden && read(TK) !== sessionId && rememberOnce(shownThankYou, nodes[j])) {
+        write(TK, sessionId);
+        trackEvent('thank_you_shown', 'Enquiry Thank You Message');
+      }
+    }
+  }
+
+  recordThankYou(d);
+  if (w.MutationObserver && d.documentElement) {
+    new MutationObserver(function (mutations) {
+      for (var i = 0; i < mutations.length; i++) {
+        recordThankYou(mutations[i].target);
+        for (var j = 0; j < mutations[i].addedNodes.length; j++) recordThankYou(mutations[i].addedNodes[j]);
+      }
+    }).observe(d.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['class', 'hidden'] });
+  }
+
+  function checkScrollDepth() {
+    var doc = d.documentElement;
+    var body = d.body;
+    var height = Math.max(doc ? doc.scrollHeight : 0, body ? body.scrollHeight : 0);
+    var viewport = w.innerHeight || (doc ? doc.clientHeight : 0) || 0;
+    var available = Math.max(1, height - viewport);
+    var percent = Math.min(100, Math.round(((w.pageYOffset || (doc && doc.scrollTop) || 0) / available) * 100));
+    for (var i = 0; i < scrollMilestones.length; i++) {
+      var milestone = scrollMilestones[i];
+      if (percent >= milestone && !sentScroll[milestone]) {
+        sentScroll[milestone] = true;
+        trackEvent('scroll_depth', milestone + '%');
+      }
+    }
+  }
+  if (w.addEventListener) w.addEventListener('scroll', checkScrollDepth, { passive: true });
+
+  /* One engaged-session event per analytics session after ten visible seconds. */
+  setTimeout(function () {
+    if (d.visibilityState === 'hidden' || read(EK) === sessionId) return;
+    write(EK, sessionId);
+    trackEvent('engaged_session', '10 seconds visible');
+  }, 10000);
+
   /* ── Automatic event tracking (event delegation) ────────── */
   function trackAttr(el, name) {
     var n = 'data-' + name;
@@ -313,7 +437,19 @@
       var el = e.target;
       var t = trackAttr(el, 'track-event');
       if (t) { trackEvent(t, el.href || el.textContent || ''); return; }
+      var modalTrigger = el.closest ? el.closest('.apply-now-trigger') : null;
+      if (modalTrigger) trackEvent('enquiry_modal_open', elementLabel(modalTrigger, 'Apply now'));
+      var courseCard = el.closest ? el.closest('.course-card, .seo-landing-course-card') : null;
+      if (courseCard) trackEvent('course_card_click', elementLabel(courseCard, 'Course card'));
       var a = el.closest ? el.closest('a') : null;
+      var button = el.closest ? el.closest('a, button') : null;
+      if (button && !modalTrigger && !courseCard) {
+        var placement = button.getAttribute('data-track-placement') || (button.closest('header') ? 'header' : (button.closest('footer') ? 'footer' : 'page'));
+        var buttonClass = String(button.className || '');
+        if (buttonClass.indexOf('btn') !== -1 || buttonClass.indexOf('cta') !== -1) {
+          trackEvent('cta_click', placement + ': ' + elementLabel(button, 'CTA'));
+        }
+      }
       if (!a) return;
       var href = a.getAttribute('href') || '';
       if (href.indexOf('tel:') === 0) trackEvent('call_click', href);
@@ -331,6 +467,21 @@
         trackEvent('contact_form_attempt', 'Contact Form Submission Attempt');
       }
       else if (f.className.indexOf('newsletter-form') !== -1) trackEvent('registration', 'Newsletter Signup');
+    }, true);
+
+    d.addEventListener('input', function (e) {
+      var form = e.target && e.target.form;
+      if (isEnquiryForm(form) && rememberOnce(startedForms, form)) {
+        syncEnquiryAttribution(form);
+        trackEvent('enquiry_form_start', form.querySelector('[name="modal_submit"]') ? 'Enquiry Modal' : 'Contact Form');
+      }
+    }, true);
+
+    d.addEventListener('invalid', function (e) {
+      var form = e.target && e.target.form;
+      if (isEnquiryForm(form) && rememberOnce(invalidForms, form)) {
+        trackEvent('form_validation_failure', form.querySelector('[name="modal_submit"]') ? 'Enquiry Modal' : 'Contact Form');
+      }
     }, true);
   }
 })(window, document);

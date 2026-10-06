@@ -48,8 +48,10 @@
             </div>
             <div class="form-group">
                 <label for="apply-captcha" class="form-label">Security Verification *</label>
-                <div class="application-captcha"><strong><?= htmlspecialchars((string) $_SESSION['captcha'], ENT_QUOTES, 'UTF-8') ?></strong><span>Enter the 4-digit code</span></div>
-                <input type="text" id="apply-captcha" name="captcha" class="form-input" inputmode="numeric" maxlength="4" required />
+                <div class="application-captcha">
+                    <input type="text" id="apply-captcha" name="captcha" class="form-input" placeholder="Enter code" inputmode="numeric" maxlength="4" required />
+                    <strong aria-label="Security code"><?= htmlspecialchars((string) $_SESSION['captcha'], ENT_QUOTES, 'UTF-8') ?></strong>
+                </div>
             </div>
             <button type="submit" name="contact_submit" class="btn btn-primary btn-lg btn-block">Submit Enquiry <i class="bi bi-arrow-right"></i></button>
         </form>

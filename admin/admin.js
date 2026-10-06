@@ -8,7 +8,8 @@
   var charts = {};
   var state = {
     from: '', to: '', data: null, period: 'daily', liveInterval: null,
-    activeTab: 'overview', gscData: null, gscLoaded: false, gscLoading: false
+    activeTab: 'overview', gscData: null, gscLoaded: false, gscLoading: false,
+    filters: { source: '', medium: '', channel: '', campaign: '', landing_page: '' }
   };
 
   var PALETTE = ['#2563eb', '#06b6d4', '#8b5cf6', '#f59e0b', '#10b981', '#ef4444', '#ec4899', '#14b8a6', '#6366f1', '#f97316', '#84cc16', '#0ea5e9', '#a855f7', '#e11d48', '#64748b'];
@@ -130,13 +131,42 @@
   /* ── data fetch ────────────────────────────────────────────── */
   function loadDashboard() {
     var url = API + '?action=dashboard&from=' + encodeURIComponent(state.from) + '&to=' + encodeURIComponent(state.to);
+    Object.keys(state.filters).forEach(function (key) {
+      if (state.filters[key]) url += '&' + encodeURIComponent(key) + '=' + encodeURIComponent(state.filters[key]);
+    });
     return fetch(url, { credentials: 'same-origin' }).then(function (r) { return r.json(); });
+  }
+
+  function renderFilters(d) {
+    var config = [
+      ['sourceFilter', 'source', 'sources', 'All sources'],
+      ['mediumFilter', 'medium', 'mediums', 'All mediums'],
+      ['channelFilter', 'channel', 'channels', 'All channels'],
+      ['campaignFilter', 'campaign', 'campaigns', 'All campaigns'],
+      ['landingFilter', 'landing_page', 'landing_pages', 'All landing pages']
+    ];
+    config.forEach(function (item) {
+      var select = el(item[0]);
+      if (!select) return;
+      var selected = (d.filters && d.filters[item[1]]) || state.filters[item[1]] || '';
+      var options = '<option value="">' + item[3] + '</option>';
+      ((d.filter_options && d.filter_options[item[2]]) || []).forEach(function (row) {
+        options += '<option value="' + esc(row.value) + '"' + (String(row.value) === selected ? ' selected' : '') + '>' + esc(row.value) + '</option>';
+      });
+      select.innerHTML = options;
+      state.filters[item[1]] = selected;
+    });
+    var active = Object.keys(state.filters).filter(function (key) { return state.filters[key]; });
+    el('filterStatus').textContent = active.length
+      ? active.length + ' active filter' + (active.length === 1 ? '' : 's') + ' · ' + fmtInt(d.kpis.sessions) + ' matching sessions'
+      : 'No acquisition filters applied · ' + fmtInt(d.kpis.sessions) + ' sessions in period';
   }
 
   function refresh() {
     loadDashboard().then(function (d) {
       if (!d || d.error) { renderError(d); return; }
       state.data = d;
+      renderFilters(d);
       el('periodLabel').textContent = 'Report period: ' + d.from + '  →  ' + d.to;
       el('reportRange').textContent = d.from + ' to ' + d.to;
       renderKpis(d);
@@ -151,6 +181,7 @@
       renderSeo(d);
       renderEnquiries(d);
       renderHealth(d);
+      renderJourneys(d);
     }).catch(function (e) { renderError(e); });
   }
 
@@ -178,7 +209,7 @@
       kpiCard('bi-eye', '#0f766e', fmtInt(k.total_views), 'Total Page Views', 'Period', '#ccfbf1') +
       kpiCard('bi-arrow-90deg-left', '#be123c', fmtPct(k.bounce_rate), 'Bounce Rate', 'Single-page sessions', '#ffe4e6') +
       kpiCard('bi-clock-history', '#4338ca', fmtDur(k.avg_duration), 'Avg Session Duration', 'Per session', '#e0e7ff') +
-      kpiCard('bi-percent', '#15803d', fmtPct(k.conversion_rate, 2), 'Conversion Rate', fmtInt(k.conversions) + ' conversions', '#dcfce7');
+      kpiCard('bi-percent', '#15803d', fmtPct(k.conversion_rate, 2), 'Conversion Rate', fmtInt(k.converting_sessions) + ' converting sessions · ' + fmtInt(k.conversions) + ' actions', '#dcfce7');
   }
   function dateLabel() {
     try { return new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }); }
@@ -213,7 +244,7 @@
       type: 'bar',
       data: { labels: d.sources.map(function (x) { return x.label; }), datasets: [
         { label: 'Sessions', data: d.sources.map(function (x) { return x.sessions; }), backgroundColor: PALETTE[0], borderRadius: 4 },
-        { label: 'Views', data: d.sources.map(function (x) { return x.views; }), backgroundColor: PALETTE[1], borderRadius: 4 }
+        { label: 'Website Pageviews', data: d.sources.map(function (x) { return x.views; }), backgroundColor: PALETTE[1], borderRadius: 4 }
       ] },
       options: { plugins: { legend: { position: 'top' } }, scales: { x: { grid: { display: false }, ticks: { font: { size: 10 } } }, y: { beginAtZero: true, grid: { color: '#f1f5f9' }, ticks: { precision: 0 } } } }
     });
@@ -374,7 +405,7 @@
 
   function renderCampaigns(d) {
     var rows = d.campaigns;
-    var h = '<thead><tr><th>Campaign</th><th>Creative / Ad</th><th>Platform / Medium</th><th>Landing Page</th><th>First / Last Visit</th><th>Sessions</th><th>Views</th><th>Conversions</th><th>Campaign Cost (₹)</th><th>Note</th><th>Save</th></tr></thead><tbody>';
+    var h = '<thead><tr><th>Campaign</th><th>Creative / Ad</th><th>Platform / Medium</th><th>Landing Page</th><th>First / Last Visit</th><th>Sessions</th><th>Website Pageviews</th><th>Conversions</th><th>Campaign Cost (₹)</th><th>Note</th><th>Save</th></tr></thead><tbody>';
     if (!rows.length) {
       h += '<tr><td colspan="11" style="text-align:center;color:#94a3b8;padding:1.5rem">No tagged campaigns recorded yet. Add utm_source, utm_medium, utm_campaign and a unique utm_content value to each campaign link.</td></tr>';
     }
@@ -439,7 +470,7 @@
       h += '<div class="social-card">' +
         '<div class="sc-icon" style="background:' + meta[1] + '"><i class="bi ' + meta[0] + '"></i></div>' +
         '<div><div class="sc-name">' + ch + '</div>' +
-        '<div class="sc-stats"><span><b>' + fmtInt(s.sessions) + '</b> sessions</span><span><b>' + fmtInt(s.views) + '</b> views</span><span><b>' + fmtInt(s.conversions) + '</b> conv.</span></div></div>' +
+        '<div class="sc-stats"><span><b>' + fmtInt(s.sessions) + '</b> sessions</span><span><b>' + fmtInt(s.views) + '</b> website pageviews</span><span><b>' + fmtInt(s.conversions) + '</b> conv.</span></div></div>' +
         '</div>';
     });
     if (!h) h = '<div class="muted" style="padding:.5rem 0">No social traffic recorded yet in this period.</div>';
@@ -467,8 +498,9 @@
   function renderConversions(d) {
     var c = d.conversions;
     el('convKpi').innerHTML =
-      kpiCard('bi-check-circle', '#166534', fmtInt(c.total), 'Total Conversions', 'Period', '#dcfce7') +
-      kpiCard('bi-percent', '#1d4ed8', fmtPct(c.rate, 2), 'Conversion Rate', 'vs sessions', '#dbeafe') +
+      kpiCard('bi-check-circle', '#166534', fmtInt(c.total), 'Conversion Actions', 'Period', '#dcfce7') +
+      kpiCard('bi-person-check', '#7e22ce', fmtInt(c.converting_sessions), 'Converting Sessions', 'Distinct sessions', '#f3e8ff') +
+      kpiCard('bi-percent', '#1d4ed8', fmtPct(c.rate, 2), 'Conversion Rate', 'Converting sessions / sessions', '#dbeafe') +
       kpiCard('bi-chat-square-text', '#0f766e', fmtInt(countType(c, 'contact_form')), 'Contact Forms', '', '#ccfbf1') +
       kpiCard('bi-whatsapp', '#15803d', fmtInt(countType(c, 'whatsapp_click')), 'WhatsApp Clicks', '', '#dcfce7');
     var h = '<thead><tr><th>Conversion Type</th><th>Count</th><th>Share</th></tr></thead><tbody>';
@@ -858,6 +890,43 @@
     });
   }
 
+  function renderJourneys(d) {
+    var list = el('journeyList');
+    if (!list) return;
+    var rows = d.journeys || [];
+    if (!rows.length) {
+      list.innerHTML = '<div class="card empty-cell">No session journeys match the selected date range and filters.</div>';
+      return;
+    }
+    list.innerHTML = rows.map(function (r) {
+      var timeline = [];
+      (r.pages || []).forEach(function (p) {
+        timeline.push({ time: p.created_at || '', kind: 'page', label: shortUrl(p.page_url || '/'), detail: p.time_on_page ? fmtDur(p.time_on_page) : '' });
+      });
+      (r.events || []).forEach(function (event) {
+        timeline.push({
+          time: event.created_at || '', kind: CONV_LABELS[event.event_type] ? 'conversion' : 'event',
+          label: CONV_LABELS[event.event_type] || String(event.event_type || '').replace(/_/g, ' '),
+          detail: event.event_label || ''
+        });
+      });
+      timeline.sort(function (a, b) { return String(a.time).localeCompare(String(b.time)); });
+      var path = timeline.map(function (step, index) {
+        var node = '<span class="journey-step ' + step.kind + '" title="' + esc(step.time + (step.detail ? ' · ' + step.detail : '')) + '">' +
+          '<i class="bi ' + (step.kind === 'page' ? 'bi-file-earmark' : (step.kind === 'conversion' ? 'bi-check-circle' : 'bi-cursor')) + '"></i>' + esc(step.label) + '</span>';
+        return (index ? '<span class="journey-arrow">→</span>' : '') + node;
+      }).join('');
+      if (!path) path = '<span class="muted">No page/action rows stored for this session.</span>';
+      var campaign = r.campaign ? ' · Campaign: ' + esc(r.campaign) : '';
+      var outcome = r.enquiry_at ? '<span class="pill pill-green">Enquiry ' + esc(r.enquiry_at) + '</span>' : (r.conversion_at ? '<span class="pill pill-green">Converted ' + esc(r.conversion_at) + '</span>' : '<span class="pill pill-amber">No conversion</span>');
+      return '<article class="journey-card"><div class="journey-head"><div><strong>' + chip(r.source_label || r.channel || 'Unattributed') +
+        ' ' + esc(r.medium || '') + campaign + '</strong><div class="journey-meta"><span>Visitor: ' + esc(String(r.visitor_id || '').slice(0, 8)) + '</span>' +
+        '<span>Session: ' + esc(String(r.session_id || '').slice(0, 8)) + '</span><span>Entry: ' + esc(r.entry_time || '-') + '</span>' +
+        '<span>Duration: ' + fmtDur(r.duration_sec) + '</span><span>Landing: ' + esc(shortUrl(r.landing_page || '/')) + '</span>' +
+        '<span>Exit: ' + esc(shortUrl(r.exit_page || '/')) + '</span></div></div>' + outcome + '</div><div class="journey-path">' + path + '</div></article>';
+    }).join('');
+  }
+
   function renderHealth(d) {
     var h = d.health || { tables: [], schema_errors: [], query_errors: [] };
     el('healthChecked').textContent = h.checked_at ? 'Checked ' + h.checked_at : '';
@@ -950,7 +1019,7 @@
     document.querySelectorAll('.nav-item').forEach(function (b) { b.classList.toggle('active', b.dataset.tab === name); });
     document.querySelectorAll('.tab-panel').forEach(function (p) { p.classList.toggle('active', p.id === 'tab-' + name); });
     var titles = {
-      overview: 'Overview', visitors: 'Visitors', campaigns: 'Campaigns', pages: 'Pages',
+      overview: 'Overview', visitors: 'Visitors', journeys: 'User Journeys', campaigns: 'Campaigns', pages: 'Pages',
       seo: 'SEO Monitor', enquiries: 'Enquiries', conversions: 'Conversions', live: 'Live Visitors', reports: 'Reports'
     };
     el('pageTitle').textContent = titles[name] || name;
@@ -972,6 +1041,10 @@
   document.addEventListener('DOMContentLoaded', function () {
     state.from = el('fromDate').value;
     state.to = el('toDate').value;
+    try {
+      var initialParams = new URLSearchParams(window.location.search);
+      Object.keys(state.filters).forEach(function (key) { state.filters[key] = initialParams.get(key) || ''; });
+    } catch (e) {}
 
     var sidebar = el('adminSidebar');
     var sidebarToggle = el('mobileSidebarToggle');
@@ -1011,6 +1084,11 @@
     el('applyRange').addEventListener('click', function () {
       state.from = el('fromDate').value;
       state.to = el('toDate').value;
+      state.filters.source = el('sourceFilter').value;
+      state.filters.medium = el('mediumFilter').value;
+      state.filters.channel = el('channelFilter').value;
+      state.filters.campaign = el('campaignFilter').value;
+      state.filters.landing_page = el('landingFilter').value;
       function href(fmt) { return 'export.php?format=' + fmt + '&from=' + state.from + '&to=' + state.to; }
       el('btnExcel').href = href('excel');
       el('btnPdf').href = href('pdf');
@@ -1022,6 +1100,12 @@
       state.gscData = null;
       refresh();
       if (state.activeTab === 'seo') loadGsc(false);
+    });
+
+    el('clearFilters').addEventListener('click', function () {
+      Object.keys(state.filters).forEach(function (key) { state.filters[key] = ''; });
+      ['sourceFilter', 'mediumFilter', 'channelFilter', 'campaignFilter', 'landingFilter'].forEach(function (id) { el(id).value = ''; });
+      refresh();
     });
 
     el('periodSeg').addEventListener('click', function (e) {

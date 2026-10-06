@@ -106,9 +106,9 @@
 .enquiry-whatsapp-consent input { flex: 0 0 auto; width: 1rem; height: 1rem; margin-top: 0.12rem; accent-color: #16a34a; }
 .application-modal-close { position: absolute; top: 1rem; right: 1rem; border: 0; background: transparent; color: var(--clr-text); font-size: 2rem; line-height: 1; cursor: pointer; }
 .application-modal-row { display: grid; gap: 1rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.application-captcha { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem; }
-.application-captcha strong { padding: 0.45rem 0.8rem; border-radius: var(--radius-md); background: var(--clr-primary-light); color: var(--clr-primary); letter-spacing: 0.25em; }
-.application-captcha span { color: var(--clr-text-muted); font-size: 0.75rem; }
+.application-captcha { position: relative; }
+.application-captcha .form-input { padding-right: 7rem; }
+.application-captcha strong { position: absolute; top: 50%; right: 0.75rem; transform: translateY(-50%); padding: 0.3rem 0.55rem; border-radius: var(--radius-md); background: var(--clr-primary-light); color: var(--clr-primary); font-size: 1rem; line-height: 1.4; letter-spacing: 0.2em; pointer-events: none; }
 @media (max-width: 600px) {
   .application-modal { padding: 0; background: #fff; }
   .application-modal-backdrop { display: none; }
@@ -1129,12 +1129,8 @@ textarea.form-input { resize: vertical; min-height: 100px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--clr-text-muted); }
 
 /* ── AOS Overrides ───────────────────────────────────────── */
-[data-aos] {
-  opacity: 1 !important;
-  transform: none !important;
-  transition: none !important;
-  pointer-events: auto;
-}
+[data-aos] { pointer-events: none; }
+[data-aos].aos-animate { pointer-events: auto; }
 
 /* ── Responsive Media Queries ────────────────────────────── */
 @media (max-width: 639px) {

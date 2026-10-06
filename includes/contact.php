@@ -95,7 +95,7 @@ unset($b);
                 <p style="font-size:0.875rem;color:var(--clr-text-secondary);margin-bottom:1.5rem">Fill in the form below. We'll call you within 24 hours.</p>
 
                 <?php if ($formSuccess): ?>
-                <div style="padding:1rem;border-radius:var(--radius-lg);background:#d1fae5;color:#065f46;margin-bottom:1.5rem;display:flex;align-items:center;gap:0.75rem;font-weight:500">
+                <div class="enquiry-thank-you-message" style="padding:1rem;border-radius:var(--radius-lg);background:#d1fae5;color:#065f46;margin-bottom:1.5rem;display:flex;align-items:center;gap:0.75rem;font-weight:500">
                     <i class="bi bi-check-circle-fill" style="font-size:1.25rem"></i> Thank you! We'll contact you within 24 hours.
                 </div>
                 <?php elseif ($formError): ?>
@@ -159,11 +159,10 @@ unset($b);
 
                     <div class="form-group">
                         <label class="form-label">Security Verification *</label>
-                        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.5rem">
-                            <div style="padding:0.5rem 1rem;border-radius:var(--radius-md);background:var(--clr-primary-light);color:var(--clr-primary);font-weight:700;font-size:1.25rem;letter-spacing:0.3em;font-family:var(--font-heading)"><?= $_SESSION['captcha'] ?></div>
-                            <span style="font-size:0.75rem;color:var(--clr-text-muted)">Enter the 4-digit code</span>
+                        <div class="application-captcha">
+                            <input type="text" name="captcha" class="form-input" placeholder="Enter code" inputmode="numeric" required maxlength="4" />
+                            <strong aria-label="Security code"><?= htmlspecialchars((string) $_SESSION['captcha'], ENT_QUOTES, 'UTF-8') ?></strong>
                         </div>
-                        <input type="text" name="captcha" class="form-input" placeholder="Enter code" required maxlength="4" />
                     </div>
 
                     <button type="submit" name="contact_submit" class="btn btn-primary btn-lg btn-block">
